@@ -1,6 +1,7 @@
 /**
  * Mock News Data
- * Based on database.md schema: News, Announcement, Event, AnnouncementRead, EventRegistration
+ * @description News, Announcements, and Events mock data
+ * @see docs/blueprint/architecture/database.md
  */
 
 import { tenants } from './users';
@@ -73,7 +74,6 @@ export interface EventRegistration {
   registeredAt: string;
 }
 
-// News articles
 export const news: News[] = [
   {
     id: 'news-001',
@@ -142,7 +142,6 @@ export const news: News[] = [
   },
 ];
 
-// Announcements
 export const announcements: Announcement[] = [
   {
     id: 'announce-001',
@@ -183,7 +182,6 @@ export const announcements: Announcement[] = [
   },
 ];
 
-// Announcement read status
 export const announcementReads: AnnouncementRead[] = [
   {
     id: 'read-001',
@@ -193,7 +191,6 @@ export const announcementReads: AnnouncementRead[] = [
   },
 ];
 
-// Events
 export const events: Event[] = [
   {
     id: 'event-001',
@@ -245,7 +242,6 @@ export const events: Event[] = [
   },
 ];
 
-// Event registrations
 export const eventRegistrations: EventRegistration[] = [
   {
     id: 'reg-001',
@@ -256,7 +252,6 @@ export const eventRegistrations: EventRegistration[] = [
   },
 ];
 
-// Helper functions
 export function getNewsById(id: string): News | undefined {
   return news.find((n) => n.id === id);
 }
@@ -265,20 +260,23 @@ export function getNewsBySlug(slug: string): News | undefined {
   return news.find((n) => n.slug === slug);
 }
 
+const sortByPinnedThenDate = (a: News, b: News) => {
+  if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
+  return new Date(b.publishedAt!).getTime() - new Date(a.publishedAt!).getTime();
+};
+
 export function getPublishedNews(): News[] {
-  return news
-    .filter((n) => n.status === 'PUBLISHED')
-    .sort((a, b) => {
-      // Pinned first, then by date
-      if (a.isPinned && !b.isPinned) return -1;
-      if (!a.isPinned && b.isPinned) return 1;
-      return new Date(b.publishedAt!).getTime() - new Date(a.publishedAt!).getTime();
-    });
+  return news.filter((n) => n.status === 'PUBLISHED').sort(sortByPinnedThenDate);
 }
 
 export function getNewsByCategory(category: NewsCategory): News[] {
   return getPublishedNews().filter((n) => n.category === category);
 }
+
+const sortByPinnedThenPriority = (a: Announcement, b: Announcement) => {
+  if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
+  return a.priority - b.priority;
+};
 
 export function getActiveAnnouncements(): Announcement[] {
   const now = new Date();
@@ -288,12 +286,7 @@ export function getActiveAnnouncements(): Announcement[] {
       const ends = a.endsAt ? new Date(a.endsAt) : null;
       return starts <= now && (!ends || ends >= now);
     })
-    .sort((a, b) => {
-      // Pinned first, then by priority
-      if (a.isPinned && !b.isPinned) return -1;
-      if (!a.isPinned && b.isPinned) return 1;
-      return a.priority - b.priority;
-    });
+    .sort(sortByPinnedThenPriority);
 }
 
 export function isAnnouncementRead(userId: string, announcementId: string): boolean {
@@ -336,7 +329,6 @@ export function getUserEvents(userId: string): (EventRegistration & { event: Eve
     .filter((r) => r.event);
 }
 
-// Display formats
 export interface NewsCard {
   id: string;
   title: string;

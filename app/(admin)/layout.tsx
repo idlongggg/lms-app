@@ -1,7 +1,87 @@
 'use client';
 
-import { AppShell } from '@/components/layout';
-import { useRequireAuth } from '@/lib/auth';
+import { useRef, useEffect } from 'react';
+import { Menu, Search } from 'lucide-react';
+import { Header, Sidebar, Logo, ThemeToggle, UserMenu } from '@/components/common';
+import { Loader } from '@/components/retroui';
+import { SidebarProvider, useSidebar } from '@/hooks/use-sidebar';
+import { useScrollPosition } from '@/hooks/use-scroll-position';
+import { useAuth, useRequireAuth } from '@/lib/auth';
+import { getAdminNavByRole } from '@/lib/navigation';
+import type { UserRole } from '@/lib/auth/types';
+
+function MobileMenuButton() {
+  const { openMobile } = useSidebar();
+
+  return (
+    <button
+      onClick={openMobile}
+      className="border-border bg-background flex h-9 w-9 items-center justify-center border-2 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm md:hidden"
+      aria-label="Open menu"
+    >
+      <Menu className="h-4 w-4" />
+    </button>
+  );
+}
+
+function SearchButton() {
+  return (
+    <button
+      className="border-border bg-background hidden h-9 items-center gap-2 border-2 px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm sm:flex"
+      aria-label="Search"
+    >
+      <Search className="h-4 w-4" />
+      <span className="text-muted-foreground text-sm">Tìm kiếm...</span>
+      <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">⌘K</kbd>
+    </button>
+  );
+}
+
+function AdminContent({ children }: { children: React.ReactNode }) {
+  const mainRef = useRef<HTMLElement>(null);
+  const { user } = useAuth();
+
+  useScrollPosition(mainRef, 'content');
+
+  // Force dark mode for admin
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+    return () => {
+      document.documentElement.classList.remove('dark');
+    };
+  }, []);
+
+  const userRole = user?.role as UserRole | undefined;
+  const navigation = getAdminNavByRole(userRole || 'tenant-admin');
+
+  return (
+    <div className="bg-background h-screen">
+      <Header
+        left={
+          <>
+            <MobileMenuButton />
+            <Logo collapsed />
+          </>
+        }
+        right={
+          <>
+            <SearchButton />
+            <ThemeToggle />
+            <UserMenu />
+          </>
+        }
+      />
+      <div className="mx-auto h-[calc(100vh-4rem)] max-w-7xl">
+        <div className="relative flex h-full gap-4 overflow-hidden pt-16">
+          <Sidebar navigation={navigation} variant="expanded" />
+          <main ref={mainRef} className="flex h-full flex-1 flex-col overflow-auto">
+            {children}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { isAuthorized, isLoading } = useRequireAuth(['root-admin', 'tenant-admin']);
@@ -9,21 +89,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (isLoading) {
     return (
       <div className="bg-background flex h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
-          <p className="text-muted-foreground">Đang tải...</p>
-        </div>
+        <Loader size="lg" />
       </div>
     );
   }
 
   if (!isAuthorized) {
-    return null; // Will redirect via useRequireAuth
+    return null;
   }
 
   return (
-    <AppShell variant="admin" forceDarkMode>
-      {children}
-    </AppShell>
+    <SidebarProvider>
+      <AdminContent>{children}</AdminContent>
+    </SidebarProvider>
   );
 }

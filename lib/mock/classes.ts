@@ -18,7 +18,7 @@ export interface Class {
   studentCount: number;
   maxStudents: number;
   status: 'ACTIVE' | 'ARCHIVED' | 'DRAFT';
-  schedule: string; // e.g., "Thứ 2, 4, 6 - 14:00"
+  schedule: string; // E.g., "Thứ 2, 4, 6 - 14:00"
   room: string;
   description: string | null;
   createdAt: string;
@@ -528,11 +528,11 @@ export interface TeacherTournament {
   status: 'DRAFT' | 'SCHEDULED' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
   startTime: string;
   endTime: string;
-  duration: number; // minutes
+  duration: number; // Minutes
   questionCount: number;
   maxParticipants: number;
   currentParticipants: number;
-  classRestriction?: string[]; // class IDs that can join
+  classRestriction?: string[]; // Class IDs that can join
   createdAt: string;
   updatedAt: string;
 }

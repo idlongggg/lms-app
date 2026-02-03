@@ -16,7 +16,7 @@ export interface Reward {
   type: RewardType;
   category: 'avatar' | 'theme' | 'voucher' | 'item' | 'booster';
   isActive: boolean;
-  stock: number | null; // null = unlimited
+  stock: number | null; // Null = unlimited
   createdAt: string;
 }
 

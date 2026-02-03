@@ -25,7 +25,7 @@ export interface SystemStats {
 export function getSystemStats(): SystemStats {
   const contentStats = getContentStats();
   return {
-    totalTenants: 2, // system + school
+    totalTenants: 2, // System + school
     activeTenants: 2,
     totalUsers: mockUsers.length,
     activeUsers: mockUsers.filter((u) => u.status === 'ACTIVE').length,
@@ -134,7 +134,7 @@ export function getAdminDashboardCards(
     ];
   }
 
-  // tenant-admin
+  // Tenant-admin
   const stats = getTenantStats(tenantId || tenants.school.id);
   return [
     {
@@ -455,7 +455,7 @@ export function getSystemSettings(): SystemSettings {
     security: {
       passwordMinLength: 8,
       passwordRequireSpecial: true,
-      sessionTimeout: 30, // minutes
+      sessionTimeout: 30, // Minutes
       maxLoginAttempts: 5,
       twoFactorEnabled: false,
     },

@@ -1,163 +1,178 @@
-import { Settings, Bell, Shield, Database, Palette } from 'lucide-react';
+import { Settings, Bell, Shield, Database } from 'lucide-react';
+
+interface SettingCardProps {
+  icon: React.ReactNode;
+  iconBg?: string;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}
+
+function SettingCard({
+  icon,
+  iconBg = 'bg-primary',
+  title,
+  description,
+  children,
+}: SettingCardProps) {
+  return (
+    <div className="border-border bg-card border-2 shadow-sm">
+      <div className="border-border flex items-center gap-3 border-b-2 p-4">
+        <div
+          className={`border-border flex h-10 w-10 items-center justify-center border-2 ${iconBg}`}
+        >
+          {icon}
+        </div>
+        <div>
+          <h2 className="text-lg font-bold">{title}</h2>
+          <p className="text-muted-foreground text-sm">{description}</p>
+        </div>
+      </div>
+      <div className="space-y-4 p-4">{children}</div>
+    </div>
+  );
+}
+
+function ToggleSwitch({ enabled }: { enabled: boolean }) {
+  return (
+    <button
+      className={`border-border h-6 w-12 border-2 transition-colors ${enabled ? 'bg-primary' : 'bg-muted'}`}
+    >
+      <div
+        className={`border-border bg-background h-4 w-4 border transition-transform ${enabled ? 'translate-x-6' : 'translate-x-0.5'}`}
+      />
+    </button>
+  );
+}
+
+function FormField({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="text-sm font-medium">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function PageHeader({ title, description }: { title: string; description: string }) {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold">{title}</h1>
+      <p className="text-muted-foreground">{description}</p>
+    </div>
+  );
+}
 
 export default function AdminSettingsPage() {
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Cài đặt hệ thống</h1>
-        <p className="text-muted-foreground">Quản lý cấu hình và tùy chỉnh hệ thống</p>
-      </div>
+      <PageHeader title="Cài đặt hệ thống" description="Quản lý cấu hình và tùy chỉnh hệ thống" />
 
-      {/* Settings Grid */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* General Settings */}
-        <div className="border-border bg-card border-2 shadow-sm">
-          <div className="border-border flex items-center gap-3 border-b-2 p-4">
-            <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
-              <Settings className="h-5 w-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold">Cài đặt chung</h2>
-              <p className="text-muted-foreground text-sm">Thông tin cơ bản của hệ thống</p>
-            </div>
-          </div>
-          <div className="space-y-4 p-4">
-            <div>
-              <label className="text-sm font-medium">Tên hệ thống</label>
-              <input
-                type="text"
-                defaultValue="LMS Platform"
-                className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Email liên hệ</label>
-              <input
-                type="email"
-                defaultValue="admin@lms.com"
-                className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Timezone</label>
-              <select className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs">
-                <option>Asia/Ho_Chi_Minh (UTC+7)</option>
-                <option>Asia/Bangkok (UTC+7)</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        <SettingCard
+          icon={<Settings className="h-5 w-5" />}
+          title="Cài đặt chung"
+          description="Thông tin cơ bản của hệ thống"
+        >
+          <FormField label="Tên hệ thống">
+            <input
+              type="text"
+              defaultValue="LMS Platform"
+              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
+            />
+          </FormField>
+          <FormField label="Email liên hệ">
+            <input
+              type="email"
+              defaultValue="admin@lms.com"
+              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
+            />
+          </FormField>
+          <FormField label="Timezone">
+            <select className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs">
+              <option>Asia/Ho_Chi_Minh (UTC+7)</option>
+              <option>Asia/Bangkok (UTC+7)</option>
+            </select>
+          </FormField>
+        </SettingCard>
 
-        {/* Notification Settings */}
-        <div className="border-border bg-card border-2 shadow-sm">
-          <div className="border-border flex items-center gap-3 border-b-2 p-4">
-            <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2">
-              <Bell className="h-5 w-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold">Thông báo</h2>
-              <p className="text-muted-foreground text-sm">Cấu hình thông báo hệ thống</p>
-            </div>
-          </div>
-          <div className="space-y-4 p-4">
-            {notificationSettings.map((setting, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">{setting.label}</p>
-                  <p className="text-muted-foreground text-sm">{setting.description}</p>
-                </div>
-                <button
-                  className={`border-border h-6 w-12 border-2 transition-colors ${setting.enabled ? 'bg-primary' : 'bg-muted'}`}
-                >
-                  <div
-                    className={`border-border bg-background h-4 w-4 border transition-transform ${setting.enabled ? 'translate-x-6' : 'translate-x-0.5'}`}
-                  />
-                </button>
+        <SettingCard
+          icon={<Bell className="h-5 w-5" />}
+          iconBg="bg-accent"
+          title="Thông báo"
+          description="Cấu hình thông báo hệ thống"
+        >
+          {notificationSettings.map((setting, index) => (
+            <div key={index} className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">{setting.label}</p>
+                <p className="text-muted-foreground text-sm">{setting.description}</p>
               </div>
-            ))}
-          </div>
-        </div>
+              <ToggleSwitch enabled={setting.enabled} />
+            </div>
+          ))}
+        </SettingCard>
 
-        {/* Security Settings */}
-        <div className="border-border bg-card border-2 shadow-sm">
-          <div className="border-border flex items-center gap-3 border-b-2 p-4">
-            <div className="border-border bg-destructive text-destructive-foreground flex h-10 w-10 items-center justify-center border-2">
-              <Shield className="h-5 w-5" />
-            </div>
+        <SettingCard
+          icon={<Shield className="h-5 w-5" />}
+          iconBg="bg-destructive text-destructive-foreground"
+          title="Bảo mật"
+          description="Cài đặt bảo mật và xác thực"
+        >
+          <FormField label="Thời gian session (phút)">
+            <input
+              type="number"
+              defaultValue="60"
+              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
+            />
+          </FormField>
+          <FormField label="Số lần đăng nhập sai tối đa">
+            <input
+              type="number"
+              defaultValue="5"
+              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
+            />
+          </FormField>
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold">Bảo mật</h2>
-              <p className="text-muted-foreground text-sm">Cài đặt bảo mật và xác thực</p>
+              <p className="font-medium">Two-Factor Authentication</p>
+              <p className="text-muted-foreground text-sm">Bắt buộc cho Admin</p>
             </div>
+            <ToggleSwitch enabled={true} />
           </div>
-          <div className="space-y-4 p-4">
-            <div>
-              <label className="text-sm font-medium">Thời gian session (phút)</label>
-              <input
-                type="number"
-                defaultValue="60"
-                className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Số lần đăng nhập sai tối đa</label>
-              <input
-                type="number"
-                defaultValue="5"
-                className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Two-Factor Authentication</p>
-                <p className="text-muted-foreground text-sm">Bắt buộc cho Admin</p>
-              </div>
-              <button className="border-border bg-primary h-6 w-12 border-2 transition-colors">
-                <div className="border-border bg-background h-4 w-4 translate-x-6 border" />
-              </button>
-            </div>
-          </div>
-        </div>
+        </SettingCard>
 
-        {/* Database Settings */}
-        <div className="border-border bg-card border-2 shadow-sm">
-          <div className="border-border flex items-center gap-3 border-b-2 p-4">
-            <div className="border-border bg-muted flex h-10 w-10 items-center justify-center border-2">
-              <Database className="h-5 w-5" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold">Database</h2>
-              <p className="text-muted-foreground text-sm">Thông tin và backup database</p>
-            </div>
-          </div>
-          <div className="space-y-4 p-4">
-            <div className="border-border bg-muted flex items-center justify-between border-2 p-3">
-              <div>
-                <p className="text-sm font-medium">PostgreSQL</p>
-                <p className="text-muted-foreground text-xs">Connected</p>
-              </div>
-              <span className="h-3 w-3 rounded-full bg-green-500" />
-            </div>
-            <div className="border-border bg-muted flex items-center justify-between border-2 p-3">
-              <div>
-                <p className="text-sm font-medium">Redis</p>
-                <p className="text-muted-foreground text-xs">Connected</p>
-              </div>
-              <span className="h-3 w-3 rounded-full bg-green-500" />
-            </div>
-            <button className="border-border bg-secondary text-secondary-foreground w-full border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-              Backup Database
-            </button>
-          </div>
-        </div>
+        <SettingCard
+          icon={<Database className="h-5 w-5" />}
+          iconBg="bg-muted"
+          title="Database"
+          description="Thông tin và backup database"
+        >
+          <ConnectionStatus name="PostgreSQL" status="Connected" />
+          <ConnectionStatus name="Redis" status="Connected" />
+          <button className="border-border bg-secondary text-secondary-foreground w-full border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+            Backup Database
+          </button>
+        </SettingCard>
       </div>
 
-      {/* Save Button */}
       <div className="flex justify-end">
         <button className="border-border bg-primary border-2 px-6 py-2 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
           Lưu cài đặt
         </button>
       </div>
+    </div>
+  );
+}
+
+function ConnectionStatus({ name, status }: { name: string; status: string }) {
+  return (
+    <div className="border-border bg-muted flex items-center justify-between border-2 p-3">
+      <div>
+        <p className="text-sm font-medium">{name}</p>
+        <p className="text-muted-foreground text-xs">{status}</p>
+      </div>
+      <span className="h-3 w-3 rounded-full bg-green-500" />
     </div>
   );
 }
