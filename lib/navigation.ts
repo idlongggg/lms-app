@@ -27,7 +27,6 @@ import {
   TrendingUp,
   Trophy,
   User,
-  UserCog,
   Users,
 } from 'lucide-react';
 

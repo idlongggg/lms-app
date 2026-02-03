@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Settings, X } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';

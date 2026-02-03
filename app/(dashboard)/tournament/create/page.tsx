@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, Clock, FileText, HelpCircle, Plus, Settings, Trophy, Users } from 'lucide-react';
+import { Calendar, Clock, FileText, HelpCircle, Plus, Trophy, Users } from 'lucide-react';
 import { useState } from 'react';
 
 import { useAuth } from '@/lib/auth';

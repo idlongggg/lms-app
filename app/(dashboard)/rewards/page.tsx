@@ -1,6 +1,6 @@
 'use client';
 
-import { Coins, Gift, Package, ShoppingBag, Star } from 'lucide-react';
+import { Coins, Gift, Star } from 'lucide-react';
 import Link from 'next/link';
 
 import { useAuth } from '@/lib/auth';

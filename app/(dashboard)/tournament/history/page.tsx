@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, History, TrendingDown, TrendingUp, Trophy } from 'lucide-react';
+import { TrendingDown, TrendingUp, Trophy } from 'lucide-react';
 
 import { LineChart } from '@/components/retroui/charts/LineChart';
 

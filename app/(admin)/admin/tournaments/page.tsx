@@ -1,17 +1,6 @@
 'use client';
 
-import {
-  Calendar,
-  Clock,
-  Eye,
-  MoreVertical,
-  Pause,
-  Play,
-  Plus,
-  Search,
-  Trophy,
-  Users,
-} from 'lucide-react';
+import { Calendar, Clock, Eye, Pause, Play, Plus, Search, Trophy, Users } from 'lucide-react';
 
 import { useAuth } from '@/lib/auth';
 import { type Tournament, tournaments } from '@/lib/mock/tournaments';

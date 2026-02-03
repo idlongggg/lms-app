@@ -478,7 +478,7 @@ export interface RecentActivityItem {
   userName?: string;
 }
 
-export function getRecentActivity(tenantId?: string): RecentActivityItem[] {
+export function getRecentActivity(_tenantId?: string): RecentActivityItem[] {
   return [
     {
       id: 'activity-001',

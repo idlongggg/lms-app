@@ -76,7 +76,6 @@ const courses = [
 ];
 
 const categories = ['Tất cả', 'Frontend', 'Backend', 'Database', 'DevOps', 'Programming'];
-const levels = ['Tất cả', 'Cơ bản', 'Trung bình', 'Nâng cao'];
 
 export default function CoursesPage() {
   return (

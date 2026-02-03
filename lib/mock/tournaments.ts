@@ -353,7 +353,7 @@ export function getUserMedals(
     .filter((um) => um.medal && um.tournament);
 }
 
-export function getLeaderboard(tournamentId?: string): LeaderboardEntry[] {
+export function getLeaderboard(_tournamentId?: string): LeaderboardEntry[] {
   // Mock global leaderboard
   const leaderboardData: LeaderboardEntry[] = [
     {

@@ -4,6 +4,7 @@ import { ChevronDown, Coins, LogOut, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
+import { Avatar } from '@/components/retroui';
 import { useAuth } from '@/lib/auth';
 import { roleDisplayInfo } from '@/lib/mock/users';
 import { cn } from '@/lib/utils';
@@ -49,11 +50,12 @@ export function UserMenu({ className }: UserMenuProps) {
         aria-expanded={isOpen}
       >
         <div className="bg-background flex h-6 w-6 items-center justify-center overflow-hidden rounded-full">
-          {user.avatarUrl ? (
-            <img src={user.avatarUrl} alt={user.name} className="h-full w-full object-cover" />
-          ) : (
-            <User className="h-3.5 w-3.5" />
-          )}
+          <Avatar className="h-6 w-6">
+            <Avatar.Image src={user.avatarUrl || undefined} alt={user.name} />
+            <Avatar.Fallback>
+              <User className="h-3.5 w-3.5" />
+            </Avatar.Fallback>
+          </Avatar>
         </div>
         <span className="hidden max-w-[100px] truncate text-sm font-medium sm:block">
           {user.name.split(' ').slice(-1)[0]}
@@ -69,20 +71,15 @@ export function UserMenu({ className }: UserMenuProps) {
           <div className="border-border border-b-2 p-4">
             <div className="flex items-center gap-3">
               <div className="border-border flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2">
-                {user.avatarUrl ? (
-                  <img
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div
+                <Avatar className="h-12 w-12">
+                  <Avatar.Image src={user.avatarUrl || undefined} alt={user.name} />
+                  <Avatar.Fallback
                     className="flex h-full w-full items-center justify-center font-bold text-white"
                     style={{ backgroundColor: roleInfo.color }}
                   >
                     {user.name.charAt(0)}
-                  </div>
-                )}
+                  </Avatar.Fallback>
+                </Avatar>
               </div>
               <div className="flex-1 overflow-hidden">
                 <p className="truncate font-medium">{user.name}</p>

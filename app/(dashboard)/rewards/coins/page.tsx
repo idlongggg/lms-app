@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowDownRight, ArrowUpRight, Clock, Coins, Gift, TrendingUp } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Coins, TrendingUp } from 'lucide-react';
 
 import { AreaChart } from '@/components/retroui/charts/AreaChart';
 import { PieChart } from '@/components/retroui/charts/PieChart';

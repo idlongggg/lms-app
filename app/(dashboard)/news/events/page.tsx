@@ -275,7 +275,6 @@ export default function EventsPage() {
         <h2 className="font-bold">Đã kết thúc</h2>
         <div className="space-y-2">
           {pastEvents.map((event) => {
-            const type = typeConfig[event.type];
             const status = statusConfig[event.status];
             return (
               <div

@@ -6,14 +6,12 @@ import {
   Calendar,
   Download,
   Filter,
-  Plus,
   TrendingUp,
   Trophy,
   Users,
 } from 'lucide-react';
 import { useState } from 'react';
 
-import { Badge } from '@/components/retroui/Badge';
 import { Button } from '@/components/retroui/Button';
 import { Card } from '@/components/retroui/Card';
 import { Dialog } from '@/components/retroui/Dialog';

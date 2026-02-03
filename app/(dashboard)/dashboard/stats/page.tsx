@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, Target, TrendingDown, TrendingUp } from 'lucide-react';
+import { Clock, Target, TrendingUp } from 'lucide-react';
 
 import { AreaChart } from '@/components/retroui/charts/AreaChart';
 import { BarChart } from '@/components/retroui/charts/BarChart';

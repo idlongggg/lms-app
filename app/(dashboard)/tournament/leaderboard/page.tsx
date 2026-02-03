@@ -1,6 +1,6 @@
 'use client';
 
-import { Award, Crown, Medal, Star, Trophy } from 'lucide-react';
+import { Award, Crown, Medal, Star } from 'lucide-react';
 
 import { BarChart } from '@/components/retroui/charts/BarChart';
 

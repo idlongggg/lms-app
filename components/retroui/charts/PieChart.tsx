@@ -6,6 +6,7 @@ import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip }
 import { cn } from '@/lib/utils';
 
 interface PieChartProps extends React.HTMLAttributes<HTMLDivElement> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>[];
   dataKey: string;
   nameKey: string;

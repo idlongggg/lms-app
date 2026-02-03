@@ -3,8 +3,6 @@
  * Based on database.md schema: Classes, Enrollments, Parent-Child relationships
  */
 
-import { mockUsers } from './users';
-
 export interface Class {
   id: string;
   tenantId: string;
