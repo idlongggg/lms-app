@@ -1,11 +1,12 @@
 'use client';
 
 import * as ReactDialog from '@radix-ui/react-dialog';
-import { cn } from '@/lib/utils';
-import { cva, VariantProps } from 'class-variance-authority';
-import React, { HTMLAttributes, ReactNode } from 'react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { cva, VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
+import React, { HTMLAttributes, ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
 
 const Dialog = ReactDialog.Root;
 const DialogTrigger = ReactDialog.Trigger;

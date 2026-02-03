@@ -1,14 +1,15 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Menu, Search } from 'lucide-react';
-import { Header, Sidebar, Logo, ThemeToggle, UserMenu } from '@/components/common';
+import { useEffect, useRef } from 'react';
+
+import { Header, Logo, Sidebar, ThemeToggle, UserMenu } from '@/components/common';
 import { Loader } from '@/components/retroui';
-import { SidebarProvider, useSidebar } from '@/hooks/use-sidebar';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
+import { SidebarProvider, useSidebar } from '@/hooks/use-sidebar';
 import { useAuth, useRequireAuth } from '@/lib/auth';
-import { getAdminNavByRole } from '@/lib/navigation';
 import type { UserRole } from '@/lib/auth/types';
+import { getAdminNavByRole } from '@/lib/navigation';
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();
@@ -60,7 +61,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
         left={
           <>
             <MobileMenuButton />
-            <Logo collapsed />
+            <Logo />
           </>
         }
         right={

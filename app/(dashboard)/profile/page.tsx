@@ -1,4 +1,4 @@
-import { User, Mail, Trophy, Flame, BookOpen, Settings } from 'lucide-react';
+import { BookOpen, Flame, Mail, Settings, Trophy, User } from 'lucide-react';
 
 export default function ProfilePage() {
   return (

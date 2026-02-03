@@ -1,26 +1,27 @@
 'use client';
 
-import { useState } from 'react';
 import {
-  Building2,
-  Search,
-  Plus,
-  MoreVertical,
-  Users,
   BookOpen,
-  Settings,
+  Building2,
+  MoreVertical,
   Pencil,
+  Plus,
+  Search,
+  Settings,
   Trash2,
+  Users,
 } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+import { useState } from 'react';
+
 import { Badge } from '@/components/retroui/Badge';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
+import { Button } from '@/components/retroui/Button';
 import { Card } from '@/components/retroui/Card';
 import { Dialog } from '@/components/retroui/Dialog';
+import { Input } from '@/components/retroui/Input';
 import { Menu } from '@/components/retroui/Menu';
+import { Select } from '@/components/retroui/Select';
+import { Table } from '@/components/retroui/Table';
+import { useAuth } from '@/lib/auth';
 
 // Mock tenants data
 const tenants = [

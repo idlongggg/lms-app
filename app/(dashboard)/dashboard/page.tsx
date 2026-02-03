@@ -1,11 +1,12 @@
 'use client';
 
-import { BookOpen, Flame, Trophy, Target, Coins, Star } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { getInProgressCourses, lessons, lessonProgress } from '@/lib/mock/courses';
-import { getUpcomingTournaments, getLiveTournaments } from '@/lib/mock/tournaments';
-import { PageLayout } from '@/components/common';
+import { BookOpen, Coins, Flame, Star, Target, Trophy } from 'lucide-react';
 import Link from 'next/link';
+
+import { PageLayout } from '@/components/common';
+import { useAuth } from '@/lib/auth';
+import { getInProgressCourses, lessonProgress, lessons } from '@/lib/mock/courses';
+import { getLiveTournaments, getUpcomingTournaments } from '@/lib/mock/tournaments';
 
 export default function DashboardPage() {
   const { user } = useAuth();

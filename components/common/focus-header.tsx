@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowLeft, Settings, X } from 'lucide-react';
+import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 
 interface FocusHeaderProps {

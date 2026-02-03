@@ -1,12 +1,12 @@
 import {
-  Megaphone,
-  Clock,
-  Pin,
-  Bell,
-  ChevronRight,
   AlertCircle,
+  Bell,
   CheckCircle,
+  ChevronRight,
+  Clock,
   Info,
+  Megaphone,
+  Pin,
 } from 'lucide-react';
 
 const announcements = [

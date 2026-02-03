@@ -1,7 +1,8 @@
 'use client';
 
+import { Award, Crown, Medal, Star, Trophy } from 'lucide-react';
+
 import { BarChart } from '@/components/retroui/charts/BarChart';
-import { Trophy, Medal, Crown, Award, Star } from 'lucide-react';
 
 const leaderboardData = [
   { rank: 1, name: 'ProCoder99', score: 12500, wins: 85, avatar: '👨‍💻' },

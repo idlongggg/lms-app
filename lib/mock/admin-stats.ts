@@ -3,9 +3,9 @@
  * Dashboard stats for root-admin, tenant-admin roles
  */
 
-import { mockUsers, tenants } from './users';
 import { getContentStats } from './courses';
 import { getTournamentStats } from './tournaments';
+import { mockUsers, tenants } from './users';
 
 // System-wide stats (for root-admin)
 export interface SystemStats {

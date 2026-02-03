@@ -1,10 +1,11 @@
 'use client';
 
-import { BookOpen, Play, CheckCircle, Clock, Star } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { getSubjectsWithProgress } from '@/lib/mock/courses';
+import { BookOpen, CheckCircle, Clock, Play, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+
+import { useAuth } from '@/lib/auth';
+import { getSubjectsWithProgress } from '@/lib/mock/courses';
 
 type FilterType = 'all' | 'in-progress' | 'completed' | 'not-started';
 

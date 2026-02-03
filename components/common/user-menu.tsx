@@ -1,11 +1,12 @@
 'use client';
 
+import { ChevronDown, Coins, LogOut, Settings, User } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
-import { User, Settings, LogOut, ChevronDown, Coins } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef, useState } from 'react';
+
 import { useAuth } from '@/lib/auth';
 import { roleDisplayInfo } from '@/lib/mock/users';
+import { cn } from '@/lib/utils';
 
 interface UserMenuProps {
   className?: string;

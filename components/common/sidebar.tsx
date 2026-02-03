@@ -1,14 +1,16 @@
 'use client';
 
-import { useRef } from 'react';
+import { ChevronLeft, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Logo } from './logo';
-import { useSidebar } from '@/hooks/use-sidebar';
+import { useRef } from 'react';
+
 import { useScrollPosition } from '@/hooks/use-scroll-position';
+import { useSidebar } from '@/hooks/use-sidebar';
 import type { NavGroup } from '@/lib/navigation';
+import { cn } from '@/lib/utils';
+
+import { Logo } from './logo';
 
 interface SidebarProps {
   navigation: NavGroup[];
@@ -44,7 +46,7 @@ export function Sidebar({ navigation, variant = 'collapsible', className }: Side
       >
         {/* Mobile header */}
         <div className="border-border flex h-16 items-center justify-between border-b-2 px-4 md:hidden">
-          <Logo />
+          <Logo title="LMS" />
           <button
             onClick={closeMobile}
             className="border-border bg-background flex h-8 w-8 items-center justify-center border-2"

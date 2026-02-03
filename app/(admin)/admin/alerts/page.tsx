@@ -1,16 +1,17 @@
 'use client';
 
+import { AlertTriangle, Bell, Check, Clock, Plus, Search, Settings, X } from 'lucide-react';
 import { useState } from 'react';
-import { AlertTriangle, Bell, Settings, Plus, Check, X, Clock, Search } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+
 import { Badge } from '@/components/retroui/Badge';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
+import { Button } from '@/components/retroui/Button';
 import { Card } from '@/components/retroui/Card';
 import { Dialog } from '@/components/retroui/Dialog';
+import { Input } from '@/components/retroui/Input';
+import { Select } from '@/components/retroui/Select';
 import { Switch } from '@/components/retroui/Switch';
+import { Table } from '@/components/retroui/Table';
+import { useAuth } from '@/lib/auth';
 
 // Mock alerts data
 const alerts = [

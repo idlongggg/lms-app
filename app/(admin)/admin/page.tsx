@@ -1,24 +1,25 @@
 'use client';
 
 import {
-  Users,
-  FileText,
-  TrendingUp,
   AlertCircle,
-  Building2,
-  GraduationCap,
   BookOpen,
+  Building2,
+  FileText,
+  GraduationCap,
+  TrendingUp,
   Trophy,
+  Users,
 } from 'lucide-react';
+import Link from 'next/link';
+
 import { useAuth } from '@/lib/auth';
 import {
-  getSystemStats,
-  getTenantStats,
   getAdminDashboardCards,
   getAdminUserList,
   getRecentActivity,
+  getSystemStats,
+  getTenantStats,
 } from '@/lib/mock/admin-stats';
-import Link from 'next/link';
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();

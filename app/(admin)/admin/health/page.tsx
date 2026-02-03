@@ -2,15 +2,16 @@
 
 import {
   Activity,
-  Server,
-  Database,
-  HardDrive,
-  Wifi,
   AlertTriangle,
   CheckCircle,
-  RefreshCw,
   Clock,
+  Database,
+  HardDrive,
+  RefreshCw,
+  Server,
+  Wifi,
 } from 'lucide-react';
+
 import { useAuth } from '@/lib/auth';
 
 // Mock health data

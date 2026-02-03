@@ -1,10 +1,17 @@
 import Link from 'next/link';
-import { Header, Footer, Logo, ThemeToggle } from '@/components/common';
 
-const publicNavItems = [
-  { title: 'Tính năng', href: '#features' },
-  { title: 'Giải đấu', href: '#tournaments' },
-  { title: 'Về chúng tôi', href: '#about' },
+import { Footer, Header, Logo, ThemeToggle } from '@/components/common';
+
+type NavItem = {
+  id: string;
+  title: string;
+  href: string;
+};
+
+const navItems: NavItem[] = [
+  { id: 'features', title: 'Tính năng', href: '#features' },
+  { id: 'tournaments', title: 'Giải đấu', href: '#tournaments' },
+  { id: 'about', title: 'Về chúng tôi', href: '#about' },
 ];
 
 function AuthButtons() {
@@ -28,15 +35,14 @@ function AuthButtons() {
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
       <Header
-        className="absolute bg-transparent"
         left={<Logo />}
         center={
           <nav className="flex items-center gap-6">
-            {publicNavItems.map((item) => (
+            {navItems.map((item) => (
               <Link
-                key={item.href}
+                key={item.id}
                 href={item.href}
                 className="hover:bg-muted px-4 py-2 font-medium transition-colors"
               >
@@ -52,8 +58,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           </>
         }
       />
-      <main className="flex-1">{children}</main>
+      {children}
       <Footer />
-    </div>
+    </>
   );
 }

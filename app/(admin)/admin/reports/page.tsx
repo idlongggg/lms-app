@@ -1,26 +1,27 @@
 'use client';
 
-import { useState } from 'react';
 import {
   BarChart3,
-  Download,
-  Calendar,
-  TrendingUp,
-  Users,
   BookOpen,
-  Trophy,
+  Calendar,
+  Download,
   Filter,
   Plus,
+  TrendingUp,
+  Trophy,
+  Users,
 } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+import { useState } from 'react';
+
 import { Badge } from '@/components/retroui/Badge';
+import { Button } from '@/components/retroui/Button';
 import { Card } from '@/components/retroui/Card';
 import { Dialog } from '@/components/retroui/Dialog';
-import { Select } from '@/components/retroui/Select';
 import { Input } from '@/components/retroui/Input';
 import { Loader } from '@/components/retroui/Loader';
+import { Select } from '@/components/retroui/Select';
+import { Table } from '@/components/retroui/Table';
+import { useAuth } from '@/lib/auth';
 
 // Mock report data
 const reportTypes = [

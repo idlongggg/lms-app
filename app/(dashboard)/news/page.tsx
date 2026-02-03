@@ -1,9 +1,10 @@
 'use client';
 
-import { Calendar, Bell, ArrowRight } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { getNewsCards, getAnnouncementCards, getEventCards } from '@/lib/mock/news';
+import { ArrowRight, Bell, Calendar } from 'lucide-react';
 import Link from 'next/link';
+
+import { useAuth } from '@/lib/auth';
+import { getAnnouncementCards, getEventCards, getNewsCards } from '@/lib/mock/news';
 
 export default function NewsPage() {
   const { user } = useAuth();

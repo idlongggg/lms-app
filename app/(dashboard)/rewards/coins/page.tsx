@@ -1,8 +1,9 @@
 'use client';
 
-import { PieChart } from '@/components/retroui/charts/PieChart';
+import { ArrowDownRight, ArrowUpRight, Clock, Coins, Gift, TrendingUp } from 'lucide-react';
+
 import { AreaChart } from '@/components/retroui/charts/AreaChart';
-import { Coins, TrendingUp, Gift, Clock, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { PieChart } from '@/components/retroui/charts/PieChart';
 
 const coinHistory = [
   { date: 'T1', balance: 1500, earned: 200, spent: 50 },

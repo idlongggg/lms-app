@@ -1,14 +1,15 @@
 'use client';
 
-import { Trophy, Users, Clock, Swords, Medal, Target } from 'lucide-react';
+import { Clock, Medal, Swords, Target, Trophy, Users } from 'lucide-react';
+import Link from 'next/link';
+
 import { useAuth } from '@/lib/auth';
 import {
   getLiveTournaments,
   getUpcomingTournaments,
-  getUserTournamentHistory,
   getUserMedals,
+  getUserTournamentHistory,
 } from '@/lib/mock/tournaments';
-import Link from 'next/link';
 
 export default function TournamentPage() {
   const { user } = useAuth();

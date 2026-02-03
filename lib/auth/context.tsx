@@ -5,11 +5,12 @@
  * React context and hooks for authentication
  */
 
-import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import type { AuthState, AuthUser, UserRole } from './types';
-import { mockAuthService, canAccessRoute } from './mock-auth';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
 import type { MockUser } from '../mock/users';
+import { canAccessRoute, mockAuthService } from './mock-auth';
+import type { AuthState, AuthUser, UserRole } from './types';
 
 interface AuthContextValue extends AuthState {
   login: (email: string, password: string) => Promise<AuthUser | null>;

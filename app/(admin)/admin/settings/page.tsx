@@ -1,4 +1,4 @@
-import { Settings, Bell, Shield, Database } from 'lucide-react';
+import { Bell, Database, Settings, Shield } from 'lucide-react';
 
 interface SettingCardProps {
   icon: React.ReactNode;

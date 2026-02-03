@@ -1,7 +1,8 @@
 'use client';
 
-import { FocusHeader } from '@/components/common';
 import { Clock, User, Zap } from 'lucide-react';
+
+import { FocusHeader } from '@/components/common';
 
 export default function LiveMatchPage() {
   return (

@@ -4,9 +4,9 @@
  * @see docs/blueprint/architecture/database.md
  */
 
-export * from './users';
-export * from './courses';
-export * from './tournaments';
-export * from './rewards';
-export * from './news';
 export * from './admin-stats';
+export * from './courses';
+export * from './news';
+export * from './rewards';
+export * from './tournaments';
+export * from './users';

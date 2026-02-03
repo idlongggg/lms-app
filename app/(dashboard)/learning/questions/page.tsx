@@ -1,17 +1,18 @@
 'use client';
 
+import { Copy, Edit, FileText, Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { FileText, Search, Plus, Edit, Trash2, Copy } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { mockQuestions, getQuestionStats } from '@/lib/mock/classes';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+
 import { Badge } from '@/components/retroui/Badge';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
+import { Button } from '@/components/retroui/Button';
 import { Card } from '@/components/retroui/Card';
 import { Dialog } from '@/components/retroui/Dialog';
+import { Input } from '@/components/retroui/Input';
+import { Select } from '@/components/retroui/Select';
+import { Table } from '@/components/retroui/Table';
 import { Textarea } from '@/components/retroui/Textarea';
+import { useAuth } from '@/lib/auth';
+import { getQuestionStats, mockQuestions } from '@/lib/mock/classes';
 
 export default function TeacherQuestionsPage() {
   const { user } = useAuth();

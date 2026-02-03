@@ -1,9 +1,10 @@
 'use client';
 
-import { ShoppingBag, Coins, Gift, Star, Package } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { getRewardCards, getCoinStats, getRedeemedItems } from '@/lib/mock/rewards';
+import { Coins, Gift, Package, ShoppingBag, Star } from 'lucide-react';
 import Link from 'next/link';
+
+import { useAuth } from '@/lib/auth';
+import { getCoinStats, getRedeemedItems, getRewardCards } from '@/lib/mock/rewards';
 
 export default function RewardsPage() {
   const { user } = useAuth();

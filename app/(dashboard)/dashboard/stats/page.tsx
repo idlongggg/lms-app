@@ -1,10 +1,11 @@
 'use client';
 
+import { Clock, Target, TrendingDown, TrendingUp } from 'lucide-react';
+
 import { AreaChart } from '@/components/retroui/charts/AreaChart';
 import { BarChart } from '@/components/retroui/charts/BarChart';
 import { LineChart } from '@/components/retroui/charts/LineChart';
 import { PieChart } from '@/components/retroui/charts/PieChart';
-import { TrendingUp, TrendingDown, Clock, Target } from 'lucide-react';
 
 const learningProgressData = [
   { month: 'T1', completed: 12, inProgress: 5 },

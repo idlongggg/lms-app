@@ -1,8 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import React from 'react';
 import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from 'recharts';
+
+import { cn } from '@/lib/utils';
 
 interface PieChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>[];

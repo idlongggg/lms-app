@@ -1,4 +1,4 @@
-import { Sparkles, Clock, Users, Star, TrendingUp } from 'lucide-react';
+import { Clock, Sparkles, Star, TrendingUp, Users } from 'lucide-react';
 
 const recommendedCourses = [
   {

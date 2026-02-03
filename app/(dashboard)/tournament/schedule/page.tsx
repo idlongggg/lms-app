@@ -1,4 +1,4 @@
-import { Calendar, Clock, Users, Trophy, Filter } from 'lucide-react';
+import { Calendar, Clock, Filter, Trophy, Users } from 'lucide-react';
 
 const upcomingMatches = [
   {

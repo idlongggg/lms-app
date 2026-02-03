@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+
 import { useAuth } from '@/lib/auth';
-import { roleDisplayInfo } from '@/lib/mock/users';
 import type { MockUser } from '@/lib/mock/users';
+import { roleDisplayInfo } from '@/lib/mock/users';
 
 export default function LoginPage() {
   const { loginWithMockUser, getMockUsers, isLoading } = useAuth();

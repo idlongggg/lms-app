@@ -1,9 +1,10 @@
 'use client';
 
-import { Baby, BookOpen, Trophy, TrendingUp, Clock, Star, Activity, Calendar } from 'lucide-react';
+import { Activity, Baby, BookOpen, Calendar, Clock, Star, TrendingUp, Trophy } from 'lucide-react';
+import Link from 'next/link';
+
 import { useAuth } from '@/lib/auth';
 import { getChildrenProgressByParent, mockChildrenProgress } from '@/lib/mock/classes';
-import Link from 'next/link';
 
 export default function ParentChildrenPage() {
   const { user } = useAuth();

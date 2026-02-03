@@ -1,7 +1,8 @@
 'use client';
 
+import { Calendar, History, TrendingDown, TrendingUp, Trophy } from 'lucide-react';
+
 import { LineChart } from '@/components/retroui/charts/LineChart';
-import { History, Trophy, Calendar, TrendingUp, TrendingDown } from 'lucide-react';
 
 const matchHistory = [
   {

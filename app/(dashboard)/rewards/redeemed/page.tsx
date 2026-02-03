@@ -1,4 +1,4 @@
-import { Gift, Calendar, Package, CheckCircle, Clock, Eye } from 'lucide-react';
+import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from 'lucide-react';
 
 const redeemedItems = [
   {

@@ -1,5 +1,5 @@
+import { ArrowRight, BookOpen, type LucideIcon, Swords, Trophy, Zap } from 'lucide-react';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Swords, Trophy, Zap, type LucideIcon } from 'lucide-react';
 
 const iconMap: Record<string, LucideIcon> = {
   BookOpen,

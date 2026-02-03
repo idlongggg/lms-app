@@ -1,6 +1,7 @@
-import { cn } from '@/lib/utils';
 import * as RadioPrimitive from '@radix-ui/react-radio-group';
 import { cva, VariantProps } from 'class-variance-authority';
+
+import { cn } from '@/lib/utils';
 
 const radioVariants = cva('border-border border-2', {
   variants: {

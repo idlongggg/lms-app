@@ -1,11 +1,12 @@
 'use client';
 
+import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { type DashboardTab, dashboardTabs, getActiveTabKey } from '@/lib/navigation';
 import { cn } from '@/lib/utils';
-import { dashboardTabs, getActiveTabKey, type DashboardTab } from '@/lib/navigation';
 
 interface DashboardNavProps {
   tabs?: DashboardTab[];

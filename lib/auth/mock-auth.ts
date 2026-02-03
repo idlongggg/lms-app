@@ -4,9 +4,9 @@
  */
 
 import type { MockUser } from '../mock/users';
-import { mockUsers, getUserByEmail } from '../mock/users';
+import { getUserByEmail, mockUsers } from '../mock/users';
 import type { AuthService, AuthState, AuthUser, LoginCredentials, UserRole } from './types';
-import { ROLE_PERMISSIONS, LOGIN_REDIRECT } from './types';
+import { LOGIN_REDIRECT, ROLE_PERMISSIONS } from './types';
 
 const STORAGE_KEY = 'lms_auth_user';
 

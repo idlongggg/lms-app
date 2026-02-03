@@ -1,9 +1,10 @@
 'use client';
 
-import { Trophy, Calendar, Clock, Users, FileText, Plus, Settings, HelpCircle } from 'lucide-react';
+import { Calendar, Clock, FileText, HelpCircle, Plus, Settings, Trophy, Users } from 'lucide-react';
+import { useState } from 'react';
+
 import { useAuth } from '@/lib/auth';
 import { mockClasses, mockQuestions } from '@/lib/mock/classes';
-import { useState } from 'react';
 
 export default function TeacherTournamentCreatePage() {
   const { user } = useAuth();

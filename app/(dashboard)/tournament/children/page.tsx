@@ -1,6 +1,7 @@
 'use client';
 
-import { Trophy, Medal, TrendingUp, Calendar, Users, Star, Award, Crown } from 'lucide-react';
+import { Award, Calendar, Crown, Medal, Star, TrendingUp, Trophy, Users } from 'lucide-react';
+
 import { useAuth } from '@/lib/auth';
 import { mockChildrenProgress } from '@/lib/mock/classes';
 

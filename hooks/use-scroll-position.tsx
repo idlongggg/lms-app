@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
+import { useCallback, useEffect, useRef } from 'react';
 
 // In-memory storage for scroll positions
 // Format: "${pathname}:${key}" -> scrollTop

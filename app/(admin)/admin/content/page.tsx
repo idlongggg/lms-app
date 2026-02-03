@@ -1,4 +1,4 @@
-import { FileText, Search, Plus, Folder, MoreVertical } from 'lucide-react';
+import { FileText, Folder, MoreVertical, Plus, Search } from 'lucide-react';
 
 export default function AdminContentPage() {
   return (

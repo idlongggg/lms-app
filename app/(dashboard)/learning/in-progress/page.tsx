@@ -1,4 +1,4 @@
-import { Clock, BookOpen, PlayCircle } from 'lucide-react';
+import { BookOpen, Clock, PlayCircle } from 'lucide-react';
 
 const inProgressCourses = [
   {

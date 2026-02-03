@@ -1,4 +1,4 @@
-import { CheckCircle, Star, Clock, Award, RotateCcw } from 'lucide-react';
+import { Award, CheckCircle, Clock, RotateCcw, Star } from 'lucide-react';
 
 const completedCourses = [
   {

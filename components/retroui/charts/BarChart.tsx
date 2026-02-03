@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import React from 'react';
 import {
   Bar,
@@ -11,6 +10,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { cn } from '@/lib/utils';
 
 interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>[];

@@ -1,4 +1,4 @@
-import { Medal, Trophy, Star, Award, Lock } from 'lucide-react';
+import { Award, Lock, Medal, Star, Trophy } from 'lucide-react';
 
 const medals = [
   {

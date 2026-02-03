@@ -1,14 +1,15 @@
 'use client';
 
+import { MoreVertical, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
-import { Users, Search, Plus, MoreVertical, Pencil, Trash2 } from 'lucide-react';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+
 import { Badge } from '@/components/retroui/Badge';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
+import { Button } from '@/components/retroui/Button';
 import { Dialog } from '@/components/retroui/Dialog';
+import { Input } from '@/components/retroui/Input';
 import { Menu } from '@/components/retroui/Menu';
+import { Select } from '@/components/retroui/Select';
+import { Table } from '@/components/retroui/Table';
 
 export default function AdminUsersPage() {
   const [roleFilter, setRoleFilter] = useState<string>('all');

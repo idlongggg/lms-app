@@ -1,18 +1,19 @@
 'use client';
 
 import {
-  Users,
-  BookOpen,
-  BarChart3,
-  TrendingUp,
-  Clock,
-  Star,
   AlertCircle,
+  BarChart3,
+  BookOpen,
+  Clock,
   Eye,
+  Star,
+  TrendingUp,
+  Users,
 } from 'lucide-react';
+import Link from 'next/link';
+
 import { useAuth } from '@/lib/auth';
 import { mockClasses, mockClassProgress, mockStudentProgress } from '@/lib/mock/classes';
-import Link from 'next/link';
 
 export default function TeacherLearningClassesPage() {
   const { user } = useAuth();

@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Dialog } from '@/components/retroui/Dialog';
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import { Check, LucideIcon, Search } from 'lucide-react';
+import React from 'react';
+
+import { Dialog } from '@/components/retroui/Dialog';
+import { cn } from '@/lib/utils';
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (

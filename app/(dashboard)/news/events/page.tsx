@@ -1,13 +1,13 @@
 import {
   Calendar,
-  Clock,
-  MapPin,
-  Users,
-  Gift,
-  Trophy,
-  Zap,
-  Star,
   ChevronRight,
+  Clock,
+  Gift,
+  MapPin,
+  Star,
+  Trophy,
+  Users,
+  Zap,
 } from 'lucide-react';
 
 const events = [

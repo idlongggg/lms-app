@@ -1,29 +1,30 @@
 'use client';
 
-import { useState } from 'react';
 import {
-  Trophy,
-  Search,
-  Calendar,
-  Users,
-  Clock,
-  Eye,
-  Edit,
-  Trash2,
-  Play,
-  Pause,
   BarChart3,
+  Calendar,
+  Clock,
+  Edit,
+  Eye,
+  Pause,
+  Play,
   Plus,
+  Search,
+  Trash2,
+  Trophy,
+  Users,
 } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
-import { mockTeacherTournaments } from '@/lib/mock/classes';
 import Link from 'next/link';
-import { Table } from '@/components/retroui/Table';
-import { Button } from '@/components/retroui/Button';
+import { useState } from 'react';
+
 import { Badge } from '@/components/retroui/Badge';
+import { Button } from '@/components/retroui/Button';
+import { Card } from '@/components/retroui/Card';
 import { Input } from '@/components/retroui/Input';
 import { Select } from '@/components/retroui/Select';
-import { Card } from '@/components/retroui/Card';
+import { Table } from '@/components/retroui/Table';
+import { useAuth } from '@/lib/auth';
+import { mockTeacherTournaments } from '@/lib/mock/classes';
 
 export default function TeacherTournamentManagePage() {
   const { user } = useAuth();

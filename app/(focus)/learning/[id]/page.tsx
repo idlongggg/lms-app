@@ -1,7 +1,8 @@
 'use client';
 
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
+
 import { FocusHeader } from '@/components/common';
-import { Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function LearningDetailPage() {
   return (

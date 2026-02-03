@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+
 import { Header, Logo, ThemeToggle } from '@/components/common';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <Header left={<Logo collapsed />} right={<ThemeToggle />} />
+      <Header left={<Logo />} right={<ThemeToggle />} />
 
       {/* Centered content */}
       <main className="flex flex-1 flex-col items-center justify-center p-6">

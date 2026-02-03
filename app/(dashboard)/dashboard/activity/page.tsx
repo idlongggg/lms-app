@@ -1,4 +1,4 @@
-import { BookOpen, Trophy, Gift, Star, Clock, CheckCircle, Swords, Award } from 'lucide-react';
+import { Award, BookOpen, CheckCircle, Clock, Gift, Star, Swords, Trophy } from 'lucide-react';
 
 const activities = [
   {

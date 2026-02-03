@@ -1,20 +1,21 @@
 'use client';
 
 import {
-  Trophy,
-  Search,
   Calendar,
-  Clock,
-  Users,
-  Swords,
-  Filter,
   CheckCircle,
+  Clock,
+  Filter,
   Play,
+  Search,
   Star,
+  Swords,
+  Trophy,
+  Users,
 } from 'lucide-react';
+import { useState } from 'react';
+
 import { useAuth } from '@/lib/auth';
 import { mockJoinableTournaments } from '@/lib/mock/classes';
-import { useState } from 'react';
 
 export default function StudentTournamentJoinPage() {
   const { user } = useAuth();

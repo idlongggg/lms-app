@@ -1,19 +1,20 @@
 'use client';
 
 import {
-  Trophy,
-  Search,
-  Plus,
   Calendar,
-  Users,
   Clock,
-  MoreVertical,
-  Play,
-  Pause,
   Eye,
+  MoreVertical,
+  Pause,
+  Play,
+  Plus,
+  Search,
+  Trophy,
+  Users,
 } from 'lucide-react';
+
 import { useAuth } from '@/lib/auth';
-import { tournaments, type Tournament } from '@/lib/mock/tournaments';
+import { type Tournament, tournaments } from '@/lib/mock/tournaments';
 
 export default function AdminTournamentsPage() {
   const { user } = useAuth();
