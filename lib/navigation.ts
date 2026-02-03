@@ -117,6 +117,14 @@ export const dashboardSidebars: Record<string, NavGroup[]> = {
       ],
     },
   ],
+  profile: [
+    {
+      items: [
+        { title: "Hồ sơ cá nhân", href: "/profile", icon: User },
+        { title: "Cài đặt", href: "/profile/settings", icon: Settings },
+      ],
+    },
+  ],
 };
 
 // Helper function to get sidebar based on current path
@@ -125,6 +133,7 @@ export function getSidebarForPath(pathname: string): NavGroup[] {
   if (pathname.startsWith("/tournament")) return dashboardSidebars.tournament;
   if (pathname.startsWith("/rewards")) return dashboardSidebars.rewards;
   if (pathname.startsWith("/news")) return dashboardSidebars.news;
+  if (pathname.startsWith("/profile")) return dashboardSidebars.profile;
   return dashboardSidebars.overview;
 }
 
@@ -134,6 +143,7 @@ export function getActiveTabKey(pathname: string): string {
   if (pathname.startsWith("/tournament")) return "tournament";
   if (pathname.startsWith("/rewards")) return "rewards";
   if (pathname.startsWith("/news")) return "news";
+  if (pathname.startsWith("/profile")) return "profile";
   return "overview";
 }
 
