@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Search, User, LogOut, Settings } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
+import { UserMenu } from "./user-menu";
 import { useSidebar } from "@/hooks/use-sidebar";
 
 interface SimpleNavItem {
@@ -76,7 +77,7 @@ export function Header({
           {showSearch && <SearchButton />}
           <ThemeToggle />
           {showUserMenu ? (
-            <UserMenuButton />
+            <UserMenu />
           ) : (
             <AuthButtons isTransparent={isTransparent} />
           )}
@@ -112,20 +113,6 @@ function SearchButton() {
         ⌘K
       </kbd>
     </button>
-  );
-}
-
-function UserMenuButton() {
-  return (
-    <div className="relative">
-      <button
-        className="flex h-9 w-9 items-center justify-center border-2 border-border bg-primary shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
-        aria-label="User menu"
-      >
-        <User className="h-4 w-4" />
-      </button>
-      {/* Dropdown menu will be implemented with RetroUI DropdownMenu */}
-    </div>
   );
 }
 

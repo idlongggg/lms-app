@@ -1,12 +1,13 @@
 "use client";
 
-import { Header, Sidebar } from "@/components/layout";
-import { SidebarProvider, useSidebar } from "@/hooks/use-sidebar";
-import { dashboardNavigation } from "@/lib/navigation";
-import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { Header, Sidebar, DashboardNav } from "@/components/layout";
+import { SidebarProvider } from "@/hooks/use-sidebar";
+import { getSidebarForPath } from "@/lib/navigation";
 
 function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
-  const { isCollapsed } = useSidebar();
+  const pathname = usePathname();
+  const sidebarNavigation = getSidebarForPath(pathname);
 
   return (
     <div className="min-h-screen bg-background">
@@ -15,10 +16,12 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         showSearch
         showUserMenu
         showMobileToggle
-      />
+      >
+        <DashboardNav />
+      </Header>
       <div className="mx-auto max-w-7xl">
         <div className="relative flex pt-16">
-          <Sidebar navigation={dashboardNavigation} variant="collapsible" />
+          <Sidebar navigation={sidebarNavigation} variant="collapsible" />
           <main className="min-h-[calc(100vh-4rem)] flex-1">
             <div className="p-6">{children}</div>
           </main>
