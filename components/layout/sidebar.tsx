@@ -34,7 +34,7 @@ export function Sidebar({ navigation, variant = "collapsible", className }: Side
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 flex h-full flex-col border-r-2 border-border bg-sidebar transition-all duration-300 md:top-16 md:h-[calc(100vh-4rem)]",
+          "fixed left-0 top-0 z-50 flex h-full flex-col border-r-2 border-border bg-sidebar transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:shrink-0",
           showCollapsed ? "w-16" : "w-64",
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           className

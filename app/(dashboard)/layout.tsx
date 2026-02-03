@@ -16,15 +16,14 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         showUserMenu
         showMobileToggle
       />
-      <Sidebar navigation={dashboardNavigation} variant="collapsible" />
-      <main
-        className={cn(
-          "min-h-[calc(100vh-4rem)] pt-16 transition-all duration-300",
-          isCollapsed ? "md:pl-16" : "md:pl-64"
-        )}
-      >
-        <div className="p-6">{children}</div>
-      </main>
+      <div className="mx-auto max-w-7xl">
+        <div className="relative flex pt-16">
+          <Sidebar navigation={dashboardNavigation} variant="collapsible" />
+          <main className="min-h-[calc(100vh-4rem)] flex-1">
+            <div className="p-6">{children}</div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }

@@ -17,10 +17,14 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <Header variant="admin" showSearch showUserMenu showMobileToggle />
-      <Sidebar navigation={adminNavigation} variant="expanded" />
-      <main className="min-h-[calc(100vh-4rem)] pt-16 md:pl-64">
-        <div className="p-6">{children}</div>
-      </main>
+      <div className="mx-auto max-w-7xl">
+        <div className="relative flex pt-16">
+          <Sidebar navigation={adminNavigation} variant="expanded" />
+          <main className="min-h-[calc(100vh-4rem)] flex-1">
+            <div className="p-6">{children}</div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }

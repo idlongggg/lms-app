@@ -45,12 +45,7 @@ export function Header({
         className
       )}
     >
-      <div
-        className={cn(
-          "mx-auto flex h-full items-center justify-between px-4",
-          isTransparent ? "max-w-7xl" : ""
-        )}
-      >
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
         {/* Left section */}
         <div className="flex items-center gap-4">
           {showMobileToggle && <MobileMenuButton />}
@@ -63,7 +58,7 @@ export function Header({
             {children}
           </div>
         ) : simpleNavItems ? (
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center justify-evenly gap-6 md:flex">
             {simpleNavItems.map((item) => (
               <Link
                 key={item.href}
