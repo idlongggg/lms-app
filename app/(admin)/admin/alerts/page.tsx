@@ -1,7 +1,16 @@
 'use client';
 
-import { AlertTriangle, Bell, Settings, Plus, Check, X, Clock, Filter, Search } from "lucide-react";
+import { useState } from "react";
+import { AlertTriangle, Bell, Settings, Plus, Check, X, Clock, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { Table } from "@/components/retroui/Table";
+import { Button } from "@/components/retroui/Button";
+import { Badge } from "@/components/retroui/Badge";
+import { Input } from "@/components/retroui/Input";
+import { Select } from "@/components/retroui/Select";
+import { Card } from "@/components/retroui/Card";
+import { Dialog } from "@/components/retroui/Dialog";
+import { Switch } from "@/components/retroui/Switch";
 
 // Mock alerts data
 const alerts = [
@@ -67,6 +76,10 @@ const alertRules = [
 
 export default function AdminAlertsPage() {
   const { user } = useAuth();
+  const [severityFilter, setSeverityFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isAddRuleOpen, setIsAddRuleOpen] = useState(false);
 
   // Only root-admin can access this page
   if (!user || user.role !== 'root-admin') {
@@ -80,6 +93,14 @@ export default function AdminAlertsPage() {
   const activeAlerts = alerts.filter(a => a.status === 'active').length;
   const criticalAlerts = alerts.filter(a => a.severity === 'critical' && a.status !== 'resolved').length;
 
+  const filteredAlerts = alerts.filter(alert => {
+    const matchesSeverity = severityFilter === 'all' || alert.severity === severityFilter;
+    const matchesStatus = statusFilter === 'all' || alert.status === statusFilter;
+    const matchesSearch = alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      alert.message.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSeverity && matchesStatus && matchesSearch;
+  });
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -91,139 +112,198 @@ export default function AdminAlertsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="inline-flex items-center gap-2 border-2 border-border bg-muted px-4 py-2 font-medium shadow-sm transition-all hover:bg-muted/80">
-            <Settings className="h-4 w-4" />
+          <Button variant="outline">
+            <Settings className="h-4 w-4 mr-2" />
             Cài đặt
-          </button>
-          <button className="inline-flex items-center gap-2 border-2 border-border bg-primary px-4 py-2 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
-            <Plus className="h-4 w-4" />
-            Thêm quy tắc
-          </button>
+          </Button>
+          <Dialog open={isAddRuleOpen} onOpenChange={setIsAddRuleOpen}>
+            <Dialog.Trigger asChild>
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                Thêm quy tắc
+              </Button>
+            </Dialog.Trigger>
+            <Dialog.Content size="md">
+              <Dialog.Header>Thêm quy tắc cảnh báo</Dialog.Header>
+              <div className="p-4 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Tên quy tắc</label>
+                  <Input placeholder="VD: CPU > 90%" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Mức độ</label>
+                  <Select defaultValue="warning">
+                    <Select.Trigger className="w-full">
+                      <Select.Value placeholder="Chọn mức độ" />
+                    </Select.Trigger>
+                    <Select.Content>
+                      <Select.Item value="critical">Critical</Select.Item>
+                      <Select.Item value="warning">Warning</Select.Item>
+                      <Select.Item value="info">Info</Select.Item>
+                    </Select.Content>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Kênh thông báo</label>
+                  <Input placeholder="Email, Slack, SMS" />
+                </div>
+              </div>
+              <Dialog.Footer>
+                <Button variant="outline" onClick={() => setIsAddRuleOpen(false)}>Hủy</Button>
+                <Button onClick={() => setIsAddRuleOpen(false)}>Lưu</Button>
+              </Dialog.Footer>
+            </Dialog.Content>
+          </Dialog>
         </div>
       </div>
 
       {/* Alert Summary */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Cảnh báo đang hoạt động</p>
-              <p className="font-bold text-2xl">{activeAlerts}</p>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Cảnh báo đang hoạt động</p>
+                <p className="font-bold text-2xl">{activeAlerts}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
+                <Bell className="h-5 w-5 text-white" />
+              </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
-              <Bell className="h-5 w-5 text-white" />
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Nghiêm trọng</p>
+                <p className="font-bold text-2xl text-red-500">{criticalAlerts}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-red-500">
+                <AlertTriangle className="h-5 w-5 text-white" />
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Nghiêm trọng</p>
-              <p className="font-bold text-2xl text-red-500">{criticalAlerts}</p>
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Quy tắc đang bật</p>
+                <p className="font-bold text-2xl">{alertRules.filter(r => r.enabled).length}/{alertRules.length}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
+                <Settings className="h-5 w-5 text-white" />
+              </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-red-500">
-              <AlertTriangle className="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Quy tắc đang bật</p>
-              <p className="font-bold text-2xl">{alertRules.filter(r => r.enabled).length}/{alertRules.length}</p>
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
-              <Settings className="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
+          </Card.Content>
+        </Card>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="flex flex-1 items-center gap-2 border-2 border-border bg-input px-3 py-2 shadow-xs">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
+        <div className="relative flex-1 min-w-[200px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
             placeholder="Tìm kiếm cảnh báo..."
-            className="flex-1 bg-transparent outline-none"
+            className="pl-10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <select className="border-2 border-border bg-input px-4 py-2 shadow-xs">
-          <option>Tất cả mức độ</option>
-          <option>Critical</option>
-          <option>Warning</option>
-          <option>Info</option>
-        </select>
-        <select className="border-2 border-border bg-input px-4 py-2 shadow-xs">
-          <option>Trạng thái</option>
-          <option>Active</option>
-          <option>Acknowledged</option>
-          <option>Resolved</option>
-        </select>
+        <Select value={severityFilter} onValueChange={setSeverityFilter}>
+          <Select.Trigger className="w-[150px]">
+            <Select.Value placeholder="Tất cả mức độ" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all">Tất cả mức độ</Select.Item>
+            <Select.Item value="critical">Critical</Select.Item>
+            <Select.Item value="warning">Warning</Select.Item>
+            <Select.Item value="info">Info</Select.Item>
+          </Select.Content>
+        </Select>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select.Trigger className="w-[150px]">
+            <Select.Value placeholder="Trạng thái" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all">Tất cả</Select.Item>
+            <Select.Item value="active">Active</Select.Item>
+            <Select.Item value="acknowledged">Acknowledged</Select.Item>
+            <Select.Item value="resolved">Resolved</Select.Item>
+          </Select.Content>
+        </Select>
       </div>
 
       {/* Alerts List */}
       <div>
         <h2 className="mb-4 font-bold text-xl">Cảnh báo gần đây</h2>
         <div className="space-y-3">
-          {alerts.map((alert) => (
-            <div key={alert.id} className={`border-2 bg-card p-4 shadow-sm ${
+          {filteredAlerts.map((alert) => (
+            <Card key={alert.id} className={`${
               alert.severity === 'critical' && alert.status === 'active' ? 'border-red-500' :
-              alert.severity === 'warning' && alert.status === 'active' ? 'border-orange-500' :
-              'border-border'
+              alert.severity === 'warning' && alert.status === 'active' ? 'border-orange-500' : ''
             }`}>
-              <div className="flex items-start gap-3">
-                <div className={`mt-0.5 flex h-8 w-8 items-center justify-center border-2 border-border ${
-                  alert.severity === 'critical' ? 'bg-red-500' :
-                  alert.severity === 'warning' ? 'bg-orange-500' : 'bg-blue-500'
-                }`}>
-                  {alert.severity === 'info' ? (
-                    <Bell className="h-4 w-4 text-white" />
-                  ) : (
-                    <AlertTriangle className="h-4 w-4 text-white" />
+              <Card.Content className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className={`mt-0.5 flex h-8 w-8 items-center justify-center border-2 border-border ${
+                    alert.severity === 'critical' ? 'bg-red-500' :
+                    alert.severity === 'warning' ? 'bg-orange-500' : 'bg-blue-500'
+                  }`}>
+                    {alert.severity === 'info' ? (
+                      <Bell className="h-4 w-4 text-white" />
+                    ) : (
+                      <AlertTriangle className="h-4 w-4 text-white" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-bold">{alert.title}</h3>
+                      <Badge
+                        variant={alert.severity === 'critical' ? 'solid' : alert.severity === 'warning' ? 'surface' : 'default'}
+                        size="sm"
+                        className={
+                          alert.severity === 'critical' ? 'bg-red-500 text-white' :
+                          alert.severity === 'warning' ? 'bg-orange-100 text-orange-700' :
+                          'bg-blue-100 text-blue-700'
+                        }
+                      >
+                        {alert.severity.toUpperCase()}
+                      </Badge>
+                      <Badge
+                        size="sm"
+                        className={
+                          alert.status === 'active' ? 'bg-red-100 text-red-700' :
+                          alert.status === 'acknowledged' ? 'bg-orange-100 text-orange-700' :
+                          'bg-green-100 text-green-700'
+                        }
+                      >
+                        {alert.status === 'active' ? 'Đang hoạt động' :
+                         alert.status === 'acknowledged' ? 'Đã xác nhận' : 'Đã giải quyết'}
+                      </Badge>
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground">{alert.message}</p>
+                    <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
+                      <span>Nguồn: {alert.source}</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {new Date(alert.createdAt).toLocaleString('vi-VN')}
+                      </span>
+                    </div>
+                  </div>
+                  {alert.status === 'active' && (
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="icon" className="hover:bg-green-100">
+                        <Check className="h-4 w-4 text-green-500" />
+                      </Button>
+                      <Button variant="outline" size="icon" className="hover:bg-red-100">
+                        <X className="h-4 w-4 text-red-500" />
+                      </Button>
+                    </div>
                   )}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-bold">{alert.title}</h3>
-                    <span className={`border border-border px-2 py-0.5 text-xs ${
-                      alert.severity === 'critical' ? 'bg-red-100 text-red-700' :
-                      alert.severity === 'warning' ? 'bg-orange-100 text-orange-700' :
-                      'bg-blue-100 text-blue-700'
-                    }`}>
-                      {alert.severity.toUpperCase()}
-                    </span>
-                    <span className={`border border-border px-2 py-0.5 text-xs ${
-                      alert.status === 'active' ? 'bg-red-100 text-red-700' :
-                      alert.status === 'acknowledged' ? 'bg-orange-100 text-orange-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {alert.status === 'active' ? 'Đang hoạt động' :
-                       alert.status === 'acknowledged' ? 'Đã xác nhận' : 'Đã giải quyết'}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">{alert.message}</p>
-                  <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
-                    <span>Nguồn: {alert.source}</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {new Date(alert.createdAt).toLocaleString('vi-VN')}
-                    </span>
-                  </div>
-                </div>
-                {alert.status === 'active' && (
-                  <div className="flex gap-2">
-                    <button className="border-2 border-border p-1.5 transition-all hover:bg-green-100">
-                      <Check className="h-4 w-4 text-green-500" />
-                    </button>
-                    <button className="border-2 border-border p-1.5 transition-all hover:bg-red-100">
-                      <X className="h-4 w-4 text-red-500" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
+              </Card.Content>
+            </Card>
           ))}
         </div>
       </div>
@@ -232,50 +312,49 @@ export default function AdminAlertsPage() {
       <div>
         <h2 className="mb-4 font-bold text-xl">Quy tắc cảnh báo</h2>
         <div className="border-2 border-border bg-card shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-border bg-muted">
-                  <th className="px-4 py-3 text-left text-sm font-bold">Quy tắc</th>
-                  <th className="px-4 py-3 text-left text-sm font-bold">Mức độ</th>
-                  <th className="px-4 py-3 text-left text-sm font-bold">Kênh thông báo</th>
-                  <th className="px-4 py-3 text-left text-sm font-bold">Trạng thái</th>
-                  <th className="px-4 py-3 text-right text-sm font-bold">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y-2 divide-border">
-                {alertRules.map((rule, index) => (
-                  <tr key={index} className="transition-colors hover:bg-muted/50">
-                    <td className="px-4 py-3 font-medium">{rule.name}</td>
-                    <td className="px-4 py-3">
-                      <span className={`border border-border px-2 py-0.5 text-xs ${
+          <Table>
+            <Table.Header>
+              <Table.Row>
+                <Table.Head>Quy tắc</Table.Head>
+                <Table.Head>Mức độ</Table.Head>
+                <Table.Head>Kênh thông báo</Table.Head>
+                <Table.Head>Trạng thái</Table.Head>
+                <Table.Head className="text-right">Actions</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {alertRules.map((rule, index) => (
+                <Table.Row key={index}>
+                  <Table.Cell className="font-medium">{rule.name}</Table.Cell>
+                  <Table.Cell>
+                    <Badge
+                      size="sm"
+                      className={
                         rule.severity === 'critical' ? 'bg-red-100 text-red-700' :
                         'bg-orange-100 text-orange-700'
-                      }`}>
-                        {rule.severity.toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{rule.channel}</td>
-                    <td className="px-4 py-3">
-                      <span className={`inline-flex items-center gap-1 text-sm ${
-                        rule.enabled ? 'text-green-500' : 'text-muted-foreground'
-                      }`}>
-                        <span className={`h-2 w-2 rounded-full ${
-                          rule.enabled ? 'bg-green-500' : 'bg-muted-foreground'
-                        }`} />
+                      }
+                    >
+                      {rule.severity.toUpperCase()}
+                    </Badge>
+                  </Table.Cell>
+                  <Table.Cell className="text-muted-foreground">{rule.channel}</Table.Cell>
+                  <Table.Cell>
+                    <div className="flex items-center gap-2">
+                      <Switch checked={rule.enabled} />
+                      <span className={`text-sm ${rule.enabled ? 'text-green-500' : 'text-muted-foreground'}`}>
                         {rule.enabled ? 'Đang bật' : 'Đã tắt'}
                       </span>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <button className="border-2 border-border px-2 py-1 text-sm transition-all hover:bg-muted">
-                        <Settings className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="text-right">
+                    <Button variant="outline" size="icon">
+                      <Settings className="h-4 w-4" />
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
         </div>
       </div>
     </div>

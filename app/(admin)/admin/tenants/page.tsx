@@ -1,7 +1,16 @@
 'use client';
 
-import { Building2, Search, Plus, MoreVertical, Users, BookOpen, Trophy, Settings } from "lucide-react";
+import { useState } from "react";
+import { Building2, Search, Plus, MoreVertical, Users, BookOpen, Settings, Pencil, Trash2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { Table } from "@/components/retroui/Table";
+import { Button } from "@/components/retroui/Button";
+import { Badge } from "@/components/retroui/Badge";
+import { Input } from "@/components/retroui/Input";
+import { Select } from "@/components/retroui/Select";
+import { Card } from "@/components/retroui/Card";
+import { Dialog } from "@/components/retroui/Dialog";
+import { Menu } from "@/components/retroui/Menu";
 
 // Mock tenants data
 const tenants = [
@@ -61,6 +70,10 @@ const tenants = [
 
 export default function AdminTenantsPage() {
   const { user } = useAuth();
+  const [planFilter, setPlanFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isAddTenantOpen, setIsAddTenantOpen] = useState(false);
 
   // Only root-admin can access this page
   if (!user || user.role !== 'root-admin') {
@@ -70,6 +83,14 @@ export default function AdminTenantsPage() {
       </div>
     );
   }
+
+  const filteredTenants = tenants.filter(tenant => {
+    const matchesPlan = planFilter === 'all' || tenant.plan === planFilter;
+    const matchesStatus = statusFilter === 'all' || tenant.status === statusFilter;
+    const matchesSearch = tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tenant.domain.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesPlan && matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="space-y-6">
@@ -81,155 +102,224 @@ export default function AdminTenantsPage() {
             Quản lý tất cả các tenant trong hệ thống
           </p>
         </div>
-        <button className="inline-flex items-center gap-2 border-2 border-border bg-primary px-4 py-2 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
-          <Plus className="h-4 w-4" />
-          Thêm Tenant
-        </button>
+        <Dialog open={isAddTenantOpen} onOpenChange={setIsAddTenantOpen}>
+          <Dialog.Trigger asChild>
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Thêm Tenant
+            </Button>
+          </Dialog.Trigger>
+          <Dialog.Content size="md">
+            <Dialog.Header>Thêm Tenant mới</Dialog.Header>
+            <div className="p-4 space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Tên tenant</label>
+                <Input placeholder="Nhập tên tenant" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Mã code</label>
+                <Input placeholder="Nhập mã code" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Domain</label>
+                <Input placeholder="example.lms.vn" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Gói dịch vụ</label>
+                <Select defaultValue="basic">
+                  <Select.Trigger className="w-full">
+                    <Select.Value placeholder="Chọn gói" />
+                  </Select.Trigger>
+                  <Select.Content>
+                    <Select.Item value="basic">Basic</Select.Item>
+                    <Select.Item value="pro">Pro</Select.Item>
+                    <Select.Item value="enterprise">Enterprise</Select.Item>
+                  </Select.Content>
+                </Select>
+              </div>
+            </div>
+            <Dialog.Footer>
+              <Button variant="outline" onClick={() => setIsAddTenantOpen(false)}>Hủy</Button>
+              <Button onClick={() => setIsAddTenantOpen(false)}>Lưu</Button>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog>
       </div>
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Tổng Tenants</p>
-              <p className="font-bold text-2xl">{tenants.length}</p>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Tổng Tenants</p>
+                <p className="font-bold text-2xl">{tenants.length}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-purple-500">
+                <Building2 className="h-5 w-5 text-white" />
+              </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-purple-500">
-              <Building2 className="h-5 w-5 text-white" />
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Đang hoạt động</p>
+                <p className="font-bold text-2xl">{tenants.filter(t => t.status === 'ACTIVE').length}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-green-500">
+                <Users className="h-5 w-5 text-white" />
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Đang hoạt động</p>
-              <p className="font-bold text-2xl">{tenants.filter(t => t.status === 'ACTIVE').length}</p>
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Tổng người dùng</p>
+                <p className="font-bold text-2xl">{tenants.reduce((sum, t) => sum + t.users, 0).toLocaleString()}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
+                <Users className="h-5 w-5 text-white" />
+              </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-green-500">
-              <Users className="h-5 w-5 text-white" />
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Tổng dung lượng</p>
+                <p className="font-bold text-2xl">101.3 GB</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
+                <BookOpen className="h-5 w-5 text-white" />
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Tổng người dùng</p>
-              <p className="font-bold text-2xl">{tenants.reduce((sum, t) => sum + t.users, 0).toLocaleString()}</p>
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
-              <Users className="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
-        <div className="border-2 border-border bg-card p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Tổng dung lượng</p>
-              <p className="font-bold text-2xl">101.3 GB</p>
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
-              <BookOpen className="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
+          </Card.Content>
+        </Card>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="flex flex-1 items-center gap-2 border-2 border-border bg-input px-3 py-2 shadow-xs">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
+        <div className="relative flex-1 min-w-[200px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
             placeholder="Tìm kiếm tenant..."
-            className="flex-1 bg-transparent outline-none"
+            className="pl-10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <select className="border-2 border-border bg-input px-4 py-2 shadow-xs">
-          <option>Tất cả gói</option>
-          <option>Enterprise</option>
-          <option>Pro</option>
-          <option>Basic</option>
-        </select>
-        <select className="border-2 border-border bg-input px-4 py-2 shadow-xs">
-          <option>Trạng thái</option>
-          <option>Active</option>
-          <option>Suspended</option>
-        </select>
+        <Select value={planFilter} onValueChange={setPlanFilter}>
+          <Select.Trigger className="w-[150px]">
+            <Select.Value placeholder="Tất cả gói" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all">Tất cả gói</Select.Item>
+            <Select.Item value="Enterprise">Enterprise</Select.Item>
+            <Select.Item value="Pro">Pro</Select.Item>
+            <Select.Item value="Basic">Basic</Select.Item>
+          </Select.Content>
+        </Select>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select.Trigger className="w-[150px]">
+            <Select.Value placeholder="Trạng thái" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all">Tất cả</Select.Item>
+            <Select.Item value="ACTIVE">Active</Select.Item>
+            <Select.Item value="SUSPENDED">Suspended</Select.Item>
+          </Select.Content>
+        </Select>
       </div>
 
       {/* Tenants Table */}
       <div className="border-2 border-border bg-card shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b-2 border-border bg-muted">
-                <th className="px-4 py-3 text-left text-sm font-bold">Tenant</th>
-                <th className="px-4 py-3 text-left text-sm font-bold">Domain</th>
-                <th className="px-4 py-3 text-left text-sm font-bold">Gói</th>
-                <th className="px-4 py-3 text-left text-sm font-bold">Người dùng</th>
-                <th className="px-4 py-3 text-left text-sm font-bold">Dung lượng</th>
-                <th className="px-4 py-3 text-left text-sm font-bold">Trạng thái</th>
-                <th className="px-4 py-3 text-right text-sm font-bold">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y-2 divide-border">
-              {tenants.map((tenant) => (
-                <tr key={tenant.id} className="transition-colors hover:bg-muted/50">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center border-2 border-border bg-primary">
-                        <Building2 className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <span className="font-medium">{tenant.name}</span>
-                        <p className="text-xs text-muted-foreground">{tenant.code}</p>
-                      </div>
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>Tenant</Table.Head>
+              <Table.Head>Domain</Table.Head>
+              <Table.Head>Gói</Table.Head>
+              <Table.Head>Người dùng</Table.Head>
+              <Table.Head>Dung lượng</Table.Head>
+              <Table.Head>Trạng thái</Table.Head>
+              <Table.Head className="text-right">Actions</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {filteredTenants.map((tenant) => (
+              <Table.Row key={tenant.id}>
+                <Table.Cell>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center border-2 border-border bg-primary">
+                      <Building2 className="h-4 w-4" />
                     </div>
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">{tenant.domain}</td>
-                  <td className="px-4 py-3">
-                    <span className={`border border-border px-2 py-0.5 text-xs font-medium ${
-                      tenant.plan === 'Enterprise' ? 'bg-purple-500 text-white' :
-                      tenant.plan === 'Pro' ? 'bg-blue-500 text-white' : 'bg-muted'
-                    }`}>
-                      {tenant.plan}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="text-sm">
-                      <span className="font-medium">{tenant.users.toLocaleString()}</span>
-                      <p className="text-xs text-muted-foreground">
-                        {tenant.teachers} GV • {tenant.students} HS
-                      </p>
+                    <div>
+                      <span className="font-medium">{tenant.name}</span>
+                      <p className="text-xs text-muted-foreground">{tenant.code}</p>
                     </div>
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">{tenant.storage}</td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1 text-sm ${
-                      tenant.status === 'ACTIVE' ? 'text-green-500' : 'text-red-500'
-                    }`}>
-                      <span className={`h-2 w-2 rounded-full ${
-                        tenant.status === 'ACTIVE' ? 'bg-green-500' : 'bg-red-500'
-                      }`} />
-                      {tenant.status === 'ACTIVE' ? 'Hoạt động' : 'Tạm ngưng'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button className="border-2 border-border p-1.5 transition-all hover:bg-muted">
-                        <Settings className="h-4 w-4" />
-                      </button>
-                      <button className="border-2 border-border p-1.5 transition-all hover:bg-muted">
-                        <MoreVertical className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="text-muted-foreground">{tenant.domain}</Table.Cell>
+                <Table.Cell>
+                  <Badge
+                    variant={tenant.plan === 'Enterprise' ? 'solid' : tenant.plan === 'Pro' ? 'surface' : 'default'}
+                    size="sm"
+                  >
+                    {tenant.plan}
+                  </Badge>
+                </Table.Cell>
+                <Table.Cell>
+                  <div className="text-sm">
+                    <span className="font-medium">{tenant.users.toLocaleString()}</span>
+                    <p className="text-xs text-muted-foreground">
+                      {tenant.teachers} GV • {tenant.students} HS
+                    </p>
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="text-muted-foreground">{tenant.storage}</Table.Cell>
+                <Table.Cell>
+                  <span className={`inline-flex items-center gap-1 text-sm ${
+                    tenant.status === 'ACTIVE' ? 'text-green-500' : 'text-red-500'
+                  }`}>
+                    <span className={`h-2 w-2 rounded-full ${
+                      tenant.status === 'ACTIVE' ? 'bg-green-500' : 'bg-red-500'
+                    }`} />
+                    {tenant.status === 'ACTIVE' ? 'Hoạt động' : 'Tạm ngưng'}
+                  </span>
+                </Table.Cell>
+                <Table.Cell className="text-right">
+                  <div className="flex items-center justify-end gap-2">
+                    <Button variant="outline" size="icon">
+                      <Settings className="h-4 w-4" />
+                    </Button>
+                    <Menu>
+                      <Menu.Trigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </Menu.Trigger>
+                      <Menu.Content align="end">
+                        <Menu.Item>
+                          <Pencil className="h-4 w-4 mr-2" />
+                          Chỉnh sửa
+                        </Menu.Item>
+                        <Menu.Item className="text-destructive">
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          Xóa
+                        </Menu.Item>
+                      </Menu.Content>
+                    </Menu>
+                  </div>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
       </div>
     </div>
   );
