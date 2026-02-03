@@ -3,13 +3,15 @@
 import { BookOpen, Coins, Flame, Star, Target, Trophy } from 'lucide-react';
 import Link from 'next/link';
 
-import { PageLayout } from '@/components/common';
+import { PageLayout } from '@/components/shared';
 import { useAuth } from '@/lib/auth';
 import { getInProgressCourses, lessonProgress, lessons } from '@/lib/mock/courses';
 import { getLiveTournaments, getUpcomingTournaments } from '@/lib/mock/tournaments';
+import { useTranslation } from '@/lib/providers';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   if (!user) return null;
 
@@ -35,18 +37,38 @@ export default function DashboardPage() {
     });
 
   const stats = [
-    { label: 'Streak', value: `${user.streak} ngày`, icon: Flame, color: 'bg-orange-500' },
-    { label: 'Level', value: `Lv.${user.level}`, icon: Star, color: 'bg-purple-500' },
-    { label: 'XP', value: user.exp.toLocaleString(), icon: Target, color: 'bg-blue-500' },
-    { label: 'Xu', value: user.coins.toLocaleString(), icon: Coins, color: 'bg-yellow-500' },
+    {
+      label: t('dashboard.streak'),
+      value: t('dashboard.streakDays', { count: user.streak }),
+      icon: Flame,
+      color: 'bg-orange-500',
+    },
+    {
+      label: t('dashboard.level'),
+      value: `Lv.${user.level}`,
+      icon: Star,
+      color: 'bg-purple-500',
+    },
+    {
+      label: t('dashboard.xp'),
+      value: user.exp.toLocaleString(),
+      icon: Target,
+      color: 'bg-blue-500',
+    },
+    {
+      label: t('dashboard.coins'),
+      value: user.coins.toLocaleString(),
+      icon: Coins,
+      color: 'bg-yellow-500',
+    },
   ];
 
   const firstName = user.name.split(' ').slice(-1)[0];
 
   return (
     <PageLayout
-      title={`Xin chào, ${firstName}! 👋`}
-      description="Chào mừng trở lại! Hôm nay bạn muốn học gì?"
+      title={`${t('dashboard.welcome')}, ${firstName}! 👋`}
+      description={t('dashboard.welcomeBack')}
     >
       <div className="space-y-6">
         {/* Stats Grid */}
@@ -76,9 +98,9 @@ export default function DashboardPage() {
           {/* Continue Learning */}
           <div className="border-border bg-card border-2 shadow-sm">
             <div className="border-border flex items-center justify-between border-b-2 p-4">
-              <h2 className="text-xl font-bold">Tiếp tục học</h2>
+              <h2 className="text-xl font-bold">{t('dashboard.continueLearning')}</h2>
               <Link href="/learning/in-progress" className="text-primary text-sm hover:underline">
-                Xem tất cả →
+                {t('dashboard.viewAllLessons')}
               </Link>
             </div>
             <div className="divide-border divide-y-2">
@@ -112,9 +134,9 @@ export default function DashboardPage() {
               ) : (
                 <div className="text-muted-foreground p-8 text-center">
                   <BookOpen className="mx-auto mb-2 h-8 w-8 opacity-50" />
-                  <p>Chưa có bài học nào đang học</p>
+                  <p>{t('dashboard.noLessonsInProgress')}</p>
                   <Link href="/learning/courses" className="text-primary text-sm hover:underline">
-                    Khám phá khóa học →
+                    {t('dashboard.exploreCourses')}
                   </Link>
                 </div>
               )}
@@ -124,9 +146,9 @@ export default function DashboardPage() {
           {/* Upcoming Tournaments */}
           <div className="border-border bg-card border-2 shadow-sm">
             <div className="border-border flex items-center justify-between border-b-2 p-4">
-              <h2 className="text-xl font-bold">Giải đấu</h2>
+              <h2 className="text-xl font-bold">{t('dashboard.tournaments')}</h2>
               <Link href="/tournament" className="text-primary text-sm hover:underline">
-                Xem tất cả →
+                {t('dashboard.viewAllLessons')}
               </Link>
             </div>
             <div className="divide-border divide-y-2">
@@ -144,12 +166,12 @@ export default function DashboardPage() {
                     <div>
                       <p className="font-medium">{tournament.name}</p>
                       <p className="text-muted-foreground text-sm">
-                        {tournament.maxParticipants} người tham gia
+                        {tournament.maxParticipants} {t('dashboard.participants')}
                       </p>
                     </div>
                   </div>
                   <div className="animate-pulse border-2 border-red-500 bg-red-500/10 px-2 py-1 text-sm font-medium text-red-500">
-                    🔴 LIVE
+                    🔴 {t('dashboard.live')}
                   </div>
                 </Link>
               ))}
@@ -160,7 +182,10 @@ export default function DashboardPage() {
                 const diffMs = startsAt.getTime() - now.getTime();
                 const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
                 const diffDays = Math.floor(diffHours / 24);
-                const timeLabel = diffDays > 0 ? `${diffDays} ngày nữa` : `${diffHours} giờ nữa`;
+                const timeLabel =
+                  diffDays > 0
+                    ? `${diffDays} ${t('dashboard.daysLeft')}`
+                    : `${diffHours} ${t('dashboard.hoursLeft')}`;
 
                 return (
                   <Link
@@ -175,7 +200,7 @@ export default function DashboardPage() {
                       <div>
                         <p className="font-medium">{tournament.name}</p>
                         <p className="text-muted-foreground text-sm">
-                          {tournament.maxParticipants} người tham gia
+                          {tournament.maxParticipants} {t('dashboard.participants')}
                         </p>
                       </div>
                     </div>

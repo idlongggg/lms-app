@@ -1,42 +1,39 @@
+'use client';
+
 import Link from 'next/link';
 
+import { Button, Card, Input, Label } from '@/components/retroui';
+import { useTranslation } from '@/lib/providers';
+
 export default function ForgotPasswordPage() {
+  const { t } = useTranslation();
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">Quên mật khẩu</h1>
-        <p className="text-muted-foreground">
-          Nhập email của bạn để nhận liên kết đặt lại mật khẩu.
+    <Card className="w-full shadow-lg">
+      <Card.Header className="pb-2">
+        <Card.Title className="text-2xl font-bold">{t('auth.forgotPassword')}</Card.Title>
+        <Card.Description>{t('auth.resetDescription')}</Card.Description>
+      </Card.Header>
+
+      <Card.Content className="pt-6">
+        <form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">{t('auth.email')}</Label>
+            <Input id="email" type="email" placeholder="you@example.com" />
+          </div>
+
+          <Button type="submit" className="w-full">
+            {t('auth.sendResetLink')}
+          </Button>
+        </form>
+
+        <p className="text-muted-foreground mt-4 text-center text-sm">
+          {t('auth.rememberPassword')}{' '}
+          <Link href="/auth/login" className="text-foreground font-medium hover:underline">
+            {t('auth.loginNow')}
+          </Link>
         </p>
-      </div>
-
-      <form className="space-y-4">
-        <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            className="border-border bg-input w-full border-2 px-4 py-3 shadow-xs transition-shadow focus:shadow-sm focus:outline-none"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="border-border bg-primary w-full border-2 px-4 py-3 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md active:translate-x-0 active:translate-y-0 active:shadow-sm"
-        >
-          Gửi liên kết đặt lại
-        </button>
-      </form>
-
-      <p className="text-muted-foreground text-center text-sm">
-        Nhớ mật khẩu rồi?{' '}
-        <Link href="/auth/login" className="text-foreground font-medium hover:underline">
-          Đăng nhập
-        </Link>
-      </p>
-    </div>
+      </Card.Content>
+    </Card>
   );
 }

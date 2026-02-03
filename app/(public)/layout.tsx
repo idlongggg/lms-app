@@ -1,18 +1,6 @@
 import Link from 'next/link';
 
-import { Footer, Header, Logo, ThemeToggle } from '@/components/common';
-
-type NavItem = {
-  id: string;
-  title: string;
-  href: string;
-};
-
-const navItems: NavItem[] = [
-  { id: 'features', title: 'Tính năng', href: '#features' },
-  { id: 'tournaments', title: 'Giải đấu', href: '#tournaments' },
-  { id: 'about', title: 'Về chúng tôi', href: '#about' },
-];
+import { Footer, Header, LanguageSwitcher, Logo, ThemeToggle } from '@/components/shared';
 
 function AuthButtons() {
   return (
@@ -33,31 +21,20 @@ function AuthButtons() {
   );
 }
 
+function HeaderRight() {
+  return (
+    <>
+      <LanguageSwitcher />
+      <ThemeToggle />
+      <AuthButtons />
+    </>
+  );
+}
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header
-        left={<Logo />}
-        center={
-          <nav className="flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="hover:bg-muted px-4 py-2 font-medium transition-colors"
-              >
-                {item.title}
-              </Link>
-            ))}
-          </nav>
-        }
-        right={
-          <>
-            <ThemeToggle />
-            <AuthButtons />
-          </>
-        }
-      />
+      <Header left={<Logo />} right={<HeaderRight />} />
       {children}
       <Footer />
     </>

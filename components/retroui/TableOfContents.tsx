@@ -95,12 +95,16 @@ export function TableOfContents({ depth = 2, className = '', children }: TableOf
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
-    const items = generateTOCFromDOM(depth);
-    setTocItems(items);
+    const updateTocItems = () => {
+      const items = generateTOCFromDOM(depth);
+      setTocItems(items);
+    };
+
+    // Initial update using queueMicrotask to avoid synchronous setState warning
+    queueMicrotask(updateTocItems);
 
     const observer = new MutationObserver(() => {
-      const updatedItems = generateTOCFromDOM(depth);
-      setTocItems(updatedItems);
+      updateTocItems();
     });
 
     observer.observe(document.body, {

@@ -4,8 +4,16 @@ import { Menu, Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
-import { DashboardNav, Header, Logo, Sidebar, ThemeToggle, UserMenu } from '@/components/common';
 import { Loader } from '@/components/retroui';
+import {
+  DashboardNav,
+  Header,
+  LanguageSwitcher,
+  Logo,
+  Sidebar,
+  ThemeToggle,
+  UserMenu,
+} from '@/components/shared';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 import { SidebarProvider, useSidebar } from '@/hooks/use-sidebar';
 import { useAuth, useRequireAuth } from '@/lib/auth';
@@ -64,6 +72,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         right={
           <>
             <SearchButton />
+            <LanguageSwitcher />
             <ThemeToggle />
             <UserMenu />
           </>

@@ -1,92 +1,164 @@
+'use client';
+
+import { ChevronsUpDown, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import { Avatar, Button, Card, Command, Input, Label, Popover } from '@/components/retroui';
+import { mockSchools } from '@/lib/mock/schools';
+import { useTranslation } from '@/lib/providers';
+import { cn } from '@/lib/utils';
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Mock registration API call
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push('/auth/verify-otp');
+    }, 1000);
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">Tạo tài khoản</h1>
-        <p className="text-muted-foreground">Bắt đầu hành trình học tập của bạn ngay hôm nay.</p>
-      </div>
+    <Card className="w-full shadow-lg">
+      <Card.Header className="pb-2">
+        <Card.Title className="text-2xl font-bold">{t('auth.register')}</Card.Title>
+        <Card.Description>{t('auth.startJourney')}</Card.Description>
+      </Card.Header>
 
-      <form className="space-y-4">
-        <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-medium">
-            Họ và tên
-          </label>
-          <input
-            id="name"
-            type="text"
-            placeholder="Nguyễn Văn A"
-            className="border-border bg-input w-full border-2 px-4 py-3 shadow-xs transition-shadow focus:shadow-sm focus:outline-none"
-          />
+      <Card.Content className="pt-6">
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">{t('auth.name')}</Label>
+            <Input id="name" type="text" placeholder="Nguyễn Văn A" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">{t('auth.email')}</Label>
+            <Input id="email" type="email" placeholder="you@example.com" />
+          </div>
+
+          <div className="space-y-2">
+            <Label>{t('auth.school')}</Label>
+            <Popover open={open} onOpenChange={setOpen}>
+              <Popover.Trigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-full justify-between font-normal"
+                >
+                  {value ? (
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-5 w-5 border">
+                        <Avatar.Image
+                          src={mockSchools.find((school) => school.id === value)?.logo}
+                          alt="School Logo"
+                        />
+                        <Avatar.Fallback>S</Avatar.Fallback>
+                      </Avatar>
+                      <span className="truncate">
+                        {mockSchools.find((school) => school.id === value)?.name}
+                      </span>
+                    </div>
+                  ) : (
+                    t('auth.selectSchool')
+                  )}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </Popover.Trigger>
+              <Popover.Content className="w-[var(--radix-popover-trigger-width)] p-0">
+                <Command>
+                  <Command.Input placeholder={t('auth.searchSchool')} />
+                  <Command.List>
+                    <Command.Empty>{t('auth.noSchoolFound')}</Command.Empty>
+                    <Command.Group>
+                      {mockSchools.map((school) => (
+                        <Command.Item
+                          key={school.id}
+                          value={school.name}
+                          onSelect={() => {
+                            setValue(school.id === value ? '' : school.id);
+                            setOpen(false);
+                          }}
+                        >
+                          <Command.Check
+                            className={cn(
+                              'mr-2 ml-0',
+                              value === school.id ? 'opacity-100' : 'opacity-0',
+                            )}
+                          />
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-6 w-6 border">
+                              <Avatar.Image src={school.logo} alt={school.name} />
+                              <Avatar.Fallback>S</Avatar.Fallback>
+                            </Avatar>
+                            <span>{school.name}</span>
+                          </div>
+                        </Command.Item>
+                      ))}
+                    </Command.Group>
+                  </Command.List>
+                </Command>
+              </Popover.Content>
+            </Popover>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">{t('auth.password')}</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
+              </button>
+            </div>
+          </div>
+
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? t('common.loading') : t('auth.register')}
+          </Button>
+        </form>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="border-border w-full border-t-2" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="bg-background text-muted-foreground px-4 text-sm">{t('auth.or')}</span>
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            className="border-border bg-input w-full border-2 px-4 py-3 shadow-xs transition-shadow focus:shadow-sm focus:outline-none"
-          />
-        </div>
+        <Button variant="outline" type="button" className="w-full">
+          {t('auth.registerWithGoogle')}
+        </Button>
 
-        <div className="space-y-2">
-          <label htmlFor="password" className="text-sm font-medium">
-            Mật khẩu
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            className="border-border bg-input w-full border-2 px-4 py-3 shadow-xs transition-shadow focus:shadow-sm focus:outline-none"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="confirmPassword" className="text-sm font-medium">
-            Xác nhận mật khẩu
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="••••••••"
-            className="border-border bg-input w-full border-2 px-4 py-3 shadow-xs transition-shadow focus:shadow-sm focus:outline-none"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="border-border bg-primary w-full border-2 px-4 py-3 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md active:translate-x-0 active:translate-y-0 active:shadow-sm"
-        >
-          Đăng ký
-        </button>
-      </form>
-
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="border-border w-full border-t-2" />
-        </div>
-        <div className="relative flex justify-center">
-          <span className="bg-background text-muted-foreground px-4 text-sm">hoặc</span>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        className="border-border bg-background w-full border-2 px-4 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
-      >
-        Đăng ký với Google
-      </button>
-
-      <p className="text-muted-foreground text-center text-sm">
-        Đã có tài khoản?{' '}
-        <Link href="/auth/login" className="text-foreground font-medium hover:underline">
-          Đăng nhập
-        </Link>
-      </p>
-    </div>
+        <p className="text-muted-foreground mt-6 text-center text-sm">
+          {t('auth.haveAccount')}{' '}
+          <Link href="/auth/login" className="text-foreground font-medium hover:underline">
+            {t('auth.loginNow')}
+          </Link>
+        </p>
+      </Card.Content>
+    </Card>
   );
 }

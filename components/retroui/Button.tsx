@@ -5,7 +5,7 @@ import React, { ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
 export const buttonVariants = cva(
-  'font-head transition-all rounded outline-hidden cursor-pointer duration-200 font-medium flex items-center',
+  'font-head transition-all rounded outline-hidden cursor-pointer duration-200 font-medium flex items-center justify-center',
   {
     variants: {
       variant: {
