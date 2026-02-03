@@ -81,7 +81,8 @@ export const news: News[] = [
     authorId: 'user-tenant-admin',
     title: 'Ra mắt tính năng Giải đấu mới',
     slug: 'ra-mat-tinh-nang-giai-dau-moi',
-    content: 'Chúng tôi vui mừng giới thiệu hệ thống giải đấu hoàn toàn mới với nhiều tính năng hấp dẫn...',
+    content:
+      'Chúng tôi vui mừng giới thiệu hệ thống giải đấu hoàn toàn mới với nhiều tính năng hấp dẫn...',
     excerpt: 'Hệ thống giải đấu mới với realtime leaderboard và nhiều phần thưởng hấp dẫn.',
     thumbnailUrl: 'https://placehold.co/800x400/3498db/white?text=Tournament+Feature',
     category: 'FEATURE',
@@ -147,7 +148,8 @@ export const announcements: Announcement[] = [
     id: 'announce-001',
     tenantId: tenants.school.id,
     title: 'Bảo trì hệ thống ngày 05/02',
-    content: 'Hệ thống sẽ tạm ngưng hoạt động từ 2:00 - 4:00 sáng ngày 05/02/2026 để nâng cấp server.',
+    content:
+      'Hệ thống sẽ tạm ngưng hoạt động từ 2:00 - 4:00 sáng ngày 05/02/2026 để nâng cấp server.',
     type: 'WARNING',
     priority: 1,
     isPinned: true,
@@ -316,7 +318,7 @@ export function getUpcomingEvents(): Event[] {
 
 export function isUserRegisteredForEvent(userId: string, eventId: string): boolean {
   return eventRegistrations.some(
-    (r) => r.userId === userId && r.eventId === eventId && r.status !== 'CANCELLED'
+    (r) => r.userId === userId && r.eventId === eventId && r.status !== 'CANCELLED',
   );
 }
 

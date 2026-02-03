@@ -327,23 +327,31 @@ export function getUserCoinTransactions(userId: string): CoinTransaction[] {
 }
 
 export function getUserCoinBalance(userId: string): number {
-  return coinTransactions
-    .filter((t) => t.userId === userId)
-    .reduce((sum, t) => sum + t.amount, 0);
+  return coinTransactions.filter((t) => t.userId === userId).reduce((sum, t) => sum + t.amount, 0);
 }
 
 export function getCoinStats(userId: string) {
   const transactions = getUserCoinTransactions(userId);
-  const earned = transactions.filter((t) => t.type === 'earned').reduce((sum, t) => sum + t.amount, 0);
+  const earned = transactions
+    .filter((t) => t.type === 'earned')
+    .reduce((sum, t) => sum + t.amount, 0);
   const spent = transactions
     .filter((t) => t.type === 'spent')
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   const bySource = {
-    quiz: transactions.filter((t) => t.source === 'quiz' && t.type === 'earned').reduce((sum, t) => sum + t.amount, 0),
-    streak: transactions.filter((t) => t.source === 'streak' && t.type === 'earned').reduce((sum, t) => sum + t.amount, 0),
-    tournament: transactions.filter((t) => t.source === 'tournament' && t.type === 'earned').reduce((sum, t) => sum + t.amount, 0),
-    achievement: transactions.filter((t) => t.source === 'achievement' && t.type === 'earned').reduce((sum, t) => sum + t.amount, 0),
+    quiz: transactions
+      .filter((t) => t.source === 'quiz' && t.type === 'earned')
+      .reduce((sum, t) => sum + t.amount, 0),
+    streak: transactions
+      .filter((t) => t.source === 'streak' && t.type === 'earned')
+      .reduce((sum, t) => sum + t.amount, 0),
+    tournament: transactions
+      .filter((t) => t.source === 'tournament' && t.type === 'earned')
+      .reduce((sum, t) => sum + t.amount, 0),
+    achievement: transactions
+      .filter((t) => t.source === 'achievement' && t.type === 'earned')
+      .reduce((sum, t) => sum + t.amount, 0),
   };
 
   return {

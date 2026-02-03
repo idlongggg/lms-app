@@ -509,7 +509,7 @@ export function getQuestionStats(teacherId: string) {
         acc[q.grade] = (acc[q.grade] || 0) + 1;
         return acc;
       },
-      {} as Record<number, number>
+      {} as Record<number, number>,
     ),
     totalUsage: questions.reduce((sum, q) => sum + q.usageCount, 0),
   };

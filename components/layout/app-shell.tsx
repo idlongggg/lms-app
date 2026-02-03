@@ -12,11 +12,7 @@ import { Header, Sidebar, DashboardNav } from '@/components/layout';
 import { SidebarProvider } from '@/hooks/use-sidebar';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 import { useAuth } from '@/lib/auth';
-import {
-  getSidebarForPath,
-  getAdminNavByRole,
-  getTabsByRole,
-} from '@/lib/navigation';
+import { getSidebarForPath, getAdminNavByRole, getTabsByRole } from '@/lib/navigation';
 import type { UserRole } from '@/lib/auth/types';
 
 export interface AppShellProps {
@@ -61,19 +57,21 @@ function AppShellContent({
 
   // Determine navigation based on role and variant
   const userRole = user?.role as UserRole | undefined;
-  
-  const navigation = variant === 'admin'
-    ? getAdminNavByRole(userRole || 'tenant-admin')
-    : getSidebarForPath(pathname, userRole);
 
-  const resolvedSidebarVariant = sidebarVariant || (variant === 'admin' ? 'expanded' : 'collapsible');
-  
+  const navigation =
+    variant === 'admin'
+      ? getAdminNavByRole(userRole || 'tenant-admin')
+      : getSidebarForPath(pathname, userRole);
+
+  const resolvedSidebarVariant =
+    sidebarVariant || (variant === 'admin' ? 'expanded' : 'collapsible');
+
   // Get tabs for dashboard variant
   const tabs = variant === 'dashboard' && userRole ? getTabsByRole(userRole) : [];
   const showTabs = variant === 'dashboard' && tabs.length > 0;
 
   return (
-    <div className="h-screen bg-background">
+    <div className="bg-background h-screen">
       <Header
         variant={variant === 'admin' ? 'admin' : 'fixed'}
         showSearch

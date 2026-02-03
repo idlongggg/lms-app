@@ -91,7 +91,10 @@ export interface DashboardCard {
   href?: string;
 }
 
-export function getAdminDashboardCards(role: 'root-admin' | 'tenant-admin', tenantId?: string): DashboardCard[] {
+export function getAdminDashboardCards(
+  role: 'root-admin' | 'tenant-admin',
+  tenantId?: string,
+): DashboardCard[] {
   if (role === 'root-admin') {
     const stats = getSystemStats();
     return [
@@ -311,7 +314,7 @@ const statusLabels: Record<string, string> = {
 
 export function getAdminUserList(
   tenantId?: string,
-  filters?: { role?: string; status?: string; search?: string }
+  filters?: { role?: string; status?: string; search?: string },
 ): AdminUserListItem[] {
   let users = mockUsers;
 
@@ -333,7 +336,7 @@ export function getAdminUserList(
       (u) =>
         u.name.toLowerCase().includes(search) ||
         u.email.toLowerCase().includes(search) ||
-        (u.phone && u.phone.includes(search))
+        (u.phone && u.phone.includes(search)),
     );
   }
 

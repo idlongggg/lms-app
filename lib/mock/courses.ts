@@ -8,7 +8,12 @@ import { tenants } from './users';
 
 export type LessonStatus = 'DRAFT' | 'PENDING_REVIEW' | 'PUBLISHED' | 'ARCHIVED';
 export type ProgressStatus = 'LOCKED' | 'AVAILABLE' | 'IN_PROGRESS' | 'COMPLETED' | 'REVIEW';
-export type QuestionType = 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE' | 'TRUE_FALSE' | 'FILL_BLANK' | 'ESSAY';
+export type QuestionType =
+  | 'SINGLE_CHOICE'
+  | 'MULTIPLE_CHOICE'
+  | 'TRUE_FALSE'
+  | 'FILL_BLANK'
+  | 'ESSAY';
 
 export interface Subject {
   id: string;
@@ -443,7 +448,10 @@ export function getQuestionsForLesson(lessonId: string): Question[] {
   return questions.filter((q) => q.lessonId === lessonId).sort((a, b) => a.order - b.order);
 }
 
-export function getUserLessonProgress(userId: string, lessonId: string): LessonProgress | undefined {
+export function getUserLessonProgress(
+  userId: string,
+  lessonId: string,
+): LessonProgress | undefined {
   return lessonProgress.find((p) => p.userId === userId && p.lessonId === lessonId);
 }
 
@@ -457,10 +465,10 @@ export function getSubjectsWithProgress(userId: string): SubjectWithProgress[] {
   return subjects.map((subject) => {
     const topicIds = topics.filter((t) => t.subjectId === subject.id).map((t) => t.id);
     const subjectLessons = lessons.filter(
-      (l) => topicIds.includes(l.topicId) && l.status === 'PUBLISHED'
+      (l) => topicIds.includes(l.topicId) && l.status === 'PUBLISHED',
     );
     const userProgress = lessonProgress.filter(
-      (p) => p.userId === userId && subjectLessons.some((l) => l.id === p.lessonId)
+      (p) => p.userId === userId && subjectLessons.some((l) => l.id === p.lessonId),
     );
     const completedLessons = userProgress.filter((p) => p.status === 'COMPLETED').length;
     const totalLessons = subjectLessons.length;

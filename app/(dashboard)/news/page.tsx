@@ -1,13 +1,13 @@
 'use client';
 
-import { Calendar, Bell, ArrowRight } from "lucide-react";
-import { useAuth } from "@/lib/auth";
-import { getNewsCards, getAnnouncementCards, getEventCards } from "@/lib/mock/news";
-import Link from "next/link";
+import { Calendar, Bell, ArrowRight } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { getNewsCards, getAnnouncementCards, getEventCards } from '@/lib/mock/news';
+import Link from 'next/link';
 
 export default function NewsPage() {
   const { user } = useAuth();
-  
+
   if (!user) return null;
 
   const newsItems = getNewsCards().slice(0, 6);
@@ -16,11 +16,16 @@ export default function NewsPage() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'EVENT': return 'bg-purple-500';
-      case 'FEATURE': return 'bg-blue-500';
-      case 'PROMOTION': return 'bg-green-500';
-      case 'COURSE': return 'bg-orange-500';
-      default: return 'bg-primary';
+      case 'EVENT':
+        return 'bg-purple-500';
+      case 'FEATURE':
+        return 'bg-blue-500';
+      case 'PROMOTION':
+        return 'bg-green-500';
+      case 'COURSE':
+        return 'bg-orange-500';
+      default:
+        return 'bg-primary';
     }
   };
 
@@ -29,9 +34,7 @@ export default function NewsPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Tin tức</h1>
-        <p className="text-muted-foreground">
-          Cập nhật mới nhất từ LMS
-        </p>
+        <p className="text-muted-foreground">Cập nhật mới nhất từ LMS</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3">
@@ -43,25 +46,25 @@ export default function NewsPage() {
               <Link
                 key={item.id}
                 href={`/news/${item.slug}`}
-                className="flex gap-4 border-2 border-border bg-background p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+                className="border-border bg-background flex gap-4 border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center border-2 border-border bg-muted text-3xl">
+                <div className="border-border bg-muted flex h-20 w-20 shrink-0 items-center justify-center border-2 text-3xl">
                   {item.thumbnail ? '📰' : '📰'}
                 </div>
                 <div className="flex-1">
                   <div className="mb-1 flex items-center gap-2">
-                    <span className={`border border-border px-2 py-0.5 text-xs font-medium text-white ${getCategoryColor(item.category)}`}>
+                    <span
+                      className={`border-border border px-2 py-0.5 text-xs font-medium text-white ${getCategoryColor(item.category)}`}
+                    >
                       {item.categoryLabel}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <span className="text-muted-foreground flex items-center gap-1 text-xs">
                       <Calendar className="h-3 w-3" />
-                      {new Date(item.publishedAt).toLocaleDateString("vi-VN")}
+                      {new Date(item.publishedAt).toLocaleDateString('vi-VN')}
                     </span>
                   </div>
                   <h3 className="font-bold">{item.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
-                    {item.excerpt}
-                  </p>
+                  <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">{item.excerpt}</p>
                 </div>
                 <div className="self-center">
                   <ArrowRight className="h-5 w-5" />
@@ -71,7 +74,7 @@ export default function NewsPage() {
           </div>
           <Link
             href="/news/all"
-            className="block w-full border-2 border-border bg-background py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm text-center"
+            className="border-border bg-background block w-full border-2 py-3 text-center font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
           >
             Xem thêm tin tức
           </Link>
@@ -80,12 +83,12 @@ export default function NewsPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Announcements */}
-          <div className="border-2 border-border bg-background shadow-sm">
-            <div className="flex items-center gap-2 border-b-2 border-border bg-muted px-4 py-3">
+          <div className="border-border bg-background border-2 shadow-sm">
+            <div className="border-border bg-muted flex items-center gap-2 border-b-2 px-4 py-3">
               <Bell className="h-4 w-4" />
               <h2 className="font-bold">Thông báo</h2>
             </div>
-            <div className="divide-y divide-border">
+            <div className="divide-border divide-y">
               {announcements.map((item) => {
                 const typeStyles = {
                   WARNING: 'border-l-yellow-500 bg-yellow-500/5',
@@ -97,9 +100,9 @@ export default function NewsPage() {
                     key={item.id}
                     className={`border-l-4 px-4 py-3 ${typeStyles[item.type] || typeStyles.INFO}`}
                   >
-                    <p className="font-medium text-sm">{item.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {new Date(item.startsAt).toLocaleDateString("vi-VN")}
+                    <p className="text-sm font-medium">{item.title}</p>
+                    <p className="text-muted-foreground mt-1 text-xs">
+                      {new Date(item.startsAt).toLocaleDateString('vi-VN')}
                     </p>
                   </div>
                 );
@@ -107,35 +110,33 @@ export default function NewsPage() {
             </div>
             <Link
               href="/news/announcements"
-              className="block border-t-2 border-border px-4 py-3 text-center text-sm text-muted-foreground hover:text-foreground"
+              className="border-border text-muted-foreground hover:text-foreground block border-t-2 px-4 py-3 text-center text-sm"
             >
               Xem tất cả thông báo →
             </Link>
           </div>
 
           {/* Upcoming Events */}
-          <div className="border-2 border-border bg-background shadow-sm">
-            <div className="flex items-center gap-2 border-b-2 border-border bg-muted px-4 py-3">
+          <div className="border-border bg-background border-2 shadow-sm">
+            <div className="border-border bg-muted flex items-center gap-2 border-b-2 px-4 py-3">
               <Calendar className="h-4 w-4" />
               <h2 className="font-bold">Sự kiện sắp tới</h2>
             </div>
-            <div className="divide-y divide-border">
+            <div className="divide-border divide-y">
               {upcomingEvents.map((event) => {
                 const eventDate = new Date(event.startsAt);
                 const day = eventDate.getDate();
                 const month = eventDate.toLocaleDateString('vi-VN', { month: 'short' });
-                
+
                 return (
                   <div key={event.id} className="flex gap-3 p-4">
-                    <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center border-2 border-border bg-primary">
-                      <span className="text-lg font-bold leading-none">{day}</span>
+                    <div className="border-border bg-primary flex h-12 w-12 shrink-0 flex-col items-center justify-center border-2">
+                      <span className="text-lg leading-none font-bold">{day}</span>
                       <span className="text-xs">{month}</span>
                     </div>
                     <div>
                       <p className="font-medium">{event.title}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {event.location || 'Online'}
-                      </p>
+                      <p className="text-muted-foreground text-sm">{event.location || 'Online'}</p>
                     </div>
                   </div>
                 );
@@ -143,7 +144,7 @@ export default function NewsPage() {
             </div>
             <Link
               href="/news/events"
-              className="block border-t-2 border-border px-4 py-3 text-center text-sm text-muted-foreground hover:text-foreground"
+              className="border-border text-muted-foreground hover:text-foreground block border-t-2 px-4 py-3 text-center text-sm"
             >
               Xem tất cả sự kiện →
             </Link>

@@ -1,16 +1,26 @@
 'use client';
 
-import { useState } from "react";
-import { BarChart3, Download, Calendar, TrendingUp, Users, BookOpen, Trophy, Filter, Plus } from "lucide-react";
-import { useAuth } from "@/lib/auth";
-import { Table } from "@/components/retroui/Table";
-import { Button } from "@/components/retroui/Button";
-import { Badge } from "@/components/retroui/Badge";
-import { Card } from "@/components/retroui/Card";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Select } from "@/components/retroui/Select";
-import { Input } from "@/components/retroui/Input";
-import { Loader } from "@/components/retroui/Loader";
+import { useState } from 'react';
+import {
+  BarChart3,
+  Download,
+  Calendar,
+  TrendingUp,
+  Users,
+  BookOpen,
+  Trophy,
+  Filter,
+  Plus,
+} from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { Table } from '@/components/retroui/Table';
+import { Button } from '@/components/retroui/Button';
+import { Badge } from '@/components/retroui/Badge';
+import { Card } from '@/components/retroui/Card';
+import { Dialog } from '@/components/retroui/Dialog';
+import { Select } from '@/components/retroui/Select';
+import { Input } from '@/components/retroui/Input';
+import { Loader } from '@/components/retroui/Loader';
 
 // Mock report data
 const reportTypes = [
@@ -52,10 +62,34 @@ const summaryStats = {
 };
 
 const recentReports = [
-  { name: 'Báo cáo hoạt động tuần 3/2024', type: 'user-activity', date: '2024-01-20', size: '2.4 MB', status: 'ready' },
-  { name: 'Tiến độ học tập tháng 1', type: 'learning-progress', date: '2024-01-19', size: '5.1 MB', status: 'ready' },
-  { name: 'Thống kê giải đấu Q1', type: 'tournament-stats', date: '2024-01-18', size: '3.2 MB', status: 'generating' },
-  { name: 'Phân tích nội dung', type: 'content-usage', date: '2024-01-17', size: '1.8 MB', status: 'ready' },
+  {
+    name: 'Báo cáo hoạt động tuần 3/2024',
+    type: 'user-activity',
+    date: '2024-01-20',
+    size: '2.4 MB',
+    status: 'ready',
+  },
+  {
+    name: 'Tiến độ học tập tháng 1',
+    type: 'learning-progress',
+    date: '2024-01-19',
+    size: '5.1 MB',
+    status: 'ready',
+  },
+  {
+    name: 'Thống kê giải đấu Q1',
+    type: 'tournament-stats',
+    date: '2024-01-18',
+    size: '3.2 MB',
+    status: 'generating',
+  },
+  {
+    name: 'Phân tích nội dung',
+    type: 'content-usage',
+    date: '2024-01-17',
+    size: '1.8 MB',
+    status: 'ready',
+  },
 ];
 
 export default function AdminReportsPage() {
@@ -78,28 +112,28 @@ export default function AdminReportsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-bold text-3xl">Báo cáo & Thống kê</h1>
+          <h1 className="text-3xl font-bold">Báo cáo & Thống kê</h1>
           <p className="text-muted-foreground">
             {isRootAdmin ? 'Báo cáo toàn hệ thống' : 'Báo cáo và phân tích dữ liệu'}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
-            <Calendar className="h-4 w-4 mr-2" />
+            <Calendar className="mr-2 h-4 w-4" />
             Lên lịch
           </Button>
           <Dialog open={isCreateReportOpen} onOpenChange={setIsCreateReportOpen}>
             <Dialog.Trigger asChild>
               <Button>
-                <BarChart3 className="h-4 w-4 mr-2" />
+                <BarChart3 className="mr-2 h-4 w-4" />
                 Tạo báo cáo
               </Button>
             </Dialog.Trigger>
             <Dialog.Content size="md">
               <Dialog.Header>Tạo báo cáo mới</Dialog.Header>
-              <div className="p-4 space-y-4">
+              <div className="space-y-4 p-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Loại báo cáo</label>
+                  <label className="mb-1 block text-sm font-medium">Loại báo cáo</label>
                   <Select value={reportType} onValueChange={setReportType}>
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn loại báo cáo" />
@@ -113,7 +147,7 @@ export default function AdminReportsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Khoảng thời gian</label>
+                  <label className="mb-1 block text-sm font-medium">Khoảng thời gian</label>
                   <Select defaultValue="week">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn khoảng thời gian" />
@@ -127,12 +161,14 @@ export default function AdminReportsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Tên báo cáo</label>
+                  <label className="mb-1 block text-sm font-medium">Tên báo cáo</label>
                   <Input placeholder="VD: Báo cáo hoạt động tuần 4" />
                 </div>
               </div>
               <Dialog.Footer>
-                <Button variant="outline" onClick={() => setIsCreateReportOpen(false)}>Hủy</Button>
+                <Button variant="outline" onClick={() => setIsCreateReportOpen(false)}>
+                  Hủy
+                </Button>
                 <Button onClick={() => setIsCreateReportOpen(false)}>Tạo</Button>
               </Dialog.Footer>
             </Dialog.Content>
@@ -146,10 +182,10 @@ export default function AdminReportsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Tổng báo cáo</p>
-                <p className="font-bold text-2xl">{summaryStats.totalReports}</p>
+                <p className="text-muted-foreground text-sm">Tổng báo cáo</p>
+                <p className="text-2xl font-bold">{summaryStats.totalReports}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-purple-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-purple-500">
                 <BarChart3 className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -159,10 +195,10 @@ export default function AdminReportsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Tuần này</p>
-                <p className="font-bold text-2xl">{summaryStats.generatedThisWeek}</p>
+                <p className="text-muted-foreground text-sm">Tuần này</p>
+                <p className="text-2xl font-bold">{summaryStats.generatedThisWeek}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-green-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-green-500">
                 <TrendingUp className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -172,10 +208,10 @@ export default function AdminReportsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Đã lên lịch</p>
-                <p className="font-bold text-2xl">{summaryStats.scheduledReports}</p>
+                <p className="text-muted-foreground text-sm">Đã lên lịch</p>
+                <p className="text-2xl font-bold">{summaryStats.scheduledReports}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-blue-500">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -185,10 +221,10 @@ export default function AdminReportsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Data points</p>
-                <p className="font-bold text-2xl">{summaryStats.dataPoints}</p>
+                <p className="text-muted-foreground text-sm">Data points</p>
+                <p className="text-2xl font-bold">{summaryStats.dataPoints}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-500">
                 <Filter className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -198,17 +234,20 @@ export default function AdminReportsPage() {
 
       {/* Report Types */}
       <div>
-        <h2 className="mb-4 font-bold text-xl">Loại báo cáo</h2>
+        <h2 className="mb-4 text-xl font-bold">Loại báo cáo</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {reportTypes.map((report) => (
-            <Card key={report.id} className="cursor-pointer transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
+            <Card
+              key={report.id}
+              className="cursor-pointer transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+            >
               <Card.Content className="p-4">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center border-2 border-border bg-primary">
+                <div className="border-border bg-primary mb-3 flex h-10 w-10 items-center justify-center border-2">
                   <report.icon className="h-5 w-5" />
                 </div>
                 <h3 className="mb-1 font-bold">{report.name}</h3>
-                <p className="mb-2 text-sm text-muted-foreground">{report.description}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground mb-2 text-sm">{report.description}</p>
+                <p className="text-muted-foreground text-xs">
                   Cập nhật: {new Date(report.lastGenerated).toLocaleDateString('vi-VN')}
                 </p>
               </Card.Content>
@@ -219,8 +258,8 @@ export default function AdminReportsPage() {
 
       {/* Recent Reports */}
       <div>
-        <h2 className="mb-4 font-bold text-xl">Báo cáo gần đây</h2>
-        <div className="border-2 border-border bg-card shadow-sm">
+        <h2 className="mb-4 text-xl font-bold">Báo cáo gần đây</h2>
+        <div className="border-border bg-card border-2 shadow-sm">
           <Table>
             <Table.Header>
               <Table.Row>
@@ -257,12 +296,8 @@ export default function AdminReportsPage() {
                     )}
                   </Table.Cell>
                   <Table.Cell className="text-right">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      disabled={report.status !== 'ready'}
-                    >
-                      <Download className="h-4 w-4 mr-1" />
+                    <Button variant="outline" size="sm" disabled={report.status !== 'ready'}>
+                      <Download className="mr-1 h-4 w-4" />
                       Tải xuống
                     </Button>
                   </Table.Cell>

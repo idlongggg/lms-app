@@ -364,7 +364,10 @@ export function getRoleInfo(roleCode: UserRole): Role | undefined {
 }
 
 // Role display info
-export const roleDisplayInfo: Record<UserRole, { label: string; color: string; description: string }> = {
+export const roleDisplayInfo: Record<
+  UserRole,
+  { label: string; color: string; description: string }
+> = {
   'root-admin': {
     label: 'Quản trị viên hệ thống',
     color: '#e74c3c',

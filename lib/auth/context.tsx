@@ -34,10 +34,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize state from service
   useEffect(() => {
-    const currentState = mockAuthService.getState();
-    setState({
-      ...currentState,
-      isLoading: false,
+    // Use queueMicrotask to avoid sync setState in effect
+    queueMicrotask(() => {
+      const currentState = mockAuthService.getState();
+      setState({
+        ...currentState,
+        isLoading: false,
+      });
     });
 
     // Subscribe to changes
@@ -63,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push(redirectPath);
       return authUser;
     },
-    [router]
+    [router],
   );
 
   const logout = useCallback(async () => {
@@ -84,7 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!state.user) return false;
       return canAccessRoute(path, state.user.role);
     },
-    [state.user]
+    [state.user],
   );
 
   const getMockUsers = useCallback(() => {
@@ -122,7 +125,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       canAccess,
       getMockUsers,
     }),
-    [state, login, loginWithMockUser, logout, hasPermission, hasRole, canAccess, getMockUsers]
+    [state, login, loginWithMockUser, logout, hasPermission, hasRole, canAccess, getMockUsers],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

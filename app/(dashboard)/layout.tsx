@@ -3,18 +3,14 @@
 import { AppShell } from '@/components/layout';
 import { useRequireAuth } from '@/lib/auth';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { isAuthorized, isLoading } = useRequireAuth();
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-background">
+      <div className="bg-background flex h-screen items-center justify-center">
         <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
+          <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
           <p className="text-muted-foreground">Đang tải...</p>
         </div>
       </div>
@@ -25,9 +21,5 @@ export default function DashboardLayout({
     return null; // Will redirect via useRequireAuth
   }
 
-  return (
-    <AppShell variant="dashboard">
-      {children}
-    </AppShell>
-  );
+  return <AppShell variant="dashboard">{children}</AppShell>;
 }

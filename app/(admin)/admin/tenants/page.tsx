@@ -1,16 +1,26 @@
 'use client';
 
-import { useState } from "react";
-import { Building2, Search, Plus, MoreVertical, Users, BookOpen, Settings, Pencil, Trash2 } from "lucide-react";
-import { useAuth } from "@/lib/auth";
-import { Table } from "@/components/retroui/Table";
-import { Button } from "@/components/retroui/Button";
-import { Badge } from "@/components/retroui/Badge";
-import { Input } from "@/components/retroui/Input";
-import { Select } from "@/components/retroui/Select";
-import { Card } from "@/components/retroui/Card";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Menu } from "@/components/retroui/Menu";
+import { useState } from 'react';
+import {
+  Building2,
+  Search,
+  Plus,
+  MoreVertical,
+  Users,
+  BookOpen,
+  Settings,
+  Pencil,
+  Trash2,
+} from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { Table } from '@/components/retroui/Table';
+import { Button } from '@/components/retroui/Button';
+import { Badge } from '@/components/retroui/Badge';
+import { Input } from '@/components/retroui/Input';
+import { Select } from '@/components/retroui/Select';
+import { Card } from '@/components/retroui/Card';
+import { Dialog } from '@/components/retroui/Dialog';
+import { Menu } from '@/components/retroui/Menu';
 
 // Mock tenants data
 const tenants = [
@@ -84,10 +94,11 @@ export default function AdminTenantsPage() {
     );
   }
 
-  const filteredTenants = tenants.filter(tenant => {
+  const filteredTenants = tenants.filter((tenant) => {
     const matchesPlan = planFilter === 'all' || tenant.plan === planFilter;
     const matchesStatus = statusFilter === 'all' || tenant.status === statusFilter;
-    const matchesSearch = tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      tenant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tenant.domain.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesPlan && matchesStatus && matchesSearch;
   });
@@ -97,35 +108,33 @@ export default function AdminTenantsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-bold text-3xl">Quản lý Tenants</h1>
-          <p className="text-muted-foreground">
-            Quản lý tất cả các tenant trong hệ thống
-          </p>
+          <h1 className="text-3xl font-bold">Quản lý Tenants</h1>
+          <p className="text-muted-foreground">Quản lý tất cả các tenant trong hệ thống</p>
         </div>
         <Dialog open={isAddTenantOpen} onOpenChange={setIsAddTenantOpen}>
           <Dialog.Trigger asChild>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Thêm Tenant
             </Button>
           </Dialog.Trigger>
           <Dialog.Content size="md">
             <Dialog.Header>Thêm Tenant mới</Dialog.Header>
-            <div className="p-4 space-y-4">
+            <div className="space-y-4 p-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Tên tenant</label>
+                <label className="mb-1 block text-sm font-medium">Tên tenant</label>
                 <Input placeholder="Nhập tên tenant" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Mã code</label>
+                <label className="mb-1 block text-sm font-medium">Mã code</label>
                 <Input placeholder="Nhập mã code" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Domain</label>
+                <label className="mb-1 block text-sm font-medium">Domain</label>
                 <Input placeholder="example.lms.vn" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Gói dịch vụ</label>
+                <label className="mb-1 block text-sm font-medium">Gói dịch vụ</label>
                 <Select defaultValue="basic">
                   <Select.Trigger className="w-full">
                     <Select.Value placeholder="Chọn gói" />
@@ -139,7 +148,9 @@ export default function AdminTenantsPage() {
               </div>
             </div>
             <Dialog.Footer>
-              <Button variant="outline" onClick={() => setIsAddTenantOpen(false)}>Hủy</Button>
+              <Button variant="outline" onClick={() => setIsAddTenantOpen(false)}>
+                Hủy
+              </Button>
               <Button onClick={() => setIsAddTenantOpen(false)}>Lưu</Button>
             </Dialog.Footer>
           </Dialog.Content>
@@ -152,10 +163,10 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Tổng Tenants</p>
-                <p className="font-bold text-2xl">{tenants.length}</p>
+                <p className="text-muted-foreground text-sm">Tổng Tenants</p>
+                <p className="text-2xl font-bold">{tenants.length}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-purple-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-purple-500">
                 <Building2 className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -165,10 +176,12 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Đang hoạt động</p>
-                <p className="font-bold text-2xl">{tenants.filter(t => t.status === 'ACTIVE').length}</p>
+                <p className="text-muted-foreground text-sm">Đang hoạt động</p>
+                <p className="text-2xl font-bold">
+                  {tenants.filter((t) => t.status === 'ACTIVE').length}
+                </p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-green-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-green-500">
                 <Users className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -178,10 +191,12 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Tổng người dùng</p>
-                <p className="font-bold text-2xl">{tenants.reduce((sum, t) => sum + t.users, 0).toLocaleString()}</p>
+                <p className="text-muted-foreground text-sm">Tổng người dùng</p>
+                <p className="text-2xl font-bold">
+                  {tenants.reduce((sum, t) => sum + t.users, 0).toLocaleString()}
+                </p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-blue-500">
                 <Users className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -191,10 +206,10 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Tổng dung lượng</p>
-                <p className="font-bold text-2xl">101.3 GB</p>
+                <p className="text-muted-foreground text-sm">Tổng dung lượng</p>
+                <p className="text-2xl font-bold">101.3 GB</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-500">
                 <BookOpen className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -204,8 +219,8 @@ export default function AdminTenantsPage() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <div className="relative min-w-[200px] flex-1">
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Tìm kiếm tenant..."
             className="pl-10"
@@ -237,7 +252,7 @@ export default function AdminTenantsPage() {
       </div>
 
       {/* Tenants Table */}
-      <div className="border-2 border-border bg-card shadow-sm">
+      <div className="border-border bg-card border-2 shadow-sm">
         <Table>
           <Table.Header>
             <Table.Row>
@@ -255,19 +270,25 @@ export default function AdminTenantsPage() {
               <Table.Row key={tenant.id}>
                 <Table.Cell>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center border-2 border-border bg-primary">
+                    <div className="border-border bg-primary flex h-8 w-8 items-center justify-center border-2">
                       <Building2 className="h-4 w-4" />
                     </div>
                     <div>
                       <span className="font-medium">{tenant.name}</span>
-                      <p className="text-xs text-muted-foreground">{tenant.code}</p>
+                      <p className="text-muted-foreground text-xs">{tenant.code}</p>
                     </div>
                   </div>
                 </Table.Cell>
                 <Table.Cell className="text-muted-foreground">{tenant.domain}</Table.Cell>
                 <Table.Cell>
                   <Badge
-                    variant={tenant.plan === 'Enterprise' ? 'solid' : tenant.plan === 'Pro' ? 'surface' : 'default'}
+                    variant={
+                      tenant.plan === 'Enterprise'
+                        ? 'solid'
+                        : tenant.plan === 'Pro'
+                          ? 'surface'
+                          : 'default'
+                    }
                     size="sm"
                   >
                     {tenant.plan}
@@ -276,19 +297,23 @@ export default function AdminTenantsPage() {
                 <Table.Cell>
                   <div className="text-sm">
                     <span className="font-medium">{tenant.users.toLocaleString()}</span>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       {tenant.teachers} GV • {tenant.students} HS
                     </p>
                   </div>
                 </Table.Cell>
                 <Table.Cell className="text-muted-foreground">{tenant.storage}</Table.Cell>
                 <Table.Cell>
-                  <span className={`inline-flex items-center gap-1 text-sm ${
-                    tenant.status === 'ACTIVE' ? 'text-green-500' : 'text-red-500'
-                  }`}>
-                    <span className={`h-2 w-2 rounded-full ${
-                      tenant.status === 'ACTIVE' ? 'bg-green-500' : 'bg-red-500'
-                    }`} />
+                  <span
+                    className={`inline-flex items-center gap-1 text-sm ${
+                      tenant.status === 'ACTIVE' ? 'text-green-500' : 'text-red-500'
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        tenant.status === 'ACTIVE' ? 'bg-green-500' : 'bg-red-500'
+                      }`}
+                    />
                     {tenant.status === 'ACTIVE' ? 'Hoạt động' : 'Tạm ngưng'}
                   </span>
                 </Table.Cell>
@@ -305,11 +330,11 @@ export default function AdminTenantsPage() {
                       </Menu.Trigger>
                       <Menu.Content align="end">
                         <Menu.Item>
-                          <Pencil className="h-4 w-4 mr-2" />
+                          <Pencil className="mr-2 h-4 w-4" />
                           Chỉnh sửa
                         </Menu.Item>
                         <Menu.Item className="text-destructive">
-                          <Trash2 className="h-4 w-4 mr-2" />
+                          <Trash2 className="mr-2 h-4 w-4" />
                           Xóa
                         </Menu.Item>
                       </Menu.Content>

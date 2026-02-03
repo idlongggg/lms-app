@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronDown } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { dashboardTabs, getActiveTabKey, type DashboardTab } from "@/lib/navigation";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { dashboardTabs, getActiveTabKey, type DashboardTab } from '@/lib/navigation';
 
 interface DashboardNavProps {
   tabs?: DashboardTab[];
@@ -14,7 +14,7 @@ interface DashboardNavProps {
 export function DashboardNav({ tabs }: DashboardNavProps) {
   const pathname = usePathname();
   const activeKey = getActiveTabKey(pathname);
-  
+
   // Use provided tabs or fallback to default
   const navTabs = tabs || dashboardTabs;
   const activeTab = navTabs.find((tab) => tab.key === activeKey);
@@ -32,10 +32,8 @@ export function DashboardNav({ tabs }: DashboardNavProps) {
               key={tab.key}
               href={tab.href}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 font-medium transition-all",
-                isActive
-                  ? "border-2 border-border bg-primary shadow-xs"
-                  : "hover:bg-muted"
+                'flex items-center gap-2 px-4 py-2 font-medium transition-all',
+                isActive ? 'border-border bg-primary border-2 shadow-xs' : 'hover:bg-muted',
               )}
             >
               <Icon className="h-4 w-4" />
@@ -64,16 +62,13 @@ function MobileNavDropdown({
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   if (!activeTab) return null;
@@ -84,20 +79,15 @@ function MobileNavDropdown({
     <div ref={dropdownRef} className="relative md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 border-2 border-border bg-background px-3 py-2 font-medium shadow-xs"
+        className="border-border bg-background flex items-center gap-2 border-2 px-3 py-2 font-medium shadow-xs"
       >
         <ActiveIcon className="h-4 w-4" />
         <span>{activeTab.title}</span>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 transition-transform",
-            isOpen && "rotate-180"
-          )}
-        />
+        <ChevronDown className={cn('h-4 w-4 transition-transform', isOpen && 'rotate-180')} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-1 w-48 border-2 border-border bg-background shadow-md">
+        <div className="border-border bg-background absolute top-full left-0 z-50 mt-1 w-48 border-2 shadow-md">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = tab.key === activeTab?.key;
@@ -108,8 +98,8 @@ function MobileNavDropdown({
                 href={tab.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-3 font-medium transition-colors",
-                  isActive ? "bg-primary" : "hover:bg-muted"
+                  'flex items-center gap-2 px-4 py-3 font-medium transition-colors',
+                  isActive ? 'bg-primary' : 'hover:bg-muted',
                 )}
               >
                 <Icon className="h-4 w-4" />

@@ -1,40 +1,34 @@
-import Link from "next/link";
-import { Logo } from "@/components/layout";
+import Link from 'next/link';
+import { Logo } from '@/components/layout';
 
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       {/* Left Panel - Branding */}
-      <div className="hidden w-1/2 flex-col justify-between border-r-2 border-border bg-primary p-12 lg:flex">
+      <div className="border-border bg-primary hidden w-1/2 flex-col justify-between border-r-2 p-12 lg:flex">
         <Logo />
         <div className="space-y-6">
-          <h1 className="font-bold text-5xl font-bold leading-tight">
-            Chào mừng đến với LMS
-          </h1>
-          <p className="text-lg text-foreground/80">
-            Nền tảng học tập trực tuyến với phong cách NeoBrutalism độc đáo.
-            Học mà chơi, chơi mà học!
+          <h1 className="text-5xl leading-tight font-bold">Chào mừng đến với LMS</h1>
+          <p className="text-foreground/80 text-lg">
+            Nền tảng học tập trực tuyến với phong cách NeoBrutalism độc đáo. Học mà chơi, chơi mà
+            học!
           </p>
           <div className="flex gap-4">
-            <div className="border-2 border-border bg-background p-4 shadow-md">
-              <p className="font-bold text-3xl font-bold">10K+</p>
-              <p className="text-sm text-muted-foreground">Học viên</p>
+            <div className="border-border bg-background border-2 p-4 shadow-md">
+              <p className="text-3xl font-bold">10K+</p>
+              <p className="text-muted-foreground text-sm">Học viên</p>
             </div>
-            <div className="border-2 border-border bg-background p-4 shadow-md">
-              <p className="font-bold text-3xl font-bold">500+</p>
-              <p className="text-sm text-muted-foreground">Bài học</p>
+            <div className="border-border bg-background border-2 p-4 shadow-md">
+              <p className="text-3xl font-bold">500+</p>
+              <p className="text-muted-foreground text-sm">Bài học</p>
             </div>
-            <div className="border-2 border-border bg-background p-4 shadow-md">
-              <p className="font-bold text-3xl font-bold">50+</p>
-              <p className="text-sm text-muted-foreground">Giải đấu</p>
+            <div className="border-border bg-background border-2 p-4 shadow-md">
+              <p className="text-3xl font-bold">50+</p>
+              <p className="text-muted-foreground text-sm">Giải đấu</p>
             </div>
           </div>
         </div>
-        <p className="text-sm text-foreground/60">
+        <p className="text-foreground/60 text-sm">
           © {new Date().getFullYear()} LMS. All rights reserved.
         </p>
       </div>
@@ -42,7 +36,7 @@ export default function AuthLayout({
       {/* Right Panel - Form */}
       <div className="flex w-full flex-col lg:w-1/2">
         {/* Mobile logo */}
-        <div className="flex h-16 items-center border-b-2 border-border px-6 lg:hidden">
+        <div className="border-border flex h-16 items-center border-b-2 px-6 lg:hidden">
           <Logo />
         </div>
 
@@ -52,10 +46,10 @@ export default function AuthLayout({
         </div>
 
         {/* Back to home link */}
-        <div className="flex h-16 items-center justify-center border-t-2 border-border">
+        <div className="border-border flex h-16 items-center justify-center border-t-2">
           <Link
             href="/"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground text-sm transition-colors"
           >
             ← Quay lại trang chủ
           </Link>

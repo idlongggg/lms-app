@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from "react";
-import { AlertTriangle, Bell, Settings, Plus, Check, X, Clock, Search } from "lucide-react";
-import { useAuth } from "@/lib/auth";
-import { Table } from "@/components/retroui/Table";
-import { Button } from "@/components/retroui/Button";
-import { Badge } from "@/components/retroui/Badge";
-import { Input } from "@/components/retroui/Input";
-import { Select } from "@/components/retroui/Select";
-import { Card } from "@/components/retroui/Card";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Switch } from "@/components/retroui/Switch";
+import { useState } from 'react';
+import { AlertTriangle, Bell, Settings, Plus, Check, X, Clock, Search } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { Table } from '@/components/retroui/Table';
+import { Button } from '@/components/retroui/Button';
+import { Badge } from '@/components/retroui/Badge';
+import { Input } from '@/components/retroui/Input';
+import { Select } from '@/components/retroui/Select';
+import { Card } from '@/components/retroui/Card';
+import { Dialog } from '@/components/retroui/Dialog';
+import { Switch } from '@/components/retroui/Switch';
 
 // Mock alerts data
 const alerts = [
@@ -90,13 +90,16 @@ export default function AdminAlertsPage() {
     );
   }
 
-  const activeAlerts = alerts.filter(a => a.status === 'active').length;
-  const criticalAlerts = alerts.filter(a => a.severity === 'critical' && a.status !== 'resolved').length;
+  const activeAlerts = alerts.filter((a) => a.status === 'active').length;
+  const criticalAlerts = alerts.filter(
+    (a) => a.severity === 'critical' && a.status !== 'resolved',
+  ).length;
 
-  const filteredAlerts = alerts.filter(alert => {
+  const filteredAlerts = alerts.filter((alert) => {
     const matchesSeverity = severityFilter === 'all' || alert.severity === severityFilter;
     const matchesStatus = statusFilter === 'all' || alert.status === statusFilter;
-    const matchesSearch = alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       alert.message.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSeverity && matchesStatus && matchesSearch;
   });
@@ -106,32 +109,30 @@ export default function AdminAlertsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-bold text-3xl">Cảnh báo hệ thống</h1>
-          <p className="text-muted-foreground">
-            Quản lý và cấu hình cảnh báo
-          </p>
+          <h1 className="text-3xl font-bold">Cảnh báo hệ thống</h1>
+          <p className="text-muted-foreground">Quản lý và cấu hình cảnh báo</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
-            <Settings className="h-4 w-4 mr-2" />
+            <Settings className="mr-2 h-4 w-4" />
             Cài đặt
           </Button>
           <Dialog open={isAddRuleOpen} onOpenChange={setIsAddRuleOpen}>
             <Dialog.Trigger asChild>
               <Button>
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 Thêm quy tắc
               </Button>
             </Dialog.Trigger>
             <Dialog.Content size="md">
               <Dialog.Header>Thêm quy tắc cảnh báo</Dialog.Header>
-              <div className="p-4 space-y-4">
+              <div className="space-y-4 p-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Tên quy tắc</label>
+                  <label className="mb-1 block text-sm font-medium">Tên quy tắc</label>
                   <Input placeholder="VD: CPU > 90%" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Mức độ</label>
+                  <label className="mb-1 block text-sm font-medium">Mức độ</label>
                   <Select defaultValue="warning">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn mức độ" />
@@ -144,12 +145,14 @@ export default function AdminAlertsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Kênh thông báo</label>
+                  <label className="mb-1 block text-sm font-medium">Kênh thông báo</label>
                   <Input placeholder="Email, Slack, SMS" />
                 </div>
               </div>
               <Dialog.Footer>
-                <Button variant="outline" onClick={() => setIsAddRuleOpen(false)}>Hủy</Button>
+                <Button variant="outline" onClick={() => setIsAddRuleOpen(false)}>
+                  Hủy
+                </Button>
                 <Button onClick={() => setIsAddRuleOpen(false)}>Lưu</Button>
               </Dialog.Footer>
             </Dialog.Content>
@@ -163,10 +166,10 @@ export default function AdminAlertsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Cảnh báo đang hoạt động</p>
-                <p className="font-bold text-2xl">{activeAlerts}</p>
+                <p className="text-muted-foreground text-sm">Cảnh báo đang hoạt động</p>
+                <p className="text-2xl font-bold">{activeAlerts}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-orange-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-500">
                 <Bell className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -176,10 +179,10 @@ export default function AdminAlertsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Nghiêm trọng</p>
-                <p className="font-bold text-2xl text-red-500">{criticalAlerts}</p>
+                <p className="text-muted-foreground text-sm">Nghiêm trọng</p>
+                <p className="text-2xl font-bold text-red-500">{criticalAlerts}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-red-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-red-500">
                 <AlertTriangle className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -189,10 +192,12 @@ export default function AdminAlertsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Quy tắc đang bật</p>
-                <p className="font-bold text-2xl">{alertRules.filter(r => r.enabled).length}/{alertRules.length}</p>
+                <p className="text-muted-foreground text-sm">Quy tắc đang bật</p>
+                <p className="text-2xl font-bold">
+                  {alertRules.filter((r) => r.enabled).length}/{alertRules.length}
+                </p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center border-2 border-border bg-blue-500">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-blue-500">
                 <Settings className="h-5 w-5 text-white" />
               </div>
             </div>
@@ -202,8 +207,8 @@ export default function AdminAlertsPage() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <div className="relative min-w-[200px] flex-1">
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Tìm kiếm cảnh báo..."
             className="pl-10"
@@ -237,19 +242,30 @@ export default function AdminAlertsPage() {
 
       {/* Alerts List */}
       <div>
-        <h2 className="mb-4 font-bold text-xl">Cảnh báo gần đây</h2>
+        <h2 className="mb-4 text-xl font-bold">Cảnh báo gần đây</h2>
         <div className="space-y-3">
           {filteredAlerts.map((alert) => (
-            <Card key={alert.id} className={`${
-              alert.severity === 'critical' && alert.status === 'active' ? 'border-red-500' :
-              alert.severity === 'warning' && alert.status === 'active' ? 'border-orange-500' : ''
-            }`}>
+            <Card
+              key={alert.id}
+              className={`${
+                alert.severity === 'critical' && alert.status === 'active'
+                  ? 'border-red-500'
+                  : alert.severity === 'warning' && alert.status === 'active'
+                    ? 'border-orange-500'
+                    : ''
+              }`}
+            >
               <Card.Content className="p-4">
                 <div className="flex items-start gap-3">
-                  <div className={`mt-0.5 flex h-8 w-8 items-center justify-center border-2 border-border ${
-                    alert.severity === 'critical' ? 'bg-red-500' :
-                    alert.severity === 'warning' ? 'bg-orange-500' : 'bg-blue-500'
-                  }`}>
+                  <div
+                    className={`border-border mt-0.5 flex h-8 w-8 items-center justify-center border-2 ${
+                      alert.severity === 'critical'
+                        ? 'bg-red-500'
+                        : alert.severity === 'warning'
+                          ? 'bg-orange-500'
+                          : 'bg-blue-500'
+                    }`}
+                  >
                     {alert.severity === 'info' ? (
                       <Bell className="h-4 w-4 text-white" />
                     ) : (
@@ -260,12 +276,20 @@ export default function AdminAlertsPage() {
                     <div className="flex items-center gap-2">
                       <h3 className="font-bold">{alert.title}</h3>
                       <Badge
-                        variant={alert.severity === 'critical' ? 'solid' : alert.severity === 'warning' ? 'surface' : 'default'}
+                        variant={
+                          alert.severity === 'critical'
+                            ? 'solid'
+                            : alert.severity === 'warning'
+                              ? 'surface'
+                              : 'default'
+                        }
                         size="sm"
                         className={
-                          alert.severity === 'critical' ? 'bg-red-500 text-white' :
-                          alert.severity === 'warning' ? 'bg-orange-100 text-orange-700' :
-                          'bg-blue-100 text-blue-700'
+                          alert.severity === 'critical'
+                            ? 'bg-red-500 text-white'
+                            : alert.severity === 'warning'
+                              ? 'bg-orange-100 text-orange-700'
+                              : 'bg-blue-100 text-blue-700'
                         }
                       >
                         {alert.severity.toUpperCase()}
@@ -273,17 +297,22 @@ export default function AdminAlertsPage() {
                       <Badge
                         size="sm"
                         className={
-                          alert.status === 'active' ? 'bg-red-100 text-red-700' :
-                          alert.status === 'acknowledged' ? 'bg-orange-100 text-orange-700' :
-                          'bg-green-100 text-green-700'
+                          alert.status === 'active'
+                            ? 'bg-red-100 text-red-700'
+                            : alert.status === 'acknowledged'
+                              ? 'bg-orange-100 text-orange-700'
+                              : 'bg-green-100 text-green-700'
                         }
                       >
-                        {alert.status === 'active' ? 'Đang hoạt động' :
-                         alert.status === 'acknowledged' ? 'Đã xác nhận' : 'Đã giải quyết'}
+                        {alert.status === 'active'
+                          ? 'Đang hoạt động'
+                          : alert.status === 'acknowledged'
+                            ? 'Đã xác nhận'
+                            : 'Đã giải quyết'}
                       </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-muted-foreground">{alert.message}</p>
-                    <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
+                    <p className="text-muted-foreground mt-1 text-sm">{alert.message}</p>
+                    <div className="text-muted-foreground mt-2 flex items-center gap-4 text-xs">
                       <span>Nguồn: {alert.source}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
@@ -310,8 +339,8 @@ export default function AdminAlertsPage() {
 
       {/* Alert Rules */}
       <div>
-        <h2 className="mb-4 font-bold text-xl">Quy tắc cảnh báo</h2>
-        <div className="border-2 border-border bg-card shadow-sm">
+        <h2 className="mb-4 text-xl font-bold">Quy tắc cảnh báo</h2>
+        <div className="border-border bg-card border-2 shadow-sm">
           <Table>
             <Table.Header>
               <Table.Row>
@@ -330,8 +359,9 @@ export default function AdminAlertsPage() {
                     <Badge
                       size="sm"
                       className={
-                        rule.severity === 'critical' ? 'bg-red-100 text-red-700' :
-                        'bg-orange-100 text-orange-700'
+                        rule.severity === 'critical'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-orange-100 text-orange-700'
                       }
                     >
                       {rule.severity.toUpperCase()}
@@ -341,7 +371,9 @@ export default function AdminAlertsPage() {
                   <Table.Cell>
                     <div className="flex items-center gap-2">
                       <Switch checked={rule.enabled} />
-                      <span className={`text-sm ${rule.enabled ? 'text-green-500' : 'text-muted-foreground'}`}>
+                      <span
+                        className={`text-sm ${rule.enabled ? 'text-green-500' : 'text-muted-foreground'}`}
+                      >
                         {rule.enabled ? 'Đang bật' : 'Đã tắt'}
                       </span>
                     </div>

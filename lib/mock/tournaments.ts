@@ -322,7 +322,7 @@ export function getUserTournamentHistory(userId: string): MatchHistoryEntry[] {
     const tournament = getTournamentById(p.tournamentId);
     const tournamentParticipants = getTournamentParticipants(p.tournamentId);
     const userMedal = userMedals.find(
-      (m) => m.userId === userId && m.tournamentId === p.tournamentId
+      (m) => m.userId === userId && m.tournamentId === p.tournamentId,
     );
     const medal = userMedal ? medals.find((m) => m.id === userMedal.medalId) : null;
 
@@ -340,7 +340,9 @@ export function getUserTournamentHistory(userId: string): MatchHistoryEntry[] {
   });
 }
 
-export function getUserMedals(userId: string): (UserMedal & { medal: Medal; tournament: Tournament })[] {
+export function getUserMedals(
+  userId: string,
+): (UserMedal & { medal: Medal; tournament: Tournament })[] {
   return userMedals
     .filter((um) => um.userId === userId)
     .map((um) => ({

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useCallback } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 
 // In-memory storage for scroll positions
 // Format: "${pathname}:${key}" -> scrollTop
@@ -11,7 +11,7 @@ const scrollPositions = new Map<string, number>();
 const DESKTOP_BREAKPOINT = 768;
 
 function isDesktop(): boolean {
-  return typeof window !== "undefined" && window.innerWidth >= DESKTOP_BREAKPOINT;
+  return typeof window !== 'undefined' && window.innerWidth >= DESKTOP_BREAKPOINT;
 }
 
 /**
@@ -21,10 +21,7 @@ function isDesktop(): boolean {
  * @param scrollRef - Ref to the scrollable element
  * @param key - Unique key to identify the scrollable area (e.g., "content", "sidebar")
  */
-export function useScrollPosition(
-  scrollRef: React.RefObject<HTMLElement | null>,
-  key: string
-) {
+export function useScrollPosition(scrollRef: React.RefObject<HTMLElement | null>, key: string) {
   const pathname = usePathname();
   const isRestoring = useRef(false);
   const storageKey = `${pathname}:${key}`;
@@ -59,8 +56,8 @@ export function useScrollPosition(
     const element = scrollRef.current;
     if (!element) return;
 
-    element.addEventListener("scroll", saveScrollPosition, { passive: true });
-    return () => element.removeEventListener("scroll", saveScrollPosition);
+    element.addEventListener('scroll', saveScrollPosition, { passive: true });
+    return () => element.removeEventListener('scroll', saveScrollPosition);
   }, [scrollRef, saveScrollPosition]);
 
   return { saveScrollPosition };

@@ -1,16 +1,12 @@
-import { Header, Footer } from "@/components/layout";
+import { Header, Footer } from '@/components/layout';
 
 const publicNavItems = [
-  { title: "Tính năng", href: "#features" },
-  { title: "Giải đấu", href: "#tournaments" },
-  { title: "Về chúng tôi", href: "#about" },
+  { title: 'Tính năng', href: '#features' },
+  { title: 'Giải đấu', href: '#tournaments' },
+  { title: 'Về chúng tôi', href: '#about' },
 ];
 
-export default function PublicLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header variant="transparent" simpleNavItems={publicNavItems} />

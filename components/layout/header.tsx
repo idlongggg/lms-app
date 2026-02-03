@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Menu, Search } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Logo } from "./logo";
-import { ThemeToggle } from "./theme-toggle";
-import { UserMenu } from "./user-menu";
-import { useSidebar } from "@/hooks/use-sidebar";
+import Link from 'next/link';
+import { Menu, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Logo } from './logo';
+import { ThemeToggle } from './theme-toggle';
+import { UserMenu } from './user-menu';
+import { useSidebar } from '@/hooks/use-sidebar';
 
 interface SimpleNavItem {
   title: string;
@@ -14,7 +14,7 @@ interface SimpleNavItem {
 }
 
 interface HeaderProps {
-  variant?: "transparent" | "fixed" | "slim" | "admin";
+  variant?: 'transparent' | 'fixed' | 'slim' | 'admin';
   simpleNavItems?: SimpleNavItem[];
   showSearch?: boolean;
   showUserMenu?: boolean;
@@ -24,7 +24,7 @@ interface HeaderProps {
 }
 
 export function Header({
-  variant = "fixed",
+  variant = 'fixed',
   simpleNavItems,
   showSearch = false,
   showUserMenu = false,
@@ -32,18 +32,16 @@ export function Header({
   className,
   children,
 }: HeaderProps) {
-  const isTransparent = variant === "transparent";
-  const isSlim = variant === "slim";
+  const isTransparent = variant === 'transparent';
+  const isSlim = variant === 'slim';
 
   return (
     <header
       className={cn(
-        "z-50 w-full border-b-2 border-border",
-        isTransparent
-          ? "absolute bg-transparent"
-          : "sticky top-0 bg-background shadow-sm",
-        isSlim ? "h-12" : "h-16",
-        className
+        'border-border z-50 w-full border-b-2',
+        isTransparent ? 'absolute bg-transparent' : 'bg-background sticky top-0 shadow-sm',
+        isSlim ? 'h-12' : 'h-16',
+        className,
       )}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
@@ -55,16 +53,14 @@ export function Header({
 
         {/* Center section - Nav links or custom children */}
         {children ? (
-          <div className="hidden flex-1 items-center justify-center md:flex">
-            {children}
-          </div>
+          <div className="hidden flex-1 items-center justify-center md:flex">{children}</div>
         ) : simpleNavItems ? (
           <nav className="hidden items-center justify-evenly gap-6 md:flex">
             {simpleNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 font-medium transition-colors hover:bg-muted"
+                className="hover:bg-muted px-4 py-2 font-medium transition-colors"
               >
                 {item.title}
               </Link>
@@ -76,11 +72,7 @@ export function Header({
         <div className="flex items-center gap-2">
           {showSearch && <SearchButton />}
           <ThemeToggle />
-          {showUserMenu ? (
-            <UserMenu />
-          ) : (
-            <AuthButtons isTransparent={isTransparent} />
-          )}
+          {showUserMenu ? <UserMenu /> : <AuthButtons isTransparent={isTransparent} />}
         </div>
       </div>
     </header>
@@ -93,7 +85,7 @@ function MobileMenuButton() {
   return (
     <button
       onClick={openMobile}
-      className="flex h-9 w-9 items-center justify-center border-2 border-border bg-background shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm md:hidden"
+      className="border-border bg-background flex h-9 w-9 items-center justify-center border-2 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm md:hidden"
       aria-label="Open menu"
     >
       <Menu className="h-4 w-4" />
@@ -104,14 +96,12 @@ function MobileMenuButton() {
 function SearchButton() {
   return (
     <button
-      className="hidden h-9 items-center gap-2 border-2 border-border bg-background px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm sm:flex"
+      className="border-border bg-background hidden h-9 items-center gap-2 border-2 px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm sm:flex"
       aria-label="Search"
     >
       <Search className="h-4 w-4" />
-      <span className="text-sm text-muted-foreground">Tìm kiếm...</span>
-      <kbd className="ml-2 rounded border border-border bg-muted px-1.5 py-0.5 text-xs">
-        ⌘K
-      </kbd>
+      <span className="text-muted-foreground text-sm">Tìm kiếm...</span>
+      <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">⌘K</kbd>
     </button>
   );
 }
@@ -122,15 +112,15 @@ function AuthButtons({ isTransparent }: { isTransparent: boolean }) {
       <Link
         href="/auth/login"
         className={cn(
-          "hidden px-4 py-2 font-medium transition-colors hover:bg-muted sm:block",
-          isTransparent && "text-foreground"
+          'hover:bg-muted hidden px-4 py-2 font-medium transition-colors sm:block',
+          isTransparent && 'text-foreground',
         )}
       >
         Đăng nhập
       </Link>
       <Link
         href="/auth/register"
-        className="flex h-9 items-center border-2 border-border bg-primary px-4 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+        className="border-border bg-primary flex h-9 items-center border-2 px-4 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
       >
         Đăng ký
       </Link>

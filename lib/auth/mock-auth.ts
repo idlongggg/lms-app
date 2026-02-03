@@ -144,10 +144,28 @@ class MockAuthServiceImpl implements AuthService {
 // Singleton instance
 export const mockAuthService = new MockAuthServiceImpl();
 
+// Route access map (moved here to avoid circular dependency)
+const ROUTE_ACCESS: Record<string, UserRole[]> = {
+  '/admin': ['root-admin', 'tenant-admin'],
+  '/admin/tenants': ['root-admin'],
+  '/admin/users': ['root-admin', 'tenant-admin'],
+  '/admin/health': ['root-admin'],
+  '/admin/alerts': ['root-admin'],
+  '/admin/settings': ['root-admin', 'tenant-admin'],
+  '/admin/content': ['tenant-admin'],
+  '/admin/tournaments': ['tenant-admin'],
+  '/admin/reports': ['tenant-admin'],
+  '/dashboard': ['teacher', 'student', 'parent'],
+  '/learning': ['teacher', 'student', 'parent'],
+  '/tournament': ['teacher', 'student', 'parent'],
+  '/rewards': ['teacher', 'student', 'parent'],
+  '/news': ['teacher', 'student', 'parent'],
+  '/profile': ['teacher', 'student', 'parent'],
+};
+
 // Helper functions
 export function canAccessRoute(path: string, role: UserRole): boolean {
-  // Import dynamically to avoid circular dependency
-  const { ROUTE_ACCESS } = require('./types');
+  // Use local ROUTE_ACCESS to avoid circular dependency
 
   // Check exact match first
   if (ROUTE_ACCESS[path]) {
