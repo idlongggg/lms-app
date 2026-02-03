@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeft, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { useSidebar } from "@/hooks/use-sidebar";
+import { useScrollPosition } from "@/hooks/use-scroll-position";
 import type { NavGroup } from "@/lib/navigation";
 
 interface SidebarProps {
@@ -17,6 +19,9 @@ interface SidebarProps {
 export function Sidebar({ navigation, variant = "collapsible", className }: SidebarProps) {
   const { isCollapsed, isMobileOpen, toggle, closeMobile } = useSidebar();
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement>(null);
+
+  useScrollPosition(navRef, "sidebar");
 
   const isExpanded = variant === "expanded";
   const showCollapsed = !isExpanded && isCollapsed;
@@ -68,7 +73,7 @@ export function Sidebar({ navigation, variant = "collapsible", className }: Side
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-2">
+        <nav ref={navRef} className="flex-1 overflow-y-auto p-2">
           {navigation.map((group, groupIndex) => (
             <div key={groupIndex} className="mb-4">
               {group.title && !showCollapsed && (
