@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2 } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/lib/auth";
 
 const baloo2 = Baloo_2({
   subsets: ["latin", "vietnamese"],
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body
         className={`${baloo2.variable} font-sans antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

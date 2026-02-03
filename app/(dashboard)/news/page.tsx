@@ -1,66 +1,29 @@
+'use client';
+
 import { Calendar, Bell, ArrowRight } from "lucide-react";
-
-const newsItems = [
-  {
-    id: 1,
-    title: "Giải đấu mùa xuân 2026 sắp bắt đầu!",
-    excerpt:
-      "Chuẩn bị cho giải đấu lớn nhất năm với tổng giải thưởng lên đến 100 triệu đồng.",
-    date: "2026-02-03",
-    category: "Sự kiện",
-    image: "🏆",
-  },
-  {
-    id: 2,
-    title: "Cập nhật tính năng mới: Chế độ học nhóm",
-    excerpt:
-      "Học cùng bạn bè với tính năng phòng học nhóm hoàn toàn mới, hỗ trợ lên đến 10 người.",
-    date: "2026-02-01",
-    category: "Tính năng",
-    image: "👥",
-  },
-  {
-    id: 3,
-    title: "Khóa học AI cơ bản đã có mặt",
-    excerpt:
-      "Khám phá thế giới trí tuệ nhân tạo với khóa học hoàn toàn miễn phí dành cho người mới bắt đầu.",
-    date: "2026-01-28",
-    category: "Khóa học",
-    image: "🤖",
-  },
-  {
-    id: 4,
-    title: "Chương trình giới thiệu bạn bè - Nhận 100 xu",
-    excerpt:
-      "Mời bạn bè tham gia LMS và nhận ngay 100 xu cho mỗi người đăng ký thành công.",
-    date: "2026-01-25",
-    category: "Khuyến mãi",
-    image: "🎁",
-  },
-];
-
-const announcements = [
-  {
-    id: 1,
-    title: "Bảo trì hệ thống ngày 05/02",
-    time: "2 giờ trước",
-    type: "warning",
-  },
-  {
-    id: 2,
-    title: "Bạn đã nhận được 50 xu từ thách đấu",
-    time: "5 giờ trước",
-    type: "success",
-  },
-  {
-    id: 3,
-    title: "Khóa học JavaScript đã được cập nhật",
-    time: "1 ngày trước",
-    type: "info",
-  },
-];
+import { useAuth } from "@/lib/auth";
+import { getNewsCards, getAnnouncementCards, getEventCards } from "@/lib/mock/news";
+import Link from "next/link";
 
 export default function NewsPage() {
+  const { user } = useAuth();
+  
+  if (!user) return null;
+
+  const newsItems = getNewsCards().slice(0, 6);
+  const announcements = getAnnouncementCards(user.id).slice(0, 5);
+  const upcomingEvents = getEventCards(user.id).slice(0, 3);
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'EVENT': return 'bg-purple-500';
+      case 'FEATURE': return 'bg-blue-500';
+      case 'PROMOTION': return 'bg-green-500';
+      case 'COURSE': return 'bg-orange-500';
+      default: return 'bg-primary';
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -77,21 +40,22 @@ export default function NewsPage() {
           <h2 className="text-xl font-bold">Tin mới nhất</h2>
           <div className="space-y-4">
             {newsItems.map((item) => (
-              <article
+              <Link
                 key={item.id}
+                href={`/news/${item.slug}`}
                 className="flex gap-4 border-2 border-border bg-background p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center border-2 border-border bg-muted text-3xl">
-                  {item.image}
+                  {item.thumbnail ? '📰' : '📰'}
                 </div>
                 <div className="flex-1">
                   <div className="mb-1 flex items-center gap-2">
-                    <span className="border border-border bg-primary px-2 py-0.5 text-xs font-medium">
-                      {item.category}
+                    <span className={`border border-border px-2 py-0.5 text-xs font-medium text-white ${getCategoryColor(item.category)}`}>
+                      {item.categoryLabel}
                     </span>
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Calendar className="h-3 w-3" />
-                      {new Date(item.date).toLocaleDateString("vi-VN")}
+                      {new Date(item.publishedAt).toLocaleDateString("vi-VN")}
                     </span>
                   </div>
                   <h3 className="font-bold">{item.title}</h3>
@@ -99,15 +63,18 @@ export default function NewsPage() {
                     {item.excerpt}
                   </p>
                 </div>
-                <button className="self-center">
+                <div className="self-center">
                   <ArrowRight className="h-5 w-5" />
-                </button>
-              </article>
+                </div>
+              </Link>
             ))}
           </div>
-          <button className="w-full border-2 border-border bg-background py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+          <Link
+            href="/news/all"
+            className="block w-full border-2 border-border bg-background py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm text-center"
+          >
             Xem thêm tin tức
-          </button>
+          </Link>
         </div>
 
         {/* Sidebar */}
@@ -118,34 +85,32 @@ export default function NewsPage() {
               <Bell className="h-4 w-4" />
               <h2 className="font-bold">Thông báo</h2>
             </div>
-            <div className="divide-y-2 divide-border">
-              {announcements.map((item) => (
-                <div key={item.id} className="p-4">
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`mt-1 h-2 w-2 shrink-0 rounded-full ${
-                        item.type === "warning"
-                          ? "bg-yellow-500"
-                          : item.type === "success"
-                            ? "bg-green-500"
-                            : "bg-blue-500"
-                      }`}
-                    />
-                    <div>
-                      <p className="font-medium">{item.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {item.time}
-                      </p>
-                    </div>
+            <div className="divide-y divide-border">
+              {announcements.map((item) => {
+                const typeStyles = {
+                  WARNING: 'border-l-yellow-500 bg-yellow-500/5',
+                  SUCCESS: 'border-l-green-500 bg-green-500/5',
+                  INFO: 'border-l-blue-500 bg-blue-500/5',
+                };
+                return (
+                  <div
+                    key={item.id}
+                    className={`border-l-4 px-4 py-3 ${typeStyles[item.type] || typeStyles.INFO}`}
+                  >
+                    <p className="font-medium text-sm">{item.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {new Date(item.startsAt).toLocaleDateString("vi-VN")}
+                    </p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
-            <div className="border-t-2 border-border p-3">
-              <button className="w-full text-center text-sm font-medium text-muted-foreground hover:text-foreground">
-                Xem tất cả thông báo
-              </button>
-            </div>
+            <Link
+              href="/news/announcements"
+              className="block border-t-2 border-border px-4 py-3 text-center text-sm text-muted-foreground hover:text-foreground"
+            >
+              Xem tất cả thông báo →
+            </Link>
           </div>
 
           {/* Upcoming Events */}
@@ -154,28 +119,34 @@ export default function NewsPage() {
               <Calendar className="h-4 w-4" />
               <h2 className="font-bold">Sự kiện sắp tới</h2>
             </div>
-            <div className="p-4 space-y-4">
-              <div className="flex gap-3">
-                <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center border-2 border-border bg-primary">
-                  <span className="text-lg font-bold leading-none">10</span>
-                  <span className="text-xs">Th2</span>
-                </div>
-                <div>
-                  <p className="font-medium">Giải đấu mùa xuân</p>
-                  <p className="text-sm text-muted-foreground">Vòng loại</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center border-2 border-border bg-secondary text-white">
-                  <span className="text-lg font-bold leading-none">14</span>
-                  <span className="text-xs">Th2</span>
-                </div>
-                <div>
-                  <p className="font-medium">Workshop: React 19</p>
-                  <p className="text-sm text-muted-foreground">Online</p>
-                </div>
-              </div>
+            <div className="divide-y divide-border">
+              {upcomingEvents.map((event) => {
+                const eventDate = new Date(event.startsAt);
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleDateString('vi-VN', { month: 'short' });
+                
+                return (
+                  <div key={event.id} className="flex gap-3 p-4">
+                    <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center border-2 border-border bg-primary">
+                      <span className="text-lg font-bold leading-none">{day}</span>
+                      <span className="text-xs">{month}</span>
+                    </div>
+                    <div>
+                      <p className="font-medium">{event.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {event.location || 'Online'}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+            <Link
+              href="/news/events"
+              className="block border-t-2 border-border px-4 py-3 text-center text-sm text-muted-foreground hover:text-foreground"
+            >
+              Xem tất cả sự kiện →
+            </Link>
           </div>
         </div>
       </div>

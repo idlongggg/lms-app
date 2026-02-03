@@ -5,18 +5,25 @@ import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { dashboardTabs, getActiveTabKey } from "@/lib/navigation";
+import { dashboardTabs, getActiveTabKey, type DashboardTab } from "@/lib/navigation";
 
-export function DashboardNav() {
+interface DashboardNavProps {
+  tabs?: DashboardTab[];
+}
+
+export function DashboardNav({ tabs }: DashboardNavProps) {
   const pathname = usePathname();
   const activeKey = getActiveTabKey(pathname);
-  const activeTab = dashboardTabs.find((tab) => tab.key === activeKey);
+  
+  // Use provided tabs or fallback to default
+  const navTabs = tabs || dashboardTabs;
+  const activeTab = navTabs.find((tab) => tab.key === activeKey);
 
   return (
     <>
       {/* Desktop Navigation */}
       <nav className="hidden items-center gap-1 md:flex">
-        {dashboardTabs.map((tab) => {
+        {navTabs.map((tab) => {
           const isActive = tab.key === activeKey;
           const Icon = tab.icon;
 
@@ -39,15 +46,17 @@ export function DashboardNav() {
       </nav>
 
       {/* Mobile Dropdown */}
-      <MobileNavDropdown activeTab={activeTab} />
+      <MobileNavDropdown activeTab={activeTab} tabs={navTabs} />
     </>
   );
 }
 
 function MobileNavDropdown({
   activeTab,
+  tabs,
 }: {
-  activeTab: (typeof dashboardTabs)[0] | undefined;
+  activeTab: DashboardTab | undefined;
+  tabs: DashboardTab[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -89,9 +98,9 @@ function MobileNavDropdown({
 
       {isOpen && (
         <div className="absolute left-0 top-full z-50 mt-1 w-48 border-2 border-border bg-background shadow-md">
-          {dashboardTabs.map((tab) => {
+          {tabs.map((tab) => {
             const Icon = tab.icon;
-            const isActive = tab.key === activeTab.key;
+            const isActive = tab.key === activeTab?.key;
 
             return (
               <Link

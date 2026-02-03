@@ -23,8 +23,15 @@ import {
   Clock,
   Bell,
   TrendingUp,
+  Building2,
+  UserCog,
+  Activity,
+  AlertTriangle,
+  Baby,
   type LucideIcon,
 } from "lucide-react";
+
+import type { UserRole } from './auth/types';
 
 export interface NavItem {
   title: string;
@@ -32,11 +39,13 @@ export interface NavItem {
   icon: LucideIcon;
   badge?: string;
   children?: NavItem[];
+  roles?: UserRole[]; // Roles that can see this item
 }
 
 export interface NavGroup {
   title?: string;
   items: NavItem[];
+  roles?: UserRole[]; // Roles that can see this group
 }
 
 // Dashboard Center Navigation (Header tabs)
@@ -45,15 +54,33 @@ export interface DashboardTab {
   href: string;
   icon: LucideIcon;
   key: string;
+  roles?: UserRole[]; // Roles that can see this tab
 }
 
-export const dashboardTabs: DashboardTab[] = [
+// All possible tabs
+const allDashboardTabs: DashboardTab[] = [
   { title: "Tổng quan", href: "/dashboard", icon: Home, key: "overview" },
-  { title: "Học tập", href: "/learning", icon: BookOpen, key: "learning" },
+  { title: "Học tập", href: "/learning", icon: BookOpen, key: "learning", roles: ['teacher', 'student', 'parent'] },
   { title: "Thách đấu", href: "/tournament", icon: Swords, key: "tournament" },
-  { title: "Đổi quà", href: "/rewards", icon: Gift, key: "rewards" },
+  { title: "Đổi quà", href: "/rewards", icon: Gift, key: "rewards", roles: ['student'] },
   { title: "Tin tức", href: "/news", icon: Newspaper, key: "news" },
 ];
+
+// Get tabs filtered by role
+export function getTabsByRole(role: UserRole): DashboardTab[] {
+  // Admin roles use admin layout, not tabs
+  if (role === 'root-admin' || role === 'tenant-admin') {
+    return [];
+  }
+  
+  return allDashboardTabs.filter(tab => {
+    if (!tab.roles) return true; // No role restriction
+    return tab.roles.includes(role);
+  });
+}
+
+// Legacy export for compatibility
+export const dashboardTabs: DashboardTab[] = allDashboardTabs;
 
 // Sidebar navigation per tab
 export const dashboardSidebars: Record<string, NavGroup[]> = {
@@ -70,15 +97,15 @@ export const dashboardSidebars: Record<string, NavGroup[]> = {
     {
       items: [
         { title: "Bài học của tôi", href: "/learning", icon: BookOpen },
-        { title: "Đang học", href: "/learning/in-progress", icon: Clock },
-        { title: "Hoàn thành", href: "/learning/completed", icon: Star },
+        { title: "Đang học", href: "/learning/in-progress", icon: Clock, roles: ['student'] },
+        { title: "Hoàn thành", href: "/learning/completed", icon: Star, roles: ['student'] },
       ],
     },
     {
       title: "Khám phá",
       items: [
         { title: "Tất cả khóa học", href: "/learning/courses", icon: GraduationCap },
-        { title: "Đề xuất cho bạn", href: "/learning/recommended", icon: Target },
+        { title: "Đề xuất cho bạn", href: "/learning/recommended", icon: Target, roles: ['student'] },
       ],
     },
   ],
@@ -87,15 +114,15 @@ export const dashboardSidebars: Record<string, NavGroup[]> = {
       items: [
         { title: "Sảnh đấu", href: "/tournament", icon: Swords },
         { title: "Lịch đấu", href: "/tournament/schedule", icon: Calendar },
-        { title: "Giải đấu live", href: "/tournament/live", icon: TrendingUp, badge: "LIVE" },
+        { title: "Giải đấu live", href: "/tournament/live", icon: TrendingUp, badge: "LIVE", roles: ['student'] },
       ],
     },
     {
       title: "Thành tích",
       items: [
         { title: "Bảng xếp hạng", href: "/tournament/leaderboard", icon: Trophy },
-        { title: "Huy chương", href: "/tournament/medals", icon: Medal },
-        { title: "Lịch sử đấu", href: "/tournament/history", icon: History },
+        { title: "Huy chương", href: "/tournament/medals", icon: Medal, roles: ['student'] },
+        { title: "Lịch sử đấu", href: "/tournament/history", icon: History, roles: ['student'] },
       ],
     },
   ],
@@ -127,14 +154,107 @@ export const dashboardSidebars: Record<string, NavGroup[]> = {
   ],
 };
 
-// Helper function to get sidebar based on current path
-export function getSidebarForPath(pathname: string): NavGroup[] {
-  if (pathname.startsWith("/learning")) return dashboardSidebars.learning;
-  if (pathname.startsWith("/tournament")) return dashboardSidebars.tournament;
-  if (pathname.startsWith("/rewards")) return dashboardSidebars.rewards;
-  if (pathname.startsWith("/news")) return dashboardSidebars.news;
-  if (pathname.startsWith("/profile")) return dashboardSidebars.profile;
-  return dashboardSidebars.overview;
+// Teacher-specific sidebars
+const teacherSidebars: Record<string, NavGroup[]> = {
+  overview: [
+    {
+      items: [
+        { title: "Tổng quan", href: "/dashboard", icon: Home },
+        { title: "Lớp học của tôi", href: "/dashboard/classes", icon: Users },
+        { title: "Thống kê", href: "/dashboard/stats", icon: BarChart3 },
+      ],
+    },
+  ],
+  learning: [
+    {
+      title: "Quản lý nội dung",
+      items: [
+        { title: "Bài học", href: "/learning", icon: BookOpen },
+        { title: "Ngân hàng câu hỏi", href: "/learning/questions", icon: FileText },
+        { title: "Quản lý lớp", href: "/learning/classes", icon: Users },
+      ],
+    },
+    {
+      title: "Theo dõi học sinh",
+      items: [
+        { title: "Tiến độ lớp", href: "/learning/class-progress", icon: BarChart3 },
+      ],
+    },
+  ],
+  tournament: [
+    {
+      items: [
+        { title: "Sảnh đấu", href: "/tournament", icon: Swords },
+        { title: "Tạo giải đấu", href: "/tournament/create", icon: Calendar },
+      ],
+    },
+    {
+      title: "Quản lý",
+      items: [
+        { title: "Giải đấu của tôi", href: "/tournament/manage", icon: Trophy },
+        { title: "Bảng xếp hạng", href: "/tournament/leaderboard", icon: Medal },
+      ],
+    },
+  ],
+};
+
+// Parent-specific sidebars
+const parentSidebars: Record<string, NavGroup[]> = {
+  overview: [
+    {
+      items: [
+        { title: "Tổng quan", href: "/dashboard", icon: Home },
+        { title: "Con của tôi", href: "/dashboard/children", icon: Baby },
+        { title: "Hoạt động gần đây", href: "/dashboard/activity", icon: History },
+      ],
+    },
+  ],
+  learning: [
+    {
+      items: [
+        { title: "Tiến độ học tập", href: "/learning", icon: BookOpen },
+        { title: "Bài đã hoàn thành", href: "/learning/completed", icon: Star },
+      ],
+    },
+  ],
+  tournament: [
+    {
+      items: [
+        { title: "Giải đấu", href: "/tournament", icon: Swords },
+        { title: "Bảng xếp hạng", href: "/tournament/leaderboard", icon: Trophy },
+        { title: "Thành tích con", href: "/tournament/children", icon: Medal },
+      ],
+    },
+  ],
+};
+
+// Helper function to get sidebar based on current path and role
+export function getSidebarForPath(pathname: string, role?: UserRole): NavGroup[] {
+  const key = getActiveTabKey(pathname);
+  
+  // Role-specific sidebars
+  if (role === 'teacher' && teacherSidebars[key]) {
+    return teacherSidebars[key];
+  }
+  if (role === 'parent' && parentSidebars[key]) {
+    return parentSidebars[key];
+  }
+  
+  // Default sidebars (student)
+  const sidebar = dashboardSidebars[key] || dashboardSidebars.overview;
+  
+  // Filter items by role
+  if (role) {
+    return sidebar.map(group => ({
+      ...group,
+      items: group.items.filter(item => {
+        if (!item.roles) return true;
+        return item.roles.includes(role);
+      }),
+    })).filter(group => group.items.length > 0);
+  }
+  
+  return sidebar;
 }
 
 // Helper function to get active tab key
@@ -150,8 +270,56 @@ export function getActiveTabKey(pathname: string): string {
 // Legacy export for compatibility
 export const dashboardNavigation: NavGroup[] = dashboardSidebars.overview;
 
-// Admin Sidebar Navigation
-export const adminNavigation: NavGroup[] = [
+// Admin Sidebar Navigation - Root Admin (system-wide)
+export const rootAdminNavigation: NavGroup[] = [
+  {
+    items: [
+      {
+        title: "Dashboard",
+        href: "/admin",
+        icon: LayoutDashboard,
+      },
+    ],
+  },
+  {
+    title: "Hệ thống",
+    items: [
+      {
+        title: "Tenants",
+        href: "/admin/tenants",
+        icon: Building2,
+      },
+      {
+        title: "Người dùng",
+        href: "/admin/users",
+        icon: Users,
+      },
+    ],
+  },
+  {
+    title: "Giám sát",
+    items: [
+      {
+        title: "Trạng thái",
+        href: "/admin/health",
+        icon: Activity,
+      },
+      {
+        title: "Cảnh báo",
+        href: "/admin/alerts",
+        icon: AlertTriangle,
+      },
+      {
+        title: "Cài đặt",
+        href: "/admin/settings",
+        icon: Settings,
+      },
+    ],
+  },
+];
+
+// Admin Sidebar Navigation - Tenant Admin (tenant-scoped)
+export const tenantAdminNavigation: NavGroup[] = [
   {
     items: [
       {
@@ -174,6 +342,21 @@ export const adminNavigation: NavGroup[] = [
         href: "/admin/content",
         icon: FileText,
       },
+      {
+        title: "Giải đấu",
+        href: "/admin/tournaments",
+        icon: Trophy,
+      },
+    ],
+  },
+  {
+    title: "Báo cáo",
+    items: [
+      {
+        title: "Thống kê",
+        href: "/admin/reports",
+        icon: BarChart3,
+      },
     ],
   },
   {
@@ -187,6 +370,20 @@ export const adminNavigation: NavGroup[] = [
     ],
   },
 ];
+
+// Legacy export for compatibility
+export const adminNavigation: NavGroup[] = tenantAdminNavigation;
+
+// Get admin navigation by role
+export function getAdminNavByRole(role: UserRole): NavGroup[] {
+  if (role === 'root-admin') {
+    return rootAdminNavigation;
+  }
+  if (role === 'tenant-admin') {
+    return tenantAdminNavigation;
+  }
+  return [];
+}
 
 // Public Header Navigation
 export const publicNavigation: NavItem[] = [

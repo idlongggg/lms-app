@@ -1,37 +1,20 @@
-import { ShoppingBag, Coins, Gift, Star } from "lucide-react";
+'use client';
 
-const featuredRewards = [
-  {
-    id: 1,
-    name: "Áo thun LMS Limited",
-    coins: 500,
-    image: "👕",
-    stock: 10,
-  },
-  {
-    id: 2,
-    name: "Voucher Grab 50K",
-    coins: 300,
-    image: "🎫",
-    stock: 25,
-  },
-  {
-    id: 3,
-    name: "Khóa học Premium 1 tháng",
-    coins: 1000,
-    image: "🎓",
-    stock: 5,
-  },
-  {
-    id: 4,
-    name: "Sticker Pack Exclusive",
-    coins: 100,
-    image: "🎨",
-    stock: 50,
-  },
-];
+import { ShoppingBag, Coins, Gift, Star, Package } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { getRewardCards, getCoinStats, getRedeemedItems } from "@/lib/mock/rewards";
+import Link from "next/link";
 
 export default function RewardsPage() {
+  const { user } = useAuth();
+  
+  if (!user) return null;
+
+  const rewardCards = getRewardCards(user.id);
+  const coinStats = getCoinStats(user.id);
+  const redeemedItems = getRedeemedItems(user.id);
+  const featuredRewards = rewardCards.filter(r => (r.stock ?? 0) > 0).slice(0, 4);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -44,7 +27,7 @@ export default function RewardsPage() {
         </div>
         <div className="flex items-center gap-2 border-2 border-border bg-primary px-4 py-2 shadow-sm">
           <Coins className="h-5 w-5" />
-          <span className="font-bold">1,250 xu</span>
+          <span className="font-bold">{user.coins.toLocaleString()} xu</span>
         </div>
       </div>
 
@@ -57,7 +40,7 @@ export default function RewardsPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Xu hiện có</p>
-              <p className="text-xl font-bold">1,250</p>
+              <p className="text-xl font-bold">{user.coins.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -68,7 +51,7 @@ export default function RewardsPage() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Đã đổi</p>
-              <p className="text-xl font-bold">8 quà</p>
+              <p className="text-xl font-bold">{redeemedItems.length} quà</p>
             </div>
           </div>
         </div>
@@ -78,40 +61,130 @@ export default function RewardsPage() {
               <Star className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Điểm thưởng</p>
-              <p className="text-xl font-bold">3,500</p>
+              <p className="text-sm text-muted-foreground">Tổng xu đã tiêu</p>
+              <p className="text-xl font-bold">{coinStats.totalSpent.toLocaleString()}</p>
             </div>
           </div>
         </div>
       </div>
 
+      {/* My Redeemed Items */}
+      {redeemedItems.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold">Quà đã đổi</h2>
+            <Link href="/rewards/history" className="text-sm text-primary hover:underline">
+              Xem tất cả →
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {redeemedItems.slice(0, 4).map((item) => (
+              <div
+                key={item.id}
+                className="border-2 border-border bg-muted/50 p-4 shadow-sm"
+              >
+                <div className="mb-3 flex h-16 items-center justify-center border-2 border-border bg-background text-3xl">
+                  {item.image || '🎁'}
+                </div>
+                <h3 className="font-medium text-sm">{item.name}</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Đổi ngày {new Date(item.acquiredAt).toLocaleDateString('vi-VN')}
+                </p>
+                <div className={`mt-2 inline-block px-2 py-0.5 text-xs font-medium border ${
+                  item.status === 'ACTIVE' ? 'border-green-500 text-green-500 bg-green-500/10' :
+                  item.status === 'APPLIED' ? 'border-blue-500 text-blue-500 bg-blue-500/10' :
+                  'border-yellow-500 text-yellow-500 bg-yellow-500/10'
+                }`}>
+                  {item.statusLabel}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Featured Rewards */}
       <div>
         <h2 className="mb-4 text-xl font-bold">Quà nổi bật</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredRewards.map((reward) => (
-            <div
-              key={reward.id}
-              className="border-2 border-border bg-background p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className="mb-3 flex h-24 items-center justify-center border-2 border-border bg-muted text-4xl">
-                {reward.image}
-              </div>
-              <h3 className="font-bold">{reward.name}</h3>
-              <div className="mt-2 flex items-center justify-between">
-                <div className="flex items-center gap-1 text-sm">
-                  <Coins className="h-4 w-4" />
-                  <span className="font-medium">{reward.coins}</span>
+          {featuredRewards.map((reward) => {
+            const canAfford = user.coins >= reward.cost;
+            const isInStock = reward.inStock;
+            return (
+              <div
+                key={reward.id}
+                className="border-2 border-border bg-background p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="mb-3 flex h-24 items-center justify-center border-2 border-border bg-muted text-4xl">
+                  {reward.image || '🎁'}
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  Còn {reward.stock}
-                </span>
+                <h3 className="font-bold">{reward.name}</h3>
+                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                  {reward.description}
+                </p>
+                <div className="mt-2 flex items-center justify-between">
+                  <div className={`flex items-center gap-1 text-sm ${!canAfford ? 'text-muted-foreground' : ''}`}>
+                    <Coins className="h-4 w-4" />
+                    <span className="font-medium">{reward.cost.toLocaleString()}</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {reward.stock !== null ? `Còn ${reward.stock}` : 'Không giới hạn'}
+                  </span>
+                </div>
+                <button 
+                  disabled={!canAfford || !isInStock || reward.owned}
+                  className={`mt-3 w-full border-2 border-border py-2 font-medium shadow-xs transition-all ${
+                    canAfford && isInStock && !reward.owned
+                      ? 'bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm' 
+                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                  }`}
+                >
+                  {reward.owned ? 'Đã sở hữu' : !isInStock ? 'Hết hàng' : !canAfford ? 'Không đủ xu' : 'Đổi ngay'}
+                </button>
               </div>
-              <button className="mt-3 w-full border-2 border-border bg-primary py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-                Đổi ngay
-              </button>
-            </div>
-          ))}
+            );
+          })}
+        </div>
+      </div>
+
+      {/* All Rewards */}
+      <div>
+        <h2 className="mb-4 text-xl font-bold">Tất cả phần quà</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {rewardCards.slice(4).map((reward) => {
+            const canAfford = user.coins >= reward.cost;
+            const isInStock = reward.inStock;
+            return (
+              <div
+                key={reward.id}
+                className="border-2 border-border bg-background p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="mb-3 flex h-24 items-center justify-center border-2 border-border bg-muted text-4xl">
+                  {reward.image || '🎁'}
+                </div>
+                <h3 className="font-bold">{reward.name}</h3>
+                <div className="mt-2 flex items-center justify-between">
+                  <div className={`flex items-center gap-1 text-sm ${!canAfford ? 'text-muted-foreground' : ''}`}>
+                    <Coins className="h-4 w-4" />
+                    <span className="font-medium">{reward.cost.toLocaleString()}</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {reward.stock !== null ? `Còn ${reward.stock}` : 'Không giới hạn'}
+                  </span>
+                </div>
+                <button 
+                  disabled={!canAfford || !isInStock || reward.owned}
+                  className={`mt-3 w-full border-2 border-border py-2 font-medium shadow-xs transition-all ${
+                    canAfford && isInStock && !reward.owned
+                      ? 'bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm' 
+                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                  }`}
+                >
+                  {reward.owned ? 'Đã sở hữu' : !isInStock ? 'Hết hàng' : !canAfford ? 'Không đủ xu' : 'Đổi ngay'}
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
 

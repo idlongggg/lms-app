@@ -1,72 +1,162 @@
-import { BookOpen, Play, CheckCircle } from "lucide-react";
+'use client';
+
+import { BookOpen, Play, CheckCircle, Clock, Star } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { getSubjectsWithProgress } from "@/lib/mock/courses";
+import Link from "next/link";
+import { useState } from "react";
+
+type FilterType = 'all' | 'in-progress' | 'completed' | 'not-started';
 
 export default function MyLearningPage() {
+  const { user } = useAuth();
+  const [filter, setFilter] = useState<FilterType>('all');
+  
+  if (!user) return null;
+
+  const subjectsWithProgress = getSubjectsWithProgress(user.id);
+  
+  const filteredSubjects = subjectsWithProgress.filter(subject => {
+    const progress = subject.completedLessons / subject.totalLessons;
+    switch (filter) {
+      case 'in-progress':
+        return progress > 0 && progress < 1;
+      case 'completed':
+        return progress === 1;
+      case 'not-started':
+        return progress === 0;
+      default:
+        return true;
+    }
+  });
+
+  const filters: { label: string; value: FilterType }[] = [
+    { label: "Tất cả", value: 'all' },
+    { label: "Đang học", value: 'in-progress' },
+    { label: "Hoàn thành", value: 'completed' },
+    { label: "Chưa bắt đầu", value: 'not-started' },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="font-bold text-3xl font-bold">Bài học của tôi</h1>
+        <h1 className="font-bold text-3xl">Bài học của tôi</h1>
         <p className="text-muted-foreground">
           Tiếp tục hành trình học tập của bạn
         </p>
       </div>
 
+      {/* Stats Summary */}
+      <div className="grid gap-4 sm:grid-cols-4">
+        <div className="border-2 border-border bg-card p-4">
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-primary" />
+            <span className="text-sm text-muted-foreground">Tổng môn học</span>
+          </div>
+          <p className="mt-1 text-2xl font-bold">{subjectsWithProgress.length}</p>
+        </div>
+        <div className="border-2 border-border bg-card p-4">
+          <div className="flex items-center gap-2">
+            <Clock className="h-5 w-5 text-orange-500" />
+            <span className="text-sm text-muted-foreground">Đang học</span>
+          </div>
+          <p className="mt-1 text-2xl font-bold">
+            {subjectsWithProgress.filter(s => s.completedLessons > 0 && s.completedLessons < s.totalLessons).length}
+          </p>
+        </div>
+        <div className="border-2 border-border bg-card p-4">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-green-500" />
+            <span className="text-sm text-muted-foreground">Hoàn thành</span>
+          </div>
+          <p className="mt-1 text-2xl font-bold">
+            {subjectsWithProgress.filter(s => s.completedLessons === s.totalLessons).length}
+          </p>
+        </div>
+        <div className="border-2 border-border bg-card p-4">
+          <div className="flex items-center gap-2">
+            <Star className="h-5 w-5 text-yellow-500" />
+            <span className="text-sm text-muted-foreground">Tổng bài học</span>
+          </div>
+          <p className="mt-1 text-2xl font-bold">
+            {subjectsWithProgress.reduce((sum, s) => sum + s.completedLessons, 0)}/
+            {subjectsWithProgress.reduce((sum, s) => sum + s.totalLessons, 0)}
+          </p>
+        </div>
+      </div>
+
       {/* Filters */}
       <div className="flex flex-wrap gap-2">
-        {["Tất cả", "Đang học", "Hoàn thành", "Chưa bắt đầu"].map((filter) => (
+        {filters.map((f) => (
           <button
-            key={filter}
-            className="border-2 border-border bg-background px-4 py-2 text-sm font-medium shadow-xs transition-all first:bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
+            key={f.value}
+            onClick={() => setFilter(f.value)}
+            className={`border-2 border-border px-4 py-2 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm ${
+              filter === f.value ? 'bg-primary' : 'bg-background'
+            }`}
           >
-            {filter}
+            {f.label}
           </button>
         ))}
       </div>
 
       {/* Subject List */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {subjects.map((subject, index) => (
-          <div
-            key={index}
-            className="border-2 border-border bg-card shadow-sm transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md"
-          >
-            <div className="border-b-2 border-border bg-primary p-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-lg font-bold">{subject.name}</h3>
-                <BookOpen className="h-5 w-5" />
+        {filteredSubjects.map((subject) => {
+          const progress = Math.round((subject.completedLessons / subject.totalLessons) * 100);
+          const isCompleted = progress === 100;
+          const isNotStarted = progress === 0;
+          
+          return (
+            <div
+              key={subject.id}
+              className="border-2 border-border bg-card shadow-sm transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md"
+            >
+              <div className={`border-b-2 border-border p-4 ${
+                isCompleted ? 'bg-green-500' : isNotStarted ? 'bg-muted' : 'bg-primary'
+              }`}>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-lg">{subject.name}</h3>
+                  {isCompleted ? (
+                    <CheckCircle className="h-5 w-5" />
+                  ) : (
+                    <BookOpen className="h-5 w-5" />
+                  )}
+                </div>
+                <p className="mt-1 text-sm opacity-80">Lớp {subject.grade}</p>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-muted-foreground">
+                  {subject.completedLessons}/{subject.totalLessons} bài học ({progress}%)
+                </p>
+                <div className="mt-2 h-3 border-2 border-border bg-muted">
+                  <div
+                    className={`h-full ${isCompleted ? 'bg-green-500' : 'bg-primary'}`}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+                <div className="mt-4 flex gap-2">
+                  <Link
+                    href={`/learning/courses/${subject.id}`}
+                    className="flex flex-1 items-center justify-center gap-2 border-2 border-border bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
+                  >
+                    <Play className="h-4 w-4" />
+                    {isNotStarted ? 'Bắt đầu' : isCompleted ? 'Ôn tập' : 'Tiếp tục'}
+                  </Link>
+                </div>
               </div>
             </div>
-            <div className="p-4">
-              <p className="text-sm text-muted-foreground">
-                {subject.completedLessons}/{subject.totalLessons} bài học
-              </p>
-              <div className="mt-2 h-3 border-2 border-border bg-muted">
-                <div
-                  className="h-full bg-primary"
-                  style={{
-                    width: `${(subject.completedLessons / subject.totalLessons) * 100}%`,
-                  }}
-                />
-              </div>
-              <div className="mt-4 flex gap-2">
-                <button className="flex flex-1 items-center justify-center gap-2 border-2 border-border bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-                  <Play className="h-4 w-4" />
-                  Tiếp tục
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {filteredSubjects.length === 0 && (
+        <div className="border-2 border-dashed border-border p-8 text-center text-muted-foreground">
+          <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
+          <p>Không có môn học nào trong danh mục này</p>
+        </div>
+      )}
     </div>
   );
 }
-
-const subjects = [
-  { name: "Toán học", completedLessons: 12, totalLessons: 20 },
-  { name: "Tiếng Anh", completedLessons: 8, totalLessons: 15 },
-  { name: "Vật lý", completedLessons: 5, totalLessons: 18 },
-  { name: "Hóa học", completedLessons: 3, totalLessons: 16 },
-  { name: "Lịch sử", completedLessons: 10, totalLessons: 12 },
-  { name: "Địa lý", completedLessons: 0, totalLessons: 10 },
-];

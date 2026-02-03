@@ -6,3 +6,4 @@ export { Logo } from "./logo";
 export { FocusHeader } from "./focus-header";
 export { DashboardNav } from "./dashboard-nav";
 export { UserMenu } from "./user-menu";
+export { AppShell } from "./app-shell";

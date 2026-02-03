@@ -1,47 +1,33 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { Header, Sidebar } from "@/components/layout";
-import { SidebarProvider } from "@/hooks/use-sidebar";
-import { useScrollPosition } from "@/hooks/use-scroll-position";
-import { adminNavigation } from "@/lib/navigation";
-
-function AdminLayoutContent({ children }: { children: React.ReactNode }) {
-  const mainRef = useRef<HTMLElement>(null);
-
-  useScrollPosition(mainRef, "content");
-
-  // Force dark mode for admin
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-    return () => {
-      document.documentElement.classList.remove("dark");
-    };
-  }, []);
-
-  return (
-    <div className="h-screen bg-background">
-      <Header variant="admin" showSearch showUserMenu showMobileToggle />
-      <div className="mx-auto h-[calc(100vh-4rem)] max-w-7xl">
-        <div className="relative flex h-full overflow-hidden pt-16">
-          <Sidebar navigation={adminNavigation} variant="expanded" />
-          <main ref={mainRef} className="h-full flex-1 overflow-y-auto">
-            <div className="p-6">{children}</div>
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { AppShell } from '@/components/layout';
+import { useRequireAuth } from '@/lib/auth';
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isAuthorized, isLoading } = useRequireAuth(['root-admin', 'tenant-admin']);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
+          <p className="text-muted-foreground">Đang tải...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthorized) {
+    return null; // Will redirect via useRequireAuth
+  }
+
   return (
-    <SidebarProvider>
-      <AdminLayoutContent>{children}</AdminLayoutContent>
-    </SidebarProvider>
+    <AppShell variant="admin" forceDarkMode>
+      {children}
+    </AppShell>
   );
 }
