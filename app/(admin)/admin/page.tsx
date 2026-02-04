@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 
 import { useAuth } from "@/lib/auth";
+import { useTranslation } from "@/lib/providers";
 import {
   getAdminDashboardCards,
   getAdminUserList,
@@ -23,6 +24,7 @@ import {
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   if (!user) return null;
 
@@ -43,28 +45,28 @@ export default function AdminDashboardPage() {
     isRootAdmin && systemStats
       ? [
           {
-            label: "Tổng Tenant",
+            label: t("admin.dashboard.stats.totalTenants"),
             value: systemStats.totalTenants.toLocaleString(),
             change: "+2",
             icon: Building2,
             color: "bg-purple-500",
           },
           {
-            label: "Tổng người dùng",
+            label: t("admin.dashboard.stats.totalUsers"),
             value: systemStats.totalUsers.toLocaleString(),
             change: `+${systemStats.newUsersToday}`,
             icon: Users,
             color: "bg-blue-500",
           },
           {
-            label: "Hoạt động hôm nay",
+            label: t("admin.dashboard.stats.activeUsers"),
             value: systemStats.activeUsers.toLocaleString(),
             change: "+18%",
             icon: TrendingUp,
             color: "bg-green-500",
           },
           {
-            label: "Nội dung",
+            label: t("admin.dashboard.stats.content"),
             value: systemStats.totalLessons?.toLocaleString() || "0",
             change: "+5",
             icon: FileText,
@@ -74,28 +76,28 @@ export default function AdminDashboardPage() {
       : tenantStats
         ? [
             {
-              label: "Học sinh",
+              label: t("admin.dashboard.stats.students"),
               value: tenantStats.students.toLocaleString(),
               change: "+8",
               icon: GraduationCap,
               color: "bg-blue-500",
             },
             {
-              label: "Giáo viên",
+              label: t("admin.dashboard.stats.teachers"),
               value: tenantStats.teachers.toLocaleString(),
               change: "+1",
               icon: Users,
               color: "bg-purple-500",
             },
             {
-              label: "Bài học",
+              label: t("admin.dashboard.stats.lessons"),
               value: tenantStats.totalLessons.toLocaleString(),
               change: "+12",
               icon: BookOpen,
               color: "bg-green-500",
             },
             {
-              label: "Giải đấu",
+              label: t("admin.dashboard.stats.tournaments"),
               value: tenantStats.activeTournaments.toLocaleString(),
               change: "+2",
               icon: Trophy,
@@ -109,12 +111,16 @@ export default function AdminDashboardPage() {
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold">
-          {isRootAdmin ? "System Dashboard" : "Admin Dashboard"}
+          {isRootAdmin
+            ? t("admin.dashboard.systemTitle")
+            : t("admin.dashboard.title")}
         </h1>
         <p className="text-muted-foreground">
           {isRootAdmin
-            ? "Tổng quan hệ thống toàn bộ các tenant"
-            : `Quản lý ${tenantStats?.tenantName || "tenant"}`}
+            ? t("admin.dashboard.systemDescription")
+            : t("admin.dashboard.description", {
+                name: tenantStats?.tenantName || "tenant",
+              })}
         </p>
       </div>
 
@@ -132,7 +138,7 @@ export default function AdminDashboardPage() {
                 <p
                   className={`text-sm ${stat.change.startsWith("+") ? "text-green-500" : "text-red-500"}`}
                 >
-                  {stat.change} so với tuần trước
+                  {stat.change} {t("admin.dashboard.stats.change")}
                 </p>
               </div>
               <div
@@ -176,12 +182,14 @@ export default function AdminDashboardPage() {
         {/* Recent Users */}
         <div className="border-border bg-card border-2 shadow-sm">
           <div className="border-border flex items-center justify-between border-b-2 p-4">
-            <h2 className="text-xl font-bold">Người dùng mới</h2>
+            <h2 className="text-xl font-bold">
+              {t("admin.dashboard.stats.newUsers")}
+            </h2>
             <Link
               href="/admin/users"
               className="text-muted-foreground hover:text-foreground text-sm"
             >
-              Xem tất cả →
+              {t("admin.dashboard.stats.viewAll")} →
             </Link>
           </div>
           <div className="divide-border divide-y-2">
@@ -226,7 +234,9 @@ export default function AdminDashboardPage() {
         {/* Recent Activity */}
         <div className="border-border bg-card border-2 shadow-sm">
           <div className="border-border flex items-center justify-between border-b-2 p-4">
-            <h2 className="text-xl font-bold">Hoạt động gần đây</h2>
+            <h2 className="text-xl font-bold">
+              {t("admin.dashboard.stats.recentActivity")}
+            </h2>
           </div>
           <div className="divide-border divide-y-2">
             {recentActivity.map((activity, index) => (

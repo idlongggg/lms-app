@@ -14,7 +14,7 @@ import {
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
-import { useSidebar } from "@/lib/providers";
+import { useSidebar, useTranslation } from "@/lib/providers";
 
 import { getAdminNavByRole } from "./nav";
 
@@ -33,13 +33,15 @@ function MobileMenuButton() {
 }
 
 function SearchButton() {
+  const { t } = useTranslation();
+
   return (
     <button
       className="border-border bg-background hidden h-9 items-center gap-2 border-2 px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm sm:flex"
-      aria-label="Search"
+      aria-label={t("common.search")}
     >
       <Search className="h-4 w-4" />
-      <span className="text-muted-foreground text-sm">Tìm kiếm...</span>
+      <span className="text-muted-foreground text-sm">{t("admin.dashboard.search")}</span>
       <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">
         ⌘K
       </kbd>

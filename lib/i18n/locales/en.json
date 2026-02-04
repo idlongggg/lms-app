@@ -86,6 +86,7 @@
       "rewards": "Rewards"
     },
     "sidebar": {
+      "dashboard": "Dashboard",
       "overview": "Overview",
       "stats": "Statistics",
       "recentActivity": "Recent Activity",
@@ -116,10 +117,40 @@
       "announcements": "Announcements",
       "events": "Events",
       "profile": "Profile",
-      "settings": "Settings"
+      "settings": "Settings",
+      "system": "System",
+      "monitoring": "Monitoring",
+      "management": "Management",
+      "tenants": "Tenants",
+      "users": "Users",
+      "health": "Health Status",
+      "alerts": "Alerts",
+      "content": "Content",
+      "tournaments": "Tournaments",
+      "statistics": "Statistics"
     },
     "admin": {
-      "dashboard": "Dashboard",
+      "dashboard": {
+        "title": "Admin Dashboard",
+        "systemTitle": "System Dashboard",
+        "description": "Manage {{name}}",
+        "systemDescription": "System overview of all tenants",
+        "search": "Search...",
+        "stats": {
+          "totalTenants": "Total Tenants",
+          "totalUsers": "Total Users",
+          "activeUsers": "Active Today",
+          "content": "Content",
+          "students": "Students",
+          "teachers": "Teachers",
+          "lessons": "Lessons",
+          "tournaments": "Tournaments",
+          "change": "vs last week",
+          "newUsers": "New Users",
+          "recentActivity": "Recent Activity",
+          "viewAll": "View all"
+        }
+      },
       "system": "System",
       "tenants": "Tenants",
       "users": "Users",
@@ -213,7 +244,8 @@
       "inProgress": "In Progress",
       "completed": "Completed",
       "notStarted": "Not Started"
-    }
+    },
+    "noSubjects": "No subjects found in this category"
   },
   "tournament": {
     "title": "Tournaments",

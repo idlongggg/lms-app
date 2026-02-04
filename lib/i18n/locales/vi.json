@@ -86,6 +86,7 @@
       "rewards": "Đổi quà"
     },
     "sidebar": {
+      "dashboard": "Bảng điều khiển",
       "overview": "Tổng quan",
       "stats": "Thống kê",
       "recentActivity": "Hoạt động gần đây",
@@ -116,10 +117,40 @@
       "announcements": "Thông báo",
       "events": "Sự kiện",
       "profile": "Hồ sơ cá nhân",
-      "settings": "Cài đặt"
+      "settings": "Cài đặt",
+      "system": "Hệ thống",
+      "monitoring": "Giám sát",
+      "management": "Quản lý",
+      "tenants": "Tenants",
+      "users": "Người dùng",
+      "health": "Trạng thái",
+      "alerts": "Cảnh báo",
+      "content": "Nội dung",
+      "tournaments": "Giải đấu",
+      "statistics": "Thống kê"
     },
     "admin": {
-      "dashboard": "Dashboard",
+      "dashboard": {
+        "title": "Admin Dashboard",
+        "systemTitle": "System Dashboard",
+        "description": "Quản lý {{name}}",
+        "systemDescription": "Tổng quan hệ thống toàn bộ các tenant",
+        "search": "Tìm kiếm...",
+        "stats": {
+          "totalTenants": "Tổng Tenant",
+          "totalUsers": "Tổng người dùng",
+          "activeUsers": "Hoạt động hôm nay",
+          "content": "Nội dung",
+          "students": "Học sinh",
+          "teachers": "Giáo viên",
+          "lessons": "Bài học",
+          "tournaments": "Giải đấu",
+          "change": "so với tuần trước",
+          "newUsers": "Người dùng mới",
+          "recentActivity": "Hoạt động gần đây",
+          "viewAll": "Xem tất cả"
+        }
+      },
       "system": "Hệ thống",
       "tenants": "Tenants",
       "users": "Người dùng",
@@ -213,7 +244,8 @@
       "inProgress": "Đang học",
       "completed": "Hoàn thành",
       "notStarted": "Chưa bắt đầu"
-    }
+    },
+    "noSubjects": "Không có môn học nào trong danh mục này"
   },
   "tournament": {
     "title": "Giải đấu",
