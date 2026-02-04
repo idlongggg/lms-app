@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { type DashboardTab, getActiveTabKey } from "@/lib/navigation";
+import { type DashboardTab, getActiveTabKey } from "@/lib/nav";
 import { useTheme, useTranslation } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 

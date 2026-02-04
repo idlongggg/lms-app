@@ -15,7 +15,7 @@ import {
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
-import { filterTabsByPermissions, getActiveTabKey } from "@/lib/navigation";
+import { filterTabs, getActiveTabKey } from "@/lib/nav";
 import { SidebarProvider, useSidebar } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
@@ -59,7 +59,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
   const tabKey = getActiveTabKey(pathname);
   const navigation = DASHBOARD_SIDEBARS[tabKey] || DASHBOARD_SIDEBARS.overview;
-  const tabs = filterTabsByPermissions(DASHBOARD_TABS, hasPermission);
+  const tabs = filterTabs(DASHBOARD_TABS, hasPermission);
   const showTabs = tabs.length > 0;
 
   return (

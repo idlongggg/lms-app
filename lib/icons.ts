@@ -26,7 +26,7 @@ import {
   Users,
 } from "lucide-react";
 
-export type IconComponent = LucideIcon;
+export type Icon = LucideIcon;
 
 // =============================================================================
 // Semantic icon exports - change mapping here when needed

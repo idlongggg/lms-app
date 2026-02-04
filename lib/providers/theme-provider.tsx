@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 
-import { THEME_COLORS, type ThemeKey } from "@/lib/constants/colors";
+import { THEME, type ThemeKey } from "@/lib/colors";
 
 export type Theme = "light" | "dark";
 
@@ -55,7 +55,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme, setTheme]);
 
   const setThemeColor = useCallback((color: ThemeKey) => {
-    const themeColors = THEME_COLORS[color];
+    const themeColors = THEME[color];
     if (!themeColors) return;
 
     const root = document.documentElement;

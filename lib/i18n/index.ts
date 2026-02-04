@@ -1,89 +1,51 @@
-/**
- * i18n Module
- * Internationalization utilities for the LMS app
- */
-
 import en from "./locales/en.json";
 import vi from "./locales/vi.json";
 
-export type Language = "vi" | "en";
+export const translations = { en, vi } as const;
+export type Language = keyof typeof translations;
 
-export interface LanguageOption {
+export const languages = [
+  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳", color: "text-red-500" },
+  { code: "en", label: "English", flag: "🇺🇸", color: "text-blue-500" },
+] as const satisfies {
   code: Language;
   label: string;
   flag: string;
   color: string;
-}
+}[];
 
-export const languages: LanguageOption[] = [
-  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳", color: "text-red-500" },
-  { code: "en", label: "English", flag: "🇺🇸", color: "text-blue-500" },
-];
+export type LanguageOption = (typeof languages)[number];
+export const defaultLanguage: Language = "vi";
 
-export const translations = {
-  vi,
-  en,
-} as const;
+// Helper to infer all valid dot-notation keys that point to a string
+type NestedKeyOf<T> = T extends object
+  ? {
+      [K in keyof T & (string | number)]: T[K] extends string
+        ? `${K}`
+        : `${K}.${NestedKeyOf<T[K]>}`;
+    }[keyof T & (string | number)]
+  : never;
 
-export type Translations = typeof vi;
+export type TxKey = NestedKeyOf<typeof en>;
 
-/**
- * Get nested value from object using dot notation
- * e.g., getNestedValue(obj, 'common.loading')
- */
-function getNestedValue(
-  obj: Record<string, unknown>,
-  path: string,
-): string | undefined {
-  const keys = path.split(".");
-  let current: unknown = obj;
-
-  for (const key of keys) {
-    if (current && typeof current === "object" && key in current) {
-      current = (current as Record<string, unknown>)[key];
-    } else {
-      return undefined;
-    }
-  }
-
-  return typeof current === "string" ? current : undefined;
-}
-
-/**
- * Interpolate variables in translation string
- * e.g., interpolate('Min {{min}} chars', { min: 5 }) => 'Min 5 chars'
- */
-function interpolate(
-  str: string,
-  vars?: Record<string, string | number>,
-): string {
-  if (!vars) return str;
-
-  return str.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-    return vars[key] !== undefined ? String(vars[key]) : match;
-  });
-}
-
-/**
- * Get translation for a key
- */
 export function getTranslation(
-  language: Language,
+  lang: Language,
   key: string,
   vars?: Record<string, string | number>,
 ): string {
-  const translation = getNestedValue(
-    translations[language] as Record<string, unknown>,
-    key,
-  );
+  const data = translations[lang];
+  const text = key
+    .split(".")
+    .reduce<unknown>((obj, k) => (obj as Record<string, unknown>)?.[k], data);
 
-  if (!translation) {
-    // Fallback to key if translation not found
-    console.warn(`Translation not found for key: ${key}`);
+  if (typeof text !== "string") {
+    console.warn(`Missing translation: ${key} (${lang})`);
     return key;
   }
 
-  return interpolate(translation, vars);
+  return vars
+    ? text.replace(/\{\{(\w+)\}\}/g, (_: string, k: string) =>
+        String(vars[k] ?? `{{${k}}}`),
+      )
+    : text;
 }
-
-export const defaultLanguage: Language = "vi";

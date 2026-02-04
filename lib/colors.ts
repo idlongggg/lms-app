@@ -1,41 +1,41 @@
 export type ThemeKey =
-  | "default"
-  | "overview"
-  | "learning"
-  | "tournament"
-  | "community"
-  | "news";
+  | "preset00"
+  | "preset01"
+  | "preset02"
+  | "preset03"
+  | "preset04"
+  | "preset05";
 
-export const THEME_COLORS: Record<
+export const THEME: Record<
   ThemeKey,
   { primary: string; hover: string; ring: string }
 > = {
-  default: {
+  preset00: {
     primary: "#10b981",
     hover: "#059669",
     ring: "#10b981",
   },
-  overview: {
+  preset01: {
     primary: "#10b981",
     hover: "#059669",
     ring: "#10b981",
   },
-  learning: {
+  preset02: {
     primary: "#3b82f6",
     hover: "#2563eb",
     ring: "#3b82f6",
   },
-  tournament: {
+  preset03: {
     primary: "#ef4444",
     hover: "#dc2626",
     ring: "#ef4444",
   },
-  community: {
+  preset04: {
     primary: "#f97316",
     hover: "#ea580c",
     ring: "#f97316",
   },
-  news: {
+  preset05: {
     primary: "#f59e0b",
     hover: "#d97706",
     ring: "#f59e0b",

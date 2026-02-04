@@ -11,7 +11,7 @@ import {
   TermsIcon,
   TournamentsIcon,
 } from "@/lib/icons";
-import type { NavItem } from "@/lib/navigation";
+import type { NavItem } from "@/lib/nav";
 
 // ============================================================================
 // Header Navigation

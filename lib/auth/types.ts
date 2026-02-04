@@ -6,8 +6,8 @@
 import type { MockUser, UserRole } from "../mock/users";
 
 // Re-export from constants for backward compatibility
-export { type Permission, PERMISSIONS, ROLE_PERMISSIONS } from "../constants";
 export type { UserRole } from "../mock/users";
+export { type Permission, PERMISSIONS } from "../permissions";
 
 export interface AuthUser {
   id: string;

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
 import { useScrollPosition } from "@/lib/hooks";
-import type { NavGroup } from "@/lib/navigation";
+import type { NavGroup } from "@/lib/nav";
 import { useTranslation } from "@/lib/providers";
 import { useSidebar } from "@/lib/providers";
 import { cn } from "@/lib/utils";

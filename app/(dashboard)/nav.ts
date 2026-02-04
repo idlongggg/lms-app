@@ -1,4 +1,3 @@
-import { PERMISSIONS } from "@/lib/constants";
 import {
   AchievementsIcon,
   AnnouncementsIcon,
@@ -27,7 +26,8 @@ import {
   StudentsIcon,
   TournamentIcon,
 } from "@/lib/icons";
-import type { DashboardTab, NavGroup, NavSection } from "@/lib/navigation";
+import type { DashboardTab, NavGroup, NavSection } from "@/lib/nav";
+import { PERMISSIONS } from "@/lib/permissions";
 
 // ============================================================================
 // Dashboard Tabs (Header navigation)
@@ -38,14 +38,14 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     key: "overview",
     href: "/dashboard",
     icon: OverviewIcon,
-    color: "default",
+    color: "preset00", // default/overview
   },
   {
     key: "learning",
     href: "/learning",
     icon: LearningIcon,
-    color: "learning",
-    permissions: [
+    color: "preset02", // learning
+    access: [
       PERMISSIONS.LESSON_READ,
       PERMISSIONS.PROGRESS_READ,
       PERMISSIONS.PROGRESS_READ_OWN,
@@ -56,15 +56,15 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     key: "tournament",
     href: "/tournament",
     icon: TournamentIcon,
-    color: "tournament",
-    permissions: [PERMISSIONS.TOURNAMENT_READ, PERMISSIONS.TOURNAMENT_JOIN],
+    color: "preset03", // tournament
+    access: [PERMISSIONS.TOURNAMENT_READ, PERMISSIONS.TOURNAMENT_JOIN],
   },
   {
     key: "community",
     href: "/community",
     icon: CommunityIcon,
-    color: "community",
-    permissions: [
+    color: "preset04", // community
+    access: [
       PERMISSIONS.LESSON_READ,
       PERMISSIONS.PROGRESS_READ_OWN,
       PERMISSIONS.PROGRESS_READ_CHILD,
@@ -74,7 +74,7 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     key: "news",
     href: "/news",
     icon: NewsIcon,
-    color: "news",
+    color: "preset05", // news
   },
 ];
 
@@ -177,7 +177,7 @@ export const DASHBOARD_SIDEBARS: Record<string, NavGroup[]> = {
 export const ADMIN_SECTIONS: NavSection[] = [
   {
     key: "adminOverview",
-    permissions: [PERMISSIONS.USER_READ, PERMISSIONS.PROGRESS_READ],
+    access: [PERMISSIONS.USER_READ, PERMISSIONS.PROGRESS_READ],
     items: [
       { key: "allStudents", href: "/dashboard/students", icon: StudentsIcon },
       { key: "allProgress", href: "/dashboard/progress", icon: ProgressIcon },
@@ -193,7 +193,7 @@ export const ADMIN_SECTIONS: NavSection[] = [
 export const PARENT_SECTIONS: NavSection[] = [
   {
     key: "childrenOverview",
-    permissions: [PERMISSIONS.PROGRESS_READ_CHILD],
+    access: [PERMISSIONS.PROGRESS_READ_CHILD],
     items: [
       { key: "myChildren", href: "/dashboard/children", icon: ChildrenIcon },
       {
@@ -217,7 +217,7 @@ export const PARENT_SECTIONS: NavSection[] = [
 export const STUDENT_SECTIONS: NavSection[] = [
   {
     key: "myLearning",
-    permissions: [PERMISSIONS.PROGRESS_READ_OWN],
+    access: [PERMISSIONS.PROGRESS_READ_OWN],
     items: [
       { key: "myProgress", href: "/dashboard/my-progress", icon: ProgressIcon },
       {

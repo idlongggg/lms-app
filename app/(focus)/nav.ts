@@ -4,7 +4,7 @@
  */
 
 import { BackIcon, HomeIcon } from "@/lib/icons";
-import type { NavItem } from "@/lib/navigation";
+import type { NavItem } from "@/lib/nav";
 
 // ============================================================================
 // Focus Mode Navigation (minimal)

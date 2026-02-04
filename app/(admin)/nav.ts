@@ -3,7 +3,6 @@
  * Navigation configuration for admin layout
  */
 
-import { PERMISSIONS } from "@/lib/constants";
 import {
   AlertsIcon,
   ContentIcon,
@@ -15,7 +14,8 @@ import {
   TournamentsIcon,
   UsersIcon,
 } from "@/lib/icons";
-import type { NavGroup, NavSection } from "@/lib/navigation";
+import type { NavGroup, NavSection } from "@/lib/nav";
+import { PERMISSIONS } from "@/lib/permissions";
 
 // ============================================================================
 // Root Admin Navigation (System-wide management)
@@ -77,7 +77,7 @@ export const TENANT_ADMIN_NAV: NavGroup[] = [
 export const ADMIN_SECTIONS: NavSection[] = [
   {
     key: "systemAdmin",
-    permissions: [PERMISSIONS.TENANT_READ, PERMISSIONS.TENANT_CREATE],
+    access: [PERMISSIONS.TENANT_READ, PERMISSIONS.TENANT_CREATE],
     items: [
       { key: "tenants", href: "/admin/tenants", icon: TenantsIcon },
       { key: "health", href: "/admin/health", icon: HealthIcon },
@@ -86,7 +86,7 @@ export const ADMIN_SECTIONS: NavSection[] = [
   },
   {
     key: "tenantAdmin",
-    permissions: [PERMISSIONS.USER_READ, PERMISSIONS.USER_CREATE],
+    access: [PERMISSIONS.USER_READ, PERMISSIONS.USER_CREATE],
     items: [
       { key: "users", href: "/admin/users", icon: UsersIcon },
       { key: "content", href: "/admin/content", icon: ContentIcon },
