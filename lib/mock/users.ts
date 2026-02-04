@@ -4,50 +4,150 @@
  * Based on rbac.md: 5 roles (root-admin, tenant-admin, teacher, student, parent)
  */
 
-export type UserRole =
-  | "root-admin"
-  | "tenant-admin"
-  | "teacher"
-  | "student"
-  | "parent";
+import { PERMISSIONS, type Permission } from "../permissions";
+import type { User, UserProfile, Streak, UserRole } from "../types/user";
 
-export type UserStatus =
-  | "PENDING"
-  | "ACTIVE"
-  | "SUSPENDED"
-  | "PENDING_DEACTIVATION";
+// Re-export types
+export type { User, UserProfile, Streak, UserRole } from "../types/user";
 
-export type ThemePreference = "LIGHT" | "DARK";
+// Role Logic helpers (previously in mock-auth)
+const ROLE_PERMISSIONS: Record<string, Permission[]> = {
+  "root-admin": [
+    // System
+    PERMISSIONS.TENANT_CREATE,
+    PERMISSIONS.TENANT_READ,
+    PERMISSIONS.TENANT_UPDATE,
+    PERMISSIONS.TENANT_DELETE,
+    PERMISSIONS.TENANT_SUSPEND,
 
-export interface User {
-  id: string;
-  tenantId: string;
-  email: string;
-  phone: string | null;
-  name: string;
-  avatarUrl: string | null;
-  provider: "INTERNAL" | "GOOGLE" | null;
-  providerId: string | null;
-  status: UserStatus;
-  emailVerifiedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
+    // Users
+    PERMISSIONS.USER_CREATE,
+    PERMISSIONS.USER_READ,
+    PERMISSIONS.USER_UPDATE,
+    PERMISSIONS.USER_DELETE,
+    PERMISSIONS.USER_IMPORT,
+    PERMISSIONS.USER_IMPERSONATE,
+    PERMISSIONS.ROLE_ASSIGN,
 
-export interface UserProfile {
-  userId: string;
-  exp: number;
-  level: number;
-  coins: number;
-  currentLevelExp: number;
-  nextLevelExp: number;
-  theme: ThemePreference;
-  locale: string | null;
-  updatedAt: string;
-}
+    // Content (Full access)
+    PERMISSIONS.SUBJECT_CREATE,
+    PERMISSIONS.SUBJECT_READ,
+    PERMISSIONS.SUBJECT_UPDATE,
+    PERMISSIONS.SUBJECT_DELETE,
+    PERMISSIONS.TOPIC_CREATE,
+    PERMISSIONS.TOPIC_READ,
+    PERMISSIONS.TOPIC_UPDATE,
+    PERMISSIONS.TOPIC_DELETE,
+    PERMISSIONS.LESSON_CREATE,
+    PERMISSIONS.LESSON_READ,
+    PERMISSIONS.LESSON_UPDATE,
+    PERMISSIONS.LESSON_DELETE,
+    PERMISSIONS.LESSON_PUBLISH,
+    PERMISSIONS.QUESTION_CREATE,
+    PERMISSIONS.QUESTION_READ,
+    PERMISSIONS.QUESTION_UPDATE,
+    PERMISSIONS.QUESTION_DELETE,
+    PERMISSIONS.QUESTION_IMPORT,
+    PERMISSIONS.MEDIA_UPLOAD,
+    PERMISSIONS.MEDIA_DELETE,
 
-export interface UserRole_ {
+    // Progress & Gamification
+    PERMISSIONS.PROGRESS_READ,
+    PERMISSIONS.TOURNAMENT_CREATE,
+    PERMISSIONS.TOURNAMENT_READ,
+    PERMISSIONS.TOURNAMENT_UPDATE,
+    PERMISSIONS.TOURNAMENT_DELETE,
+    PERMISSIONS.LEADERBOARD_READ,
+
+    // Analytics
+    PERMISSIONS.ANALYTICS_DASHBOARD,
+    PERMISSIONS.REPORT_READ,
+    PERMISSIONS.REPORT_EXPORT,
+  ],
+  "tenant-admin": [
+    PERMISSIONS.USER_CREATE,
+    PERMISSIONS.USER_READ,
+    PERMISSIONS.USER_UPDATE,
+    PERMISSIONS.USER_DELETE,
+    PERMISSIONS.USER_IMPORT,
+    PERMISSIONS.ROLE_ASSIGN,
+    PERMISSIONS.SUBJECT_CREATE,
+    PERMISSIONS.SUBJECT_READ,
+    PERMISSIONS.SUBJECT_UPDATE,
+    PERMISSIONS.SUBJECT_DELETE,
+    PERMISSIONS.TOPIC_CREATE,
+    PERMISSIONS.TOPIC_READ,
+    PERMISSIONS.TOPIC_UPDATE,
+    PERMISSIONS.TOPIC_DELETE,
+    PERMISSIONS.LESSON_CREATE,
+    PERMISSIONS.LESSON_READ,
+    PERMISSIONS.LESSON_UPDATE,
+    PERMISSIONS.LESSON_DELETE,
+    PERMISSIONS.LESSON_PUBLISH,
+    PERMISSIONS.QUESTION_CREATE,
+    PERMISSIONS.QUESTION_READ,
+    PERMISSIONS.QUESTION_UPDATE,
+    PERMISSIONS.QUESTION_DELETE,
+    PERMISSIONS.QUESTION_IMPORT,
+    PERMISSIONS.MEDIA_UPLOAD,
+    PERMISSIONS.MEDIA_DELETE,
+    PERMISSIONS.PROGRESS_READ,
+    PERMISSIONS.TOURNAMENT_CREATE,
+    PERMISSIONS.TOURNAMENT_READ,
+    PERMISSIONS.TOURNAMENT_UPDATE,
+    PERMISSIONS.TOURNAMENT_DELETE,
+    PERMISSIONS.LEADERBOARD_READ,
+    PERMISSIONS.REPORT_READ,
+    PERMISSIONS.REPORT_EXPORT,
+    PERMISSIONS.ANALYTICS_DASHBOARD,
+  ],
+  teacher: [
+    PERMISSIONS.SUBJECT_READ,
+    PERMISSIONS.TOPIC_CREATE,
+    PERMISSIONS.TOPIC_READ,
+    PERMISSIONS.TOPIC_UPDATE,
+    PERMISSIONS.LESSON_CREATE,
+    PERMISSIONS.LESSON_READ,
+    PERMISSIONS.LESSON_UPDATE,
+    PERMISSIONS.QUESTION_CREATE,
+    PERMISSIONS.QUESTION_READ,
+    PERMISSIONS.QUESTION_UPDATE,
+    PERMISSIONS.QUESTION_DELETE,
+    PERMISSIONS.QUESTION_IMPORT,
+    PERMISSIONS.MEDIA_UPLOAD,
+    PERMISSIONS.PROGRESS_READ,
+    PERMISSIONS.TOURNAMENT_CREATE,
+    PERMISSIONS.TOURNAMENT_READ,
+    PERMISSIONS.TOURNAMENT_UPDATE,
+    PERMISSIONS.LEADERBOARD_READ,
+    PERMISSIONS.REPORT_READ,
+  ],
+  student: [
+    PERMISSIONS.SUBJECT_READ,
+    PERMISSIONS.TOPIC_READ,
+    PERMISSIONS.LESSON_READ,
+    PERMISSIONS.QUESTION_READ,
+    PERMISSIONS.PROGRESS_READ_OWN,
+    PERMISSIONS.EXERCISE_SUBMIT,
+    PERMISSIONS.LEARNING_PATH_READ,
+    PERMISSIONS.TOURNAMENT_READ,
+    PERMISSIONS.TOURNAMENT_JOIN,
+    PERMISSIONS.TOURNAMENT_SUBMIT,
+    PERMISSIONS.LEADERBOARD_READ,
+    PERMISSIONS.REWARD_REDEEM,
+    PERMISSIONS.BADGE_READ,
+    PERMISSIONS.REPORT_READ_OWN,
+  ],
+  parent: [
+    PERMISSIONS.PROGRESS_READ_CHILD,
+    PERMISSIONS.TOURNAMENT_READ,
+    PERMISSIONS.LEADERBOARD_READ,
+    PERMISSIONS.BADGE_READ,
+    PERMISSIONS.REPORT_READ_OWN,
+  ],
+};
+
+export interface UserRoleAssignment {
   id: string;
   userId: string;
   roleId: string;
@@ -58,7 +158,7 @@ export interface UserRole_ {
 export interface Role {
   id: string;
   tenantId: string | null;
-  code: UserRole;
+  code: string;
   name: string;
   description: string | null;
   color: string | null;
@@ -66,15 +166,7 @@ export interface Role {
   updatedAt: string;
 }
 
-export interface Streak {
-  userId: string;
-  currentStreak: number;
-  longestStreak: number;
-  lastActive: string;
-}
-
 export interface MockUser extends User {
-  role: UserRole;
   profile: UserProfile;
   streak: Streak;
 }
@@ -105,7 +197,7 @@ export const tenants = {
   },
 };
 
-// Roles
+// Roles Catalog
 export const roles: Role[] = [
   {
     id: "role-root-admin",
@@ -159,7 +251,20 @@ export const roles: Role[] = [
   },
 ];
 
-// Mock Users - 5 users for 5 roles
+// Helper to construct Role object
+const createRole = (code: string): UserRole => {
+  const roleDef = roles.find((r) => r.code === code);
+  return {
+    code: code,
+    name: roleDef?.name || code,
+    color: roleDef?.color || "#000000",
+    permissions: ROLE_PERMISSIONS[code] || [],
+  };
+};
+
+/*
+ * Mock Users - 5 users for 5 roles
+ */
 export const mockUsers: MockUser[] = [
   // Root Admin
   {
@@ -167,7 +272,8 @@ export const mockUsers: MockUser[] = [
     tenantId: tenants.system.id,
     email: "root@lms.vn",
     phone: null,
-    name: "Admin Hệ Thống",
+    firstName: "Admin",
+    lastName: "Hệ Thống",
     avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=root",
     provider: "INTERNAL",
     providerId: null,
@@ -176,7 +282,7 @@ export const mockUsers: MockUser[] = [
     createdAt: "2024-01-01T00:00:00Z",
     updatedAt: "2024-01-01T00:00:00Z",
     deletedAt: null,
-    role: "root-admin",
+    role: createRole("root-admin"),
     profile: {
       userId: "user-root-admin",
       exp: 0,
@@ -201,7 +307,8 @@ export const mockUsers: MockUser[] = [
     tenantId: tenants.school.id,
     email: "admin@school.vn",
     phone: "0901234567",
-    name: "Nguyễn Văn Quản Lý",
+    firstName: "Quản Lý",
+    lastName: "Nguyễn Văn",
     avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=admin",
     provider: "INTERNAL",
     providerId: null,
@@ -210,7 +317,7 @@ export const mockUsers: MockUser[] = [
     createdAt: "2024-01-15T00:00:00Z",
     updatedAt: "2024-01-15T00:00:00Z",
     deletedAt: null,
-    role: "tenant-admin",
+    role: createRole("tenant-admin"),
     profile: {
       userId: "user-tenant-admin",
       exp: 5000,
@@ -235,7 +342,8 @@ export const mockUsers: MockUser[] = [
     tenantId: tenants.school.id,
     email: "teacher@school.vn",
     phone: "0902345678",
-    name: "Trần Thị Giáo Viên",
+    firstName: "Giáo Viên",
+    lastName: "Trần Thị",
     avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=teacher",
     provider: "INTERNAL",
     providerId: null,
@@ -244,7 +352,7 @@ export const mockUsers: MockUser[] = [
     createdAt: "2024-02-01T00:00:00Z",
     updatedAt: "2024-02-01T00:00:00Z",
     deletedAt: null,
-    role: "teacher",
+    role: createRole("teacher"),
     profile: {
       userId: "user-teacher",
       exp: 12000,
@@ -269,7 +377,8 @@ export const mockUsers: MockUser[] = [
     tenantId: tenants.school.id,
     email: "student@school.vn",
     phone: "0903456789",
-    name: "Lê Văn Học Sinh",
+    firstName: "Học Sinh",
+    lastName: "Lê Văn",
     avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=student",
     provider: "INTERNAL",
     providerId: null,
@@ -278,7 +387,7 @@ export const mockUsers: MockUser[] = [
     createdAt: "2024-03-01T00:00:00Z",
     updatedAt: "2024-03-01T00:00:00Z",
     deletedAt: null,
-    role: "student",
+    role: createRole("student"),
     profile: {
       userId: "user-student",
       exp: 3500,
@@ -303,7 +412,8 @@ export const mockUsers: MockUser[] = [
     tenantId: tenants.school.id,
     email: "parent@school.vn",
     phone: "0904567890",
-    name: "Phạm Thị Phụ Huynh",
+    firstName: "Phụ Huynh",
+    lastName: "Phạm Thị",
     avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=parent",
     provider: "INTERNAL",
     providerId: null,
@@ -312,7 +422,7 @@ export const mockUsers: MockUser[] = [
     createdAt: "2024-03-15T00:00:00Z",
     updatedAt: "2024-03-15T00:00:00Z",
     deletedAt: null,
-    role: "parent",
+    role: createRole("parent"),
     profile: {
       userId: "user-parent",
       exp: 500,
@@ -346,7 +456,7 @@ export const parentChildLinks = [
   },
 ];
 
-// Helper functions
+// Helper functions (updated for new structure)
 export function getUserByEmail(email: string): MockUser | undefined {
   return mockUsers.find((u) => u.email === email);
 }
@@ -355,8 +465,11 @@ export function getUserById(id: string): MockUser | undefined {
   return mockUsers.find((u) => u.id === id);
 }
 
-export function getUsersByRole(role: UserRole): MockUser[] {
-  return mockUsers.filter((u) => u.role === role);
+export function getUsersByRole(roleName: string): MockUser[] {
+  // Be permissive with role name matching as we used codes before
+  return mockUsers.filter(
+    (u) => u.role.code === roleName || u.role.name === roleName,
+  );
 }
 
 export function getUsersByTenant(tenantId: string): MockUser[] {
@@ -372,38 +485,6 @@ export function getChildrenOfParent(parentId: string): MockUser[] {
     .filter((u): u is MockUser => u !== undefined);
 }
 
-export function getRoleInfo(roleCode: UserRole): Role | undefined {
+export function getRoleInfo(roleCode: string): Role | undefined {
   return roles.find((r) => r.code === roleCode);
 }
-
-// Role display info
-export const roleDisplayInfo: Record<
-  UserRole,
-  { label: string; color: string; description: string }
-> = {
-  "root-admin": {
-    label: "Quản trị viên hệ thống",
-    color: "#e74c3c",
-    description: "Toàn quyền quản lý hệ thống",
-  },
-  "tenant-admin": {
-    label: "Quản trị viên trường",
-    color: "#3498db",
-    description: "Quản lý người dùng và nội dung của trường",
-  },
-  teacher: {
-    label: "Giáo viên",
-    color: "#2ecc71",
-    description: "Tạo và quản lý bài học, câu hỏi",
-  },
-  student: {
-    label: "Học sinh",
-    color: "#f39c12",
-    description: "Học tập, thi đấu, đổi thưởng",
-  },
-  parent: {
-    label: "Phụ huynh",
-    color: "#9b59b6",
-    description: "Theo dõi tiến độ học tập của con",
-  },
-};

@@ -33,7 +33,7 @@ export interface NavTab {
  */
 export function filterTabs(
   tabs: NavTab[],
-  hasPermission: (permission: string) => boolean,
+  hasPermission: (permission: Permission) => boolean,
 ): NavTab[] {
   return tabs
     .filter((tab) => {
@@ -56,7 +56,7 @@ export function filterTabs(
  */
 export function filterNavItems(
   items: NavItem[],
-  hasPermission: (permission: string) => boolean,
+  hasPermission: (permission: Permission) => boolean,
 ): NavItem[] {
   return items.filter((item) => {
     if (!item.access || item.access.length === 0) return true;
@@ -69,7 +69,7 @@ export function filterNavItems(
  */
 export function filterNavGroups(
   groups: NavGroup[],
-  hasPermission: (permission: string) => boolean,
+  hasPermission: (permission: Permission) => boolean,
 ): NavGroup[] {
   return groups
     .filter((group) => {

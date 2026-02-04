@@ -99,7 +99,10 @@ export default function AdminReportsPage() {
   const { t } = useTranslation();
   const [reportType, setReportType] = useState<string>("user-activity");
 
-  if (!user || (user.role !== "root-admin" && user.role !== "tenant-admin")) {
+  if (
+    !user ||
+    (user.role.code !== "root-admin" && user.role.code !== "tenant-admin")
+  ) {
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <p className="text-muted-foreground">{t("errors.noAccess")}</p>

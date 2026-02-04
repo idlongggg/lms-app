@@ -13,7 +13,6 @@ import {
   RedeemedIcon,
   SettingsIcon,
 } from "@/lib/icons";
-import { roleDisplayInfo } from "@/lib/mock/users";
 
 interface UserMenuProps {
   user: AuthUser | null;
@@ -42,7 +41,7 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
     return null;
   }
 
-  const roleInfo = roleDisplayInfo[user.role];
+  const fullName = `${user.lastName} ${user.firstName}`;
 
   const handleLogout = async () => {
     setIsOpen(false);
@@ -59,14 +58,14 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
       >
         <div className="bg-background flex h-6 w-6 items-center justify-center overflow-hidden rounded-full">
           <Avatar className="h-6 w-6">
-            <Avatar.Image src={user.avatarUrl || undefined} alt={user.name} />
+            <Avatar.Image src={user.avatarUrl || undefined} alt={fullName} />
             <Avatar.Fallback>
               <ProfileIcon className="h-3.5 w-3.5" />
             </Avatar.Fallback>
           </Avatar>
         </div>
         <span className="hidden max-w-[100px] truncate text-sm font-medium sm:block">
-          {user.name.split(" ").slice(-1)[0]}
+          {user.firstName}
         </span>
         <ExpandIcon
           className={`hidden h-4 w-4 transition-transform sm:block ${
@@ -84,26 +83,26 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
                 <Avatar className="h-12 w-12">
                   <Avatar.Image
                     src={user.avatarUrl || undefined}
-                    alt={user.name}
+                    alt={fullName}
                   />
                   <Avatar.Fallback
                     className="flex h-full w-full items-center justify-center font-bold text-white"
-                    style={{ backgroundColor: roleInfo.color }}
+                    style={{ backgroundColor: user.role.color }}
                   >
-                    {user.name.charAt(0)}
+                    {user.firstName.charAt(0)}
                   </Avatar.Fallback>
                 </Avatar>
               </div>
               <div className="flex-1 overflow-hidden">
-                <p className="truncate font-medium">{user.name}</p>
+                <p className="truncate font-medium">{fullName}</p>
                 <p className="text-muted-foreground truncate text-xs">
                   {user.email}
                 </p>
                 <div
                   className="mt-1 inline-block rounded px-1.5 py-0.5 text-xs font-medium text-white"
-                  style={{ backgroundColor: roleInfo.color }}
+                  style={{ backgroundColor: user.role.color }}
                 >
-                  {roleInfo.label}
+                  {user.role.name}
                 </div>
               </div>
             </div>

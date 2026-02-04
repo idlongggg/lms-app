@@ -3,17 +3,19 @@
  * Type definitions for authentication system
  */
 
-import type { MockUser, UserRole } from "../mock/users";
+import type { UserRole } from "../types/user";
+import type { MockUser } from "../mock/users";
 
 // Re-export from constants for backward compatibility
-export type { UserRole } from "../mock/users";
+export type { UserRole } from "../types/user";
 export { type Permission, PERMISSIONS } from "../permissions";
 
 export interface AuthUser {
   id: string;
   tenantId: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   avatarUrl: string | null;
   role: UserRole;
   level: number;
@@ -33,13 +35,15 @@ export interface LoginCredentials {
   password: string;
 }
 
+import { Permission } from "../permissions";
+
 export interface AuthService {
   getState(): AuthState;
   login(credentials: LoginCredentials): Promise<AuthUser | null>;
   loginWithMockUser(user: MockUser): Promise<AuthUser>;
   logout(): Promise<void>;
-  hasPermission(permission: string): boolean;
-  hasRole(role: UserRole | UserRole[]): boolean;
+  hasPermission(permission: Permission): boolean;
+  hasRole(roleName: string | string[]): boolean;
   getLoginRedirectPath(): string;
 }
 

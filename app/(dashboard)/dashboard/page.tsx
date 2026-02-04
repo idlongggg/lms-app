@@ -72,7 +72,7 @@ export default function DashboardPage() {
     },
   ];
 
-  const firstName = user.name.split(" ").slice(-1)[0];
+  const firstName = user.firstName;
 
   return (
     <div className="space-y-6">

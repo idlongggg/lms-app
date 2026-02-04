@@ -112,7 +112,7 @@ export default function AdminAlertsPage() {
   const [isAddRuleOpen, setIsAddRuleOpen] = useState(false);
 
   // Only root-admin can access this page
-  if (!user || user.role !== "root-admin") {
+  if (!user || user.role.code !== "root-admin") {
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <p className="text-muted-foreground">

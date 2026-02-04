@@ -19,7 +19,7 @@ export default function AdminTournamentsPage() {
   const { user } = useAuth();
 
   // Only tenant-admin can access this page
-  if (!user || user.role !== "tenant-admin") {
+  if (!user || user.role.code !== "tenant-admin") {
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <p className="text-muted-foreground">

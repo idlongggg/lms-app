@@ -28,11 +28,11 @@ export default function AdminDashboardPage() {
 
   if (!user) return null;
 
-  const isRootAdmin = user.role === "root-admin";
+  const isRootAdmin = user.role.code === "root-admin";
   const systemStats = isRootAdmin ? getSystemStats() : null;
   const tenantStats = getTenantStats(user.tenantId);
   const dashboardCards = getAdminDashboardCards(
-    user.role as "root-admin" | "tenant-admin",
+    user.role.code as "root-admin" | "tenant-admin",
     user.tenantId,
   );
   const recentUsers = getAdminUserList(

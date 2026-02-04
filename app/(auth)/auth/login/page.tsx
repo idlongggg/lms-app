@@ -15,7 +15,6 @@ import {
 } from "@/components/retroui";
 import { useAuth } from "@/lib/auth";
 import type { MockUser } from "@/lib/mock/users";
-import { roleDisplayInfo } from "@/lib/mock/users";
 import { useTranslation } from "@/lib/providers";
 
 export default function LoginPage() {
@@ -70,8 +69,9 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div className="grid gap-2">
               {mockUsers.map((user) => {
-                const roleInfo = roleDisplayInfo[user.role];
+                const roleInfo = user.role;
                 const isSelected = selectedUser?.id === user.id;
+                const fullName = `${user.lastName} ${user.firstName}`;
 
                 return (
                   <Button
@@ -88,7 +88,7 @@ export default function LoginPage() {
                     >
                       <Avatar.Image
                         src={user.avatarUrl || undefined}
-                        alt={user.name}
+                        alt={fullName}
                       />
                       <Avatar.Fallback
                         style={{
@@ -97,13 +97,13 @@ export default function LoginPage() {
                         }}
                         className="text-sm font-bold"
                       >
-                        {user.name.charAt(0)}
+                        {user.firstName.charAt(0)}
                       </Avatar.Fallback>
                     </Avatar>
 
                     {/* Info */}
                     <div className="min-w-0 flex-1 text-left">
-                      <div className="truncate font-medium">{user.name}</div>
+                      <div className="truncate font-medium">{fullName}</div>
                       <div className="text-muted-foreground truncate text-xs">
                         {user.email}
                       </div>
@@ -120,7 +120,7 @@ export default function LoginPage() {
                         }}
                         className="border-0"
                       >
-                        {roleInfo.label}
+                        {roleInfo.name}
                       </Badge>
                     )}
                   </Button>

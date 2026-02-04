@@ -68,9 +68,9 @@ export function getTenantStats(tenantId: string): TenantStats {
     tenantName: tenant.name,
     totalUsers: tenantUsers.length,
     activeUsers: tenantUsers.filter((u) => u.status === "ACTIVE").length,
-    students: tenantUsers.filter((u) => u.role === "student").length,
-    teachers: tenantUsers.filter((u) => u.role === "teacher").length,
-    parents: tenantUsers.filter((u) => u.role === "parent").length,
+    students: tenantUsers.filter((u) => u.role.code === "student").length,
+    teachers: tenantUsers.filter((u) => u.role.code === "teacher").length,
+    parents: tenantUsers.filter((u) => u.role.code === "parent").length,
     newUsersThisWeek: 8,
     totalLessons: contentStats.totalLessons,
     publishedLessons: contentStats.publishedLessons,
@@ -231,7 +231,7 @@ export interface RecentUser {
 
 export function getRecentUsers(limit: number = 5): RecentUser[] {
   return mockUsers
-    .filter((u) => u.role !== "root-admin")
+    .filter((u) => u.role.code !== "root-admin")
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -239,10 +239,10 @@ export function getRecentUsers(limit: number = 5): RecentUser[] {
     .slice(0, limit)
     .map((u) => ({
       id: u.id,
-      name: u.name,
+      name: `${u.lastName} ${u.firstName}`,
       email: u.email,
       avatar: u.avatarUrl,
-      role: u.role,
+      role: u.role.code,
       joinedAt: u.createdAt,
       status: u.status,
     }));
@@ -332,7 +332,7 @@ export function getAdminUserList(
 
   // Apply filters
   if (filters?.role) {
-    users = users.filter((u) => u.role === filters.role);
+    users = users.filter((u) => u.role.code === filters.role);
   }
   if (filters?.status) {
     users = users.filter((u) => u.status === filters.status);
@@ -341,7 +341,7 @@ export function getAdminUserList(
     const search = filters.search.toLowerCase();
     users = users.filter(
       (u) =>
-        u.name.toLowerCase().includes(search) ||
+        (u.firstName + " " + u.lastName).toLowerCase().includes(search) ||
         u.email.toLowerCase().includes(search) ||
         (u.phone && u.phone.includes(search)),
     );
@@ -349,12 +349,12 @@ export function getAdminUserList(
 
   return users.map((u) => ({
     id: u.id,
-    name: u.name,
+    name: `${u.lastName} ${u.firstName}`,
     email: u.email,
     phone: u.phone,
     avatar: u.avatarUrl,
-    role: u.role,
-    roleLabel: roleLabels[u.role] || u.role,
+    role: u.role.code,
+    roleLabel: roleLabels[u.role.code] || u.role.code,
     status: u.status,
     statusLabel: statusLabels[u.status] || u.status,
     level: u.profile.level,

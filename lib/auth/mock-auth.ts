@@ -5,7 +5,6 @@
 
 import type { MockUser } from "../mock/users";
 import { getUserByEmail, mockUsers } from "../mock/users";
-import { PERMISSIONS } from "../permissions";
 import type {
   AuthService,
   AuthState,
@@ -13,108 +12,19 @@ import type {
   LoginCredentials,
   UserRole,
 } from "./types";
-import { LOGIN_REDIRECT } from "./types";
+import { LOGIN_REDIRECT, type Permission } from "./types";
 
 const STORAGE_KEY = "lms_auth_user";
-
-// Role permissions mapping (Moved from constants/permissions.ts for mock purposes)
-const MOCK_ROLE_PERMISSIONS: Record<UserRole, string[]> = {
-  "root-admin": Object.values(PERMISSIONS), // All permissions
-
-  "tenant-admin": [
-    PERMISSIONS.USER_CREATE,
-    PERMISSIONS.USER_READ,
-    PERMISSIONS.USER_UPDATE,
-    PERMISSIONS.USER_DELETE,
-    PERMISSIONS.USER_IMPORT,
-    PERMISSIONS.ROLE_ASSIGN,
-    PERMISSIONS.SUBJECT_CREATE,
-    PERMISSIONS.SUBJECT_READ,
-    PERMISSIONS.SUBJECT_UPDATE,
-    PERMISSIONS.SUBJECT_DELETE,
-    PERMISSIONS.TOPIC_CREATE,
-    PERMISSIONS.TOPIC_READ,
-    PERMISSIONS.TOPIC_UPDATE,
-    PERMISSIONS.TOPIC_DELETE,
-    PERMISSIONS.LESSON_CREATE,
-    PERMISSIONS.LESSON_READ,
-    PERMISSIONS.LESSON_UPDATE,
-    PERMISSIONS.LESSON_DELETE,
-    PERMISSIONS.LESSON_PUBLISH,
-    PERMISSIONS.QUESTION_CREATE,
-    PERMISSIONS.QUESTION_READ,
-    PERMISSIONS.QUESTION_UPDATE,
-    PERMISSIONS.QUESTION_DELETE,
-    PERMISSIONS.QUESTION_IMPORT,
-    PERMISSIONS.MEDIA_UPLOAD,
-    PERMISSIONS.MEDIA_DELETE,
-    PERMISSIONS.PROGRESS_READ,
-    PERMISSIONS.TOURNAMENT_CREATE,
-    PERMISSIONS.TOURNAMENT_READ,
-    PERMISSIONS.TOURNAMENT_UPDATE,
-    PERMISSIONS.TOURNAMENT_DELETE,
-    PERMISSIONS.LEADERBOARD_READ,
-    PERMISSIONS.REPORT_READ,
-    PERMISSIONS.REPORT_EXPORT,
-    PERMISSIONS.ANALYTICS_DASHBOARD,
-  ],
-
-  teacher: [
-    PERMISSIONS.SUBJECT_READ,
-    PERMISSIONS.TOPIC_CREATE,
-    PERMISSIONS.TOPIC_READ,
-    PERMISSIONS.TOPIC_UPDATE,
-    PERMISSIONS.LESSON_CREATE,
-    PERMISSIONS.LESSON_READ,
-    PERMISSIONS.LESSON_UPDATE,
-    PERMISSIONS.QUESTION_CREATE,
-    PERMISSIONS.QUESTION_READ,
-    PERMISSIONS.QUESTION_UPDATE,
-    PERMISSIONS.QUESTION_DELETE,
-    PERMISSIONS.QUESTION_IMPORT,
-    PERMISSIONS.MEDIA_UPLOAD,
-    PERMISSIONS.PROGRESS_READ,
-    PERMISSIONS.TOURNAMENT_CREATE,
-    PERMISSIONS.TOURNAMENT_READ,
-    PERMISSIONS.TOURNAMENT_UPDATE,
-    PERMISSIONS.LEADERBOARD_READ,
-    PERMISSIONS.REPORT_READ,
-  ],
-
-  student: [
-    PERMISSIONS.SUBJECT_READ,
-    PERMISSIONS.TOPIC_READ,
-    PERMISSIONS.LESSON_READ,
-    PERMISSIONS.QUESTION_READ,
-    PERMISSIONS.PROGRESS_READ_OWN,
-    PERMISSIONS.EXERCISE_SUBMIT,
-    PERMISSIONS.LEARNING_PATH_READ,
-    PERMISSIONS.TOURNAMENT_READ,
-    PERMISSIONS.TOURNAMENT_JOIN,
-    PERMISSIONS.TOURNAMENT_SUBMIT,
-    PERMISSIONS.LEADERBOARD_READ,
-    PERMISSIONS.REWARD_REDEEM,
-    PERMISSIONS.BADGE_READ,
-    PERMISSIONS.REPORT_READ_OWN,
-  ],
-
-  parent: [
-    PERMISSIONS.PROGRESS_READ_CHILD,
-    PERMISSIONS.TOURNAMENT_READ,
-    PERMISSIONS.LEADERBOARD_READ,
-    PERMISSIONS.BADGE_READ,
-    PERMISSIONS.REPORT_READ_OWN,
-  ],
-};
 
 function mockUserToAuthUser(mockUser: MockUser): AuthUser {
   return {
     id: mockUser.id,
     tenantId: mockUser.tenantId,
     email: mockUser.email,
-    name: mockUser.name,
+    firstName: mockUser.firstName,
+    lastName: mockUser.lastName,
     avatarUrl: mockUser.avatarUrl,
-    role: mockUser.role,
+    role: mockUser.role, // Now the rich object
     level: mockUser.profile.level,
     exp: mockUser.profile.exp,
     coins: mockUser.profile.coins,
@@ -203,24 +113,27 @@ class MockAuthServiceImpl implements AuthService {
     this.notifyListeners();
   }
 
-  hasPermission(permission: string): boolean {
+  hasPermission(permission: Permission): boolean {
     if (!this.user) return false;
-    const rolePermissions = MOCK_ROLE_PERMISSIONS[this.user.role] || [];
-    return rolePermissions.includes(permission);
+    return this.user.role.permissions.includes(permission);
   }
 
-  hasRole(role: UserRole | UserRole[]): boolean {
+  hasRole(roleName: string | string[]): boolean {
     if (!this.user) return false;
-    if (Array.isArray(role)) {
-      return role.includes(this.user.role);
+    const userRoleCode = this.user.role.code;
+    if (Array.isArray(roleName)) {
+      return roleName.includes(userRoleCode);
     }
-    return this.user.role === role;
+    return userRoleCode === roleName;
   }
 
   getLoginRedirectPath(): string {
     if (!this.user) return "/auth/login";
     // Admin roles go to /admin, everyone else to /dashboard
-    if (this.user.role === "root-admin" || this.user.role === "tenant-admin") {
+    if (
+      this.user.role.code === "root-admin" ||
+      this.user.role.code === "tenant-admin"
+    ) {
       return "/admin";
     }
     return LOGIN_REDIRECT;
@@ -250,14 +163,14 @@ export const mockAuthService = new MockAuthServiceImpl();
 export function canAccessRoute(path: string, role: UserRole): boolean {
   // Admin routes require admin roles
   if (path.startsWith("/admin")) {
-    return role === "root-admin" || role === "tenant-admin";
+    return role.code === "root-admin" || role.code === "tenant-admin";
   }
   // All other routes are accessible - permissions are checked at component level
   return true;
 }
 
 export function getLayoutVariant(role: UserRole): "admin" | "dashboard" {
-  if (role === "root-admin" || role === "tenant-admin") {
+  if (role.code === "root-admin" || role.code === "tenant-admin") {
     return "admin";
   }
   return "dashboard";

@@ -12,14 +12,14 @@ import React, {
 
 import type { MockUser } from "../mock/users";
 import { canAccessRoute, mockAuthService } from "./mock-auth";
-import type { AuthState, AuthUser, UserRole } from "./types";
+import type { AuthState, AuthUser, UserRole, Permission } from "./types";
 
 interface AuthContextValue extends AuthState {
   login: (email: string, password: string) => Promise<AuthUser | null>;
   loginWithMockUser: (user: MockUser) => Promise<AuthUser>;
   logout: () => Promise<void>;
-  hasPermission: (permission: string) => boolean;
-  hasRole: (role: UserRole | UserRole[]) => boolean;
+  hasPermission: (permission: Permission) => boolean;
+  hasRole: (role: string | string[]) => boolean;
   canAccess: (path: string) => boolean;
   getMockUsers: () => MockUser[];
 }
@@ -77,11 +77,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push("/");
   }, [router]);
 
-  const hasPermission = useCallback((permission: string) => {
+  const hasPermission = useCallback((permission: Permission) => {
     return mockAuthService.hasPermission(permission);
   }, []);
 
-  const hasRole = useCallback((role: UserRole | UserRole[]) => {
+  const hasRole = useCallback((role: string | string[]) => {
     return mockAuthService.hasRole(role);
   }, []);
 
@@ -160,17 +160,17 @@ export function useUser(): AuthUser | null {
 // Hook to check if user is admin
 export function useIsAdmin(): boolean {
   const { user } = useAuth();
-  return user?.role === "root-admin" || user?.role === "tenant-admin";
+  return user?.role.code === "root-admin" || user?.role.code === "tenant-admin";
 }
 
 // Hook to check single permission
-export function usePermission(permission: string): boolean {
+export function usePermission(permission: Permission): boolean {
   const { hasPermission } = useAuth();
   return hasPermission(permission);
 }
 
 // Hook to check multiple permissions (returns true if user has ANY of the permissions)
-export function usePermissions(permissions: string[]): boolean {
+export function usePermissions(permissions: Permission[]): boolean {
   const { hasPermission } = useAuth();
   return permissions.some((p) => hasPermission(p));
 }
@@ -181,7 +181,7 @@ export function Can({
   children,
   fallback = null,
 }: {
-  permission: string | string[];
+  permission: Permission | Permission[];
   children: React.ReactNode;
   fallback?: React.ReactNode;
 }): React.ReactNode {
@@ -195,7 +195,7 @@ export function Can({
 }
 
 // Hook for route protection
-export function useRequireAuth(requiredRoles?: UserRole[]): {
+export function useRequireAuth(requiredRoles?: string[]): {
   isAuthorized: boolean;
   isLoading: boolean;
 } {
@@ -210,7 +210,7 @@ export function useRequireAuth(requiredRoles?: UserRole[]): {
   }
 
   if (requiredRoles && requiredRoles.length > 0) {
-    const isAuthorized = requiredRoles.includes(user.role);
+    const isAuthorized = requiredRoles.includes(user.role.code);
     return { isAuthorized, isLoading: false };
   }
 
