@@ -1,2 +1,2 @@
-export { TeacherClassesSection } from "./teacher-classes-section";
-export { TeacherQuestionsSection } from "./teacher-questions-section";
+export * from "./teacher-classes-section";
+export * from "./teacher-questions-section";

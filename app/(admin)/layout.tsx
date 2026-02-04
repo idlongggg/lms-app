@@ -13,10 +13,10 @@ import {
   UserMenu,
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
-import type { UserRole } from "@/lib/auth/types";
 import { useScrollPosition } from "@/lib/hooks";
-import { getAdminNavByRole } from "@/lib/navigation";
 import { SidebarProvider, useSidebar } from "@/lib/providers";
+
+import { getAdminNavByRole } from "./nav";
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();
@@ -61,8 +61,8 @@ function AdminContent({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const userRole = user?.role as UserRole | undefined;
-  const navigation = getAdminNavByRole(userRole || "tenant-admin");
+  const userRole = user?.role || "tenant-admin";
+  const navigation = getAdminNavByRole(userRole);
 
   return (
     <div className="bg-background h-screen">

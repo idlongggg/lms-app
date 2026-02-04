@@ -75,7 +75,55 @@
     "profile": "Profile",
     "settings": "Settings",
     "help": "Help",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "tabs": {
+      "overview": "Overview",
+      "learning": "Learning",
+      "tournament": "Tournament",
+      "community": "Community",
+      "news": "News"
+    },
+    "sidebar": {
+      "overview": "Overview",
+      "stats": "Statistics",
+      "recentActivity": "Recent Activity",
+      "learning": "Learning",
+      "allCourses": "All Courses",
+      "arena": "Arena",
+      "schedule": "Schedule",
+      "leaderboard": "Leaderboard",
+      "forum": "Forum",
+      "questionBank": "Question Bank",
+      "discussions": "Discussions",
+      "shop": "Shop",
+      "myCoins": "My Coins",
+      "redeemed": "Redeemed",
+      "latestNews": "Latest News",
+      "announcements": "Announcements",
+      "events": "Events",
+      "profile": "Profile",
+      "settings": "Settings"
+    },
+    "admin": {
+      "dashboard": "Dashboard",
+      "system": "System",
+      "tenants": "Tenants",
+      "users": "Users",
+      "monitoring": "Monitoring",
+      "health": "Health Status",
+      "alerts": "Alerts",
+      "settings": "Settings",
+      "management": "Management",
+      "content": "Content",
+      "tournaments": "Tournaments",
+      "reports": "Reports",
+      "statistics": "Statistics"
+    },
+    "public": {
+      "features": "Features",
+      "tournaments": "Tournaments",
+      "about": "About Us"
+    }
   },
   "courses": {
     "title": "Courses",
@@ -235,6 +283,18 @@
     "events": {
       "title": "Events",
       "description": "Upcoming events schedule"
+    }
+  },
+  "community": {
+    "title": "Community",
+    "description": "Connect, share and learn together",
+    "questions": {
+      "title": "Question Bank",
+      "description": "Community-contributed question repository"
+    },
+    "discussions": {
+      "title": "Discussions",
+      "description": "Join discussions with friends and teachers"
     }
   },
   "settings": {

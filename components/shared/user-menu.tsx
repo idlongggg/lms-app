@@ -1,12 +1,13 @@
 "use client";
 
-import { ChevronDown, Coins, LogOut, Settings, User } from "lucide-react";
+import { ChevronDown, Coins, Gift, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { Avatar } from "@/components/retroui";
 import { useAuth } from "@/lib/auth";
 import { roleDisplayInfo } from "@/lib/mock/users";
+import { useTranslation } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 
 interface UserMenuProps {
@@ -17,6 +18,7 @@ export function UserMenu({ className }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { user, logout, isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -123,7 +125,15 @@ export function UserMenu({ className }: UserMenuProps) {
               className="hover:bg-muted flex items-center gap-3 px-4 py-3 font-medium transition-colors"
             >
               <User className="h-4 w-4" />
-              <span>Hồ sơ cá nhân</span>
+              <span>{t("navigation.sidebar.profile")}</span>
+            </Link>
+            <Link
+              href="/rewards"
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-muted flex items-center gap-3 px-4 py-3 font-medium transition-colors"
+            >
+              <Gift className="h-4 w-4 text-pink-500" />
+              <span>{t("rewards.title")}</span>
             </Link>
             <Link
               href="/profile/settings"
@@ -131,7 +141,7 @@ export function UserMenu({ className }: UserMenuProps) {
               className="hover:bg-muted flex items-center gap-3 px-4 py-3 font-medium transition-colors"
             >
               <Settings className="h-4 w-4" />
-              <span>Cài đặt</span>
+              <span>{t("navigation.sidebar.settings")}</span>
             </Link>
           </div>
 
@@ -142,7 +152,7 @@ export function UserMenu({ className }: UserMenuProps) {
               className="text-destructive hover:bg-destructive/10 flex w-full items-center gap-3 px-4 py-3 font-medium transition-colors"
             >
               <LogOut className="h-4 w-4" />
-              <span>Đăng xuất</span>
+              <span>{t("auth.logout")}</span>
             </button>
           </div>
         </div>

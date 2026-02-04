@@ -75,7 +75,55 @@
     "profile": "Hồ sơ",
     "settings": "Cài đặt",
     "help": "Trợ giúp",
-    "notifications": "Thông báo"
+    "notifications": "Thông báo",
+    "tabs": {
+      "overview": "Tổng quan",
+      "learning": "Học tập",
+      "tournament": "Thách đấu",
+      "community": "Cộng đồng",
+      "news": "Tin tức"
+    },
+    "sidebar": {
+      "overview": "Tổng quan",
+      "stats": "Thống kê",
+      "recentActivity": "Hoạt động gần đây",
+      "learning": "Học tập",
+      "allCourses": "Tất cả khóa học",
+      "arena": "Sảnh đấu",
+      "schedule": "Lịch đấu",
+      "leaderboard": "Bảng xếp hạng",
+      "forum": "Diễn đàn",
+      "questionBank": "Ngân hàng câu hỏi",
+      "discussions": "Thảo luận",
+      "shop": "Cửa hàng",
+      "myCoins": "Xu của tôi",
+      "redeemed": "Đã đổi",
+      "latestNews": "Tin mới nhất",
+      "announcements": "Thông báo",
+      "events": "Sự kiện",
+      "profile": "Hồ sơ cá nhân",
+      "settings": "Cài đặt"
+    },
+    "admin": {
+      "dashboard": "Dashboard",
+      "system": "Hệ thống",
+      "tenants": "Tenants",
+      "users": "Người dùng",
+      "monitoring": "Giám sát",
+      "health": "Trạng thái",
+      "alerts": "Cảnh báo",
+      "settings": "Cài đặt",
+      "management": "Quản lý",
+      "content": "Nội dung",
+      "tournaments": "Giải đấu",
+      "reports": "Báo cáo",
+      "statistics": "Thống kê"
+    },
+    "public": {
+      "features": "Tính năng",
+      "tournaments": "Giải đấu",
+      "about": "Về chúng tôi"
+    }
   },
   "courses": {
     "title": "Khóa học",
@@ -235,6 +283,18 @@
     "events": {
       "title": "Sự kiện",
       "description": "Lịch sự kiện sắp diễn ra"
+    }
+  },
+  "community": {
+    "title": "Cộng đồng",
+    "description": "Kết nối, chia sẻ và học hỏi cùng nhau",
+    "questions": {
+      "title": "Ngân hàng câu hỏi",
+      "description": "Kho câu hỏi do cộng đồng đóng góp"
+    },
+    "discussions": {
+      "title": "Thảo luận",
+      "description": "Tham gia thảo luận với bạn bè và thầy cô"
     }
   },
   "settings": {

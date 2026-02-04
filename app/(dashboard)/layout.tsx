@@ -14,12 +14,12 @@ import {
   UserMenu,
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
-import type { UserRole } from "@/lib/auth/types";
 import { useScrollPosition } from "@/lib/hooks";
-import { getSidebarForPath, getTabsByRole } from "@/lib/navigation";
+import { filterTabsByPermissions, getActiveTabKey } from "@/lib/navigation";
 import { SidebarProvider, useSidebar } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
+import { DASHBOARD_SIDEBARS, DASHBOARD_TABS } from "./nav";
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();
@@ -53,13 +53,13 @@ function SearchButton() {
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const mainRef = useRef<HTMLElement>(null);
-  const { user } = useAuth();
+  const { hasPermission } = useAuth();
 
   useScrollPosition(mainRef, "content");
 
-  const userRole = user?.role as UserRole | undefined;
-  const navigation = getSidebarForPath(pathname, userRole);
-  const tabs = userRole ? getTabsByRole(userRole) : [];
+  const tabKey = getActiveTabKey(pathname);
+  const navigation = DASHBOARD_SIDEBARS[tabKey] || DASHBOARD_SIDEBARS.overview;
+  const tabs = filterTabsByPermissions(DASHBOARD_TABS, hasPermission);
   const showTabs = tabs.length > 0;
 
   return (

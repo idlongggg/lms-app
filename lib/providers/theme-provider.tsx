@@ -1,10 +1,5 @@
 "use client";
 
-/**
- * Theme Provider
- * React Context provider for theme (light/dark mode) management
- */
-
 import React, {
   createContext,
   useCallback,
@@ -14,12 +9,15 @@ import React, {
   useState,
 } from "react";
 
+import { THEME_COLORS, type ThemeKey } from "@/lib/constants/colors";
+
 export type Theme = "light" | "dark";
 
 interface ThemeContextValue {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  setThemeColor: (color: ThemeKey) => void;
   mounted: boolean;
 }
 
@@ -56,14 +54,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(theme === "light" ? "dark" : "light");
   }, [theme, setTheme]);
 
+  const setThemeColor = useCallback((color: ThemeKey) => {
+    const themeColors = THEME_COLORS[color];
+    if (!themeColors) return;
+
+    const root = document.documentElement;
+    root.style.setProperty("--primary", themeColors.primary);
+    root.style.setProperty("--primary-hover", themeColors.hover);
+    root.style.setProperty("--ring", themeColors.ring);
+  }, []);
+
   const value = useMemo<ThemeContextValue>(
     () => ({
       theme,
       setTheme,
       toggleTheme,
+      setThemeColor,
       mounted,
     }),
-    [theme, setTheme, toggleTheme, mounted],
+    [theme, setTheme, toggleTheme, setThemeColor, mounted],
   );
 
   return (

@@ -7,6 +7,7 @@ import { useRef } from "react";
 
 import { useScrollPosition } from "@/lib/hooks";
 import type { NavGroup } from "@/lib/navigation";
+import { useTranslation } from "@/lib/providers";
 import { useSidebar } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ export function Sidebar({
   const { isCollapsed, isMobileOpen, toggle, closeMobile } = useSidebar();
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
 
   useScrollPosition(navRef, "sidebar");
 
@@ -82,15 +84,16 @@ export function Sidebar({
         <nav ref={navRef} className="flex-1 overflow-y-auto p-2">
           {navigation.map((group, groupIndex) => (
             <div key={groupIndex} className="mb-4">
-              {group.title && !showCollapsed && (
+              {group.key && !showCollapsed && (
                 <h3 className="text-muted-foreground mb-2 px-3 text-xs font-semibold tracking-wider uppercase">
-                  {group.title}
+                  {t(`navigation.sidebar.${group.key}`)}
                 </h3>
               )}
               <ul className="space-y-1">
                 {group.items.map((item) => {
                   const isActive = pathname === item.href;
                   const Icon = item.icon;
+                  const itemTitle = t(`navigation.sidebar.${item.key}`);
 
                   return (
                     <li key={item.href}>
@@ -104,10 +107,10 @@ export function Sidebar({
                             ? "border-border bg-primary border-2 shadow-xs"
                             : "hover:bg-sidebar-accent",
                         )}
-                        title={showCollapsed ? item.title : undefined}
+                        title={showCollapsed ? itemTitle : undefined}
                       >
                         <Icon className="h-5 w-5 shrink-0" />
-                        {!showCollapsed && <span>{item.title}</span>}
+                        {!showCollapsed && <span>{itemTitle}</span>}
                         {!showCollapsed && item.badge && (
                           <span className="border-border bg-accent ml-auto border px-1.5 py-0.5 text-xs">
                             {item.badge}
