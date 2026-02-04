@@ -25,7 +25,7 @@ import {
 } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
-import { NAVIGATION_CONFIG } from "./nav";
+import { NAV } from "./nav";
 
 function SearchButton() {
   return (
@@ -79,11 +79,11 @@ export default function DashboardLayout({
     return null;
   }
 
-  const tabs = filterTabs(NAVIGATION_CONFIG, hasPermission);
+  const tabs = filterTabs(NAV, hasPermission);
   const navigation = getSidebarForPath(tabs, pathname);
   const showTabs = tabs.length > 0;
 
-  const activeTabKey = getActiveTabKey(pathname);
+  const activeTabKey = getActiveTabKey(tabs, pathname);
   const pageHeader = (
     <>
       <h1 className="text-2xl font-bold tracking-tight">

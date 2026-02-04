@@ -84,16 +84,14 @@ export function filterNavGroups(
 }
 
 /**
- * Get active tab key from pathname
+ * Get active tab key from pathname by matching against tab hrefs
  */
-export function getActiveTabKey(pathname: string): string {
-  if (pathname.startsWith("/learning")) return "learning";
-  if (pathname.startsWith("/tournament")) return "tournament";
-  if (pathname.startsWith("/community")) return "community";
-  if (pathname.startsWith("/rewards")) return "rewards";
-  if (pathname.startsWith("/news")) return "news";
-  if (pathname.startsWith("/profile")) return "profile";
-  return "overview";
+export function getActiveTabKey(tabs: NavTab[], pathname: string): string {
+  // Find tab whose href matches the pathname (excluding root dashboard)
+  const matchedTab = tabs.find(
+    (tab) => tab.href !== "/dashboard" && pathname.startsWith(tab.href),
+  );
+  return matchedTab?.key ?? "overview";
 }
 
 /**
@@ -111,6 +109,6 @@ export function getSidebarForPath(
   tabs: NavTab[],
   pathname: string,
 ): NavGroup[] {
-  const tabKey = getActiveTabKey(pathname);
+  const tabKey = getActiveTabKey(tabs, pathname);
   return getSidebarForTab(tabs, tabKey);
 }

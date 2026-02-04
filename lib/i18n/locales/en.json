@@ -83,7 +83,8 @@
       "community": "Community",
       "news": "News",
       "profile": "Profile",
-      "rewards": "Rewards"
+      "rewards": "Rewards",
+      "admin": "Admin"
     },
     "sidebar": {
       "dashboard": "Dashboard",

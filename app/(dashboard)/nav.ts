@@ -38,10 +38,10 @@ import type { NavTab } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/permissions";
 
 // ============================================================================
-// Navigation Configuration (Tab > Group > Items)
+// NAV
 // ============================================================================
 
-export const NAVIGATION_CONFIG: NavTab[] = [
+export const NAV: NavTab[] = [
   {
     key: "overview",
     href: "/dashboard",
@@ -241,7 +241,7 @@ export const NAVIGATION_CONFIG: NavTab[] = [
     key: "admin",
     href: "/admin",
     icon: DashboardIcon,
-    color: "preset06", // Assuming a new color preset
+    color: "preset00", // Assuming a new color preset
     hideInHeader: false, // Make it visible if user has access
     access: [
       PERMISSIONS.TENANT_READ,

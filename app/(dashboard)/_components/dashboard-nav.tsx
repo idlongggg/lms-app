@@ -9,7 +9,7 @@ import { type NavTab, getActiveTabKey } from "@/lib/nav";
 import { useTheme, useTranslation } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 
-import { NAVIGATION_CONFIG } from "../nav";
+import { NAV } from "../nav";
 
 interface DashboardNavProps {
   tabs?: NavTab[];
@@ -17,12 +17,12 @@ interface DashboardNavProps {
 
 export function DashboardNav({ tabs }: DashboardNavProps) {
   const pathname = usePathname();
-  const activeKey = getActiveTabKey(pathname);
   const { t } = useTranslation();
   const { setThemeColor } = useTheme();
 
   // Use provided tabs or fallback to default
-  const allTabs = tabs || NAVIGATION_CONFIG;
+  const allTabs = tabs || NAV;
+  const activeKey = getActiveTabKey(allTabs, pathname);
   const navTabs = allTabs.filter((tab) => !tab.hideInHeader);
   const activeTab = allTabs.find((tab) => tab.key === activeKey);
 
