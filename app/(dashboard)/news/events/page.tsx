@@ -14,8 +14,6 @@ import {
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
-
 const events = [
   {
     id: 1,
@@ -147,19 +145,15 @@ export default function EventsPage() {
   );
 
   return (
-    <PageLayout
-      title={t("news.events.title")}
-      description={t("news.events.description")}
-      actions={
+    <div className="space-y-8">
+      <div className="flex justify-end">
         <select className="border-border bg-background border-2 px-4 py-2 font-medium">
           <option>Tất cả loại</option>
           <option>Thi đấu</option>
           <option>Workshop</option>
           <option>Sự kiện</option>
         </select>
-      }
-    >
-      <div className="space-y-8">
+      </div>
         {/* Featured Event */}
         {upcomingEvents[0] && (
           <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
@@ -335,7 +329,6 @@ export default function EventsPage() {
             })}
           </div>
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

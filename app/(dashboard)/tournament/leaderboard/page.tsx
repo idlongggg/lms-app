@@ -5,8 +5,6 @@ import { Award, Crown, Medal, Star } from "lucide-react";
 import { BarChart } from "@/components/retroui/charts/BarChart";
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
-
 const leaderboardData = [
   { rank: 1, name: "ProCoder99", score: 12500, wins: 85, avatar: "👨‍💻" },
   { rank: 2, name: "ReactMaster", score: 11200, wins: 78, avatar: "⚛️" },
@@ -39,11 +37,7 @@ export default function LeaderboardPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("tournament.leaderboard.title")}
-      description={t("tournament.leaderboard.description")}
-    >
-      <div className="space-y-8">
+    <div className="space-y-8">
         {/* My Rank Card */}
         <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
           <div className="flex flex-col items-center gap-6 sm:flex-row">
@@ -184,7 +178,6 @@ export default function LeaderboardPage() {
             </div>
           </div>
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

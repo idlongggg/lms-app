@@ -13,7 +13,6 @@ import {
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
 
 const announcements = [
   {
@@ -95,17 +94,13 @@ export default function AnnouncementsPage() {
   const otherAnnouncements = announcements.filter((a) => !a.isPinned);
 
   return (
-    <PageLayout
-      title={t("news.announcements.title")}
-      description={t("news.announcements.description")}
-      actions={
+    <div className="space-y-8">
+      <div className="flex justify-end">
         <button className="border-border bg-background flex items-center gap-2 border-2 px-4 py-2 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
           <Bell className="h-4 w-4" />
           Đánh dấu đã đọc tất cả
         </button>
-      }
-    >
-      <div className="space-y-8">
+      </div>
         {/* Pinned Announcements */}
         {pinnedAnnouncements.length > 0 && (
           <div className="space-y-4">
@@ -214,7 +209,6 @@ export default function AnnouncementsPage() {
             Xem thêm thông báo cũ
           </button>
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

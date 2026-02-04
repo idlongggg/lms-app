@@ -4,7 +4,7 @@ import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 const courses = [
   {
@@ -95,10 +95,7 @@ export default function CoursesPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("learning.courses.title")}
-      description={t("learning.courses.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-8">
         {/* Filters */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -191,6 +188,6 @@ export default function CoursesPage() {
           </button>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

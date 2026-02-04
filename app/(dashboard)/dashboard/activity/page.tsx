@@ -13,7 +13,7 @@ import {
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 const activities = [
   {
@@ -109,10 +109,7 @@ export default function ActivityPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("dashboard.activity.title")}
-      description={t("dashboard.activity.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-8">
         {/* Today Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -210,6 +207,6 @@ export default function ActivityPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ import { LineChart } from "@/components/retroui/charts/LineChart";
 import { PieChart } from "@/components/retroui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 const learningProgressData = [
   { month: "T1", completed: 12, inProgress: 5 },
@@ -50,10 +50,7 @@ export default function StatsPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("dashboard.stats.title")}
-      description={t("dashboard.stats.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-8">
         {/* Summary Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -206,6 +203,6 @@ export default function StatsPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

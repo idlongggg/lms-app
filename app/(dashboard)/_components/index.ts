@@ -6,4 +6,4 @@ export { CreateTournamentSection } from "../tournament/_components/create-tourna
 export { JoinTournamentSection } from "../tournament/_components/join-tournament-section";
 export { ParentTournamentSection } from "../tournament/_components/parent-tournament-section";
 export * from "./dashboard-nav";
-export * from "./page-layout";
+

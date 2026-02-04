@@ -11,7 +11,6 @@ import { getSubjectsWithProgress } from "@/lib/mock/courses";
 import { useTranslation } from "@/lib/providers";
 
 import {
-  PageLayout,
   TeacherClassesSection,
   TeacherQuestionsSection,
 } from "../_components";
@@ -49,11 +48,7 @@ export default function MyLearningPage() {
   ];
 
   return (
-    <PageLayout
-      title={t("learning.title")}
-      description={t("learning.description")}
-    >
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Stats Summary */}
         <div className="grid gap-4 sm:grid-cols-4">
           <Card className="p-4">
@@ -213,7 +208,6 @@ export default function MyLearningPage() {
             <TeacherClassesSection />
           </div>
         </Can>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

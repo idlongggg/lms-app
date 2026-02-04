@@ -4,7 +4,7 @@ import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 const redeemedItems = [
   {
@@ -93,16 +93,13 @@ export default function RedeemedPage() {
   ).length;
 
   return (
-    <PageLayout
-      title={t("rewards.redeemed.title")}
-      description={t("rewards.redeemed.description")}
-      actions={
+    <div className="space-y-6">
+      <div className="flex justify-end">
         <button className="border-border bg-primary border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
           <Gift className="mr-2 inline h-4 w-4" />
           Đổi thêm quà
         </button>
-      }
-    >
+      </div>
       <div className="space-y-8">
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
@@ -248,6 +245,6 @@ export default function RedeemedPage() {
           </div>
         )}
       </div>
-    </PageLayout>
+    </div>
   );
 }

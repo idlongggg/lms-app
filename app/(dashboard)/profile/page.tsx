@@ -4,16 +4,13 @@ import { BookOpen, Flame, Mail, Settings, Trophy, User } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../_components/page-layout";
+
 
 export default function ProfilePage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("profile.title")}
-      description={t("profile.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-6">
         {/* Profile Header */}
         <div className="border-border bg-card border-2 shadow-sm">
@@ -109,7 +106,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }
 

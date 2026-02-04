@@ -4,8 +4,6 @@ import { Calendar, Clock, Filter, Trophy, Users } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
-
 const upcomingMatches = [
   {
     id: 1,
@@ -67,11 +65,7 @@ export default function SchedulePage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("tournament.schedule.title")}
-      description={t("tournament.schedule.description")}
-    >
-      <div className="space-y-8">
+    <div className="space-y-8">
         {/* My Registered */}
         {myRegistered.length > 0 && (
           <div className="border-primary bg-primary/10 border-2 p-4 shadow-sm">
@@ -212,7 +206,6 @@ export default function SchedulePage() {
             </div>
           ))}
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "@/lib/mock/rewards";
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../_components/page-layout";
+
 
 export default function RewardsPage() {
   const { user } = useAuth();
@@ -27,18 +27,15 @@ export default function RewardsPage() {
     .slice(0, 4);
 
   return (
-    <PageLayout
-      title={t("rewards.title")}
-      description={t("rewards.description")}
-      actions={
+    <div className="space-y-6">
+      <div className="flex justify-end">
         <div className="border-border bg-primary flex items-center gap-2 border-2 px-4 py-2 shadow-sm">
           <Coins className="h-5 w-5" />
           <span className="font-bold">
             {user.coins.toLocaleString()} {t("dashboard.coins")}
           </span>
         </div>
-      }
-    >
+      </div>
       <div className="space-y-8">
         {/* Quick Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
@@ -310,6 +307,6 @@ export default function RewardsPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

@@ -2,16 +2,13 @@
 
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 export default function ProfileSettingsPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("settings.title")}
-      description={t("settings.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-6">
         {/* Account Settings */}
         <div className="border-border bg-background border-2 shadow-sm">
@@ -104,6 +101,6 @@ export default function ProfileSettingsPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

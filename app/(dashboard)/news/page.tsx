@@ -11,8 +11,6 @@ import {
 } from "@/lib/mock/news";
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../_components/page-layout";
-
 export default function NewsPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
@@ -39,8 +37,7 @@ export default function NewsPage() {
   };
 
   return (
-    <PageLayout title={t("news.title")} description={t("news.description")}>
-      <div className="grid gap-8 lg:grid-cols-3">
+    <div className="grid gap-8 lg:grid-cols-3">
         {/* Main News */}
         <div className="space-y-6 lg:col-span-2">
           <h2 className="text-xl font-bold">Tin mới nhất</h2>
@@ -161,7 +158,6 @@ export default function NewsPage() {
             </Link>
           </div>
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

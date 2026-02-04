@@ -17,7 +17,6 @@ import {
 import { useTranslation } from "@/lib/providers";
 
 import {
-  PageLayout,
   ParentChildrenSection,
   TeacherClassesSection,
 } from "../_components";
@@ -79,11 +78,7 @@ export default function DashboardPage() {
   const firstName = user.name.split(" ").slice(-1)[0];
 
   return (
-    <PageLayout
-      title={`${t("dashboard.welcome")}, ${firstName}! 👋`}
-      description={t("dashboard.welcomeBack")}
-    >
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Stats Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
@@ -255,7 +250,6 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </div>
-    </PageLayout>
+    </div>
   );
 }

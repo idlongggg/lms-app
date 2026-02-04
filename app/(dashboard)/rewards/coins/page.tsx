@@ -6,7 +6,7 @@ import { AreaChart } from "@/components/retroui/charts/AreaChart";
 import { PieChart } from "@/components/retroui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
 
-import { PageLayout } from "../../_components/page-layout";
+
 
 const coinHistory = [
   { date: "T1", balance: 1500, earned: 200, spent: 50 },
@@ -78,10 +78,7 @@ export default function CoinsPage() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout
-      title={t("rewards.coins.title")}
-      description={t("rewards.coins.description")}
-    >
+    <div className="space-y-6">
       <div className="space-y-8">
         {/* Balance Card */}
         <div className="border-primary bg-primary/20 border-2 p-6 shadow-sm">
@@ -268,6 +265,6 @@ export default function CoinsPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

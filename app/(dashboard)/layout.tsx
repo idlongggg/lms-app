@@ -15,8 +15,8 @@ import {
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
-import { getSidebarForPath, filterTabs } from "@/lib/nav";
-import { SidebarProvider, useSidebar } from "@/lib/providers";
+import { getActiveTabKey, getSidebarForPath, filterTabs } from "@/lib/nav";
+import { SidebarProvider, useSidebar, useTranslation } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
 import { NAVIGATION_CONFIG } from "./nav";
@@ -54,6 +54,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const mainRef = useRef<HTMLElement>(null);
   const { hasPermission } = useAuth();
+  const { t } = useTranslation();
 
   useScrollPosition(mainRef, "content");
 
@@ -62,7 +63,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const showTabs = tabs.length > 0;
 
   return (
-    <div className="bg-background h-screen">
+    <div className="bg-background flex h-screen flex-col overflow-hidden">
       <Header
         left={
           <>
@@ -80,14 +81,28 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           </>
         }
       />
-      <div className="mx-auto h-[calc(100vh-4rem)] max-w-7xl">
-        <div className="relative flex h-full gap-4 overflow-hidden pt-6">
+      <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden">
+        <div className="relative flex h-full gap-4 pt-6">
           <Sidebar navigation={navigation} variant="collapsible" />
           <main
             ref={mainRef}
-            className="flex h-full flex-1 flex-col overflow-auto"
+            className="flex h-full flex-1 flex-col overflow-hidden"
           >
-            {children}
+            <div className="border-border mb-6 shrink-0 border-b-2 pb-4">
+              <h1 className="text-2xl font-bold tracking-tight">
+                {t(`navigation.tabs.${getActiveTabKey(pathname)}`)}
+              </h1>
+              <p className="text-muted-foreground">
+                {t(`dashboard.${getActiveTabKey(pathname)}.description`, {
+                  defaultValue: t(
+                    `navigation.sidebar.${getActiveTabKey(pathname)}`,
+                  ),
+                })}
+              </p>
+            </div>
+            <div className="flex-1 overflow-auto pr-6 pb-6">
+              {children}
+            </div>
           </main>
         </div>
       </div>

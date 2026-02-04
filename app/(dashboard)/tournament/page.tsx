@@ -17,7 +17,6 @@ import { useTranslation } from "@/lib/providers";
 import {
   CreateTournamentSection,
   JoinTournamentSection,
-  PageLayout,
   ParentTournamentSection,
 } from "../_components";
 
@@ -46,15 +45,12 @@ export default function TournamentPage() {
   };
 
   return (
-    <PageLayout
-      title={t("tournament.title")}
-      description={t("tournament.description")}
-      actions={
+    <div className="space-y-6">
+      <div className="flex justify-end">
         <Can permission={PERMISSIONS.TOURNAMENT_CREATE}>
           <CreateTournamentSection />
         </Can>
-      }
-    >
+      </div>
       <div className="space-y-6">
         {/* User Stats */}
         <div className="grid gap-4 sm:grid-cols-4">
@@ -203,6 +199,6 @@ export default function TournamentPage() {
           </div>
         </Can>
       </div>
-    </PageLayout>
+    </div>
   );
 }
