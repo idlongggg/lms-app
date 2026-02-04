@@ -1,8 +1,4 @@
-/**
- * Providers Module
- * Centralized exports for app providers
- */
-
-export { AppProviders } from './app-providers';
-export { LanguageProvider, useLanguage, useTranslation } from './language-provider';
-export { type Theme, ThemeProvider, useTheme } from './theme-provider';
+export * from "./app-providers";
+export * from "./language-provider";
+export * from "./sidebar-provider";
+export * from "./theme-provider";

@@ -8,81 +8,83 @@ import {
   Trophy,
   Users,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 const events = [
   {
     id: 1,
-    title: 'Code Marathon 2026',
+    title: "Code Marathon 2026",
     description:
-      'Cuộc thi lập trình marathon kéo dài 24 giờ với nhiều thử thách hấp dẫn. Tham gia để giành giải thưởng lớn!',
-    type: 'competition',
-    startDate: '2026-02-15T09:00:00',
-    endDate: '2026-02-16T09:00:00',
-    location: 'Online',
+      "Cuộc thi lập trình marathon kéo dài 24 giờ với nhiều thử thách hấp dẫn. Tham gia để giành giải thưởng lớn!",
+    type: "competition",
+    startDate: "2026-02-15T09:00:00",
+    endDate: "2026-02-16T09:00:00",
+    location: "Online",
     participants: 245,
     maxParticipants: 500,
-    rewards: '10,000 xu + Huy hiệu độc quyền',
-    status: 'upcoming',
-    image: '🏃',
+    rewards: "10,000 xu + Huy hiệu độc quyền",
+    status: "upcoming",
+    image: "🏃",
   },
   {
     id: 2,
-    title: 'Workshop: React Server Components',
+    title: "Workshop: React Server Components",
     description:
-      'Tìm hiểu về React Server Components và cách áp dụng vào dự án thực tế cùng chuyên gia.',
-    type: 'workshop',
-    startDate: '2026-02-12T19:00:00',
-    endDate: '2026-02-12T21:00:00',
-    location: 'Google Meet',
+      "Tìm hiểu về React Server Components và cách áp dụng vào dự án thực tế cùng chuyên gia.",
+    type: "workshop",
+    startDate: "2026-02-12T19:00:00",
+    endDate: "2026-02-12T21:00:00",
+    location: "Google Meet",
     participants: 89,
     maxParticipants: 100,
-    rewards: '200 xu + Certificate',
-    status: 'upcoming',
-    image: '📚',
+    rewards: "200 xu + Certificate",
+    status: "upcoming",
+    image: "📚",
   },
   {
     id: 3,
     title: "Valentine's Day Challenge",
-    description: 'Hoàn thành các bài quiz trong ngày Valentine để nhận quà đặc biệt!',
-    type: 'event',
-    startDate: '2026-02-14T00:00:00',
-    endDate: '2026-02-14T23:59:00',
-    location: 'Platform',
+    description:
+      "Hoàn thành các bài quiz trong ngày Valentine để nhận quà đặc biệt!",
+    type: "event",
+    startDate: "2026-02-14T00:00:00",
+    endDate: "2026-02-14T23:59:00",
+    location: "Platform",
     participants: null,
     maxParticipants: null,
-    rewards: 'Double XP + Avatar Valentine',
-    status: 'upcoming',
-    image: '💝',
+    rewards: "Double XP + Avatar Valentine",
+    status: "upcoming",
+    image: "💝",
   },
   {
     id: 4,
-    title: 'TypeScript Deep Dive',
+    title: "TypeScript Deep Dive",
     description:
-      'Khám phá những tính năng nâng cao của TypeScript như Generics, Utility Types, và Pattern Matching.',
-    type: 'workshop',
-    startDate: '2026-02-08T10:00:00',
-    endDate: '2026-02-08T12:00:00',
-    location: 'Zoom',
+      "Khám phá những tính năng nâng cao của TypeScript như Generics, Utility Types, và Pattern Matching.",
+    type: "workshop",
+    startDate: "2026-02-08T10:00:00",
+    endDate: "2026-02-08T12:00:00",
+    location: "Zoom",
     participants: 156,
     maxParticipants: 150,
-    rewards: '150 xu',
-    status: 'full',
-    image: '📘',
+    rewards: "150 xu",
+    status: "full",
+    image: "📘",
   },
   {
     id: 5,
-    title: 'JavaScript Quiz Championship Q1',
-    description: 'Giải vô địch Quiz JavaScript quý 1 năm 2026. Top 3 sẽ nhận thưởng đặc biệt!',
-    type: 'competition',
-    startDate: '2026-01-25T14:00:00',
-    endDate: '2026-01-25T18:00:00',
-    location: 'Online',
+    title: "JavaScript Quiz Championship Q1",
+    description:
+      "Giải vô địch Quiz JavaScript quý 1 năm 2026. Top 3 sẽ nhận thưởng đặc biệt!",
+    type: "competition",
+    startDate: "2026-01-25T14:00:00",
+    endDate: "2026-01-25T18:00:00",
+    location: "Online",
     participants: 320,
     maxParticipants: 300,
-    rewards: '5,000 xu cho Top 3',
-    status: 'ended',
-    image: '🏆',
+    rewards: "5,000 xu cho Top 3",
+    status: "ended",
+    image: "🏆",
   },
 ];
 
@@ -91,46 +93,51 @@ const typeConfig: Record<
   { label: string; color: string; bgColor: string; icon: typeof Trophy }
 > = {
   competition: {
-    label: 'Thi đấu',
-    color: 'text-red-700',
-    bgColor: 'bg-red-100',
+    label: "Thi đấu",
+    color: "text-red-700",
+    bgColor: "bg-red-100",
     icon: Trophy,
   },
   workshop: {
-    label: 'Workshop',
-    color: 'text-blue-700',
-    bgColor: 'bg-blue-100',
+    label: "Workshop",
+    color: "text-blue-700",
+    bgColor: "bg-blue-100",
     icon: Star,
   },
   event: {
-    label: 'Sự kiện',
-    color: 'text-purple-700',
-    bgColor: 'bg-purple-100',
+    label: "Sự kiện",
+    color: "text-purple-700",
+    bgColor: "bg-purple-100",
     icon: Zap,
   },
 };
 
-const statusConfig: Record<string, { label: string; color: string; bgColor: string }> = {
+const statusConfig: Record<
+  string,
+  { label: string; color: string; bgColor: string }
+> = {
   upcoming: {
-    label: 'Sắp diễn ra',
-    color: 'text-green-700',
-    bgColor: 'bg-green-100',
+    label: "Sắp diễn ra",
+    color: "text-green-700",
+    bgColor: "bg-green-100",
   },
   full: {
-    label: 'Đã đủ người',
-    color: 'text-orange-700',
-    bgColor: 'bg-orange-100',
+    label: "Đã đủ người",
+    color: "text-orange-700",
+    bgColor: "bg-orange-100",
   },
   ended: {
-    label: 'Đã kết thúc',
-    color: 'text-gray-500',
-    bgColor: 'bg-gray-100',
+    label: "Đã kết thúc",
+    color: "text-gray-500",
+    bgColor: "bg-gray-100",
   },
 };
 
 export default function EventsPage() {
-  const upcomingEvents = events.filter((e) => e.status === 'upcoming');
-  const pastEvents = events.filter((e) => e.status === 'ended' || e.status === 'full');
+  const upcomingEvents = events.filter((e) => e.status === "upcoming");
+  const pastEvents = events.filter(
+    (e) => e.status === "ended" || e.status === "full",
+  );
 
   return (
     <div className="space-y-8">
@@ -138,7 +145,9 @@ export default function EventsPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Sự kiện</h1>
-          <p className="text-muted-foreground">Khám phá các sự kiện và workshop sắp diễn ra</p>
+          <p className="text-muted-foreground">
+            Khám phá các sự kiện và workshop sắp diễn ra
+          </p>
         </div>
         <select className="border-border bg-background border-2 px-4 py-2 font-medium">
           <option>Tất cả loại</option>
@@ -166,22 +175,32 @@ export default function EventsPage() {
                   Nổi bật
                 </span>
               </div>
-              <h2 className="mt-2 text-2xl font-bold">{upcomingEvents[0].title}</h2>
-              <p className="text-muted-foreground mt-2">{upcomingEvents[0].description}</p>
+              <h2 className="mt-2 text-2xl font-bold">
+                {upcomingEvents[0].title}
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                {upcomingEvents[0].description}
+              </p>
               <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
-                  {new Date(upcomingEvents[0].startDate).toLocaleDateString('vi-VN', {
-                    day: 'numeric',
-                    month: 'long',
-                  })}
+                  {new Date(upcomingEvents[0].startDate).toLocaleDateString(
+                    "vi-VN",
+                    {
+                      day: "numeric",
+                      month: "long",
+                    },
+                  )}
                 </span>
                 <span className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
-                  {new Date(upcomingEvents[0].startDate).toLocaleTimeString('vi-VN', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
+                  {new Date(upcomingEvents[0].startDate).toLocaleTimeString(
+                    "vi-VN",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    },
+                  )}
                 </span>
                 <span className="flex items-center gap-1">
                   <MapPin className="h-4 w-4" />
@@ -190,7 +209,8 @@ export default function EventsPage() {
                 {upcomingEvents[0].participants !== null && (
                   <span className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
-                    {upcomingEvents[0].participants}/{upcomingEvents[0].maxParticipants}
+                    {upcomingEvents[0].participants}/
+                    {upcomingEvents[0].maxParticipants}
                   </span>
                 )}
                 <span className="flex items-center gap-1">
@@ -244,13 +264,13 @@ export default function EventsPage() {
                     <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
-                        {new Date(event.startDate).toLocaleDateString('vi-VN')}
+                        {new Date(event.startDate).toLocaleDateString("vi-VN")}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {new Date(event.startDate).toLocaleTimeString('vi-VN', {
-                          hour: '2-digit',
-                          minute: '2-digit',
+                        {new Date(event.startDate).toLocaleTimeString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
                         })}
                       </span>
                     </div>
@@ -262,7 +282,9 @@ export default function EventsPage() {
                     <Gift className="h-4 w-4" />
                     {event.rewards}
                   </span>
-                  <button className="text-secondary font-medium hover:underline">Chi tiết</button>
+                  <button className="text-secondary font-medium hover:underline">
+                    Chi tiết
+                  </button>
                 </div>
               </div>
             );
@@ -287,12 +309,14 @@ export default function EventsPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-medium">{event.title}</h3>
-                    <span className={`px-1.5 py-0.5 text-xs ${status.bgColor} ${status.color}`}>
+                    <span
+                      className={`px-1.5 py-0.5 text-xs ${status.bgColor} ${status.color}`}
+                    >
                       {status.label}
                     </span>
                   </div>
                   <p className="text-muted-foreground text-sm">
-                    {new Date(event.startDate).toLocaleDateString('vi-VN')}
+                    {new Date(event.startDate).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
                 <button className="text-muted-foreground hover:text-foreground text-sm">

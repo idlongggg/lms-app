@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Bar,
   BarChart as RechartsBarChart,
@@ -9,9 +9,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +27,7 @@ interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
   showGrid?: boolean;
   showTooltip?: boolean;
   stacked?: boolean;
-  alignment?: 'vertical' | 'horizontal';
+  alignment?: "vertical" | "horizontal";
   className?: string;
 }
 
@@ -37,32 +37,34 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
       data = [],
       index,
       categories = [],
-      strokeColors = ['var(--foreground)'],
-      fillColors = ['var(--primary)', 'var(--secondary)'],
-      tooltipBgColor = 'var(--background)',
-      tooltipBorderColor = 'var(--border)',
-      gridColor = 'var(--muted)',
+      strokeColors = ["var(--foreground)"],
+      fillColors = ["var(--primary)", "var(--secondary)"],
+      tooltipBgColor = "var(--background)",
+      tooltipBorderColor = "var(--border)",
+      gridColor = "var(--muted)",
       valueFormatter = (value: number) => value.toString(),
       showGrid = true,
       showTooltip = true,
       stacked = false,
-      alignment = 'vertical',
+      alignment = "vertical",
       className,
       ...props
     },
     ref,
   ) => {
     return (
-      <div ref={ref} className={cn('h-80 w-full', className)} {...props}>
+      <div ref={ref} className={cn("h-80 w-full", className)} {...props}>
         <ResponsiveContainer width="100%" height="100%">
           <RechartsBarChart
             data={data}
-            layout={alignment === 'horizontal' ? 'vertical' : undefined}
+            layout={alignment === "horizontal" ? "vertical" : undefined}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
-            {showGrid && <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />}
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            )}
 
-            {alignment === 'horizontal' ? (
+            {alignment === "horizontal" ? (
               <>
                 <XAxis
                   type="number"
@@ -117,14 +119,19 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
                           <span className="text-muted-foreground text-[0.70rem] uppercase">
                             {index}
                           </span>
-                          <span className="text-muted-foreground font-bold">{label}</span>
+                          <span className="text-muted-foreground font-bold">
+                            {label}
+                          </span>
                         </div>
                         {payload.map((entry, index) => (
                           <div key={index} className="flex flex-col">
                             <span className="text-muted-foreground text-[0.70rem] uppercase">
                               {entry.dataKey}
                             </span>
-                            <span className="font-bold" style={{ color: strokeColors[0] }}>
+                            <span
+                              className="font-bold"
+                              style={{ color: strokeColors[0] }}
+                            >
                               {valueFormatter(entry.value as number)}
                             </span>
                           </div>
@@ -147,7 +154,7 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
                   fill={fillColor}
                   stroke={strokeColor}
                   strokeWidth={1}
-                  stackId={stacked ? 'strokeId' : undefined}
+                  stackId={stacked ? "strokeId" : undefined}
                 />
               );
             })}
@@ -158,6 +165,6 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(
   },
 );
 
-BarChart.displayName = 'BarChart';
+BarChart.displayName = "BarChart";
 
 export { BarChart, type BarChartProps };

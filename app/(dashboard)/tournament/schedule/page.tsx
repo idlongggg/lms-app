@@ -1,59 +1,59 @@
-import { Calendar, Clock, Filter, Trophy, Users } from 'lucide-react';
+import { Calendar, Clock, Filter, Trophy, Users } from "lucide-react";
 
 const upcomingMatches = [
   {
     id: 1,
-    title: 'JavaScript Championship',
-    date: '2026-02-10',
-    time: '19:00',
+    title: "JavaScript Championship",
+    date: "2026-02-10",
+    time: "19:00",
     participants: 32,
     maxParticipants: 64,
-    prize: '500 xu',
-    status: 'registration',
-    difficulty: 'Trung bình',
+    prize: "500 xu",
+    status: "registration",
+    difficulty: "Trung bình",
   },
   {
     id: 2,
-    title: 'React Masters Cup',
-    date: '2026-02-14',
-    time: '20:00',
+    title: "React Masters Cup",
+    date: "2026-02-14",
+    time: "20:00",
     participants: 48,
     maxParticipants: 64,
-    prize: '1000 xu',
-    status: 'registration',
-    difficulty: 'Nâng cao',
+    prize: "1000 xu",
+    status: "registration",
+    difficulty: "Nâng cao",
   },
   {
     id: 3,
-    title: 'TypeScript Challenge',
-    date: '2026-02-17',
-    time: '18:30',
+    title: "TypeScript Challenge",
+    date: "2026-02-17",
+    time: "18:30",
     participants: 16,
     maxParticipants: 32,
-    prize: '300 xu',
-    status: 'registration',
-    difficulty: 'Cơ bản',
+    prize: "300 xu",
+    status: "registration",
+    difficulty: "Cơ bản",
   },
   {
     id: 4,
-    title: 'CSS Battle Weekly',
-    date: '2026-02-08',
-    time: '21:00',
+    title: "CSS Battle Weekly",
+    date: "2026-02-08",
+    time: "21:00",
     participants: 28,
     maxParticipants: 32,
-    prize: '200 xu',
-    status: 'starting_soon',
-    difficulty: 'Cơ bản',
+    prize: "200 xu",
+    status: "starting_soon",
+    difficulty: "Cơ bản",
   },
 ];
 
 const myRegistered = [
   {
     id: 5,
-    title: 'Algorithm Arena',
-    date: '2026-02-12',
-    time: '19:30',
-    status: 'registered',
+    title: "Algorithm Arena",
+    date: "2026-02-12",
+    time: "19:30",
+    status: "registered",
   },
 ];
 
@@ -63,7 +63,9 @@ export default function SchedulePage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Lịch đấu</h1>
-        <p className="text-muted-foreground">Xem các giải đấu sắp diễn ra và đăng ký tham gia</p>
+        <p className="text-muted-foreground">
+          Xem các giải đấu sắp diễn ra và đăng ký tham gia
+        </p>
       </div>
 
       {/* My Registered */}
@@ -83,7 +85,8 @@ export default function SchedulePage() {
                   <div>
                     <p className="font-medium">{match.title}</p>
                     <p className="text-muted-foreground text-sm">
-                      {new Date(match.date).toLocaleDateString('vi-VN')} • {match.time}
+                      {new Date(match.date).toLocaleDateString("vi-VN")} •{" "}
+                      {match.time}
                     </p>
                   </div>
                 </div>
@@ -127,14 +130,14 @@ export default function SchedulePage() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span className="font-medium">
-                  {new Date(match.date).toLocaleDateString('vi-VN', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
+                  {new Date(match.date).toLocaleDateString("vi-VN", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
                   })}
                 </span>
               </div>
-              {match.status === 'starting_soon' && (
+              {match.status === "starting_soon" && (
                 <span className="border-border animate-pulse border bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">
                   Sắp bắt đầu
                 </span>
@@ -163,11 +166,11 @@ export default function SchedulePage() {
                 </div>
                 <span
                   className={`border-border shrink-0 border px-2 py-1 text-xs font-medium ${
-                    match.difficulty === 'Cơ bản'
-                      ? 'bg-green-100 text-green-700'
-                      : match.difficulty === 'Trung bình'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
+                    match.difficulty === "Cơ bản"
+                      ? "bg-green-100 text-green-700"
+                      : match.difficulty === "Trung bình"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-red-100 text-red-700"
                   }`}
                 >
                   {match.difficulty}
@@ -177,9 +180,14 @@ export default function SchedulePage() {
               {/* Progress Bar */}
               <div className="mt-4">
                 <div className="mb-1 flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Số người đăng ký</span>
+                  <span className="text-muted-foreground">
+                    Số người đăng ký
+                  </span>
                   <span className="font-medium">
-                    {Math.round((match.participants / match.maxParticipants) * 100)}%
+                    {Math.round(
+                      (match.participants / match.maxParticipants) * 100,
+                    )}
+                    %
                   </span>
                 </div>
                 <div className="border-border bg-muted h-2 w-full border">

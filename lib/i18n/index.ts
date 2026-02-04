@@ -3,10 +3,10 @@
  * Internationalization utilities for the LMS app
  */
 
-import en from './locales/en.json';
-import vi from './locales/vi.json';
+import en from "./locales/en.json";
+import vi from "./locales/vi.json";
 
-export type Language = 'vi' | 'en';
+export type Language = "vi" | "en";
 
 export interface LanguageOption {
   code: Language;
@@ -16,8 +16,8 @@ export interface LanguageOption {
 }
 
 export const languages: LanguageOption[] = [
-  { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳', color: 'text-red-500' },
-  { code: 'en', label: 'English', flag: '🇺🇸', color: 'text-blue-500' },
+  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳", color: "text-red-500" },
+  { code: "en", label: "English", flag: "🇺🇸", color: "text-blue-500" },
 ];
 
 export const translations = {
@@ -31,26 +31,32 @@ export type Translations = typeof vi;
  * Get nested value from object using dot notation
  * e.g., getNestedValue(obj, 'common.loading')
  */
-function getNestedValue(obj: Record<string, unknown>, path: string): string | undefined {
-  const keys = path.split('.');
+function getNestedValue(
+  obj: Record<string, unknown>,
+  path: string,
+): string | undefined {
+  const keys = path.split(".");
   let current: unknown = obj;
 
   for (const key of keys) {
-    if (current && typeof current === 'object' && key in current) {
+    if (current && typeof current === "object" && key in current) {
       current = (current as Record<string, unknown>)[key];
     } else {
       return undefined;
     }
   }
 
-  return typeof current === 'string' ? current : undefined;
+  return typeof current === "string" ? current : undefined;
 }
 
 /**
  * Interpolate variables in translation string
  * e.g., interpolate('Min {{min}} chars', { min: 5 }) => 'Min 5 chars'
  */
-function interpolate(str: string, vars?: Record<string, string | number>): string {
+function interpolate(
+  str: string,
+  vars?: Record<string, string | number>,
+): string {
   if (!vars) return str;
 
   return str.replace(/\{\{(\w+)\}\}/g, (match, key) => {
@@ -66,7 +72,10 @@ export function getTranslation(
   key: string,
   vars?: Record<string, string | number>,
 ): string {
-  const translation = getNestedValue(translations[language] as Record<string, unknown>, key);
+  const translation = getNestedValue(
+    translations[language] as Record<string, unknown>,
+    key,
+  );
 
   if (!translation) {
     // Fallback to key if translation not found
@@ -77,4 +86,4 @@ export function getTranslation(
   return interpolate(translation, vars);
 }
 
-export const defaultLanguage: Language = 'vi';
+export const defaultLanguage: Language = "vi";

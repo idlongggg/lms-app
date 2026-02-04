@@ -3,7 +3,9 @@ export default function ProfileSettingsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold">Cài đặt</h1>
-        <p className="text-muted-foreground">Quản lý cài đặt tài khoản của bạn</p>
+        <p className="text-muted-foreground">
+          Quản lý cài đặt tài khoản của bạn
+        </p>
       </div>
 
       <div className="space-y-6">
@@ -24,7 +26,9 @@ export default function ProfileSettingsPage() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium">Số điện thoại</label>
+                <label className="mb-2 block text-sm font-medium">
+                  Số điện thoại
+                </label>
                 <input
                   type="tel"
                   defaultValue="0912345678"
@@ -47,7 +51,9 @@ export default function ProfileSettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Thông báo email</p>
-                <p className="text-muted-foreground text-sm">Nhận thông báo qua email</p>
+                <p className="text-muted-foreground text-sm">
+                  Nhận thông báo qua email
+                </p>
               </div>
               <button className="bg-primary h-6 w-11 rounded-full p-0.5">
                 <div className="bg-background h-5 w-5 translate-x-5 rounded-full transition-transform" />
@@ -67,7 +73,9 @@ export default function ProfileSettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Nhắc nhở học tập</p>
-                <p className="text-muted-foreground text-sm">Nhận nhắc nhở hàng ngày</p>
+                <p className="text-muted-foreground text-sm">
+                  Nhận nhắc nhở hàng ngày
+                </p>
               </div>
               <button className="bg-muted h-6 w-11 rounded-full p-0.5">
                 <div className="bg-background h-5 w-5 rounded-full transition-transform" />
@@ -83,8 +91,8 @@ export default function ProfileSettingsPage() {
           </div>
           <div className="p-6">
             <p className="text-muted-foreground mb-4 text-sm">
-              Xóa tài khoản sẽ xóa vĩnh viễn tất cả dữ liệu của bạn. Hành động này không thể hoàn
-              tác.
+              Xóa tài khoản sẽ xóa vĩnh viễn tất cả dữ liệu của bạn. Hành động
+              này không thể hoàn tác.
             </p>
             <button className="border-destructive bg-background text-destructive hover:bg-destructive border-2 px-6 py-2 font-medium shadow-xs transition-all hover:text-white">
               Xóa tài khoản

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { ArrowLeft, X } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowLeft, X } from "lucide-react";
+import Link from "next/link";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface FocusHeaderProps {
   backHref: string;
@@ -12,11 +12,16 @@ interface FocusHeaderProps {
   className?: string;
 }
 
-export function FocusHeader({ backHref, title, children, className }: FocusHeaderProps) {
+export function FocusHeader({
+  backHref,
+  title,
+  children,
+  className,
+}: FocusHeaderProps) {
   return (
     <header
       className={cn(
-        'border-border bg-background sticky top-0 z-50 flex h-12 items-center justify-between border-b-2 px-4',
+        "border-border bg-background sticky top-0 z-50 flex h-12 items-center justify-between border-b-2 px-4",
         className,
       )}
     >
@@ -30,7 +35,11 @@ export function FocusHeader({ backHref, title, children, className }: FocusHeade
 
       {/* Center - Title or custom content */}
       <div className="flex-1 px-4">
-        {title ? <h1 className="truncate text-center font-medium">{title}</h1> : children}
+        {title ? (
+          <h1 className="truncate text-center font-medium">{title}</h1>
+        ) : (
+          children
+        )}
       </div>
 
       {/* Right - Settings/Close */}

@@ -1,81 +1,89 @@
-import { BookOpen, Clock, Filter, Star, Users } from 'lucide-react';
+import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
 
 const courses = [
   {
     id: 1,
-    title: 'React.js từ cơ bản đến nâng cao',
-    description: 'Học React từ đầu với hooks, context, và các patterns phổ biến',
-    thumbnail: '⚛️',
+    title: "React.js từ cơ bản đến nâng cao",
+    description:
+      "Học React từ đầu với hooks, context, và các patterns phổ biến",
+    thumbnail: "⚛️",
     lessons: 45,
-    duration: '25h',
+    duration: "25h",
     students: 1250,
     rating: 4.8,
-    level: 'Trung bình',
-    category: 'Frontend',
+    level: "Trung bình",
+    category: "Frontend",
   },
   {
     id: 2,
-    title: 'Node.js & Express Backend',
-    description: 'Xây dựng REST API với Node.js, Express và MongoDB',
-    thumbnail: '🟢',
+    title: "Node.js & Express Backend",
+    description: "Xây dựng REST API với Node.js, Express và MongoDB",
+    thumbnail: "🟢",
     lessons: 38,
-    duration: '20h',
+    duration: "20h",
     students: 890,
     rating: 4.7,
-    level: 'Trung bình',
-    category: 'Backend',
+    level: "Trung bình",
+    category: "Backend",
   },
   {
     id: 3,
-    title: 'Python cho người mới bắt đầu',
-    description: 'Nhập môn lập trình với Python - ngôn ngữ dễ học nhất',
-    thumbnail: '🐍',
+    title: "Python cho người mới bắt đầu",
+    description: "Nhập môn lập trình với Python - ngôn ngữ dễ học nhất",
+    thumbnail: "🐍",
     lessons: 30,
-    duration: '15h',
+    duration: "15h",
     students: 2100,
     rating: 4.9,
-    level: 'Cơ bản',
-    category: 'Programming',
+    level: "Cơ bản",
+    category: "Programming",
   },
   {
     id: 4,
-    title: 'SQL & Database Design',
-    description: 'Thiết kế cơ sở dữ liệu và viết truy vấn SQL hiệu quả',
-    thumbnail: '🗄️',
+    title: "SQL & Database Design",
+    description: "Thiết kế cơ sở dữ liệu và viết truy vấn SQL hiệu quả",
+    thumbnail: "🗄️",
     lessons: 25,
-    duration: '12h',
+    duration: "12h",
     students: 750,
     rating: 4.6,
-    level: 'Cơ bản',
-    category: 'Database',
+    level: "Cơ bản",
+    category: "Database",
   },
   {
     id: 5,
-    title: 'Docker & Kubernetes',
-    description: 'Container hóa ứng dụng và triển khai với Kubernetes',
-    thumbnail: '🐳',
+    title: "Docker & Kubernetes",
+    description: "Container hóa ứng dụng và triển khai với Kubernetes",
+    thumbnail: "🐳",
     lessons: 32,
-    duration: '18h',
+    duration: "18h",
     students: 520,
     rating: 4.5,
-    level: 'Nâng cao',
-    category: 'DevOps',
+    level: "Nâng cao",
+    category: "DevOps",
   },
   {
     id: 6,
-    title: 'Next.js Full-stack Development',
-    description: 'Xây dựng ứng dụng full-stack với Next.js 14 App Router',
-    thumbnail: '▲',
+    title: "Next.js Full-stack Development",
+    description: "Xây dựng ứng dụng full-stack với Next.js 14 App Router",
+    thumbnail: "▲",
     lessons: 40,
-    duration: '22h',
+    duration: "22h",
     students: 680,
     rating: 4.8,
-    level: 'Nâng cao',
-    category: 'Frontend',
+    level: "Nâng cao",
+    category: "Frontend",
   },
 ];
 
-const categories = ['Tất cả', 'Frontend', 'Backend', 'Database', 'DevOps', 'Programming'];
+const categories = [
+  "Tất cả",
+  "Frontend",
+  "Backend",
+  "Database",
+  "DevOps",
+  "Programming",
+];
 
 export default function CoursesPage() {
   return (
@@ -83,7 +91,9 @@ export default function CoursesPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Tất cả khóa học</h1>
-        <p className="text-muted-foreground">Khám phá hơn 100+ khóa học chất lượng</p>
+        <p className="text-muted-foreground">
+          Khám phá hơn 100+ khóa học chất lượng
+        </p>
       </div>
 
       {/* Filters */}
@@ -97,7 +107,7 @@ export default function CoursesPage() {
             <button
               key={cat}
               className={`border-border hover:bg-muted border-2 px-3 py-1 text-sm font-medium transition-all ${
-                cat === 'Tất cả' ? 'bg-primary' : 'bg-background'
+                cat === "Tất cả" ? "bg-primary" : "bg-background"
               }`}
             >
               {cat}

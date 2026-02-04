@@ -1,4 +1,4 @@
-import { Bell, Database, Settings, Shield } from 'lucide-react';
+import { Bell, Database, Settings, Shield } from "lucide-react";
 
 interface SettingCardProps {
   icon: React.ReactNode;
@@ -10,7 +10,7 @@ interface SettingCardProps {
 
 function SettingCard({
   icon,
-  iconBg = 'bg-primary',
+  iconBg = "bg-primary",
   title,
   description,
   children,
@@ -36,16 +36,22 @@ function SettingCard({
 function ToggleSwitch({ enabled }: { enabled: boolean }) {
   return (
     <button
-      className={`border-border h-6 w-12 border-2 transition-colors ${enabled ? 'bg-primary' : 'bg-muted'}`}
+      className={`border-border h-6 w-12 border-2 transition-colors ${enabled ? "bg-primary" : "bg-muted"}`}
     >
       <div
-        className={`border-border bg-background h-4 w-4 border transition-transform ${enabled ? 'translate-x-6' : 'translate-x-0.5'}`}
+        className={`border-border bg-background h-4 w-4 border transition-transform ${enabled ? "translate-x-6" : "translate-x-0.5"}`}
       />
     </button>
   );
 }
 
-function FormField({ label, children }: { label: string; children: React.ReactNode }) {
+function FormField({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <label className="text-sm font-medium">{label}</label>
@@ -54,7 +60,13 @@ function FormField({ label, children }: { label: string; children: React.ReactNo
   );
 }
 
-function PageHeader({ title, description }: { title: string; description: string }) {
+function PageHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <div>
       <h1 className="text-3xl font-bold">{title}</h1>
@@ -66,7 +78,10 @@ function PageHeader({ title, description }: { title: string; description: string
 export default function AdminSettingsPage() {
   return (
     <div className="space-y-6">
-      <PageHeader title="Cài đặt hệ thống" description="Quản lý cấu hình và tùy chỉnh hệ thống" />
+      <PageHeader
+        title="Cài đặt hệ thống"
+        description="Quản lý cấu hình và tùy chỉnh hệ thống"
+      />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <SettingCard
@@ -106,7 +121,9 @@ export default function AdminSettingsPage() {
             <div key={index} className="flex items-center justify-between">
               <div>
                 <p className="font-medium">{setting.label}</p>
-                <p className="text-muted-foreground text-sm">{setting.description}</p>
+                <p className="text-muted-foreground text-sm">
+                  {setting.description}
+                </p>
               </div>
               <ToggleSwitch enabled={setting.enabled} />
             </div>
@@ -136,7 +153,9 @@ export default function AdminSettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">Two-Factor Authentication</p>
-              <p className="text-muted-foreground text-sm">Bắt buộc cho Admin</p>
+              <p className="text-muted-foreground text-sm">
+                Bắt buộc cho Admin
+              </p>
             </div>
             <ToggleSwitch enabled={true} />
           </div>
@@ -179,18 +198,18 @@ function ConnectionStatus({ name, status }: { name: string; status: string }) {
 
 const notificationSettings = [
   {
-    label: 'Email thông báo',
-    description: 'Gửi email khi có sự kiện quan trọng',
+    label: "Email thông báo",
+    description: "Gửi email khi có sự kiện quan trọng",
     enabled: true,
   },
   {
-    label: 'Push notification',
-    description: 'Thông báo đẩy cho người dùng',
+    label: "Push notification",
+    description: "Thông báo đẩy cho người dùng",
     enabled: true,
   },
   {
-    label: 'Báo cáo hàng tuần',
-    description: 'Gửi báo cáo tổng hợp mỗi tuần',
+    label: "Báo cáo hàng tuần",
+    description: "Gửi báo cáo tổng hợp mỗi tuần",
     enabled: false,
   },
 ];

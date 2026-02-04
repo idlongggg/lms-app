@@ -3,12 +3,18 @@
  * Implementation of AuthService with LocalStorage persistence
  */
 
-import type { MockUser } from '../mock/users';
-import { getUserByEmail, mockUsers } from '../mock/users';
-import type { AuthService, AuthState, AuthUser, LoginCredentials, UserRole } from './types';
-import { LOGIN_REDIRECT, ROLE_PERMISSIONS } from './types';
+import type { MockUser } from "../mock/users";
+import { getUserByEmail, mockUsers } from "../mock/users";
+import type {
+  AuthService,
+  AuthState,
+  AuthUser,
+  LoginCredentials,
+  UserRole,
+} from "./types";
+import { LOGIN_REDIRECT, ROLE_PERMISSIONS } from "./types";
 
-const STORAGE_KEY = 'lms_auth_user';
+const STORAGE_KEY = "lms_auth_user";
 
 function mockUserToAuthUser(mockUser: MockUser): AuthUser {
   return {
@@ -26,7 +32,7 @@ function mockUserToAuthUser(mockUser: MockUser): AuthUser {
 }
 
 function loadUserFromStorage(): AuthUser | null {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === "undefined") return null;
 
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -41,12 +47,12 @@ function loadUserFromStorage(): AuthUser | null {
 }
 
 function saveUserToStorage(user: AuthUser): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
 }
 
 function clearUserFromStorage(): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   localStorage.removeItem(STORAGE_KEY);
 }
 
@@ -57,7 +63,7 @@ class MockAuthServiceImpl implements AuthService {
 
   constructor() {
     // Load from storage on init (client-side only)
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       this.user = loadUserFromStorage();
       this.isLoading = false;
     }
@@ -121,8 +127,12 @@ class MockAuthServiceImpl implements AuthService {
   }
 
   getLoginRedirectPath(): string {
-    if (!this.user) return '/auth/login';
-    return LOGIN_REDIRECT[this.user.role] || '/dashboard';
+    if (!this.user) return "/auth/login";
+    // Admin roles go to /admin, everyone else to /dashboard
+    if (this.user.role === "root-admin" || this.user.role === "tenant-admin") {
+      return "/admin";
+    }
+    return LOGIN_REDIRECT;
   }
 
   // For React integration
@@ -144,51 +154,20 @@ class MockAuthServiceImpl implements AuthService {
 // Singleton instance
 export const mockAuthService = new MockAuthServiceImpl();
 
-// Route access map (moved here to avoid circular dependency)
-const ROUTE_ACCESS: Record<string, UserRole[]> = {
-  '/admin': ['root-admin', 'tenant-admin'],
-  '/admin/tenants': ['root-admin'],
-  '/admin/users': ['root-admin', 'tenant-admin'],
-  '/admin/health': ['root-admin'],
-  '/admin/alerts': ['root-admin'],
-  '/admin/settings': ['root-admin', 'tenant-admin'],
-  '/admin/content': ['tenant-admin'],
-  '/admin/tournaments': ['tenant-admin'],
-  '/admin/reports': ['tenant-admin'],
-  '/dashboard': ['teacher', 'student', 'parent'],
-  '/learning': ['teacher', 'student', 'parent'],
-  '/tournament': ['teacher', 'student', 'parent'],
-  '/rewards': ['teacher', 'student', 'parent'],
-  '/news': ['teacher', 'student', 'parent'],
-  '/profile': ['teacher', 'student', 'parent'],
-};
-
-// Helper functions
+// Simplified route access - admin routes require admin roles, everything else is open
+// Fine-grained access is controlled via permissions within components
 export function canAccessRoute(path: string, role: UserRole): boolean {
-  // Use local ROUTE_ACCESS to avoid circular dependency
-
-  // Check exact match first
-  if (ROUTE_ACCESS[path]) {
-    return ROUTE_ACCESS[path].includes(role);
+  // Admin routes require admin roles
+  if (path.startsWith("/admin")) {
+    return role === "root-admin" || role === "tenant-admin";
   }
-
-  // Check parent paths
-  const pathParts = path.split('/').filter(Boolean);
-  while (pathParts.length > 0) {
-    const parentPath = '/' + pathParts.join('/');
-    if (ROUTE_ACCESS[parentPath]) {
-      return ROUTE_ACCESS[parentPath].includes(role);
-    }
-    pathParts.pop();
-  }
-
-  // Default: allow if no specific rule
+  // All other routes are accessible - permissions are checked at component level
   return true;
 }
 
-export function getLayoutVariant(role: UserRole): 'admin' | 'dashboard' {
-  if (role === 'root-admin' || role === 'tenant-admin') {
-    return 'admin';
+export function getLayoutVariant(role: UserRole): "admin" | "dashboard" {
+  if (role === "root-admin" || role === "tenant-admin") {
+    return "admin";
   }
-  return 'dashboard';
+  return "dashboard";
 }

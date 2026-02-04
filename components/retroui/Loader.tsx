@@ -1,29 +1,31 @@
-import { cva, type VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-const loaderVariants = cva('flex gap-1', {
+const loaderVariants = cva("flex gap-1", {
   variants: {
     variant: {
-      default: '[&>div]:bg-primary [&>div]:border-black',
-      secondary: '[&>div]:bg-secondary [&>div]:border-black',
-      outline: '[&>div]:bg-transparent [&>div]:border-black',
+      default: "[&>div]:bg-primary [&>div]:border-black",
+      secondary: "[&>div]:bg-secondary [&>div]:border-black",
+      outline: "[&>div]:bg-transparent [&>div]:border-black",
     },
     size: {
-      sm: '[&>div]:w-2 [&>div]:h-2',
-      md: '[&>div]:w-3 [&>div]:h-3',
-      lg: '[&>div]:w-4 [&>div]:h-4',
+      sm: "[&>div]:w-2 [&>div]:h-2",
+      md: "[&>div]:w-3 [&>div]:h-3",
+      lg: "[&>div]:w-4 [&>div]:h-4",
     },
   },
   defaultVariants: {
-    variant: 'default',
-    size: 'md',
+    variant: "default",
+    size: "md",
   },
 });
 
 interface LoaderProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>, VariantProps<typeof loaderVariants> {
+  extends
+    Omit<React.HTMLAttributes<HTMLDivElement>, "color">,
+    VariantProps<typeof loaderVariants> {
   asChild?: boolean;
   count?: number; // number of bouncing dots
   duration?: number; // animation duration in seconds
@@ -31,7 +33,18 @@ interface LoaderProps
 }
 
 const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
-  ({ className, variant, size, count = 3, duration = 0.5, delayStep = 100, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      count = 3,
+      duration = 0.5,
+      delayStep = 100,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div
         className={cn(loaderVariants({ variant, size }), className)}
@@ -46,7 +59,7 @@ const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
             className="animate-bounce border-2"
             style={{
               animationDuration: `${duration}s`,
-              animationIterationCount: 'infinite',
+              animationIterationCount: "infinite",
               animationDelay: `${i * delayStep}ms`,
             }}
           />
@@ -56,5 +69,5 @@ const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
   },
 );
 
-Loader.displayName = 'Loader';
+Loader.displayName = "Loader";
 export { Loader };

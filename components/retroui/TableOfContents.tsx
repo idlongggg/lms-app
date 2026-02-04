@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface TOCItem {
   title: string;
@@ -19,7 +19,7 @@ interface TableOfContentsProps {
 
 function generateTOCFromDOM(depth: number = 6): TOCItem[] {
   const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-    Array.from({ length: depth }, (_, i) => `h${i + 1}`).join(', '),
+    Array.from({ length: depth }, (_, i) => `h${i + 1}`).join(", "),
   );
 
   const items: TOCItem[] = [];
@@ -31,16 +31,16 @@ function generateTOCFromDOM(depth: number = 6): TOCItem[] {
       heading.id ||
       heading.textContent
         ?.toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '') ||
-      '';
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "") ||
+      "";
 
     if (!heading.id && id) {
       heading.id = id;
     }
 
     const item: TOCItem = {
-      title: heading.textContent || '',
+      title: heading.textContent || "",
       url: `#${id}`,
       level,
     };
@@ -67,7 +67,7 @@ function renderTOCItems(items: TOCItem[], level = 0, activeId: string | null) {
   if (!items || items.length === 0) return null;
 
   return (
-    <ul className={`space-y-1 ${level > 0 ? 'mt-1 ml-4' : ''}`}>
+    <ul className={`space-y-1 ${level > 0 ? "mt-1 ml-4" : ""}`}>
       {items.map((item, index) => {
         const isActive = activeId === item.url.substring(1);
         return (
@@ -76,8 +76,8 @@ function renderTOCItems(items: TOCItem[], level = 0, activeId: string | null) {
               href={item.url}
               className={`block max-w-full truncate border-l-2 py-1 pl-2 text-sm transition-colors ${
                 isActive
-                  ? 'bg-accent border-black text-black'
-                  : 'border-transparent hover:border-black hover:text-black'
+                  ? "bg-accent border-black text-black"
+                  : "border-transparent hover:border-black hover:text-black"
               }`}
             >
               {item.title}
@@ -90,7 +90,11 @@ function renderTOCItems(items: TOCItem[], level = 0, activeId: string | null) {
   );
 }
 
-export function TableOfContents({ depth = 2, className = '', children }: TableOfContentsProps) {
+export function TableOfContents({
+  depth = 2,
+  className = "",
+  children,
+}: TableOfContentsProps) {
   const [tocItems, setTocItems] = useState<TOCItem[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -111,7 +115,7 @@ export function TableOfContents({ depth = 2, className = '', children }: TableOf
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['id'],
+      attributeFilter: ["id"],
     });
 
     return () => observer.disconnect();
@@ -126,10 +130,10 @@ export function TableOfContents({ depth = 2, className = '', children }: TableOf
           }
         });
       },
-      { rootMargin: '-20% 0% -35% 0%' },
+      { rootMargin: "-20% 0% -35% 0%" },
     );
 
-    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
     headings.forEach((heading) => observer.observe(heading));
 
     return () => observer.disconnect();
@@ -142,7 +146,7 @@ export function TableOfContents({ depth = 2, className = '', children }: TableOf
   return (
     <div
       className={cn(
-        'sidebar-scroll h-60 w-52 overflow-y-auto rounded border-2 p-4 shadow-md',
+        "sidebar-scroll h-60 w-52 overflow-y-auto rounded border-2 p-4 shadow-md",
         className,
       )}
     >

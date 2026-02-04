@@ -1,13 +1,22 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import { useState } from "react";
 
-import { Avatar, Badge, Button, Card, Input, Label, Loader, Switch } from '@/components/retroui';
-import { useAuth } from '@/lib/auth';
-import type { MockUser } from '@/lib/mock/users';
-import { roleDisplayInfo } from '@/lib/mock/users';
-import { useTranslation } from '@/lib/providers';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Input,
+  Label,
+  Loader,
+  Switch,
+} from "@/components/retroui";
+import { useAuth } from "@/lib/auth";
+import type { MockUser } from "@/lib/mock/users";
+import { roleDisplayInfo } from "@/lib/mock/users";
+import { useTranslation } from "@/lib/providers";
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -24,7 +33,7 @@ export default function LoginPage() {
     try {
       await loginWithMockUser(user);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     } finally {
       setIsLoggingIn(false);
     }
@@ -35,17 +44,24 @@ export default function LoginPage() {
       <Card.Header className="flex flex-row items-start justify-between space-y-0 pb-2">
         <div className="space-y-1">
           <Card.Title className="text-2xl font-bold">
-            {showDemo ? t('auth.devLogin') : t('auth.login')}
+            {showDemo ? t("auth.devLogin") : t("auth.login")}
           </Card.Title>
           <Card.Description>
-            {showDemo ? t('auth.devLoginDesc') : t('auth.welcomeBack')}
+            {showDemo ? t("auth.devLoginDesc") : t("auth.welcomeBack")}
           </Card.Description>
         </div>
         <div className="flex items-center gap-2">
-          <Label htmlFor="demo-mode" className="cursor-pointer text-xs font-medium">
-            {t('auth.demoMode')}
+          <Label
+            htmlFor="demo-mode"
+            className="cursor-pointer text-xs font-medium"
+          >
+            {t("auth.demoMode")}
           </Label>
-          <Switch id="demo-mode" checked={showDemo} onCheckedChange={setShowDemo} />
+          <Switch
+            id="demo-mode"
+            checked={showDemo}
+            onCheckedChange={setShowDemo}
+          />
         </div>
       </Card.Header>
 
@@ -66,10 +82,19 @@ export default function LoginPage() {
                     className="h-auto w-full justify-start gap-3 p-3 disabled:opacity-50"
                   >
                     {/* Avatar */}
-                    <Avatar className="h-10 w-10 border-2" style={{ borderColor: roleInfo.color }}>
-                      <Avatar.Image src={user.avatarUrl || undefined} alt={user.name} />
+                    <Avatar
+                      className="h-10 w-10 border-2"
+                      style={{ borderColor: roleInfo.color }}
+                    >
+                      <Avatar.Image
+                        src={user.avatarUrl || undefined}
+                        alt={user.name}
+                      />
                       <Avatar.Fallback
-                        style={{ backgroundColor: roleInfo.color, color: 'white' }}
+                        style={{
+                          backgroundColor: roleInfo.color,
+                          color: "white",
+                        }}
                         className="text-sm font-bold"
                       >
                         {user.name.charAt(0)}
@@ -79,7 +104,9 @@ export default function LoginPage() {
                     {/* Info */}
                     <div className="min-w-0 flex-1 text-left">
                       <div className="truncate font-medium">{user.name}</div>
-                      <div className="text-muted-foreground truncate text-xs">{user.email}</div>
+                      <div className="text-muted-foreground truncate text-xs">
+                        {user.email}
+                      </div>
                     </div>
 
                     {/* Role Badge or Loading */}
@@ -87,7 +114,10 @@ export default function LoginPage() {
                       <Loader size="sm" />
                     ) : (
                       <Badge
-                        style={{ backgroundColor: roleInfo.color, color: 'white' }}
+                        style={{
+                          backgroundColor: roleInfo.color,
+                          color: "white",
+                        }}
                         className="border-0"
                       >
                         {roleInfo.label}
@@ -102,25 +132,25 @@ export default function LoginPage() {
           <div className="space-y-6">
             <form className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">{t('auth.email')}</Label>
+                <Label htmlFor="email">{t("auth.email")}</Label>
                 <Input id="email" type="email" placeholder="you@example.com" />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">{t('auth.password')}</Label>
+                  <Label htmlFor="password">{t("auth.password")}</Label>
                   <Link
                     href="/auth/forgot-password"
                     className="text-muted-foreground hover:text-foreground text-sm"
                   >
-                    {t('auth.forgotPassword')}
+                    {t("auth.forgotPassword")}
                   </Link>
                 </div>
                 <Input id="password" type="password" placeholder="••••••••" />
               </div>
 
               <Button type="submit" disabled className="w-full">
-                {t('auth.login')}
+                {t("auth.login")}
               </Button>
             </form>
 
@@ -130,19 +160,22 @@ export default function LoginPage() {
               </div>
               <div className="relative flex justify-center">
                 <span className="bg-background text-muted-foreground px-4 text-sm">
-                  {t('auth.or')}
+                  {t("auth.or")}
                 </span>
               </div>
             </div>
 
             <Button variant="outline" type="button" disabled className="w-full">
-              {t('auth.loginWithGoogle')}
+              {t("auth.loginWithGoogle")}
             </Button>
 
             <p className="text-muted-foreground text-center text-sm">
-              {t('auth.noAccount')}{' '}
-              <Link href="/auth/register" className="text-foreground font-medium hover:underline">
-                {t('auth.registerNow')}
+              {t("auth.noAccount")}{" "}
+              <Link
+                href="/auth/register"
+                className="text-foreground font-medium hover:underline"
+              >
+                {t("auth.registerNow")}
               </Link>
             </p>
           </div>

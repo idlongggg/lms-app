@@ -3,9 +3,9 @@
  * Dashboard stats for root-admin, tenant-admin roles
  */
 
-import { getContentStats } from './courses';
-import { getTournamentStats } from './tournaments';
-import { mockUsers, tenants } from './users';
+import { getContentStats } from "./courses";
+import { getTournamentStats } from "./tournaments";
+import { mockUsers, tenants } from "./users";
 
 // System-wide stats (for root-admin)
 export interface SystemStats {
@@ -17,7 +17,7 @@ export interface SystemStats {
   newUsersThisWeek: number;
   newUsersThisMonth: number;
   totalLessons: number;
-  systemHealth: 'healthy' | 'warning' | 'critical';
+  systemHealth: "healthy" | "warning" | "critical";
   uptime: string;
   lastBackup: string;
 }
@@ -28,14 +28,14 @@ export function getSystemStats(): SystemStats {
     totalTenants: 2, // System + school
     activeTenants: 2,
     totalUsers: mockUsers.length,
-    activeUsers: mockUsers.filter((u) => u.status === 'ACTIVE').length,
+    activeUsers: mockUsers.filter((u) => u.status === "ACTIVE").length,
     newUsersToday: 3,
     newUsersThisWeek: 15,
     newUsersThisMonth: 48,
     totalLessons: contentStats.totalLessons,
-    systemHealth: 'healthy',
-    uptime: '99.9%',
-    lastBackup: '2026-02-03T02:00:00Z',
+    systemHealth: "healthy",
+    uptime: "99.9%",
+    lastBackup: "2026-02-03T02:00:00Z",
   };
 }
 
@@ -57,7 +57,8 @@ export interface TenantStats {
 }
 
 export function getTenantStats(tenantId: string): TenantStats {
-  const tenant = tenantId === tenants.system.id ? tenants.system : tenants.school;
+  const tenant =
+    tenantId === tenants.system.id ? tenants.system : tenants.school;
   const tenantUsers = mockUsers.filter((u) => u.tenantId === tenantId);
   const contentStats = getContentStats();
   const tournamentStats = getTournamentStats();
@@ -66,10 +67,10 @@ export function getTenantStats(tenantId: string): TenantStats {
     tenantId,
     tenantName: tenant.name,
     totalUsers: tenantUsers.length,
-    activeUsers: tenantUsers.filter((u) => u.status === 'ACTIVE').length,
-    students: tenantUsers.filter((u) => u.role === 'student').length,
-    teachers: tenantUsers.filter((u) => u.role === 'teacher').length,
-    parents: tenantUsers.filter((u) => u.role === 'parent').length,
+    activeUsers: tenantUsers.filter((u) => u.status === "ACTIVE").length,
+    students: tenantUsers.filter((u) => u.role === "student").length,
+    teachers: tenantUsers.filter((u) => u.role === "teacher").length,
+    parents: tenantUsers.filter((u) => u.role === "parent").length,
     newUsersThisWeek: 8,
     totalLessons: contentStats.totalLessons,
     publishedLessons: contentStats.publishedLessons,
@@ -92,44 +93,44 @@ export interface DashboardCard {
 }
 
 export function getAdminDashboardCards(
-  role: 'root-admin' | 'tenant-admin',
+  role: "root-admin" | "tenant-admin",
   tenantId?: string,
 ): DashboardCard[] {
-  if (role === 'root-admin') {
+  if (role === "root-admin") {
     const stats = getSystemStats();
     return [
       {
-        id: 'total-tenants',
-        title: 'Tổng Tenants',
+        id: "total-tenants",
+        title: "Tổng Tenants",
         value: stats.totalTenants,
-        icon: 'Building2',
-        color: '#3498db',
-        href: '/admin/tenants',
+        icon: "Building2",
+        color: "#3498db",
+        href: "/admin/tenants",
       },
       {
-        id: 'total-users',
-        title: 'Tổng người dùng',
+        id: "total-users",
+        title: "Tổng người dùng",
         value: stats.totalUsers,
         change: 12,
-        changeLabel: 'so với tuần trước',
-        icon: 'Users',
-        color: '#2ecc71',
-        href: '/admin/users',
+        changeLabel: "so với tuần trước",
+        icon: "Users",
+        color: "#2ecc71",
+        href: "/admin/users",
       },
       {
-        id: 'active-users',
-        title: 'Đang hoạt động',
+        id: "active-users",
+        title: "Đang hoạt động",
         value: stats.activeUsers,
-        icon: 'UserCheck',
-        color: '#f39c12',
+        icon: "UserCheck",
+        color: "#f39c12",
       },
       {
-        id: 'system-health',
-        title: 'Trạng thái hệ thống',
-        value: stats.systemHealth === 'healthy' ? 'Tốt' : 'Cảnh báo',
-        icon: 'Activity',
-        color: stats.systemHealth === 'healthy' ? '#27ae60' : '#e74c3c',
-        href: '/admin/settings',
+        id: "system-health",
+        title: "Trạng thái hệ thống",
+        value: stats.systemHealth === "healthy" ? "Tốt" : "Cảnh báo",
+        icon: "Activity",
+        color: stats.systemHealth === "healthy" ? "#27ae60" : "#e74c3c",
+        href: "/admin/settings",
       },
     ];
   }
@@ -138,38 +139,38 @@ export function getAdminDashboardCards(
   const stats = getTenantStats(tenantId || tenants.school.id);
   return [
     {
-      id: 'total-students',
-      title: 'Học sinh',
+      id: "total-students",
+      title: "Học sinh",
       value: stats.students,
       change: 5,
-      changeLabel: 'mới tuần này',
-      icon: 'GraduationCap',
-      color: '#3498db',
-      href: '/admin/users?role=student',
+      changeLabel: "mới tuần này",
+      icon: "GraduationCap",
+      color: "#3498db",
+      href: "/admin/users?role=student",
     },
     {
-      id: 'total-teachers',
-      title: 'Giáo viên',
+      id: "total-teachers",
+      title: "Giáo viên",
       value: stats.teachers,
-      icon: 'UserCog',
-      color: '#2ecc71',
-      href: '/admin/users?role=teacher',
+      icon: "UserCog",
+      color: "#2ecc71",
+      href: "/admin/users?role=teacher",
     },
     {
-      id: 'published-lessons',
-      title: 'Bài học',
+      id: "published-lessons",
+      title: "Bài học",
       value: stats.publishedLessons,
-      icon: 'BookOpen',
-      color: '#9b59b6',
-      href: '/admin/content',
+      icon: "BookOpen",
+      color: "#9b59b6",
+      href: "/admin/content",
     },
     {
-      id: 'active-tournaments',
-      title: 'Giải đấu',
+      id: "active-tournaments",
+      title: "Giải đấu",
       value: stats.activeTournaments,
-      icon: 'Trophy',
-      color: '#f39c12',
-      href: '/admin/tournaments',
+      icon: "Trophy",
+      color: "#f39c12",
+      href: "/admin/tournaments",
     },
   ];
 }
@@ -183,14 +184,17 @@ export interface ChartDataPoint {
 
 export function getUserGrowthData(days: number = 7): ChartDataPoint[] {
   const data: ChartDataPoint[] = [];
-  const baseDate = new Date('2026-02-03');
+  const baseDate = new Date("2026-02-03");
 
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(baseDate);
     date.setDate(date.getDate() - i);
     data.push({
-      date: date.toISOString().split('T')[0],
-      label: date.toLocaleDateString('vi-VN', { weekday: 'short', day: 'numeric' }),
+      date: date.toISOString().split("T")[0],
+      label: date.toLocaleDateString("vi-VN", {
+        weekday: "short",
+        day: "numeric",
+      }),
       value: Math.floor(Math.random() * 10) + 5, // Random 5-15 new users per day
     });
   }
@@ -207,10 +211,10 @@ export interface ActivityData {
 
 export function getActivityDistribution(): ActivityData[] {
   return [
-    { name: 'Học bài', value: 45, color: '#3498db' },
-    { name: 'Làm quiz', value: 30, color: '#2ecc71' },
-    { name: 'Thi đấu', value: 15, color: '#e74c3c' },
-    { name: 'Xem video', value: 10, color: '#f39c12' },
+    { name: "Học bài", value: 45, color: "#3498db" },
+    { name: "Làm quiz", value: 30, color: "#2ecc71" },
+    { name: "Thi đấu", value: 15, color: "#e74c3c" },
+    { name: "Xem video", value: 10, color: "#f39c12" },
   ];
 }
 
@@ -227,8 +231,11 @@ export interface RecentUser {
 
 export function getRecentUsers(limit: number = 5): RecentUser[] {
   return mockUsers
-    .filter((u) => u.role !== 'root-admin')
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .filter((u) => u.role !== "root-admin")
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
     .slice(0, limit)
     .map((u) => ({
       id: u.id,
@@ -244,7 +251,7 @@ export function getRecentUsers(limit: number = 5): RecentUser[] {
 // System alerts
 export interface SystemAlert {
   id: string;
-  type: 'error' | 'warning' | 'info';
+  type: "error" | "warning" | "info";
   title: string;
   message: string;
   timestamp: string;
@@ -254,27 +261,27 @@ export interface SystemAlert {
 export function getSystemAlerts(): SystemAlert[] {
   return [
     {
-      id: 'alert-001',
-      type: 'warning',
-      title: 'Disk space low',
-      message: 'Server storage đạt 85% dung lượng',
-      timestamp: '2026-02-03T08:00:00Z',
+      id: "alert-001",
+      type: "warning",
+      title: "Disk space low",
+      message: "Server storage đạt 85% dung lượng",
+      timestamp: "2026-02-03T08:00:00Z",
       resolved: false,
     },
     {
-      id: 'alert-002',
-      type: 'info',
-      title: 'Backup completed',
-      message: 'Database backup hoàn thành lúc 02:00',
-      timestamp: '2026-02-03T02:00:00Z',
+      id: "alert-002",
+      type: "info",
+      title: "Backup completed",
+      message: "Database backup hoàn thành lúc 02:00",
+      timestamp: "2026-02-03T02:00:00Z",
       resolved: true,
     },
     {
-      id: 'alert-003',
-      type: 'info',
-      title: 'New version available',
-      message: 'Phiên bản 2.1.0 đã sẵn sàng để cập nhật',
-      timestamp: '2026-02-02T10:00:00Z',
+      id: "alert-003",
+      type: "info",
+      title: "New version available",
+      message: "Phiên bản 2.1.0 đã sẵn sàng để cập nhật",
+      timestamp: "2026-02-02T10:00:00Z",
       resolved: false,
     },
   ];
@@ -298,18 +305,18 @@ export interface AdminUserListItem {
 }
 
 const roleLabels: Record<string, string> = {
-  'root-admin': 'Admin hệ thống',
-  'tenant-admin': 'Admin trường',
-  teacher: 'Giáo viên',
-  student: 'Học sinh',
-  parent: 'Phụ huynh',
+  "root-admin": "Admin hệ thống",
+  "tenant-admin": "Admin trường",
+  teacher: "Giáo viên",
+  student: "Học sinh",
+  parent: "Phụ huynh",
 };
 
 const statusLabels: Record<string, string> = {
-  ACTIVE: 'Hoạt động',
-  PENDING: 'Chờ xác thực',
-  SUSPENDED: 'Đã khóa',
-  PENDING_DEACTIVATION: 'Chờ xóa',
+  ACTIVE: "Hoạt động",
+  PENDING: "Chờ xác thực",
+  SUSPENDED: "Đã khóa",
+  PENDING_DEACTIVATION: "Chờ xóa",
 };
 
 export function getAdminUserList(
@@ -361,7 +368,7 @@ export function getAdminUserList(
 export interface ContentListItem {
   id: string;
   title: string;
-  type: 'subject' | 'topic' | 'lesson' | 'question';
+  type: "subject" | "topic" | "lesson" | "question";
   typeLabel: string;
   status: string;
   statusLabel: string;
@@ -374,48 +381,48 @@ export function getContentList(): ContentListItem[] {
   // Mock content list combining subjects, lessons
   return [
     {
-      id: 'subject-math',
-      title: 'Toán học',
-      type: 'subject',
-      typeLabel: 'Môn học',
-      status: 'PUBLISHED',
-      statusLabel: 'Đã xuất bản',
-      author: 'Admin',
-      createdAt: '2024-01-01T00:00:00Z',
-      updatedAt: '2024-01-01T00:00:00Z',
+      id: "subject-math",
+      title: "Toán học",
+      type: "subject",
+      typeLabel: "Môn học",
+      status: "PUBLISHED",
+      statusLabel: "Đã xuất bản",
+      author: "Admin",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
     },
     {
-      id: 'lesson-math-1',
-      title: 'Số nguyên tố và hợp số',
-      type: 'lesson',
-      typeLabel: 'Bài học',
-      status: 'PUBLISHED',
-      statusLabel: 'Đã xuất bản',
-      author: 'Trần Thị Giáo Viên',
-      createdAt: '2024-01-15T00:00:00Z',
-      updatedAt: '2024-02-01T00:00:00Z',
+      id: "lesson-math-1",
+      title: "Số nguyên tố và hợp số",
+      type: "lesson",
+      typeLabel: "Bài học",
+      status: "PUBLISHED",
+      statusLabel: "Đã xuất bản",
+      author: "Trần Thị Giáo Viên",
+      createdAt: "2024-01-15T00:00:00Z",
+      updatedAt: "2024-02-01T00:00:00Z",
     },
     {
-      id: 'lesson-math-2',
-      title: 'Ước và bội số',
-      type: 'lesson',
-      typeLabel: 'Bài học',
-      status: 'PUBLISHED',
-      statusLabel: 'Đã xuất bản',
-      author: 'Trần Thị Giáo Viên',
-      createdAt: '2024-01-20T00:00:00Z',
-      updatedAt: '2024-02-05T00:00:00Z',
+      id: "lesson-math-2",
+      title: "Ước và bội số",
+      type: "lesson",
+      typeLabel: "Bài học",
+      status: "PUBLISHED",
+      statusLabel: "Đã xuất bản",
+      author: "Trần Thị Giáo Viên",
+      createdAt: "2024-01-20T00:00:00Z",
+      updatedAt: "2024-02-05T00:00:00Z",
     },
     {
-      id: 'lesson-en-2',
-      title: 'Past Simple Tense',
-      type: 'lesson',
-      typeLabel: 'Bài học',
-      status: 'DRAFT',
-      statusLabel: 'Nháp',
-      author: 'Trần Thị Giáo Viên',
-      createdAt: '2024-02-01T00:00:00Z',
-      updatedAt: '2024-02-01T00:00:00Z',
+      id: "lesson-en-2",
+      title: "Past Simple Tense",
+      type: "lesson",
+      typeLabel: "Bài học",
+      status: "DRAFT",
+      statusLabel: "Nháp",
+      author: "Trần Thị Giáo Viên",
+      createdAt: "2024-02-01T00:00:00Z",
+      updatedAt: "2024-02-01T00:00:00Z",
     },
   ];
 }
@@ -439,18 +446,18 @@ export interface SystemSettings {
   notification: {
     emailEnabled: boolean;
     pushEnabled: boolean;
-    digestFrequency: 'daily' | 'weekly' | 'never';
+    digestFrequency: "daily" | "weekly" | "never";
   };
 }
 
 export function getSystemSettings(): SystemSettings {
   return {
     general: {
-      appName: 'LMS Platform',
-      tagline: 'Học tập thông minh, tiến bộ mỗi ngày',
+      appName: "LMS Platform",
+      tagline: "Học tập thông minh, tiến bộ mỗi ngày",
       logoUrl: null,
-      timezone: 'Asia/Ho_Chi_Minh',
-      language: 'vi',
+      timezone: "Asia/Ho_Chi_Minh",
+      language: "vi",
     },
     security: {
       passwordMinLength: 8,
@@ -462,7 +469,7 @@ export function getSystemSettings(): SystemSettings {
     notification: {
       emailEnabled: true,
       pushEnabled: true,
-      digestFrequency: 'daily',
+      digestFrequency: "daily",
     },
   };
 }
@@ -470,7 +477,7 @@ export function getSystemSettings(): SystemSettings {
 // Recent activity feed for admin dashboard
 export interface RecentActivityItem {
   id: string;
-  type: 'info' | 'success' | 'warning' | 'error';
+  type: "info" | "success" | "warning" | "error";
   title: string;
   description: string;
   time: string;
@@ -481,43 +488,43 @@ export interface RecentActivityItem {
 export function getRecentActivity(_tenantId?: string): RecentActivityItem[] {
   return [
     {
-      id: 'activity-001',
-      type: 'success',
-      title: 'Học sinh mới đăng ký',
-      description: 'Nguyễn Văn Học Sinh đã hoàn tất đăng ký tài khoản',
-      time: '5 phút trước',
-      userId: 'user-student',
-      userName: 'Nguyễn Văn Học Sinh',
+      id: "activity-001",
+      type: "success",
+      title: "Học sinh mới đăng ký",
+      description: "Nguyễn Văn Học Sinh đã hoàn tất đăng ký tài khoản",
+      time: "5 phút trước",
+      userId: "user-student",
+      userName: "Nguyễn Văn Học Sinh",
     },
     {
-      id: 'activity-002',
-      type: 'info',
-      title: 'Bài học mới được xuất bản',
+      id: "activity-002",
+      type: "info",
+      title: "Bài học mới được xuất bản",
       description: 'Giáo viên Trần đã xuất bản bài "Số nguyên tố"',
-      time: '30 phút trước',
-      userId: 'user-teacher',
-      userName: 'Trần Thị Giáo Viên',
+      time: "30 phút trước",
+      userId: "user-teacher",
+      userName: "Trần Thị Giáo Viên",
     },
     {
-      id: 'activity-003',
-      type: 'warning',
-      title: 'Dung lượng lưu trữ',
-      description: 'Đã sử dụng 85% dung lượng lưu trữ',
-      time: '1 giờ trước',
+      id: "activity-003",
+      type: "warning",
+      title: "Dung lượng lưu trữ",
+      description: "Đã sử dụng 85% dung lượng lưu trữ",
+      time: "1 giờ trước",
     },
     {
-      id: 'activity-004',
-      type: 'success',
-      title: 'Giải đấu kết thúc',
+      id: "activity-004",
+      type: "success",
+      title: "Giải đấu kết thúc",
       description: 'Giải "Toán Siêu Tốc" đã kết thúc với 45 người tham gia',
-      time: '2 giờ trước',
+      time: "2 giờ trước",
     },
     {
-      id: 'activity-005',
-      type: 'info',
-      title: 'Backup hoàn thành',
-      description: 'Database backup hoàn thành lúc 02:00',
-      time: '6 giờ trước',
+      id: "activity-005",
+      type: "info",
+      title: "Backup hoàn thành",
+      description: "Database backup hoàn thành lúc 02:00",
+      time: "6 giờ trước",
     },
   ];
 }

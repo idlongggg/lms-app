@@ -1,25 +1,33 @@
-'use client';
+"use client";
 
-import { MoreVertical, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
-import { useState } from 'react';
+import {
+  MoreVertical,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
 
-import { Badge } from '@/components/retroui/Badge';
-import { Button } from '@/components/retroui/Button';
-import { Dialog } from '@/components/retroui/Dialog';
-import { Input } from '@/components/retroui/Input';
-import { Menu } from '@/components/retroui/Menu';
-import { Select } from '@/components/retroui/Select';
-import { Table } from '@/components/retroui/Table';
+import { Badge } from "@/components/retroui/Badge";
+import { Button } from "@/components/retroui/Button";
+import { Dialog } from "@/components/retroui/Dialog";
+import { Input } from "@/components/retroui/Input";
+import { Menu } from "@/components/retroui/Menu";
+import { Select } from "@/components/retroui/Select";
+import { Table } from "@/components/retroui/Table";
 
 export default function AdminUsersPage() {
-  const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [roleFilter, setRoleFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
 
   const filteredUsers = users.filter((user) => {
-    const matchesRole = roleFilter === 'all' || user.role === roleFilter;
-    const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
+    const matchesRole = roleFilter === "all" || user.role === roleFilter;
+    const matchesStatus =
+      statusFilter === "all" || user.status === statusFilter;
     const matchesSearch =
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase());
@@ -32,7 +40,9 @@ export default function AdminUsersPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Quản lý người dùng</h1>
-          <p className="text-muted-foreground">Quản lý tài khoản và phân quyền</p>
+          <p className="text-muted-foreground">
+            Quản lý tài khoản và phân quyền
+          </p>
         </div>
         <Dialog open={isAddUserOpen} onOpenChange={setIsAddUserOpen}>
           <Dialog.Trigger asChild>
@@ -45,7 +55,9 @@ export default function AdminUsersPage() {
             <Dialog.Header>Thêm người dùng mới</Dialog.Header>
             <div className="space-y-4 p-4">
               <div>
-                <label className="mb-1 block text-sm font-medium">Họ và tên</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Họ và tên
+                </label>
                 <Input placeholder="Nhập họ và tên" />
               </div>
               <div>
@@ -134,15 +146,17 @@ export default function AdminUsersPage() {
                     <span className="font-medium">{user.name}</span>
                   </div>
                 </Table.Cell>
-                <Table.Cell className="text-muted-foreground">{user.email}</Table.Cell>
+                <Table.Cell className="text-muted-foreground">
+                  {user.email}
+                </Table.Cell>
                 <Table.Cell>
                   <Badge
                     variant={
-                      user.role === 'Admin'
-                        ? 'solid'
-                        : user.role === 'Teacher'
-                          ? 'surface'
-                          : 'default'
+                      user.role === "Admin"
+                        ? "solid"
+                        : user.role === "Teacher"
+                          ? "surface"
+                          : "default"
                     }
                     size="sm"
                   >
@@ -151,15 +165,17 @@ export default function AdminUsersPage() {
                 </Table.Cell>
                 <Table.Cell>
                   <span
-                    className={`inline-flex items-center gap-1 text-sm ${user.status === 'Active' ? 'text-green-500' : 'text-muted-foreground'}`}
+                    className={`inline-flex items-center gap-1 text-sm ${user.status === "Active" ? "text-green-500" : "text-muted-foreground"}`}
                   >
                     <span
-                      className={`h-2 w-2 rounded-full ${user.status === 'Active' ? 'bg-green-500' : 'bg-muted-foreground'}`}
+                      className={`h-2 w-2 rounded-full ${user.status === "Active" ? "bg-green-500" : "bg-muted-foreground"}`}
                     />
                     {user.status}
                   </span>
                 </Table.Cell>
-                <Table.Cell className="text-muted-foreground">{user.createdAt}</Table.Cell>
+                <Table.Cell className="text-muted-foreground">
+                  {user.createdAt}
+                </Table.Cell>
                 <Table.Cell className="text-right">
                   <Menu>
                     <Menu.Trigger asChild>
@@ -212,38 +228,38 @@ export default function AdminUsersPage() {
 
 const users = [
   {
-    name: 'Nguyễn Văn A',
-    email: 'a@example.com',
-    role: 'Admin',
-    status: 'Active',
-    createdAt: '01/01/2026',
+    name: "Nguyễn Văn A",
+    email: "a@example.com",
+    role: "Admin",
+    status: "Active",
+    createdAt: "01/01/2026",
   },
   {
-    name: 'Trần Thị B',
-    email: 'b@example.com',
-    role: 'Teacher',
-    status: 'Active',
-    createdAt: '15/01/2026',
+    name: "Trần Thị B",
+    email: "b@example.com",
+    role: "Teacher",
+    status: "Active",
+    createdAt: "15/01/2026",
   },
   {
-    name: 'Lê Văn C',
-    email: 'c@example.com',
-    role: 'Student',
-    status: 'Active',
-    createdAt: '20/01/2026',
+    name: "Lê Văn C",
+    email: "c@example.com",
+    role: "Student",
+    status: "Active",
+    createdAt: "20/01/2026",
   },
   {
-    name: 'Phạm Thị D',
-    email: 'd@example.com',
-    role: 'Student',
-    status: 'Inactive',
-    createdAt: '25/01/2026',
+    name: "Phạm Thị D",
+    email: "d@example.com",
+    role: "Student",
+    status: "Inactive",
+    createdAt: "25/01/2026",
   },
   {
-    name: 'Hoàng Văn E',
-    email: 'e@example.com',
-    role: 'Teacher',
-    status: 'Active',
-    createdAt: '30/01/2026',
+    name: "Hoàng Văn E",
+    email: "e@example.com",
+    role: "Teacher",
+    status: "Active",
+    createdAt: "30/01/2026",
   },
 ];

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Clock, User, Zap } from 'lucide-react';
+import { Clock, User, Zap } from "lucide-react";
 
-import { FocusHeader } from '@/components/shared';
+import { FocusHeader } from "@/components/shared";
 
 export default function LiveMatchPage() {
   return (
@@ -65,14 +65,16 @@ export default function LiveMatchPage() {
 
             {/* Answer Options */}
             <div className="mt-6 grid grid-cols-2 gap-3">
-              {['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Huế'].map((answer, index) => (
-                <button
-                  key={index}
-                  className="border-border bg-background hover:bg-accent border-2 p-4 text-center font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
-                >
-                  {answer}
-                </button>
-              ))}
+              {["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Huế"].map(
+                (answer, index) => (
+                  <button
+                    key={index}
+                    className="border-border bg-background hover:bg-accent border-2 p-4 text-center font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
+                  >
+                    {answer}
+                  </button>
+                ),
+              )}
             </div>
           </div>
         </div>
@@ -81,9 +83,14 @@ export default function LiveMatchPage() {
         <div className="border-border bg-background border-t-2 p-4">
           <div className="mx-auto max-w-3xl">
             <div className="border-border bg-muted h-3 border-2">
-              <div className="bg-destructive h-full transition-all" style={{ width: '60%' }} />
+              <div
+                className="bg-destructive h-full transition-all"
+                style={{ width: "60%" }}
+              />
             </div>
-            <p className="text-muted-foreground mt-2 text-center text-sm">Còn 12 giây để trả lời</p>
+            <p className="text-muted-foreground mt-2 text-center text-sm">
+              Còn 12 giây để trả lời
+            </p>
           </div>
         </div>
       </main>

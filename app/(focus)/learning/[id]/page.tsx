@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
-import { FocusHeader } from '@/components/shared';
+import { FocusHeader } from "@/components/shared";
 
 export default function LearningDetailPage() {
   return (
@@ -29,13 +29,17 @@ export default function LearningDetailPage() {
               <div className="border-border bg-accent mb-4 inline-flex border-2 px-3 py-1 text-sm font-medium">
                 Câu hỏi 3
               </div>
-              <h2 className="text-2xl font-bold">Giải phương trình: 2x + 5 = 15</h2>
-              <p className="text-muted-foreground mt-2">Chọn đáp án đúng nhất</p>
+              <h2 className="text-2xl font-bold">
+                Giải phương trình: 2x + 5 = 15
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                Chọn đáp án đúng nhất
+              </p>
             </div>
 
             {/* Answer Options */}
             <div className="mt-6 space-y-3">
-              {['x = 5', 'x = 10', 'x = 7.5', 'x = 4'].map((answer, index) => (
+              {["x = 5", "x = 10", "x = 7.5", "x = 4"].map((answer, index) => (
                 <button
                   key={index}
                   className="border-border bg-background hover:bg-accent w-full border-2 p-4 text-left font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"

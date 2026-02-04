@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import React from "react";
+import {
+  Cell,
+  Pie,
+  PieChart as RechartsPieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface PieChartProps extends React.HTMLAttributes<HTMLDivElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,14 +33,14 @@ const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
       dataKey,
       nameKey,
       colors = [
-        'var(--chart-1)',
-        'var(--chart-2)',
-        'var(--chart-3)',
-        'var(--chart-4)',
-        'var(--chart-5)',
+        "var(--chart-1)",
+        "var(--chart-2)",
+        "var(--chart-3)",
+        "var(--chart-4)",
+        "var(--chart-5)",
       ],
-      tooltipBgColor = 'var(--background)',
-      tooltipBorderColor = 'var(--border)',
+      tooltipBgColor = "var(--background)",
+      tooltipBorderColor = "var(--border)",
       valueFormatter = (value: number) => value.toString(),
       showTooltip = true,
       innerRadius = 0,
@@ -45,7 +51,7 @@ const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
     ref,
   ) => {
     return (
-      <div ref={ref} className={cn('h-80 w-full', className)} {...props}>
+      <div ref={ref} className={cn("h-80 w-full", className)} {...props}>
         <ResponsiveContainer width="100%" height="100%">
           <RechartsPieChart>
             <Pie
@@ -60,7 +66,10 @@ const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
               className="h-full w-full"
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={colors[index % colors.length]}
+                />
               ))}
             </Pie>
 
@@ -99,6 +108,6 @@ const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
   },
 );
 
-PieChart.displayName = 'PieChart';
+PieChart.displayName = "PieChart";
 
 export { PieChart, type PieChartProps };

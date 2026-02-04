@@ -1,104 +1,137 @@
-'use client';
+"use client";
 
-import { AlertTriangle, Bell, Check, Clock, Plus, Search, Settings, X } from 'lucide-react';
-import { useState } from 'react';
+import {
+  AlertTriangle,
+  Bell,
+  Check,
+  Clock,
+  Plus,
+  Search,
+  Settings,
+  X,
+} from "lucide-react";
+import { useState } from "react";
 
-import { Badge } from '@/components/retroui/Badge';
-import { Button } from '@/components/retroui/Button';
-import { Card } from '@/components/retroui/Card';
-import { Dialog } from '@/components/retroui/Dialog';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
-import { Switch } from '@/components/retroui/Switch';
-import { Table } from '@/components/retroui/Table';
-import { useAuth } from '@/lib/auth';
+import { Badge } from "@/components/retroui/Badge";
+import { Button } from "@/components/retroui/Button";
+import { Card } from "@/components/retroui/Card";
+import { Dialog } from "@/components/retroui/Dialog";
+import { Input } from "@/components/retroui/Input";
+import { Select } from "@/components/retroui/Select";
+import { Switch } from "@/components/retroui/Switch";
+import { Table } from "@/components/retroui/Table";
+import { useAuth } from "@/lib/auth";
 
 // Mock alerts data
 const alerts = [
   {
     id: 1,
-    title: 'CPU usage cao',
-    message: 'Server API-01 CPU vượt ngưỡng 80% trong 5 phút',
-    severity: 'critical',
-    status: 'active',
-    source: 'System Monitor',
-    createdAt: '2024-01-20T10:25:00Z',
+    title: "CPU usage cao",
+    message: "Server API-01 CPU vượt ngưỡng 80% trong 5 phút",
+    severity: "critical",
+    status: "active",
+    source: "System Monitor",
+    createdAt: "2024-01-20T10:25:00Z",
     acknowledgedAt: null,
   },
   {
     id: 2,
-    title: 'File Storage latency',
-    message: 'Độ trễ truy cập file storage tăng lên 45ms',
-    severity: 'warning',
-    status: 'acknowledged',
-    source: 'Health Check',
-    createdAt: '2024-01-20T09:15:00Z',
-    acknowledgedAt: '2024-01-20T09:20:00Z',
+    title: "File Storage latency",
+    message: "Độ trễ truy cập file storage tăng lên 45ms",
+    severity: "warning",
+    status: "acknowledged",
+    source: "Health Check",
+    createdAt: "2024-01-20T09:15:00Z",
+    acknowledgedAt: "2024-01-20T09:20:00Z",
   },
   {
     id: 3,
-    title: 'Login failures spike',
-    message: '50+ đăng nhập thất bại từ IP 192.168.1.100',
-    severity: 'warning',
-    status: 'active',
-    source: 'Security',
-    createdAt: '2024-01-20T08:45:00Z',
+    title: "Login failures spike",
+    message: "50+ đăng nhập thất bại từ IP 192.168.1.100",
+    severity: "warning",
+    status: "active",
+    source: "Security",
+    createdAt: "2024-01-20T08:45:00Z",
     acknowledgedAt: null,
   },
   {
     id: 4,
-    title: 'Database backup completed',
-    message: 'Backup hàng ngày hoàn thành thành công',
-    severity: 'info',
-    status: 'resolved',
-    source: 'Backup Service',
-    createdAt: '2024-01-20T02:00:00Z',
-    acknowledgedAt: '2024-01-20T02:01:00Z',
+    title: "Database backup completed",
+    message: "Backup hàng ngày hoàn thành thành công",
+    severity: "info",
+    status: "resolved",
+    source: "Backup Service",
+    createdAt: "2024-01-20T02:00:00Z",
+    acknowledgedAt: "2024-01-20T02:01:00Z",
   },
   {
     id: 5,
-    title: 'Memory usage warning',
-    message: 'Server DB-01 memory đạt 75%',
-    severity: 'warning',
-    status: 'resolved',
-    source: 'System Monitor',
-    createdAt: '2024-01-19T16:30:00Z',
-    acknowledgedAt: '2024-01-19T16:35:00Z',
+    title: "Memory usage warning",
+    message: "Server DB-01 memory đạt 75%",
+    severity: "warning",
+    status: "resolved",
+    source: "System Monitor",
+    createdAt: "2024-01-19T16:30:00Z",
+    acknowledgedAt: "2024-01-19T16:35:00Z",
   },
 ];
 
 const alertRules = [
-  { name: 'CPU > 80%', enabled: true, severity: 'critical', channel: 'Email, Slack' },
-  { name: 'Memory > 85%', enabled: true, severity: 'critical', channel: 'Email, Slack' },
-  { name: 'Disk > 90%', enabled: true, severity: 'warning', channel: 'Email' },
-  { name: 'API latency > 500ms', enabled: true, severity: 'warning', channel: 'Slack' },
-  { name: 'Error rate > 1%', enabled: false, severity: 'critical', channel: 'Email, Slack, SMS' },
+  {
+    name: "CPU > 80%",
+    enabled: true,
+    severity: "critical",
+    channel: "Email, Slack",
+  },
+  {
+    name: "Memory > 85%",
+    enabled: true,
+    severity: "critical",
+    channel: "Email, Slack",
+  },
+  { name: "Disk > 90%", enabled: true, severity: "warning", channel: "Email" },
+  {
+    name: "API latency > 500ms",
+    enabled: true,
+    severity: "warning",
+    channel: "Slack",
+  },
+  {
+    name: "Error rate > 1%",
+    enabled: false,
+    severity: "critical",
+    channel: "Email, Slack, SMS",
+  },
 ];
 
 export default function AdminAlertsPage() {
   const { user } = useAuth();
-  const [severityFilter, setSeverityFilter] = useState<string>('all');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [severityFilter, setSeverityFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAddRuleOpen, setIsAddRuleOpen] = useState(false);
 
   // Only root-admin can access this page
-  if (!user || user.role !== 'root-admin') {
+  if (!user || user.role !== "root-admin") {
     return (
       <div className="flex h-[50vh] items-center justify-center">
-        <p className="text-muted-foreground">Bạn không có quyền truy cập trang này.</p>
+        <p className="text-muted-foreground">
+          Bạn không có quyền truy cập trang này.
+        </p>
       </div>
     );
   }
 
-  const activeAlerts = alerts.filter((a) => a.status === 'active').length;
+  const activeAlerts = alerts.filter((a) => a.status === "active").length;
   const criticalAlerts = alerts.filter(
-    (a) => a.severity === 'critical' && a.status !== 'resolved',
+    (a) => a.severity === "critical" && a.status !== "resolved",
   ).length;
 
   const filteredAlerts = alerts.filter((alert) => {
-    const matchesSeverity = severityFilter === 'all' || alert.severity === severityFilter;
-    const matchesStatus = statusFilter === 'all' || alert.status === statusFilter;
+    const matchesSeverity =
+      severityFilter === "all" || alert.severity === severityFilter;
+    const matchesStatus =
+      statusFilter === "all" || alert.status === statusFilter;
     const matchesSearch =
       alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       alert.message.toLowerCase().includes(searchQuery.toLowerCase());
@@ -129,11 +162,15 @@ export default function AdminAlertsPage() {
               <Dialog.Header>Thêm quy tắc cảnh báo</Dialog.Header>
               <div className="space-y-4 p-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Tên quy tắc</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Tên quy tắc
+                  </label>
                   <Input placeholder="VD: CPU > 90%" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Mức độ</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Mức độ
+                  </label>
                   <Select defaultValue="warning">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn mức độ" />
@@ -146,12 +183,17 @@ export default function AdminAlertsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Kênh thông báo</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Kênh thông báo
+                  </label>
                   <Input placeholder="Email, Slack, SMS" />
                 </div>
               </div>
               <Dialog.Footer>
-                <Button variant="outline" onClick={() => setIsAddRuleOpen(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsAddRuleOpen(false)}
+                >
                   Hủy
                 </Button>
                 <Button onClick={() => setIsAddRuleOpen(false)}>Lưu</Button>
@@ -167,7 +209,9 @@ export default function AdminAlertsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Cảnh báo đang hoạt động</p>
+                <p className="text-muted-foreground text-sm">
+                  Cảnh báo đang hoạt động
+                </p>
                 <p className="text-2xl font-bold">{activeAlerts}</p>
               </div>
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-500">
@@ -181,7 +225,9 @@ export default function AdminAlertsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-muted-foreground text-sm">Nghiêm trọng</p>
-                <p className="text-2xl font-bold text-red-500">{criticalAlerts}</p>
+                <p className="text-2xl font-bold text-red-500">
+                  {criticalAlerts}
+                </p>
               </div>
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-red-500">
                 <AlertTriangle className="h-5 w-5 text-white" />
@@ -193,9 +239,12 @@ export default function AdminAlertsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Quy tắc đang bật</p>
+                <p className="text-muted-foreground text-sm">
+                  Quy tắc đang bật
+                </p>
                 <p className="text-2xl font-bold">
-                  {alertRules.filter((r) => r.enabled).length}/{alertRules.length}
+                  {alertRules.filter((r) => r.enabled).length}/
+                  {alertRules.length}
                 </p>
               </div>
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-blue-500">
@@ -249,25 +298,25 @@ export default function AdminAlertsPage() {
             <Card
               key={alert.id}
               className={`${
-                alert.severity === 'critical' && alert.status === 'active'
-                  ? 'border-red-500'
-                  : alert.severity === 'warning' && alert.status === 'active'
-                    ? 'border-orange-500'
-                    : ''
+                alert.severity === "critical" && alert.status === "active"
+                  ? "border-red-500"
+                  : alert.severity === "warning" && alert.status === "active"
+                    ? "border-orange-500"
+                    : ""
               }`}
             >
               <Card.Content className="p-4">
                 <div className="flex items-start gap-3">
                   <div
                     className={`border-border mt-0.5 flex h-8 w-8 items-center justify-center border-2 ${
-                      alert.severity === 'critical'
-                        ? 'bg-red-500'
-                        : alert.severity === 'warning'
-                          ? 'bg-orange-500'
-                          : 'bg-blue-500'
+                      alert.severity === "critical"
+                        ? "bg-red-500"
+                        : alert.severity === "warning"
+                          ? "bg-orange-500"
+                          : "bg-blue-500"
                     }`}
                   >
-                    {alert.severity === 'info' ? (
+                    {alert.severity === "info" ? (
                       <Bell className="h-4 w-4 text-white" />
                     ) : (
                       <AlertTriangle className="h-4 w-4 text-white" />
@@ -278,19 +327,19 @@ export default function AdminAlertsPage() {
                       <h3 className="font-bold">{alert.title}</h3>
                       <Badge
                         variant={
-                          alert.severity === 'critical'
-                            ? 'solid'
-                            : alert.severity === 'warning'
-                              ? 'surface'
-                              : 'default'
+                          alert.severity === "critical"
+                            ? "solid"
+                            : alert.severity === "warning"
+                              ? "surface"
+                              : "default"
                         }
                         size="sm"
                         className={
-                          alert.severity === 'critical'
-                            ? 'bg-red-500 text-white'
-                            : alert.severity === 'warning'
-                              ? 'bg-orange-100 text-orange-700'
-                              : 'bg-blue-100 text-blue-700'
+                          alert.severity === "critical"
+                            ? "bg-red-500 text-white"
+                            : alert.severity === "warning"
+                              ? "bg-orange-100 text-orange-700"
+                              : "bg-blue-100 text-blue-700"
                         }
                       >
                         {alert.severity.toUpperCase()}
@@ -298,35 +347,45 @@ export default function AdminAlertsPage() {
                       <Badge
                         size="sm"
                         className={
-                          alert.status === 'active'
-                            ? 'bg-red-100 text-red-700'
-                            : alert.status === 'acknowledged'
-                              ? 'bg-orange-100 text-orange-700'
-                              : 'bg-green-100 text-green-700'
+                          alert.status === "active"
+                            ? "bg-red-100 text-red-700"
+                            : alert.status === "acknowledged"
+                              ? "bg-orange-100 text-orange-700"
+                              : "bg-green-100 text-green-700"
                         }
                       >
-                        {alert.status === 'active'
-                          ? 'Đang hoạt động'
-                          : alert.status === 'acknowledged'
-                            ? 'Đã xác nhận'
-                            : 'Đã giải quyết'}
+                        {alert.status === "active"
+                          ? "Đang hoạt động"
+                          : alert.status === "acknowledged"
+                            ? "Đã xác nhận"
+                            : "Đã giải quyết"}
                       </Badge>
                     </div>
-                    <p className="text-muted-foreground mt-1 text-sm">{alert.message}</p>
+                    <p className="text-muted-foreground mt-1 text-sm">
+                      {alert.message}
+                    </p>
                     <div className="text-muted-foreground mt-2 flex items-center gap-4 text-xs">
                       <span>Nguồn: {alert.source}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {new Date(alert.createdAt).toLocaleString('vi-VN')}
+                        {new Date(alert.createdAt).toLocaleString("vi-VN")}
                       </span>
                     </div>
                   </div>
-                  {alert.status === 'active' && (
+                  {alert.status === "active" && (
                     <div className="flex gap-2">
-                      <Button variant="outline" size="icon" className="hover:bg-green-100">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="hover:bg-green-100"
+                      >
                         <Check className="h-4 w-4 text-green-500" />
                       </Button>
-                      <Button variant="outline" size="icon" className="hover:bg-red-100">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="hover:bg-red-100"
+                      >
                         <X className="h-4 w-4 text-red-500" />
                       </Button>
                     </div>
@@ -360,22 +419,24 @@ export default function AdminAlertsPage() {
                     <Badge
                       size="sm"
                       className={
-                        rule.severity === 'critical'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-orange-100 text-orange-700'
+                        rule.severity === "critical"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-orange-100 text-orange-700"
                       }
                     >
                       {rule.severity.toUpperCase()}
                     </Badge>
                   </Table.Cell>
-                  <Table.Cell className="text-muted-foreground">{rule.channel}</Table.Cell>
+                  <Table.Cell className="text-muted-foreground">
+                    {rule.channel}
+                  </Table.Cell>
                   <Table.Cell>
                     <div className="flex items-center gap-2">
                       <Switch checked={rule.enabled} />
                       <span
-                        className={`text-sm ${rule.enabled ? 'text-green-500' : 'text-muted-foreground'}`}
+                        className={`text-sm ${rule.enabled ? "text-green-500" : "text-muted-foreground"}`}
                       >
-                        {rule.enabled ? 'Đang bật' : 'Đã tắt'}
+                        {rule.enabled ? "Đang bật" : "Đã tắt"}
                       </span>
                     </div>
                   </Table.Cell>

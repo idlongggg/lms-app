@@ -1,29 +1,29 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Logo } from './logo';
+import { Logo } from "./logo";
 
 const footerLinks = {
   product: {
-    title: 'Sản phẩm',
+    title: "Sản phẩm",
     links: [
-      { label: 'Tính năng', href: '#features' },
-      { label: 'Giải đấu', href: '#tournaments' },
-      { label: 'Bảng giá', href: '#pricing' },
+      { label: "Tính năng", href: "#features" },
+      { label: "Giải đấu", href: "#tournaments" },
+      { label: "Bảng giá", href: "#pricing" },
     ],
   },
   company: {
-    title: 'Công ty',
+    title: "Công ty",
     links: [
-      { label: 'Về chúng tôi', href: '#about' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Liên hệ', href: '/contact' },
+      { label: "Về chúng tôi", href: "#about" },
+      { label: "Blog", href: "/blog" },
+      { label: "Liên hệ", href: "/contact" },
     ],
   },
   legal: {
-    title: 'Pháp lý',
+    title: "Pháp lý",
     links: [
-      { label: 'Điều khoản', href: '/terms' },
-      { label: 'Bảo mật', href: '/privacy' },
+      { label: "Điều khoản", href: "/terms" },
+      { label: "Bảo mật", href: "/privacy" },
     ],
   },
 };
@@ -37,14 +37,17 @@ export function Footer() {
           <div className="space-y-4">
             <Logo title="LMS" />
             <p className="text-muted-foreground text-sm">
-              Nền tảng học tập trực tuyến với phong cách độc đáo và trải nghiệm gamification thú vị.
+              Nền tảng học tập trực tuyến với phong cách độc đáo và trải nghiệm
+              gamification thú vị.
             </p>
           </div>
 
           {/* Links */}
           {Object.entries(footerLinks).map(([key, section]) => (
             <div key={key}>
-              <h3 className="mb-3 text-sm font-bold tracking-wider uppercase">{section.title}</h3>
+              <h3 className="mb-3 text-sm font-bold tracking-wider uppercase">
+                {section.title}
+              </h3>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.href}>

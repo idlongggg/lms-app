@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Area,
   AreaChart as RechartsAreaChart,
@@ -9,9 +9,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface AreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +26,7 @@ interface AreaChartProps extends React.HTMLAttributes<HTMLDivElement> {
   valueFormatter?: (value: number) => string;
   showGrid?: boolean;
   showTooltip?: boolean;
-  fill?: 'gradient' | 'solid';
+  fill?: "gradient" | "solid";
   className?: string;
 }
 
@@ -36,15 +36,15 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
       data = [],
       index,
       categories = [],
-      strokeColors = ['var(--foreground)'],
-      fillColors = ['var(--primary)'],
-      tooltipBgColor = 'var(--background)',
-      tooltipBorderColor = 'var(--border)',
-      gridColor = 'var(--muted)',
+      strokeColors = ["var(--foreground)"],
+      fillColors = ["var(--primary)"],
+      tooltipBgColor = "var(--background)",
+      tooltipBorderColor = "var(--border)",
+      gridColor = "var(--muted)",
       valueFormatter = (value: number) => value.toString(),
       showGrid = true,
       showTooltip = true,
-      fill = 'gradient',
+      fill = "gradient",
       className,
       ...props
     },
@@ -53,19 +53,37 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
     const chartId = React.useId();
 
     return (
-      <div ref={ref} className={cn('h-80 w-full', className)} {...props}>
+      <div ref={ref} className={cn("h-80 w-full", className)} {...props}>
         <ResponsiveContainer width="100%" height="100%">
-          <RechartsAreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+          <RechartsAreaChart
+            data={data}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
             <defs>
               {categories.map((category, index) => {
                 const fillColor = fillColors[index] || fillColors[0];
                 const gradientId = `gradient-${chartId}-${category}`;
                 return (
-                  <linearGradient key={category} id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                    {fill === 'gradient' ? (
+                  <linearGradient
+                    key={category}
+                    id={gradientId}
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    {fill === "gradient" ? (
                       <>
-                        <stop offset="5%" stopColor={fillColor} stopOpacity={0.8} />
-                        <stop offset="95%" stopColor={fillColor} stopOpacity={0} />
+                        <stop
+                          offset="5%"
+                          stopColor={fillColor}
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor={fillColor}
+                          stopOpacity={0}
+                        />
                       </>
                     ) : (
                       <stop stopColor={fillColor} stopOpacity={0.6} />
@@ -75,7 +93,9 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
               })}
             </defs>
 
-            {showGrid && <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />}
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            )}
 
             <XAxis
               dataKey={index}
@@ -109,14 +129,19 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
                           <span className="text-muted-foreground text-[0.70rem] uppercase">
                             {index}
                           </span>
-                          <span className="text-muted-foreground font-bold">{label}</span>
+                          <span className="text-muted-foreground font-bold">
+                            {label}
+                          </span>
                         </div>
                         {payload.map((entry, index) => (
                           <div key={index} className="flex flex-col">
                             <span className="text-muted-foreground text-[0.70rem] uppercase">
                               {entry.dataKey}
                             </span>
-                            <span className="font-bold" style={{ color: strokeColors[0] }}>
+                            <span
+                              className="font-bold"
+                              style={{ color: strokeColors[0] }}
+                            >
                               {valueFormatter(entry.value as number)}
                             </span>
                           </div>
@@ -149,6 +174,6 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
   },
 );
 
-AreaChart.displayName = 'AreaChart';
+AreaChart.displayName = "AreaChart";
 
 export { AreaChart, type AreaChartProps };

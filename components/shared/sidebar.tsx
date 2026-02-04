@@ -1,46 +1,53 @@
-'use client';
+"use client";
 
-import { ChevronLeft, X } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRef } from 'react';
+import { ChevronLeft, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
-import { useScrollPosition } from '@/hooks/use-scroll-position';
-import { useSidebar } from '@/hooks/use-sidebar';
-import type { NavGroup } from '@/lib/navigation';
-import { cn } from '@/lib/utils';
+import { useScrollPosition } from "@/lib/hooks";
+import type { NavGroup } from "@/lib/navigation";
+import { useSidebar } from "@/lib/providers";
+import { cn } from "@/lib/utils";
 
-import { Logo } from './logo';
+import { Logo } from "./logo";
 
 interface SidebarProps {
   navigation: NavGroup[];
-  variant?: 'collapsible' | 'expanded';
+  variant?: "collapsible" | "expanded";
   className?: string;
 }
 
-export function Sidebar({ navigation, variant = 'collapsible', className }: SidebarProps) {
+export function Sidebar({
+  navigation,
+  variant = "collapsible",
+  className,
+}: SidebarProps) {
   const { isCollapsed, isMobileOpen, toggle, closeMobile } = useSidebar();
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
 
-  useScrollPosition(navRef, 'sidebar');
+  useScrollPosition(navRef, "sidebar");
 
-  const isExpanded = variant === 'expanded';
+  const isExpanded = variant === "expanded";
   const showCollapsed = !isExpanded && isCollapsed;
 
   return (
     <>
       {/* Mobile overlay */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={closeMobile} />
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={closeMobile}
+        />
       )}
 
       {/* Sidebar */}
       <aside
         className={cn(
-          'border-border bg-sidebar fixed top-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:shrink-0',
-          showCollapsed ? 'w-16' : 'w-64',
-          isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+          "border-border bg-sidebar fixed top-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:shrink-0",
+          showCollapsed ? "w-16" : "w-64",
+          isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           className,
         )}
       >
@@ -60,10 +67,13 @@ export function Sidebar({ navigation, variant = 'collapsible', className }: Side
           <button
             onClick={toggle}
             className="border-border bg-background hover:bg-muted absolute top-6 -right-3 z-10 hidden h-6 w-6 items-center justify-center border-2 shadow-xs transition-all md:flex"
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             <ChevronLeft
-              className={cn('h-3 w-3 transition-transform', isCollapsed && 'rotate-180')}
+              className={cn(
+                "h-3 w-3 transition-transform",
+                isCollapsed && "rotate-180",
+              )}
             />
           </button>
         )}
@@ -88,11 +98,11 @@ export function Sidebar({ navigation, variant = 'collapsible', className }: Side
                         href={item.href}
                         onClick={closeMobile}
                         className={cn(
-                          'flex items-center gap-3 px-3 py-2 font-medium transition-all',
-                          showCollapsed && 'justify-center px-2',
+                          "flex items-center gap-3 px-3 py-2 font-medium transition-all",
+                          showCollapsed && "justify-center px-2",
                           isActive
-                            ? 'border-border bg-primary border-2 shadow-xs'
-                            : 'hover:bg-sidebar-accent',
+                            ? "border-border bg-primary border-2 shadow-xs"
+                            : "hover:bg-sidebar-accent",
                         )}
                         title={showCollapsed ? item.title : undefined}
                       >

@@ -1,10 +1,14 @@
-'use client';
+"use client";
 
-import { Coins, Gift, Star } from 'lucide-react';
-import Link from 'next/link';
+import { Coins, Gift, Star } from "lucide-react";
+import Link from "next/link";
 
-import { useAuth } from '@/lib/auth';
-import { getCoinStats, getRedeemedItems, getRewardCards } from '@/lib/mock/rewards';
+import { useAuth } from "@/lib/auth";
+import {
+  getCoinStats,
+  getRedeemedItems,
+  getRewardCards,
+} from "@/lib/mock/rewards";
 
 export default function RewardsPage() {
   const { user } = useAuth();
@@ -14,7 +18,9 @@ export default function RewardsPage() {
   const rewardCards = getRewardCards(user.id);
   const coinStats = getCoinStats(user.id);
   const redeemedItems = getRedeemedItems(user.id);
-  const featuredRewards = rewardCards.filter((r) => (r.stock ?? 0) > 0).slice(0, 4);
+  const featuredRewards = rewardCards
+    .filter((r) => (r.stock ?? 0) > 0)
+    .slice(0, 4);
 
   return (
     <div className="space-y-8">
@@ -22,7 +28,9 @@ export default function RewardsPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Đổi quà</h1>
-          <p className="text-muted-foreground">Dùng xu tích lũy để đổi những phần quà hấp dẫn</p>
+          <p className="text-muted-foreground">
+            Dùng xu tích lũy để đổi những phần quà hấp dẫn
+          </p>
         </div>
         <div className="border-border bg-primary flex items-center gap-2 border-2 px-4 py-2 shadow-sm">
           <Coins className="h-5 w-5" />
@@ -61,7 +69,9 @@ export default function RewardsPage() {
             </div>
             <div>
               <p className="text-muted-foreground text-sm">Tổng xu đã tiêu</p>
-              <p className="text-xl font-bold">{coinStats.totalSpent.toLocaleString()}</p>
+              <p className="text-xl font-bold">
+                {coinStats.totalSpent.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
@@ -72,27 +82,34 @@ export default function RewardsPage() {
         <div>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-bold">Quà đã đổi</h2>
-            <Link href="/rewards/history" className="text-primary text-sm hover:underline">
+            <Link
+              href="/rewards/history"
+              className="text-primary text-sm hover:underline"
+            >
               Xem tất cả →
             </Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {redeemedItems.slice(0, 4).map((item) => (
-              <div key={item.id} className="border-border bg-muted/50 border-2 p-4 shadow-sm">
+              <div
+                key={item.id}
+                className="border-border bg-muted/50 border-2 p-4 shadow-sm"
+              >
                 <div className="border-border bg-background mb-3 flex h-16 items-center justify-center border-2 text-3xl">
-                  {item.image || '🎁'}
+                  {item.image || "🎁"}
                 </div>
                 <h3 className="text-sm font-medium">{item.name}</h3>
                 <p className="text-muted-foreground mt-1 text-xs">
-                  Đổi ngày {new Date(item.acquiredAt).toLocaleDateString('vi-VN')}
+                  Đổi ngày{" "}
+                  {new Date(item.acquiredAt).toLocaleDateString("vi-VN")}
                 </p>
                 <div
                   className={`mt-2 inline-block border px-2 py-0.5 text-xs font-medium ${
-                    item.status === 'ACTIVE'
-                      ? 'border-green-500 bg-green-500/10 text-green-500'
-                      : item.status === 'APPLIED'
-                        ? 'border-blue-500 bg-blue-500/10 text-blue-500'
-                        : 'border-yellow-500 bg-yellow-500/10 text-yellow-500'
+                    item.status === "ACTIVE"
+                      ? "border-green-500 bg-green-500/10 text-green-500"
+                      : item.status === "APPLIED"
+                        ? "border-blue-500 bg-blue-500/10 text-blue-500"
+                        : "border-yellow-500 bg-yellow-500/10 text-yellow-500"
                   }`}
                 >
                   {item.statusLabel}
@@ -116,7 +133,7 @@ export default function RewardsPage() {
                 className="border-border bg-background border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
-                  {reward.image || '🎁'}
+                  {reward.image || "🎁"}
                 </div>
                 <h3 className="font-bold">{reward.name}</h3>
                 <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
@@ -124,30 +141,34 @@ export default function RewardsPage() {
                 </p>
                 <div className="mt-2 flex items-center justify-between">
                   <div
-                    className={`flex items-center gap-1 text-sm ${!canAfford ? 'text-muted-foreground' : ''}`}
+                    className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
                   >
                     <Coins className="h-4 w-4" />
-                    <span className="font-medium">{reward.cost.toLocaleString()}</span>
+                    <span className="font-medium">
+                      {reward.cost.toLocaleString()}
+                    </span>
                   </div>
                   <span className="text-muted-foreground text-xs">
-                    {reward.stock !== null ? `Còn ${reward.stock}` : 'Không giới hạn'}
+                    {reward.stock !== null
+                      ? `Còn ${reward.stock}`
+                      : "Không giới hạn"}
                   </span>
                 </div>
                 <button
                   disabled={!canAfford || !isInStock || reward.owned}
                   className={`border-border mt-3 w-full border-2 py-2 font-medium shadow-xs transition-all ${
                     canAfford && isInStock && !reward.owned
-                      ? 'bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm'
-                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                      ? "bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
+                      : "bg-muted text-muted-foreground cursor-not-allowed"
                   }`}
                 >
                   {reward.owned
-                    ? 'Đã sở hữu'
+                    ? "Đã sở hữu"
                     : !isInStock
-                      ? 'Hết hàng'
+                      ? "Hết hàng"
                       : !canAfford
-                        ? 'Không đủ xu'
-                        : 'Đổi ngay'}
+                        ? "Không đủ xu"
+                        : "Đổi ngay"}
                 </button>
               </div>
             );
@@ -168,35 +189,39 @@ export default function RewardsPage() {
                 className="border-border bg-background border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
-                  {reward.image || '🎁'}
+                  {reward.image || "🎁"}
                 </div>
                 <h3 className="font-bold">{reward.name}</h3>
                 <div className="mt-2 flex items-center justify-between">
                   <div
-                    className={`flex items-center gap-1 text-sm ${!canAfford ? 'text-muted-foreground' : ''}`}
+                    className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
                   >
                     <Coins className="h-4 w-4" />
-                    <span className="font-medium">{reward.cost.toLocaleString()}</span>
+                    <span className="font-medium">
+                      {reward.cost.toLocaleString()}
+                    </span>
                   </div>
                   <span className="text-muted-foreground text-xs">
-                    {reward.stock !== null ? `Còn ${reward.stock}` : 'Không giới hạn'}
+                    {reward.stock !== null
+                      ? `Còn ${reward.stock}`
+                      : "Không giới hạn"}
                   </span>
                 </div>
                 <button
                   disabled={!canAfford || !isInStock || reward.owned}
                   className={`border-border mt-3 w-full border-2 py-2 font-medium shadow-xs transition-all ${
                     canAfford && isInStock && !reward.owned
-                      ? 'bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm'
-                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                      ? "bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
+                      : "bg-muted text-muted-foreground cursor-not-allowed"
                   }`}
                 >
                   {reward.owned
-                    ? 'Đã sở hữu'
+                    ? "Đã sở hữu"
                     : !isInStock
-                      ? 'Hết hàng'
+                      ? "Hết hàng"
                       : !canAfford
-                        ? 'Không đủ xu'
-                        : 'Đổi ngay'}
+                        ? "Không đủ xu"
+                        : "Đổi ngay"}
                 </button>
               </div>
             );

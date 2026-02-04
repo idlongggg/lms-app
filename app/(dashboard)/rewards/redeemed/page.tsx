@@ -1,85 +1,88 @@
-import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from 'lucide-react';
+import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from "lucide-react";
 
 const redeemedItems = [
   {
     id: 1,
-    name: 'Khóa học React Pro',
-    description: 'Trọn bộ khóa học React từ cơ bản đến nâng cao',
+    name: "Khóa học React Pro",
+    description: "Trọn bộ khóa học React từ cơ bản đến nâng cao",
     cost: 500,
-    redeemedAt: '2026-02-02T10:15:00',
-    status: 'active',
-    image: '📚',
+    redeemedAt: "2026-02-02T10:15:00",
+    status: "active",
+    image: "📚",
     expiresAt: null,
   },
   {
     id: 2,
-    name: 'Avatar Premium - Cyberpunk',
-    description: 'Avatar độc quyền phong cách Cyberpunk',
+    name: "Avatar Premium - Cyberpunk",
+    description: "Avatar độc quyền phong cách Cyberpunk",
     cost: 150,
-    redeemedAt: '2026-01-30T16:20:00',
-    status: 'applied',
-    image: '🤖',
+    redeemedAt: "2026-01-30T16:20:00",
+    status: "applied",
+    image: "🤖",
     expiresAt: null,
   },
   {
     id: 3,
-    name: 'Thẻ Double XP 7 ngày',
-    description: 'Nhận gấp đôi XP trong 7 ngày',
+    name: "Thẻ Double XP 7 ngày",
+    description: "Nhận gấp đôi XP trong 7 ngày",
     cost: 200,
-    redeemedAt: '2026-01-25T09:00:00',
-    status: 'expired',
-    image: '⚡',
-    expiresAt: '2026-02-01T09:00:00',
+    redeemedAt: "2026-01-25T09:00:00",
+    status: "expired",
+    image: "⚡",
+    expiresAt: "2026-02-01T09:00:00",
   },
   {
     id: 4,
-    name: 'Badge VIP',
-    description: 'Huy hiệu VIP hiển thị bên cạnh tên',
+    name: "Badge VIP",
+    description: "Huy hiệu VIP hiển thị bên cạnh tên",
     cost: 300,
-    redeemedAt: '2026-01-20T14:30:00',
-    status: 'active',
-    image: '⭐',
-    expiresAt: '2026-04-20T14:30:00',
+    redeemedAt: "2026-01-20T14:30:00",
+    status: "active",
+    image: "⭐",
+    expiresAt: "2026-04-20T14:30:00",
   },
   {
     id: 5,
-    name: 'Khung hình đại diện',
-    description: 'Khung hình neon độc đáo',
+    name: "Khung hình đại diện",
+    description: "Khung hình neon độc đáo",
     cost: 100,
-    redeemedAt: '2026-01-15T11:45:00',
-    status: 'applied',
-    image: '🖼️',
+    redeemedAt: "2026-01-15T11:45:00",
+    status: "applied",
+    image: "🖼️",
     expiresAt: null,
   },
 ];
 
-const statusConfig: Record<string, { label: string; color: string; bgColor: string }> = {
+const statusConfig: Record<
+  string,
+  { label: string; color: string; bgColor: string }
+> = {
   active: {
-    label: 'Đang hoạt động',
-    color: 'text-green-700',
-    bgColor: 'bg-green-100',
+    label: "Đang hoạt động",
+    color: "text-green-700",
+    bgColor: "bg-green-100",
   },
   applied: {
-    label: 'Đang áp dụng',
-    color: 'text-blue-700',
-    bgColor: 'bg-blue-100',
+    label: "Đang áp dụng",
+    color: "text-blue-700",
+    bgColor: "bg-blue-100",
   },
   expired: {
-    label: 'Hết hạn',
-    color: 'text-gray-500',
-    bgColor: 'bg-gray-100',
+    label: "Hết hạn",
+    color: "text-gray-500",
+    bgColor: "bg-gray-100",
   },
   pending: {
-    label: 'Đang xử lý',
-    color: 'text-orange-700',
-    bgColor: 'bg-orange-100',
+    label: "Đang xử lý",
+    color: "text-orange-700",
+    bgColor: "bg-orange-100",
   },
 };
 
 export default function RedeemedPage() {
   const totalSpent = redeemedItems.reduce((sum, item) => sum + item.cost, 0);
   const activeItems = redeemedItems.filter(
-    (item) => item.status === 'active' || item.status === 'applied',
+    (item) => item.status === "active" || item.status === "applied",
   ).length;
 
   return (
@@ -88,7 +91,9 @@ export default function RedeemedPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Đã đổi</h1>
-          <p className="text-muted-foreground">Quản lý các vật phẩm bạn đã đổi</p>
+          <p className="text-muted-foreground">
+            Quản lý các vật phẩm bạn đã đổi
+          </p>
         </div>
         <button className="border-border bg-primary border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
           <Gift className="mr-2 inline h-4 w-4" />
@@ -105,7 +110,9 @@ export default function RedeemedPage() {
             </div>
             <div>
               <p className="text-muted-foreground text-sm">Tổng đã đổi</p>
-              <p className="text-xl font-bold">{redeemedItems.length} vật phẩm</p>
+              <p className="text-xl font-bold">
+                {redeemedItems.length} vật phẩm
+              </p>
             </div>
           </div>
         </div>
@@ -127,7 +134,9 @@ export default function RedeemedPage() {
             </div>
             <div>
               <p className="text-muted-foreground text-sm">Tổng xu đã dùng</p>
-              <p className="text-xl font-bold">{totalSpent.toLocaleString()} xu</p>
+              <p className="text-xl font-bold">
+                {totalSpent.toLocaleString()} xu
+              </p>
             </div>
           </div>
         </div>
@@ -160,9 +169,9 @@ export default function RedeemedPage() {
             <div
               key={item.id}
               className={`border-border bg-background border-2 shadow-sm transition-all ${
-                item.status === 'expired'
-                  ? 'opacity-60'
-                  : 'hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md'
+                item.status === "expired"
+                  ? "opacity-60"
+                  : "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               }`}
             >
               <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
@@ -181,18 +190,25 @@ export default function RedeemedPage() {
                       {status.label}
                     </span>
                   </div>
-                  <p className="text-muted-foreground mt-1 text-sm">{item.description}</p>
+                  <p className="text-muted-foreground mt-1 text-sm">
+                    {item.description}
+                  </p>
                   <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-4 text-sm">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
-                      Đổi ngày: {new Date(item.redeemedAt).toLocaleDateString('vi-VN')}
+                      Đổi ngày:{" "}
+                      {new Date(item.redeemedAt).toLocaleDateString("vi-VN")}
                     </span>
-                    <span className="flex items-center gap-1">💰 {item.cost} xu</span>
+                    <span className="flex items-center gap-1">
+                      💰 {item.cost} xu
+                    </span>
                     {item.expiresAt && (
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        {item.status === 'expired' ? 'Hết hạn' : 'Hết hạn'}:{' '}
-                        {new Date(item.expiresAt).toLocaleDateString('vi-VN')}
+                        {item.status === "expired"
+                          ? "Hết hạn"
+                          : "Hết hạn"}:{" "}
+                        {new Date(item.expiresAt).toLocaleDateString("vi-VN")}
                       </span>
                     )}
                   </div>
@@ -200,7 +216,7 @@ export default function RedeemedPage() {
 
                 {/* Actions */}
                 <div className="flex shrink-0 gap-2">
-                  {item.status === 'active' && (
+                  {item.status === "active" && (
                     <button className="border-border bg-primary border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
                       Sử dụng
                     </button>

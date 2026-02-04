@@ -1,5 +1,12 @@
-import { ArrowRight, BookOpen, type LucideIcon, Swords, Trophy, Zap } from 'lucide-react';
-import Link from 'next/link';
+import {
+  ArrowRight,
+  BookOpen,
+  type LucideIcon,
+  Swords,
+  Trophy,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
 
 const iconMap: Record<string, LucideIcon> = {
   BookOpen,
@@ -23,8 +30,9 @@ function HeroSection() {
               Học tập không nhàm chán
             </h1>
             <p className="text-foreground/80 text-lg">
-              Nền tảng học tập trực tuyến với gamification, giải đấu thú vị và phong cách
-              NeoBrutalism độc đáo. Biến việc học thành cuộc phiêu lưu!
+              Nền tảng học tập trực tuyến với gamification, giải đấu thú vị và
+              phong cách NeoBrutalism độc đáo. Biến việc học thành cuộc phiêu
+              lưu!
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
@@ -59,9 +67,21 @@ function HeroStats() {
             label="1000+ Bài học"
             variant="accent"
           />
-          <StatCard icon={<Trophy className="h-8 w-8" />} label="50+ Giải đấu" variant="muted" />
-          <StatCard icon={<Swords className="h-8 w-8" />} label="PvP Mode" variant="muted" />
-          <StatCard icon={<Zap className="h-8 w-8" />} label="AI Tutor" variant="accent" />
+          <StatCard
+            icon={<Trophy className="h-8 w-8" />}
+            label="50+ Giải đấu"
+            variant="muted"
+          />
+          <StatCard
+            icon={<Swords className="h-8 w-8" />}
+            label="PvP Mode"
+            variant="muted"
+          />
+          <StatCard
+            icon={<Zap className="h-8 w-8" />}
+            label="AI Tutor"
+            variant="accent"
+          />
         </div>
       </div>
     </div>
@@ -75,11 +95,11 @@ function StatCard({
 }: {
   icon: React.ReactNode;
   label: string;
-  variant: 'accent' | 'muted';
+  variant: "accent" | "muted";
 }) {
   return (
     <div
-      className={`border-border border-2 p-4 ${variant === 'accent' ? 'bg-accent' : 'bg-muted'}`}
+      className={`border-border border-2 p-4 ${variant === "accent" ? "bg-accent" : "bg-muted"}`}
     >
       {icon}
       <p className="mt-2 font-medium">{label}</p>
@@ -133,7 +153,8 @@ function CTASection() {
       <div className="mx-auto max-w-3xl px-4 text-center">
         <h2 className="text-4xl font-bold">Sẵn sàng bắt đầu hành trình?</h2>
         <p className="text-foreground/80 mt-4 text-lg">
-          Tham gia cùng hàng nghìn học viên và biến việc học thành niềm vui mỗi ngày.
+          Tham gia cùng hàng nghìn học viên và biến việc học thành niềm vui mỗi
+          ngày.
         </p>
         <Link
           href="/auth/register"
@@ -159,23 +180,26 @@ export default function LandingPage() {
 
 const features = [
   {
-    icon: 'BookOpen',
-    title: 'Nội dung đa dạng',
-    description: 'Hàng nghìn bài học từ cơ bản đến nâng cao, được biên soạn bởi các chuyên gia.',
+    icon: "BookOpen",
+    title: "Nội dung đa dạng",
+    description:
+      "Hàng nghìn bài học từ cơ bản đến nâng cao, được biên soạn bởi các chuyên gia.",
   },
   {
-    icon: 'Swords',
-    title: 'Giải đấu PvP',
-    description: 'Thử thách bản thân trong các trận đấu realtime với người chơi khác.',
+    icon: "Swords",
+    title: "Giải đấu PvP",
+    description:
+      "Thử thách bản thân trong các trận đấu realtime với người chơi khác.",
   },
   {
-    icon: 'Trophy',
-    title: 'Hệ thống phần thưởng',
-    description: 'Nhận điểm, huy hiệu và leo rank khi hoàn thành bài học và chiến thắng.',
+    icon: "Trophy",
+    title: "Hệ thống phần thưởng",
+    description:
+      "Nhận điểm, huy hiệu và leo rank khi hoàn thành bài học và chiến thắng.",
   },
   {
-    icon: 'Zap',
-    title: 'AI Tutor',
-    description: 'Trợ lý AI thông minh hỗ trợ giải đáp thắc mắc 24/7.',
+    icon: "Zap",
+    title: "AI Tutor",
+    description: "Trợ lý AI thông minh hỗ trợ giải đáp thắc mắc 24/7.",
   },
 ];

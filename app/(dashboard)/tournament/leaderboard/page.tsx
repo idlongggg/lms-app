@@ -1,35 +1,35 @@
-'use client';
+"use client";
 
-import { Award, Crown, Medal, Star } from 'lucide-react';
+import { Award, Crown, Medal, Star } from "lucide-react";
 
-import { BarChart } from '@/components/retroui/charts/BarChart';
+import { BarChart } from "@/components/retroui/charts/BarChart";
 
 const leaderboardData = [
-  { rank: 1, name: 'ProCoder99', score: 12500, wins: 85, avatar: '👨‍💻' },
-  { rank: 2, name: 'ReactMaster', score: 11200, wins: 78, avatar: '⚛️' },
-  { rank: 3, name: 'JSNinja', score: 10800, wins: 72, avatar: '🥷' },
-  { rank: 4, name: 'TypeHero', score: 9500, wins: 65, avatar: '📘' },
-  { rank: 5, name: 'CodeWarrior', score: 9200, wins: 63, avatar: '⚔️' },
-  { rank: 6, name: 'DevQueen', score: 8900, wins: 60, avatar: '👑' },
-  { rank: 7, name: 'ByteKing', score: 8600, wins: 58, avatar: '🤴' },
-  { rank: 8, name: 'AlgoAce', score: 8300, wins: 55, avatar: '🎯' },
-  { rank: 9, name: 'WebWizard', score: 8000, wins: 52, avatar: '🧙' },
-  { rank: 10, name: 'StackStar', score: 7800, wins: 50, avatar: '⭐' },
+  { rank: 1, name: "ProCoder99", score: 12500, wins: 85, avatar: "👨‍💻" },
+  { rank: 2, name: "ReactMaster", score: 11200, wins: 78, avatar: "⚛️" },
+  { rank: 3, name: "JSNinja", score: 10800, wins: 72, avatar: "🥷" },
+  { rank: 4, name: "TypeHero", score: 9500, wins: 65, avatar: "📘" },
+  { rank: 5, name: "CodeWarrior", score: 9200, wins: 63, avatar: "⚔️" },
+  { rank: 6, name: "DevQueen", score: 8900, wins: 60, avatar: "👑" },
+  { rank: 7, name: "ByteKing", score: 8600, wins: 58, avatar: "🤴" },
+  { rank: 8, name: "AlgoAce", score: 8300, wins: 55, avatar: "🎯" },
+  { rank: 9, name: "WebWizard", score: 8000, wins: 52, avatar: "🧙" },
+  { rank: 10, name: "StackStar", score: 7800, wins: 50, avatar: "⭐" },
 ];
 
 const weeklyTopData = [
-  { name: 'ProCoder99', points: 450 },
-  { name: 'ReactMaster', points: 380 },
-  { name: 'JSNinja', points: 350 },
-  { name: 'TypeHero', points: 320 },
-  { name: 'CodeWarrior', points: 280 },
+  { name: "ProCoder99", points: 450 },
+  { name: "ReactMaster", points: 380 },
+  { name: "JSNinja", points: 350 },
+  { name: "TypeHero", points: 320 },
+  { name: "CodeWarrior", points: 280 },
 ];
 
 const myStats = {
   rank: 42,
   score: 3200,
   wins: 28,
-  percentile: 'Top 15%',
+  percentile: "Top 15%",
 };
 
 export default function LeaderboardPage() {
@@ -38,7 +38,9 @@ export default function LeaderboardPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Bảng xếp hạng</h1>
-        <p className="text-muted-foreground">Xem thứ hạng của bạn và các đối thủ hàng đầu</p>
+        <p className="text-muted-foreground">
+          Xem thứ hạng của bạn và các đối thủ hàng đầu
+        </p>
       </div>
 
       {/* My Rank Card */}
@@ -88,7 +90,7 @@ export default function LeaderboardPage() {
               <div
                 key={player.rank}
                 className={`hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors ${
-                  player.rank <= 3 ? 'bg-primary/5' : ''
+                  player.rank <= 3 ? "bg-primary/5" : ""
                 }`}
               >
                 {/* Rank */}
@@ -112,7 +114,9 @@ export default function LeaderboardPage() {
                 {/* Name */}
                 <div className="flex-1">
                   <p className="font-medium">{player.name}</p>
-                  <p className="text-muted-foreground text-sm">{player.wins} thắng</p>
+                  <p className="text-muted-foreground text-sm">
+                    {player.wins} thắng
+                  </p>
                 </div>
 
                 {/* Score */}
@@ -139,9 +143,9 @@ export default function LeaderboardPage() {
             <BarChart
               data={weeklyTopData}
               index="name"
-              categories={['points']}
+              categories={["points"]}
               alignment="horizontal"
-              fillColors={['var(--primary)']}
+              fillColors={["var(--primary)"]}
               className="h-64"
               valueFormatter={(value) => `${value} pts`}
             />

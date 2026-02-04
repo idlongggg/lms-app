@@ -1,91 +1,100 @@
-import { Award, BookOpen, CheckCircle, Clock, Gift, Star, Swords, Trophy } from 'lucide-react';
+import {
+  Award,
+  BookOpen,
+  CheckCircle,
+  Clock,
+  Gift,
+  Star,
+  Swords,
+  Trophy,
+} from "lucide-react";
 
 const activities = [
   {
     id: 1,
-    type: 'lesson_complete',
-    title: 'Hoàn thành bài học',
-    description: 'React Hooks: useEffect cơ bản',
-    time: '10 phút trước',
+    type: "lesson_complete",
+    title: "Hoàn thành bài học",
+    description: "React Hooks: useEffect cơ bản",
+    time: "10 phút trước",
     icon: CheckCircle,
-    color: 'bg-green-500',
-    reward: '+10 xu',
+    color: "bg-green-500",
+    reward: "+10 xu",
   },
   {
     id: 2,
-    type: 'tournament_win',
-    title: 'Thắng thách đấu',
-    description: 'Đánh bại @nguyenb với tỷ số 8-5',
-    time: '1 giờ trước',
+    type: "tournament_win",
+    title: "Thắng thách đấu",
+    description: "Đánh bại @nguyenb với tỷ số 8-5",
+    time: "1 giờ trước",
     icon: Trophy,
-    color: 'bg-yellow-500',
-    reward: '+50 xu',
+    color: "bg-yellow-500",
+    reward: "+50 xu",
   },
   {
     id: 3,
-    type: 'streak',
-    title: 'Streak 7 ngày',
-    description: 'Học tập liên tục 7 ngày',
-    time: '2 giờ trước',
+    type: "streak",
+    title: "Streak 7 ngày",
+    description: "Học tập liên tục 7 ngày",
+    time: "2 giờ trước",
     icon: Star,
-    color: 'bg-orange-500',
-    reward: '+100 xu',
+    color: "bg-orange-500",
+    reward: "+100 xu",
   },
   {
     id: 4,
-    type: 'lesson_start',
-    title: 'Bắt đầu khóa học mới',
-    description: 'TypeScript cho người mới bắt đầu',
-    time: '3 giờ trước',
+    type: "lesson_start",
+    title: "Bắt đầu khóa học mới",
+    description: "TypeScript cho người mới bắt đầu",
+    time: "3 giờ trước",
     icon: BookOpen,
-    color: 'bg-blue-500',
+    color: "bg-blue-500",
     reward: null,
   },
   {
     id: 5,
-    type: 'reward_redeem',
-    title: 'Đổi quà thành công',
-    description: 'Voucher Grab 50K',
-    time: '1 ngày trước',
+    type: "reward_redeem",
+    title: "Đổi quà thành công",
+    description: "Voucher Grab 50K",
+    time: "1 ngày trước",
     icon: Gift,
-    color: 'bg-purple-500',
-    reward: '-300 xu',
+    color: "bg-purple-500",
+    reward: "-300 xu",
   },
   {
     id: 6,
-    type: 'tournament_loss',
-    title: 'Thua thách đấu',
-    description: 'Thua @tranc với tỷ số 4-7',
-    time: '1 ngày trước',
+    type: "tournament_loss",
+    title: "Thua thách đấu",
+    description: "Thua @tranc với tỷ số 4-7",
+    time: "1 ngày trước",
     icon: Swords,
-    color: 'bg-red-500',
-    reward: '+10 xu',
+    color: "bg-red-500",
+    reward: "+10 xu",
   },
   {
     id: 7,
-    type: 'achievement',
-    title: 'Mở khóa thành tựu',
-    description: 'Người học siêng năng - 50 bài học',
-    time: '2 ngày trước',
+    type: "achievement",
+    title: "Mở khóa thành tựu",
+    description: "Người học siêng năng - 50 bài học",
+    time: "2 ngày trước",
     icon: Award,
-    color: 'bg-primary',
-    reward: '+200 xu',
+    color: "bg-primary",
+    reward: "+200 xu",
   },
   {
     id: 8,
-    type: 'lesson_complete',
-    title: 'Hoàn thành bài học',
-    description: 'JavaScript Promises và Async/Await',
-    time: '2 ngày trước',
+    type: "lesson_complete",
+    title: "Hoàn thành bài học",
+    description: "JavaScript Promises và Async/Await",
+    time: "2 ngày trước",
     icon: CheckCircle,
-    color: 'bg-green-500',
-    reward: '+10 xu',
+    color: "bg-green-500",
+    reward: "+10 xu",
   },
 ];
 
 const todayStats = {
   lessonsCompleted: 3,
-  timeSpent: '2h 15m',
+  timeSpent: "2h 15m",
   coinsEarned: 80,
   streakDays: 12,
 };
@@ -96,7 +105,9 @@ export default function ActivityPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Hoạt động gần đây</h1>
-        <p className="text-muted-foreground">Theo dõi các hoạt động và tiến trình của bạn</p>
+        <p className="text-muted-foreground">
+          Theo dõi các hoạt động và tiến trình của bạn
+        </p>
       </div>
 
       {/* Today Stats */}
@@ -164,21 +175,25 @@ export default function ActivityPage() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="font-medium">{activity.title}</p>
-                      <p className="text-muted-foreground text-sm">{activity.description}</p>
+                      <p className="text-muted-foreground text-sm">
+                        {activity.description}
+                      </p>
                     </div>
                     {activity.reward && (
                       <span
                         className={`border-border shrink-0 border px-2 py-0.5 text-sm font-medium ${
-                          activity.reward.startsWith('+')
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-red-100 text-red-700'
+                          activity.reward.startsWith("+")
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
                         {activity.reward}
                       </span>
                     )}
                   </div>
-                  <p className="text-muted-foreground mt-1 text-xs">{activity.time}</p>
+                  <p className="text-muted-foreground mt-1 text-xs">
+                    {activity.time}
+                  </p>
                 </div>
               </div>
             );

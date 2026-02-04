@@ -1,4 +1,4 @@
-import { BookOpen, Flame, Mail, Settings, Trophy, User } from 'lucide-react';
+import { BookOpen, Flame, Mail, Settings, Trophy, User } from "lucide-react";
 
 export default function ProfilePage() {
   return (
@@ -56,7 +56,7 @@ export default function ProfilePage() {
               >
                 <div
                   className={`border-border flex h-12 w-12 items-center justify-center border-2 ${
-                    achievement.unlocked ? 'bg-primary' : 'bg-muted opacity-50'
+                    achievement.unlocked ? "bg-primary" : "bg-muted opacity-50"
                   }`}
                 >
                   <achievement.icon className="h-6 w-6" />
@@ -80,7 +80,9 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex-1">
                   <p className="font-medium">{activity.title}</p>
-                  <p className="text-muted-foreground text-sm">{activity.time}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {activity.time}
+                  </p>
                 </div>
                 {activity.points && (
                   <span className="border-border bg-primary border px-2 py-0.5 text-sm font-medium">
@@ -97,34 +99,34 @@ export default function ProfilePage() {
 }
 
 const profileStats = [
-  { label: 'Streak', value: '7', icon: Flame },
-  { label: 'Giải đấu', value: '12', icon: Trophy },
-  { label: 'Bài học', value: '48', icon: BookOpen },
+  { label: "Streak", value: "7", icon: Flame },
+  { label: "Giải đấu", value: "12", icon: Trophy },
+  { label: "Bài học", value: "48", icon: BookOpen },
 ];
 
 const achievements = [
-  { name: 'First Win', icon: Trophy, unlocked: true },
-  { name: '7 Day Streak', icon: Flame, unlocked: true },
-  { name: 'Quick Learner', icon: BookOpen, unlocked: true },
-  { name: 'Champion', icon: Trophy, unlocked: false },
+  { name: "First Win", icon: Trophy, unlocked: true },
+  { name: "7 Day Streak", icon: Flame, unlocked: true },
+  { name: "Quick Learner", icon: BookOpen, unlocked: true },
+  { name: "Champion", icon: Trophy, unlocked: false },
 ];
 
 const recentActivity = [
   {
-    title: 'Hoàn thành bài học Đại số',
-    time: '2 giờ trước',
+    title: "Hoàn thành bài học Đại số",
+    time: "2 giờ trước",
     icon: BookOpen,
     points: 50,
   },
   {
-    title: 'Thắng giải đấu Toán Vui',
-    time: 'Hôm qua',
+    title: "Thắng giải đấu Toán Vui",
+    time: "Hôm qua",
     icon: Trophy,
     points: 200,
   },
   {
-    title: 'Đạt streak 7 ngày',
-    time: '2 ngày trước',
+    title: "Đạt streak 7 ngày",
+    time: "2 ngày trước",
     icon: Flame,
     points: 100,
   },

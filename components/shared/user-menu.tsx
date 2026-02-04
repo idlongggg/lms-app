@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { ChevronDown, Coins, LogOut, Settings, User } from 'lucide-react';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { ChevronDown, Coins, LogOut, Settings, User } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
-import { Avatar } from '@/components/retroui';
-import { useAuth } from '@/lib/auth';
-import { roleDisplayInfo } from '@/lib/mock/users';
-import { cn } from '@/lib/utils';
+import { Avatar } from "@/components/retroui";
+import { useAuth } from "@/lib/auth";
+import { roleDisplayInfo } from "@/lib/mock/users";
+import { cn } from "@/lib/utils";
 
 interface UserMenuProps {
   className?: string;
@@ -26,8 +26,8 @@ export function UserMenu({ className }: UserMenuProps) {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   if (!isAuthenticated || !user) {
@@ -42,7 +42,7 @@ export function UserMenu({ className }: UserMenuProps) {
   };
 
   return (
-    <div ref={menuRef} className={cn('relative', className)}>
+    <div ref={menuRef} className={cn("relative", className)}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="border-border bg-primary flex h-9 items-center gap-2 border-2 px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
@@ -58,10 +58,13 @@ export function UserMenu({ className }: UserMenuProps) {
           </Avatar>
         </div>
         <span className="hidden max-w-[100px] truncate text-sm font-medium sm:block">
-          {user.name.split(' ').slice(-1)[0]}
+          {user.name.split(" ").slice(-1)[0]}
         </span>
         <ChevronDown
-          className={cn('hidden h-4 w-4 transition-transform sm:block', isOpen && 'rotate-180')}
+          className={cn(
+            "hidden h-4 w-4 transition-transform sm:block",
+            isOpen && "rotate-180",
+          )}
         />
       </button>
 
@@ -72,7 +75,10 @@ export function UserMenu({ className }: UserMenuProps) {
             <div className="flex items-center gap-3">
               <div className="border-border flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2">
                 <Avatar className="h-12 w-12">
-                  <Avatar.Image src={user.avatarUrl || undefined} alt={user.name} />
+                  <Avatar.Image
+                    src={user.avatarUrl || undefined}
+                    alt={user.name}
+                  />
                   <Avatar.Fallback
                     className="flex h-full w-full items-center justify-center font-bold text-white"
                     style={{ backgroundColor: roleInfo.color }}
@@ -83,7 +89,9 @@ export function UserMenu({ className }: UserMenuProps) {
               </div>
               <div className="flex-1 overflow-hidden">
                 <p className="truncate font-medium">{user.name}</p>
-                <p className="text-muted-foreground truncate text-xs">{user.email}</p>
+                <p className="text-muted-foreground truncate text-xs">
+                  {user.email}
+                </p>
                 <div
                   className="mt-1 inline-block rounded px-1.5 py-0.5 text-xs font-medium text-white"
                   style={{ backgroundColor: roleInfo.color }}
@@ -97,7 +105,9 @@ export function UserMenu({ className }: UserMenuProps) {
             <div className="mt-3 flex gap-3 text-sm">
               <div className="flex items-center gap-1">
                 <Coins className="h-4 w-4 text-yellow-500" />
-                <span className="font-medium">{user.coins.toLocaleString()}</span>
+                <span className="font-medium">
+                  {user.coins.toLocaleString()}
+                </span>
               </div>
               <div className="text-muted-foreground">
                 Lv.{user.level} • {user.streak}🔥

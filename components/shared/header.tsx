@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   left?: React.ReactNode;
@@ -13,7 +13,7 @@ export function Header({ left, center, right, className }: HeaderProps) {
   return (
     <header
       className={cn(
-        'border-border bg-background sticky top-0 z-50 h-14 w-full border-b-2 shadow-sm',
+        "border-border bg-background sticky top-0 z-50 h-14 w-full border-b-2 shadow-sm",
         className,
       )}
     >
@@ -23,7 +23,9 @@ export function Header({ left, center, right, className }: HeaderProps) {
 
         {/* Center section */}
         {center && (
-          <div className="hidden flex-1 items-center justify-center md:flex">{center}</div>
+          <div className="hidden flex-1 items-center justify-center md:flex">
+            {center}
+          </div>
         )}
 
         {/* Right section */}

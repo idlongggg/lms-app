@@ -1,11 +1,20 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Header, LanguageSwitcher, Logo, ThemeToggle } from '@/components/shared';
-import { useTranslation } from '@/lib/providers';
+import {
+  Header,
+  LanguageSwitcher,
+  Logo,
+  ThemeToggle,
+} from "@/components/shared";
+import { useTranslation } from "@/lib/providers";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +39,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             href="/"
             className="text-muted-foreground hover:text-foreground text-sm transition-colors"
           >
-            ← {t('common.backToHome')}
+            ← {t("common.backToHome")}
           </Link>
         </div>
       </main>

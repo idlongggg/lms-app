@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function useCountdown(initialSeconds = 0) {
   const [count, setCount] = useState(initialSeconds);

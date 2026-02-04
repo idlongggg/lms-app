@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Globe } from 'lucide-react';
+import { Globe } from "lucide-react";
 
-import { Popover } from '@/components/retroui';
-import { useLanguage } from '@/hooks/use-language';
-import { cn } from '@/lib/utils';
+import { Popover } from "@/components/retroui";
+import { useLanguage } from "@/lib/providers";
+import { cn } from "@/lib/utils";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -17,7 +17,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     return (
       <button
         className={cn(
-          'border-border bg-background hover:bg-muted flex h-9 w-9 items-center justify-center border-2 transition-all',
+          "border-border bg-background hover:bg-muted flex h-9 w-9 items-center justify-center border-2 transition-all",
           className,
         )}
         disabled
@@ -32,12 +32,12 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       <Popover.Trigger asChild>
         <button
           className={cn(
-            'border-border bg-background flex h-9 w-9 items-center justify-center border-2 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm active:translate-x-0 active:translate-y-0 active:shadow-xs',
+            "border-border bg-background flex h-9 w-9 items-center justify-center border-2 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm active:translate-x-0 active:translate-y-0 active:shadow-xs",
             className,
           )}
           aria-label="Change language"
         >
-          <span className={cn('text-base font-bold', currentLanguage.color)}>
+          <span className={cn("text-base font-bold", currentLanguage.color)}>
             {currentLanguage.code.toUpperCase()}
           </span>
         </button>
@@ -49,16 +49,16 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
               key={lang.code}
               onClick={() => setLanguage(lang.code)}
               className={cn(
-                'flex w-full items-center gap-3 rounded px-3 py-2 text-left text-sm transition-colors',
+                "flex w-full items-center gap-3 rounded px-3 py-2 text-left text-sm transition-colors",
                 lang.code === currentLanguage.code
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted',
+                  ? "bg-primary text-primary-foreground"
+                  : "hover:bg-muted",
               )}
             >
               <span
                 className={cn(
-                  'text-base font-bold',
-                  lang.code === currentLanguage.code ? '' : lang.color,
+                  "text-base font-bold",
+                  lang.code === currentLanguage.code ? "" : lang.color,
                 )}
               >
                 {lang.code.toUpperCase()}

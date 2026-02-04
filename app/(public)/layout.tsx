@@ -1,6 +1,12 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Footer, Header, LanguageSwitcher, Logo, ThemeToggle } from '@/components/shared';
+import {
+  Footer,
+  Header,
+  LanguageSwitcher,
+  Logo,
+  ThemeToggle,
+} from "@/components/shared";
 
 function AuthButtons() {
   return (
@@ -31,7 +37,11 @@ function HeaderRight() {
   );
 }
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Header left={<Logo />} right={<HeaderRight />} />

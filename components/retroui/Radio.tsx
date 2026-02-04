@@ -1,56 +1,64 @@
-import * as RadioPrimitive from '@radix-ui/react-radio-group';
-import { cva, VariantProps } from 'class-variance-authority';
+import * as RadioPrimitive from "@radix-ui/react-radio-group";
+import { cva, VariantProps } from "class-variance-authority";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-const radioVariants = cva('border-border border-2', {
+const radioVariants = cva("border-border border-2", {
   variants: {
     variant: {
-      default: '',
-      outline: '',
-      solid: '',
+      default: "",
+      outline: "",
+      solid: "",
     },
     size: {
-      sm: 'h-4 w-4',
-      md: 'h-5 w-5',
-      lg: 'h-6 w-6',
+      sm: "h-4 w-4",
+      md: "h-5 w-5",
+      lg: "h-6 w-6",
     },
   },
   defaultVariants: {
-    variant: 'default',
-    size: 'md',
+    variant: "default",
+    size: "md",
   },
 });
 
-const radioIndicatorVariants = cva('flex ', {
+const radioIndicatorVariants = cva("flex ", {
   variants: {
     variant: {
-      default: 'bg-primary border-2 border-border',
-      outline: 'border-2 border-border',
-      solid: 'bg-border',
+      default: "bg-primary border-2 border-border",
+      outline: "border-2 border-border",
+      solid: "bg-border",
     },
     size: {
-      sm: 'h-2 w-2',
-      md: 'h-2.5 w-2.5',
-      lg: 'h-3.5 w-3.5',
+      sm: "h-2 w-2",
+      md: "h-2.5 w-2.5",
+      lg: "h-3.5 w-3.5",
     },
   },
   defaultVariants: {
-    variant: 'default',
-    size: 'md',
+    variant: "default",
+    size: "md",
   },
 });
 
 type RadioGroupProps = React.ComponentProps<typeof RadioPrimitive.Root>;
 
 export const RadioGroupRoot = ({ className, ...props }: RadioGroupProps) => (
-  <RadioPrimitive.Root className={cn('grid gap-2', className)} {...props} />
+  <RadioPrimitive.Root className={cn("grid gap-2", className)} {...props} />
 );
 
 interface RadioProps
-  extends React.ComponentProps<typeof RadioPrimitive.Item>, VariantProps<typeof radioVariants> {}
+  extends
+    React.ComponentProps<typeof RadioPrimitive.Item>,
+    VariantProps<typeof radioVariants> {}
 
-export const RadioItem = ({ children, className, size, variant, ...props }: RadioProps) => (
+export const RadioItem = ({
+  children,
+  className,
+  size,
+  variant,
+  ...props
+}: RadioProps) => (
   <RadioPrimitive.Item
     {...props}
     className={cn(

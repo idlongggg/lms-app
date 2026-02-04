@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import React, { ComponentPropsWithoutRef } from 'react';
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import React, { ComponentPropsWithoutRef } from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 const Menu = DropdownMenu.Root;
 const Trigger = DropdownMenu.Trigger;
@@ -15,7 +15,10 @@ const Content = ({ className, ...props }: IMenuContent) => (
     <DropdownMenu.Content
       side="bottom"
       align="start"
-      className={cn('absolute top-2 min-w-20 border-2 bg-white shadow-md', className)}
+      className={cn(
+        "absolute top-2 min-w-20 border-2 bg-white shadow-md",
+        className,
+      )}
       {...props}
     />
   </DropdownMenu.Portal>
@@ -28,13 +31,13 @@ const MenuItem = React.forwardRef<
   <DropdownMenu.Item
     ref={ref}
     className={cn(
-      'hover:bg-primary focus:bg-primary relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm text-black outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50',
+      "hover:bg-primary focus:bg-primary relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm text-black outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50",
       className,
     )}
     {...props}
   />
 ));
-MenuItem.displayName = 'MenuItem';
+MenuItem.displayName = "MenuItem";
 
 const MenuComponent = Object.assign(Menu, {
   Trigger,

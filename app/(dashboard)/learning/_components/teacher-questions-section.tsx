@@ -1,42 +1,34 @@
-'use client';
+"use client";
 
-import { Copy, Edit, Plus, Search, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { Copy, Edit, Plus, Search, Trash2 } from "lucide-react";
+import { useState } from "react";
 
-import { Badge } from '@/components/retroui/Badge';
-import { Button } from '@/components/retroui/Button';
-import { Card } from '@/components/retroui/Card';
-import { Dialog } from '@/components/retroui/Dialog';
-import { Input } from '@/components/retroui/Input';
-import { Select } from '@/components/retroui/Select';
-import { Table } from '@/components/retroui/Table';
-import { Textarea } from '@/components/retroui/Textarea';
-import { useAuth } from '@/lib/auth';
-import { getQuestionStats, mockQuestions } from '@/lib/mock/classes';
+import { Badge } from "@/components/retroui/Badge";
+import { Button } from "@/components/retroui/Button";
+import { Card } from "@/components/retroui/Card";
+import { Dialog } from "@/components/retroui/Dialog";
+import { Input } from "@/components/retroui/Input";
+import { Select } from "@/components/retroui/Select";
+import { Table } from "@/components/retroui/Table";
+import { Textarea } from "@/components/retroui/Textarea";
+import { getQuestionStats, mockQuestions } from "@/lib/mock/classes";
 
-export default function TeacherQuestionsPage() {
-  const { user } = useAuth();
-  const [gradeFilter, setGradeFilter] = useState<string>('all');
-  const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
+export function TeacherQuestionsSection() {
+  const [gradeFilter, setGradeFilter] = useState<string>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
 
-  if (!user || user.role !== 'teacher') {
-    return (
-      <div className="flex h-[50vh] items-center justify-center">
-        <p className="text-muted-foreground">Bạn không có quyền truy cập trang này.</p>
-      </div>
-    );
-  }
-
   const questions = mockQuestions;
-  const stats = getQuestionStats('user-teacher-001');
+  const stats = getQuestionStats("user-teacher-001");
 
   const filteredQuestions = questions.filter((q) => {
-    const matchesGrade = gradeFilter === 'all' || q.grade.toString() === gradeFilter;
-    const matchesDifficulty = difficultyFilter === 'all' || q.difficulty === difficultyFilter;
-    const matchesType = typeFilter === 'all' || q.type === typeFilter;
+    const matchesGrade =
+      gradeFilter === "all" || q.grade.toString() === gradeFilter;
+    const matchesDifficulty =
+      difficultyFilter === "all" || q.difficulty === difficultyFilter;
+    const matchesType = typeFilter === "all" || q.type === typeFilter;
     const matchesSearch =
       q.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
       q.topic.toLowerCase().includes(searchQuery.toLowerCase());
@@ -45,11 +37,13 @@ export default function TeacherQuestionsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
+      {/* Section Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Ngân hàng câu hỏi</h1>
-          <p className="text-muted-foreground">Quản lý câu hỏi cho bài học và giải đấu</p>
+          <h2 className="text-2xl font-bold">Ngân hàng câu hỏi</h2>
+          <p className="text-muted-foreground">
+            Quản lý câu hỏi cho bài học và giải đấu
+          </p>
         </div>
         <Dialog open={isAddQuestionOpen} onOpenChange={setIsAddQuestionOpen}>
           <Dialog.Trigger asChild>
@@ -62,12 +56,16 @@ export default function TeacherQuestionsPage() {
             <Dialog.Header>Thêm câu hỏi mới</Dialog.Header>
             <div className="max-h-[60vh] space-y-4 overflow-y-auto p-4">
               <div>
-                <label className="mb-1 block text-sm font-medium">Nội dung câu hỏi</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Nội dung câu hỏi
+                </label>
                 <Textarea placeholder="Nhập nội dung câu hỏi..." rows={3} />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Khối lớp</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Khối lớp
+                  </label>
                   <Select defaultValue="6">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn khối" />
@@ -81,13 +79,17 @@ export default function TeacherQuestionsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Loại câu hỏi</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Loại câu hỏi
+                  </label>
                   <Select defaultValue="MULTIPLE_CHOICE">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn loại" />
                     </Select.Trigger>
                     <Select.Content>
-                      <Select.Item value="MULTIPLE_CHOICE">Trắc nghiệm</Select.Item>
+                      <Select.Item value="MULTIPLE_CHOICE">
+                        Trắc nghiệm
+                      </Select.Item>
                       <Select.Item value="TRUE_FALSE">Đúng/Sai</Select.Item>
                       <Select.Item value="FILL_BLANK">Điền khuyết</Select.Item>
                       <Select.Item value="SHORT_ANSWER">Tự luận</Select.Item>
@@ -97,7 +99,9 @@ export default function TeacherQuestionsPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Độ khó</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Độ khó
+                  </label>
                   <Select defaultValue="MEDIUM">
                     <Select.Trigger className="w-full">
                       <Select.Value placeholder="Chọn độ khó" />
@@ -110,28 +114,40 @@ export default function TeacherQuestionsPage() {
                   </Select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Chủ đề</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Chủ đề
+                  </label>
                   <Input placeholder="VD: Phép cộng số nguyên" />
                 </div>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Đáp án A</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Đáp án A
+                </label>
                 <Input placeholder="Nhập đáp án A" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Đáp án B</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Đáp án B
+                </label>
                 <Input placeholder="Nhập đáp án B" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Đáp án C</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Đáp án C
+                </label>
                 <Input placeholder="Nhập đáp án C" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Đáp án D</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Đáp án D
+                </label>
                 <Input placeholder="Nhập đáp án D" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Đáp án đúng</label>
+                <label className="mb-1 block text-sm font-medium">
+                  Đáp án đúng
+                </label>
                 <Select defaultValue="A">
                   <Select.Trigger className="w-full">
                     <Select.Value placeholder="Chọn đáp án đúng" />
@@ -146,7 +162,10 @@ export default function TeacherQuestionsPage() {
               </div>
             </div>
             <Dialog.Footer>
-              <Button variant="outline" onClick={() => setIsAddQuestionOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setIsAddQuestionOpen(false)}
+              >
                 Hủy
               </Button>
               <Button onClick={() => setIsAddQuestionOpen(false)}>Lưu</Button>
@@ -166,19 +185,25 @@ export default function TeacherQuestionsPage() {
         <Card>
           <Card.Content className="p-4">
             <p className="text-muted-foreground text-sm">Dễ</p>
-            <p className="text-2xl font-bold text-green-500">{stats.byDifficulty.easy}</p>
+            <p className="text-2xl font-bold text-green-500">
+              {stats.byDifficulty.easy}
+            </p>
           </Card.Content>
         </Card>
         <Card>
           <Card.Content className="p-4">
             <p className="text-muted-foreground text-sm">Trung bình</p>
-            <p className="text-2xl font-bold text-yellow-500">{stats.byDifficulty.medium}</p>
+            <p className="text-2xl font-bold text-yellow-500">
+              {stats.byDifficulty.medium}
+            </p>
           </Card.Content>
         </Card>
         <Card>
           <Card.Content className="p-4">
             <p className="text-muted-foreground text-sm">Khó</p>
-            <p className="text-2xl font-bold text-red-500">{stats.byDifficulty.hard}</p>
+            <p className="text-2xl font-bold text-red-500">
+              {stats.byDifficulty.hard}
+            </p>
           </Card.Content>
         </Card>
         <Card>
@@ -262,38 +287,42 @@ export default function TeacherQuestionsPage() {
                     </p>
                   )}
                 </Table.Cell>
-                <Table.Cell className="text-muted-foreground">{question.topic}</Table.Cell>
+                <Table.Cell className="text-muted-foreground">
+                  {question.topic}
+                </Table.Cell>
                 <Table.Cell>Lớp {question.grade}</Table.Cell>
                 <Table.Cell>
                   <Badge variant="default" size="sm">
-                    {question.type === 'MULTIPLE_CHOICE'
-                      ? 'Trắc nghiệm'
-                      : question.type === 'TRUE_FALSE'
-                        ? 'Đúng/Sai'
-                        : question.type === 'FILL_BLANK'
-                          ? 'Điền khuyết'
-                          : 'Tự luận'}
+                    {question.type === "MULTIPLE_CHOICE"
+                      ? "Trắc nghiệm"
+                      : question.type === "TRUE_FALSE"
+                        ? "Đúng/Sai"
+                        : question.type === "FILL_BLANK"
+                          ? "Điền khuyết"
+                          : "Tự luận"}
                   </Badge>
                 </Table.Cell>
                 <Table.Cell>
                   <Badge
                     size="sm"
                     className={
-                      question.difficulty === 'EASY'
-                        ? 'bg-green-100 text-green-700'
-                        : question.difficulty === 'MEDIUM'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-red-100 text-red-700'
+                      question.difficulty === "EASY"
+                        ? "bg-green-100 text-green-700"
+                        : question.difficulty === "MEDIUM"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-red-100 text-red-700"
                     }
                   >
-                    {question.difficulty === 'EASY'
-                      ? 'Dễ'
-                      : question.difficulty === 'MEDIUM'
-                        ? 'TB'
-                        : 'Khó'}
+                    {question.difficulty === "EASY"
+                      ? "Dễ"
+                      : question.difficulty === "MEDIUM"
+                        ? "TB"
+                        : "Khó"}
                   </Badge>
                 </Table.Cell>
-                <Table.Cell className="text-muted-foreground">{question.usageCount} lần</Table.Cell>
+                <Table.Cell className="text-muted-foreground">
+                  {question.usageCount} lần
+                </Table.Cell>
                 <Table.Cell>
                   <div className="flex items-center justify-end gap-1">
                     <Button variant="outline" size="icon" title="Sửa">
@@ -302,7 +331,12 @@ export default function TeacherQuestionsPage() {
                     <Button variant="outline" size="icon" title="Sao chép">
                       <Copy className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="icon" className="hover:bg-red-100" title="Xóa">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="hover:bg-red-100"
+                      title="Xóa"
+                    >
                       <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
                   </div>
@@ -320,10 +354,26 @@ export default function TeacherQuestionsPage() {
             <h3 className="mb-4 font-bold">Theo loại câu hỏi</h3>
             <div className="space-y-3">
               {[
-                { label: 'Trắc nghiệm', count: stats.byType.multipleChoice, color: 'bg-blue-500' },
-                { label: 'Đúng/Sai', count: stats.byType.trueFalse, color: 'bg-green-500' },
-                { label: 'Điền khuyết', count: stats.byType.fillBlank, color: 'bg-yellow-500' },
-                { label: 'Tự luận', count: stats.byType.shortAnswer, color: 'bg-purple-500' },
+                {
+                  label: "Trắc nghiệm",
+                  count: stats.byType.multipleChoice,
+                  color: "bg-blue-500",
+                },
+                {
+                  label: "Đúng/Sai",
+                  count: stats.byType.trueFalse,
+                  color: "bg-green-500",
+                },
+                {
+                  label: "Điền khuyết",
+                  count: stats.byType.fillBlank,
+                  color: "bg-yellow-500",
+                },
+                {
+                  label: "Tự luận",
+                  count: stats.byType.shortAnswer,
+                  color: "bg-purple-500",
+                },
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <div className={`h-3 w-3 ${item.color}`} />

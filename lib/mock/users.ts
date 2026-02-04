@@ -4,11 +4,20 @@
  * Based on rbac.md: 5 roles (root-admin, tenant-admin, teacher, student, parent)
  */
 
-export type UserRole = 'root-admin' | 'tenant-admin' | 'teacher' | 'student' | 'parent';
+export type UserRole =
+  | "root-admin"
+  | "tenant-admin"
+  | "teacher"
+  | "student"
+  | "parent";
 
-export type UserStatus = 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'PENDING_DEACTIVATION';
+export type UserStatus =
+  | "PENDING"
+  | "ACTIVE"
+  | "SUSPENDED"
+  | "PENDING_DEACTIVATION";
 
-export type ThemePreference = 'LIGHT' | 'DARK';
+export type ThemePreference = "LIGHT" | "DARK";
 
 export interface User {
   id: string;
@@ -17,7 +26,7 @@ export interface User {
   phone: string | null;
   name: string;
   avatarUrl: string | null;
-  provider: 'INTERNAL' | 'GOOGLE' | null;
+  provider: "INTERNAL" | "GOOGLE" | null;
   providerId: string | null;
   status: UserStatus;
   emailVerifiedAt: string | null;
@@ -73,80 +82,80 @@ export interface MockUser extends User {
 // Tenants
 export const tenants = {
   system: {
-    id: 'tenant-system',
-    code: 'system',
-    name: 'LMS System',
-    domain: 'lms.vn',
+    id: "tenant-system",
+    code: "system",
+    name: "LMS System",
+    domain: "lms.vn",
     logoUrl: null,
-    status: 'ACTIVE' as const,
+    status: "ACTIVE" as const,
     settings: {},
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
+    createdAt: "2024-01-01T00:00:00Z",
+    updatedAt: "2024-01-01T00:00:00Z",
   },
   school: {
-    id: 'tenant-school-001',
-    code: 'school-001',
-    name: 'Trường THCS ABC',
-    domain: 'school.vn',
+    id: "tenant-school-001",
+    code: "school-001",
+    name: "Trường THCS ABC",
+    domain: "school.vn",
     logoUrl: null,
-    status: 'ACTIVE' as const,
+    status: "ACTIVE" as const,
     settings: {},
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
   },
 };
 
 // Roles
 export const roles: Role[] = [
   {
-    id: 'role-root-admin',
+    id: "role-root-admin",
     tenantId: null, // System-wide
-    code: 'root-admin',
-    name: 'Quản trị viên hệ thống',
-    description: 'Toàn quyền trên hệ thống',
-    color: '#e74c3c',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
+    code: "root-admin",
+    name: "Quản trị viên hệ thống",
+    description: "Toàn quyền trên hệ thống",
+    color: "#e74c3c",
+    createdAt: "2024-01-01T00:00:00Z",
+    updatedAt: "2024-01-01T00:00:00Z",
   },
   {
-    id: 'role-tenant-admin',
+    id: "role-tenant-admin",
     tenantId: tenants.school.id,
-    code: 'tenant-admin',
-    name: 'Quản trị viên trường',
-    description: 'Quản lý tenant',
-    color: '#3498db',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    code: "tenant-admin",
+    name: "Quản trị viên trường",
+    description: "Quản lý tenant",
+    color: "#3498db",
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
   },
   {
-    id: 'role-teacher',
+    id: "role-teacher",
     tenantId: tenants.school.id,
-    code: 'teacher',
-    name: 'Giáo viên',
-    description: 'Quản lý học liệu',
-    color: '#2ecc71',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    code: "teacher",
+    name: "Giáo viên",
+    description: "Quản lý học liệu",
+    color: "#2ecc71",
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
   },
   {
-    id: 'role-student',
+    id: "role-student",
     tenantId: tenants.school.id,
-    code: 'student',
-    name: 'Học sinh',
-    description: 'Học viên',
-    color: '#f39c12',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    code: "student",
+    name: "Học sinh",
+    description: "Học viên",
+    color: "#f39c12",
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
   },
   {
-    id: 'role-parent',
+    id: "role-parent",
     tenantId: tenants.school.id,
-    code: 'parent',
-    name: 'Phụ huynh',
-    description: 'Xem báo cáo con',
-    color: '#9b59b6',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    code: "parent",
+    name: "Phụ huynh",
+    description: "Xem báo cáo con",
+    color: "#9b59b6",
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
   },
 ];
 
@@ -154,172 +163,172 @@ export const roles: Role[] = [
 export const mockUsers: MockUser[] = [
   // Root Admin
   {
-    id: 'user-root-admin',
+    id: "user-root-admin",
     tenantId: tenants.system.id,
-    email: 'root@lms.vn',
+    email: "root@lms.vn",
     phone: null,
-    name: 'Admin Hệ Thống',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=root',
-    provider: 'INTERNAL',
+    name: "Admin Hệ Thống",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=root",
+    provider: "INTERNAL",
     providerId: null,
-    status: 'ACTIVE',
-    emailVerifiedAt: '2024-01-01T00:00:00Z',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
+    status: "ACTIVE",
+    emailVerifiedAt: "2024-01-01T00:00:00Z",
+    createdAt: "2024-01-01T00:00:00Z",
+    updatedAt: "2024-01-01T00:00:00Z",
     deletedAt: null,
-    role: 'root-admin',
+    role: "root-admin",
     profile: {
-      userId: 'user-root-admin',
+      userId: "user-root-admin",
       exp: 0,
       level: 99,
       coins: 999999,
       currentLevelExp: 0,
       nextLevelExp: 0,
-      theme: 'DARK',
-      locale: 'vi',
-      updatedAt: '2024-01-01T00:00:00Z',
+      theme: "DARK",
+      locale: "vi",
+      updatedAt: "2024-01-01T00:00:00Z",
     },
     streak: {
-      userId: 'user-root-admin',
+      userId: "user-root-admin",
       currentStreak: 0,
       longestStreak: 0,
-      lastActive: '2026-02-03T00:00:00Z',
+      lastActive: "2026-02-03T00:00:00Z",
     },
   },
   // Tenant Admin
   {
-    id: 'user-tenant-admin',
+    id: "user-tenant-admin",
     tenantId: tenants.school.id,
-    email: 'admin@school.vn',
-    phone: '0901234567',
-    name: 'Nguyễn Văn Quản Lý',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
-    provider: 'INTERNAL',
+    email: "admin@school.vn",
+    phone: "0901234567",
+    name: "Nguyễn Văn Quản Lý",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=admin",
+    provider: "INTERNAL",
     providerId: null,
-    status: 'ACTIVE',
-    emailVerifiedAt: '2024-01-15T00:00:00Z',
-    createdAt: '2024-01-15T00:00:00Z',
-    updatedAt: '2024-01-15T00:00:00Z',
+    status: "ACTIVE",
+    emailVerifiedAt: "2024-01-15T00:00:00Z",
+    createdAt: "2024-01-15T00:00:00Z",
+    updatedAt: "2024-01-15T00:00:00Z",
     deletedAt: null,
-    role: 'tenant-admin',
+    role: "tenant-admin",
     profile: {
-      userId: 'user-tenant-admin',
+      userId: "user-tenant-admin",
       exp: 5000,
       level: 10,
       coins: 50000,
       currentLevelExp: 500,
       nextLevelExp: 1000,
-      theme: 'DARK',
-      locale: 'vi',
-      updatedAt: '2024-01-15T00:00:00Z',
+      theme: "DARK",
+      locale: "vi",
+      updatedAt: "2024-01-15T00:00:00Z",
     },
     streak: {
-      userId: 'user-tenant-admin',
+      userId: "user-tenant-admin",
       currentStreak: 15,
       longestStreak: 45,
-      lastActive: '2026-02-03T00:00:00Z',
+      lastActive: "2026-02-03T00:00:00Z",
     },
   },
   // Teacher
   {
-    id: 'user-teacher',
+    id: "user-teacher",
     tenantId: tenants.school.id,
-    email: 'teacher@school.vn',
-    phone: '0902345678',
-    name: 'Trần Thị Giáo Viên',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=teacher',
-    provider: 'INTERNAL',
+    email: "teacher@school.vn",
+    phone: "0902345678",
+    name: "Trần Thị Giáo Viên",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=teacher",
+    provider: "INTERNAL",
     providerId: null,
-    status: 'ACTIVE',
-    emailVerifiedAt: '2024-02-01T00:00:00Z',
-    createdAt: '2024-02-01T00:00:00Z',
-    updatedAt: '2024-02-01T00:00:00Z',
+    status: "ACTIVE",
+    emailVerifiedAt: "2024-02-01T00:00:00Z",
+    createdAt: "2024-02-01T00:00:00Z",
+    updatedAt: "2024-02-01T00:00:00Z",
     deletedAt: null,
-    role: 'teacher',
+    role: "teacher",
     profile: {
-      userId: 'user-teacher',
+      userId: "user-teacher",
       exp: 12000,
       level: 15,
       coins: 8500,
       currentLevelExp: 700,
       nextLevelExp: 1500,
-      theme: 'LIGHT',
-      locale: 'vi',
-      updatedAt: '2024-02-01T00:00:00Z',
+      theme: "LIGHT",
+      locale: "vi",
+      updatedAt: "2024-02-01T00:00:00Z",
     },
     streak: {
-      userId: 'user-teacher',
+      userId: "user-teacher",
       currentStreak: 30,
       longestStreak: 60,
-      lastActive: '2026-02-03T00:00:00Z',
+      lastActive: "2026-02-03T00:00:00Z",
     },
   },
   // Student
   {
-    id: 'user-student',
+    id: "user-student",
     tenantId: tenants.school.id,
-    email: 'student@school.vn',
-    phone: '0903456789',
-    name: 'Lê Văn Học Sinh',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=student',
-    provider: 'INTERNAL',
+    email: "student@school.vn",
+    phone: "0903456789",
+    name: "Lê Văn Học Sinh",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=student",
+    provider: "INTERNAL",
     providerId: null,
-    status: 'ACTIVE',
-    emailVerifiedAt: '2024-03-01T00:00:00Z',
-    createdAt: '2024-03-01T00:00:00Z',
-    updatedAt: '2024-03-01T00:00:00Z',
+    status: "ACTIVE",
+    emailVerifiedAt: "2024-03-01T00:00:00Z",
+    createdAt: "2024-03-01T00:00:00Z",
+    updatedAt: "2024-03-01T00:00:00Z",
     deletedAt: null,
-    role: 'student',
+    role: "student",
     profile: {
-      userId: 'user-student',
+      userId: "user-student",
       exp: 3500,
       level: 8,
       coins: 1250,
       currentLevelExp: 350,
       nextLevelExp: 800,
-      theme: 'LIGHT',
-      locale: 'vi',
-      updatedAt: '2024-03-01T00:00:00Z',
+      theme: "LIGHT",
+      locale: "vi",
+      updatedAt: "2024-03-01T00:00:00Z",
     },
     streak: {
-      userId: 'user-student',
+      userId: "user-student",
       currentStreak: 7,
       longestStreak: 21,
-      lastActive: '2026-02-03T00:00:00Z',
+      lastActive: "2026-02-03T00:00:00Z",
     },
   },
   // Parent
   {
-    id: 'user-parent',
+    id: "user-parent",
     tenantId: tenants.school.id,
-    email: 'parent@school.vn',
-    phone: '0904567890',
-    name: 'Phạm Thị Phụ Huynh',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=parent',
-    provider: 'INTERNAL',
+    email: "parent@school.vn",
+    phone: "0904567890",
+    name: "Phạm Thị Phụ Huynh",
+    avatarUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=parent",
+    provider: "INTERNAL",
     providerId: null,
-    status: 'ACTIVE',
-    emailVerifiedAt: '2024-03-15T00:00:00Z',
-    createdAt: '2024-03-15T00:00:00Z',
-    updatedAt: '2024-03-15T00:00:00Z',
+    status: "ACTIVE",
+    emailVerifiedAt: "2024-03-15T00:00:00Z",
+    createdAt: "2024-03-15T00:00:00Z",
+    updatedAt: "2024-03-15T00:00:00Z",
     deletedAt: null,
-    role: 'parent',
+    role: "parent",
     profile: {
-      userId: 'user-parent',
+      userId: "user-parent",
       exp: 500,
       level: 2,
       coins: 200,
       currentLevelExp: 100,
       nextLevelExp: 300,
-      theme: 'LIGHT',
-      locale: 'vi',
-      updatedAt: '2024-03-15T00:00:00Z',
+      theme: "LIGHT",
+      locale: "vi",
+      updatedAt: "2024-03-15T00:00:00Z",
     },
     streak: {
-      userId: 'user-parent',
+      userId: "user-parent",
       currentStreak: 3,
       longestStreak: 10,
-      lastActive: '2026-02-03T00:00:00Z',
+      lastActive: "2026-02-03T00:00:00Z",
     },
   },
 ];
@@ -327,13 +336,13 @@ export const mockUsers: MockUser[] = [
 // Parent-Child Link (for parent role)
 export const parentChildLinks = [
   {
-    id: 'link-001',
-    parentId: 'user-parent',
-    childId: 'user-student',
-    inviteCode: 'ABC123',
-    status: 'ACTIVE' as const,
-    linkedAt: '2024-03-20T00:00:00Z',
-    createdAt: '2024-03-15T00:00:00Z',
+    id: "link-001",
+    parentId: "user-parent",
+    childId: "user-student",
+    inviteCode: "ABC123",
+    status: "ACTIVE" as const,
+    linkedAt: "2024-03-20T00:00:00Z",
+    createdAt: "2024-03-15T00:00:00Z",
   },
 ];
 
@@ -355,8 +364,12 @@ export function getUsersByTenant(tenantId: string): MockUser[] {
 }
 
 export function getChildrenOfParent(parentId: string): MockUser[] {
-  const links = parentChildLinks.filter((l) => l.parentId === parentId && l.status === 'ACTIVE');
-  return links.map((l) => getUserById(l.childId)).filter((u): u is MockUser => u !== undefined);
+  const links = parentChildLinks.filter(
+    (l) => l.parentId === parentId && l.status === "ACTIVE",
+  );
+  return links
+    .map((l) => getUserById(l.childId))
+    .filter((u): u is MockUser => u !== undefined);
 }
 
 export function getRoleInfo(roleCode: UserRole): Role | undefined {
@@ -368,29 +381,29 @@ export const roleDisplayInfo: Record<
   UserRole,
   { label: string; color: string; description: string }
 > = {
-  'root-admin': {
-    label: 'Quản trị viên hệ thống',
-    color: '#e74c3c',
-    description: 'Toàn quyền quản lý hệ thống',
+  "root-admin": {
+    label: "Quản trị viên hệ thống",
+    color: "#e74c3c",
+    description: "Toàn quyền quản lý hệ thống",
   },
-  'tenant-admin': {
-    label: 'Quản trị viên trường',
-    color: '#3498db',
-    description: 'Quản lý người dùng và nội dung của trường',
+  "tenant-admin": {
+    label: "Quản trị viên trường",
+    color: "#3498db",
+    description: "Quản lý người dùng và nội dung của trường",
   },
   teacher: {
-    label: 'Giáo viên',
-    color: '#2ecc71',
-    description: 'Tạo và quản lý bài học, câu hỏi',
+    label: "Giáo viên",
+    color: "#2ecc71",
+    description: "Tạo và quản lý bài học, câu hỏi",
   },
   student: {
-    label: 'Học sinh',
-    color: '#f39c12',
-    description: 'Học tập, thi đấu, đổi thưởng',
+    label: "Học sinh",
+    color: "#f39c12",
+    description: "Học tập, thi đấu, đổi thưởng",
   },
   parent: {
-    label: 'Phụ huynh',
-    color: '#9b59b6',
-    description: 'Theo dõi tiến độ học tập của con',
+    label: "Phụ huynh",
+    color: "#9b59b6",
+    description: "Theo dõi tiến độ học tập của con",
   },
 };

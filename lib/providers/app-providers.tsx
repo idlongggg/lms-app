@@ -1,14 +1,11 @@
-'use client';
+"use client";
 
-/**
- * App Providers
- * Combined providers wrapper for the application
- */
+import React from "react";
 
-import React from 'react';
+import { AuthProvider } from "@/lib/auth";
 
-import { LanguageProvider } from './language-provider';
-import { ThemeProvider } from './theme-provider';
+import { LanguageProvider } from "./language-provider";
+import { ThemeProvider } from "./theme-provider";
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -17,7 +14,9 @@ interface AppProvidersProps {
 export function AppProviders({ children }: AppProvidersProps) {
   return (
     <ThemeProvider>
-      <LanguageProvider>{children}</LanguageProvider>
+      <LanguageProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

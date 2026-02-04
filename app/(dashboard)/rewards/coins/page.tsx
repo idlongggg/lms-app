@@ -1,66 +1,66 @@
-'use client';
+"use client";
 
-import { ArrowDownRight, ArrowUpRight, Coins, TrendingUp } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Coins, TrendingUp } from "lucide-react";
 
-import { AreaChart } from '@/components/retroui/charts/AreaChart';
-import { PieChart } from '@/components/retroui/charts/PieChart';
+import { AreaChart } from "@/components/retroui/charts/AreaChart";
+import { PieChart } from "@/components/retroui/charts/PieChart";
 
 const coinHistory = [
-  { date: 'T1', balance: 1500, earned: 200, spent: 50 },
-  { date: 'T2', balance: 1800, earned: 400, spent: 100 },
-  { date: 'T3', balance: 2200, earned: 500, spent: 100 },
-  { date: 'T4', balance: 2600, earned: 450, spent: 50 },
+  { date: "T1", balance: 1500, earned: 200, spent: 50 },
+  { date: "T2", balance: 1800, earned: 400, spent: 100 },
+  { date: "T3", balance: 2200, earned: 500, spent: 100 },
+  { date: "T4", balance: 2600, earned: 450, spent: 50 },
 ];
 
 const sourceData = [
-  { name: 'Thách đấu', value: 1500, color: '#AAFC3D' },
-  { name: 'Hoàn thành khóa', value: 800, color: '#5252FF' },
-  { name: 'Streak bonus', value: 400, color: '#FF00FF' },
-  { name: 'Sự kiện', value: 300, color: '#FFC107' },
+  { name: "Thách đấu", value: 1500, color: "#AAFC3D" },
+  { name: "Hoàn thành khóa", value: 800, color: "#5252FF" },
+  { name: "Streak bonus", value: 400, color: "#FF00FF" },
+  { name: "Sự kiện", value: 300, color: "#FFC107" },
 ];
 
 const transactions = [
   {
     id: 1,
-    type: 'earn',
-    description: 'Thắng thách đấu JavaScript',
+    type: "earn",
+    description: "Thắng thách đấu JavaScript",
     amount: 50,
-    date: '2026-02-03T14:30:00',
+    date: "2026-02-03T14:30:00",
   },
   {
     id: 2,
-    type: 'spend',
-    description: 'Đổi khóa học Premium',
+    type: "spend",
+    description: "Đổi khóa học Premium",
     amount: -500,
-    date: '2026-02-02T10:15:00',
+    date: "2026-02-02T10:15:00",
   },
   {
     id: 3,
-    type: 'earn',
-    description: 'Hoàn thành bài quiz',
+    type: "earn",
+    description: "Hoàn thành bài quiz",
     amount: 20,
-    date: '2026-02-01T19:45:00',
+    date: "2026-02-01T19:45:00",
   },
   {
     id: 4,
-    type: 'earn',
-    description: 'Streak 7 ngày bonus',
+    type: "earn",
+    description: "Streak 7 ngày bonus",
     amount: 100,
-    date: '2026-01-31T00:00:00',
+    date: "2026-01-31T00:00:00",
   },
   {
     id: 5,
-    type: 'spend',
-    description: 'Đổi avatar mới',
+    type: "spend",
+    description: "Đổi avatar mới",
     amount: -150,
-    date: '2026-01-30T16:20:00',
+    date: "2026-01-30T16:20:00",
   },
   {
     id: 6,
-    type: 'earn',
-    description: 'Top 10 bảng xếp hạng',
+    type: "earn",
+    description: "Top 10 bảng xếp hạng",
     amount: 200,
-    date: '2026-01-29T12:00:00',
+    date: "2026-01-29T12:00:00",
   },
 ];
 
@@ -77,7 +77,9 @@ export default function CoinsPage() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Số dư xu</h1>
-        <p className="text-muted-foreground">Theo dõi xu và lịch sử giao dịch của bạn</p>
+        <p className="text-muted-foreground">
+          Theo dõi xu và lịch sử giao dịch của bạn
+        </p>
       </div>
 
       {/* Balance Card */}
@@ -87,8 +89,12 @@ export default function CoinsPage() {
             <Coins className="h-10 w-10" />
           </div>
           <div className="flex-1 text-center sm:text-left">
-            <p className="text-muted-foreground text-sm font-medium">Số dư hiện tại</p>
-            <p className="text-4xl font-bold">{stats.balance.toLocaleString()} xu</p>
+            <p className="text-muted-foreground text-sm font-medium">
+              Số dư hiện tại
+            </p>
+            <p className="text-4xl font-bold">
+              {stats.balance.toLocaleString()} xu
+            </p>
             {stats.pendingRewards > 0 && (
               <p className="text-muted-foreground mt-1 text-sm">
                 +{stats.pendingRewards} xu đang chờ xử lý
@@ -109,7 +115,9 @@ export default function CoinsPage() {
               <ArrowUpRight className="h-5 w-5 text-white" />
             </div>
             <div>
-              <p className="text-muted-foreground text-sm">Kiếm được tháng này</p>
+              <p className="text-muted-foreground text-sm">
+                Kiếm được tháng này
+              </p>
               <p className="text-xl font-bold text-green-600">
                 +{stats.earnedThisMonth.toLocaleString()} xu
               </p>
@@ -137,8 +145,11 @@ export default function CoinsPage() {
             <div>
               <p className="text-muted-foreground text-sm">Tháng này</p>
               <p className="text-xl font-bold">
-                {stats.earnedThisMonth - stats.spentThisMonth > 0 ? '+' : ''}
-                {(stats.earnedThisMonth - stats.spentThisMonth).toLocaleString()} xu
+                {stats.earnedThisMonth - stats.spentThisMonth > 0 ? "+" : ""}
+                {(
+                  stats.earnedThisMonth - stats.spentThisMonth
+                ).toLocaleString()}{" "}
+                xu
               </p>
             </div>
           </div>
@@ -155,9 +166,9 @@ export default function CoinsPage() {
             <AreaChart
               data={coinHistory}
               index="date"
-              categories={['balance']}
-              fillColors={['var(--primary)']}
-              strokeColors={['var(--secondary)']}
+              categories={["balance"]}
+              fillColors={["var(--primary)"]}
+              strokeColors={["var(--secondary)"]}
               className="h-64"
               valueFormatter={(value) => `${value} xu`}
             />
@@ -179,9 +190,15 @@ export default function CoinsPage() {
             />
             <div className="mt-4 space-y-2">
               {sourceData.map((source) => (
-                <div key={source.name} className="flex items-center justify-between text-sm">
+                <div
+                  key={source.name}
+                  className="flex items-center justify-between text-sm"
+                >
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3" style={{ backgroundColor: source.color }} />
+                    <div
+                      className="h-3 w-3"
+                      style={{ backgroundColor: source.color }}
+                    />
                     <span>{source.name}</span>
                   </div>
                   <span className="font-medium">{source.value} xu</span>
@@ -212,10 +229,10 @@ export default function CoinsPage() {
             >
               <div
                 className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${
-                  tx.type === 'earn' ? 'bg-green-500' : 'bg-red-500'
+                  tx.type === "earn" ? "bg-green-500" : "bg-red-500"
                 }`}
               >
-                {tx.type === 'earn' ? (
+                {tx.type === "earn" ? (
                   <ArrowUpRight className="h-5 w-5 text-white" />
                 ) : (
                   <ArrowDownRight className="h-5 w-5 text-white" />
@@ -224,18 +241,18 @@ export default function CoinsPage() {
               <div className="flex-1">
                 <p className="font-medium">{tx.description}</p>
                 <p className="text-muted-foreground text-sm">
-                  {new Date(tx.date).toLocaleDateString('vi-VN', {
-                    day: 'numeric',
-                    month: 'long',
-                    hour: '2-digit',
-                    minute: '2-digit',
+                  {new Date(tx.date).toLocaleDateString("vi-VN", {
+                    day: "numeric",
+                    month: "long",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </p>
               </div>
               <span
-                className={`text-lg font-bold ${tx.amount > 0 ? 'text-green-600' : 'text-red-600'}`}
+                className={`text-lg font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}
               >
-                {tx.amount > 0 ? '+' : ''}
+                {tx.amount > 0 ? "+" : ""}
                 {tx.amount} xu
               </span>
             </div>

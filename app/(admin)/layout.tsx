@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Menu, Search } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { Menu, Search } from "lucide-react";
+import { useEffect, useRef } from "react";
 
-import { Loader } from '@/components/retroui';
+import { Loader } from "@/components/retroui";
 import {
   Header,
   LanguageSwitcher,
@@ -11,12 +11,12 @@ import {
   Sidebar,
   ThemeToggle,
   UserMenu,
-} from '@/components/shared';
-import { useScrollPosition } from '@/hooks/use-scroll-position';
-import { SidebarProvider, useSidebar } from '@/hooks/use-sidebar';
-import { useAuth, useRequireAuth } from '@/lib/auth';
-import type { UserRole } from '@/lib/auth/types';
-import { getAdminNavByRole } from '@/lib/navigation';
+} from "@/components/shared";
+import { useAuth, useRequireAuth } from "@/lib/auth";
+import type { UserRole } from "@/lib/auth/types";
+import { useScrollPosition } from "@/lib/hooks";
+import { getAdminNavByRole } from "@/lib/navigation";
+import { SidebarProvider, useSidebar } from "@/lib/providers";
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();
@@ -40,7 +40,9 @@ function SearchButton() {
     >
       <Search className="h-4 w-4" />
       <span className="text-muted-foreground text-sm">Tìm kiếm...</span>
-      <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">⌘K</kbd>
+      <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">
+        ⌘K
+      </kbd>
     </button>
   );
 }
@@ -49,18 +51,18 @@ function AdminContent({ children }: { children: React.ReactNode }) {
   const mainRef = useRef<HTMLElement>(null);
   const { user } = useAuth();
 
-  useScrollPosition(mainRef, 'content');
+  useScrollPosition(mainRef, "content");
 
   // Force dark mode for admin
   useEffect(() => {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.add("dark");
     return () => {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     };
   }, []);
 
   const userRole = user?.role as UserRole | undefined;
-  const navigation = getAdminNavByRole(userRole || 'tenant-admin');
+  const navigation = getAdminNavByRole(userRole || "tenant-admin");
 
   return (
     <div className="bg-background h-screen">
@@ -83,7 +85,10 @@ function AdminContent({ children }: { children: React.ReactNode }) {
       <div className="mx-auto h-[calc(100vh-4rem)] max-w-7xl">
         <div className="relative flex h-full gap-4 overflow-hidden pt-16">
           <Sidebar navigation={navigation} variant="expanded" />
-          <main ref={mainRef} className="flex h-full flex-1 flex-col overflow-auto">
+          <main
+            ref={mainRef}
+            className="flex h-full flex-1 flex-col overflow-auto"
+          >
             {children}
           </main>
         </div>
@@ -92,8 +97,15 @@ function AdminContent({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { isAuthorized, isLoading } = useRequireAuth(['root-admin', 'tenant-admin']);
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isAuthorized, isLoading } = useRequireAuth([
+    "root-admin",
+    "tenant-admin",
+  ]);
 
   if (isLoading) {
     return (

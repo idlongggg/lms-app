@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   CartesianGrid,
   Line,
@@ -9,9 +9,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface LineChartProps extends React.HTMLAttributes<HTMLDivElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,10 +36,10 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
       data = [],
       index,
       categories = [],
-      strokeColors = ['var(--foreground)'],
-      tooltipBgColor = 'var(--background)',
-      tooltipBorderColor = 'var(--border)',
-      gridColor = 'var(--muted)',
+      strokeColors = ["var(--foreground)"],
+      tooltipBgColor = "var(--background)",
+      tooltipBorderColor = "var(--border)",
+      gridColor = "var(--muted)",
       valueFormatter = (value: number) => value.toString(),
       showGrid = true,
       showTooltip = true,
@@ -51,10 +51,15 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
     ref,
   ) => {
     return (
-      <div ref={ref} className={cn('h-80 w-full', className)} {...props}>
+      <div ref={ref} className={cn("h-80 w-full", className)} {...props}>
         <ResponsiveContainer width="100%" height="100%">
-          <RechartsLineChart data={data} margin={{ top: 0, right: 30, left: 0, bottom: 0 }}>
-            {showGrid && <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />}
+          <RechartsLineChart
+            data={data}
+            margin={{ top: 0, right: 30, left: 0, bottom: 0 }}
+          >
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            )}
 
             <XAxis
               dataKey={index}
@@ -88,14 +93,19 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                           <span className="text-muted-foreground text-[0.70rem] uppercase">
                             {index}
                           </span>
-                          <span className="text-muted-foreground font-bold">{label}</span>
+                          <span className="text-muted-foreground font-bold">
+                            {label}
+                          </span>
                         </div>
                         {payload.map((entry, index) => (
                           <div key={index} className="flex flex-col">
                             <span className="text-muted-foreground text-[0.70rem] uppercase">
                               {entry.dataKey}
                             </span>
-                            <span className="font-bold" style={{ color: entry.color }}>
+                            <span
+                              className="font-bold"
+                              style={{ color: entry.color }}
+                            >
                               {valueFormatter(entry.value as number)}
                             </span>
                           </div>
@@ -128,6 +138,6 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
   },
 );
 
-LineChart.displayName = 'LineChart';
+LineChart.displayName = "LineChart";
 
 export { LineChart, type LineChartProps };
