@@ -4,4 +4,4 @@ export * from "./logo";
 export * from "./sidebar";
 export * from "./theme-toggle";
 export * from "./user-menu";
-export * from "./layout";
+export * from "./mobile-menu-button";

@@ -409,6 +409,94 @@
     "changeAvatar": "Thay đổi ảnh đại diện",
     "updateProfile": "Cập nhật hồ sơ"
   },
+  "admin": {
+    "reports": {
+      "title": "Báo cáo & Thống kê",
+      "description": "Xem và tải xuống các báo cáo chi tiết",
+      "create": "Tạo báo cáo",
+      "export": "Xuất báo cáo",
+      "selectType": "Chọn loại báo cáo",
+      "timeRange": "Thời gian",
+      "types": {
+        "userActivity": "Hoạt động người dùng",
+        "learningProgress": "Tiến độ học tập",
+        "tournamentStats": "Thống kê giải đấu",
+        "contentUsage": "Phân tích nội dung"
+      },
+      "table": {
+        "name": "Tên báo cáo",
+        "type": "Loại",
+        "date": "Ngày tạo",
+        "status": "Trạng thái",
+        "download": "Tải xuống"
+      },
+      "status": {
+        "ready": "Sẵn sàng",
+        "generating": "Đang tạo",
+        "failed": "Thất bại"
+      },
+      "ranges": {
+        "week": "Tuần này",
+        "month": "Tháng này",
+        "year": "Năm nay"
+      }
+    },
+    "tenants": {
+      "title": "Quản lý Tenants",
+      "description": "Quản lý tất cả các tenant trong hệ thống",
+      "add": "Thêm Tenant",
+      "search": "Tìm kiếm tenant...",
+      "filterPlan": "Tất cả gói",
+      "filterStatus": "Trạng thái",
+      "table": {
+        "tenant": "Tenant",
+        "domain": "Domain",
+        "plan": "Gói",
+        "users": "Người dùng",
+        "storage": "Dung lượng",
+        "status": "Trạng thái",
+        "actions": "Hành động"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "suspended": "Tạm ngưng"
+      },
+      "form": {
+        "title": "Thêm Tenant mới",
+        "name": "Tên tenant",
+        "code": "Mã code",
+        "domain": "Domain",
+        "plan": "Gói dịch vụ"
+      }
+    },
+    "users": {
+      "title": "Quản lý người dùng",
+      "description": "Quản lý tài khoản và phân quyền",
+      "add": "Thêm người dùng",
+      "search": "Tìm kiếm người dùng...",
+      "filterRole": "Tất cả role",
+      "filterStatus": "Trạng thái",
+      "table": {
+        "user": "Người dùng",
+        "email": "Email",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "joined": "Ngày tham gia",
+        "actions": "Hành động"
+      },
+      "roles": {
+        "admin": "Quản trị viên",
+        "teacher": "Giáo viên",
+        "student": "Học viên"
+      },
+      "form": {
+        "title": "Thêm người dùng mới",
+        "name": "Họ và tên",
+        "email": "Email",
+        "role": "Vai trò"
+      }
+    }
+  },
   "errors": {
     "required": "Trường này là bắt buộc",
     "invalidEmail": "Email không hợp lệ",

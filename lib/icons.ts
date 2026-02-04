@@ -7,24 +7,31 @@ import {
   BookOpen,
   Building2,
   Calendar,
+  ChevronDown,
+  ChevronLeft,
   Coins,
   FileText,
   Gift,
+  Globe,
   GraduationCap,
   History,
   Home,
   LayoutDashboard,
+  LogOut,
   type LucideIcon,
   Menu,
   MessageSquare,
+  Moon,
   Newspaper,
   Settings,
   Shield,
   ShoppingBag,
+  Sun,
   Swords,
   Trophy,
   User,
   Users,
+  X,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -84,6 +91,14 @@ export const ContactIcon = Shield;
 
 // Shared
 export const MenuIcon = Menu;
+export const LanguageIcon = Globe;
+export const LightModeIcon = Sun;
+export const DarkModeIcon = Moon;
+export const CollapseIcon = ChevronLeft;
+export const ExpandIcon = ChevronDown;
+export const LogOutIcon = LogOut;
+export const LogoIcon = GraduationCap;
+export const CloseIcon = X;
 
 // Focus
 export const BackIcon = ArrowLeft;

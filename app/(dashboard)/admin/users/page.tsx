@@ -17,8 +17,48 @@ import { Input } from "@/components/retroui/Input";
 import { Menu } from "@/components/retroui/Menu";
 import { Select } from "@/components/retroui/Select";
 import { Table } from "@/components/retroui/Table";
+import { useTranslation } from "@/lib/providers";
+
+const users = [
+  {
+    name: "Nguyễn Văn A",
+    email: "a@example.com",
+    role: "admin",
+    status: "active",
+    createdAt: "01/01/2026",
+  },
+  {
+    name: "Trần Thị B",
+    email: "b@example.com",
+    role: "teacher",
+    status: "active",
+    createdAt: "15/01/2026",
+  },
+  {
+    name: "Lê Văn C",
+    email: "c@example.com",
+    role: "student",
+    status: "active",
+    createdAt: "20/01/2026",
+  },
+  {
+    name: "Phạm Thị D",
+    email: "d@example.com",
+    role: "student",
+    status: "inactive",
+    createdAt: "25/01/2026",
+  },
+  {
+    name: "Hoàng Văn E",
+    email: "e@example.com",
+    role: "teacher",
+    status: "active",
+    createdAt: "30/01/2026",
+  },
+];
 
 export default function AdminUsersPage() {
+  const { t } = useTranslation();
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,50 +79,62 @@ export default function AdminUsersPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Quản lý người dùng</h1>
+          <h1 className="text-3xl font-bold">{t("admin.users.title")}</h1>
           <p className="text-muted-foreground">
-            Quản lý tài khoản và phân quyền
+            {t("admin.users.description")}
           </p>
         </div>
         <Dialog open={isAddUserOpen} onOpenChange={setIsAddUserOpen}>
           <Dialog.Trigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Thêm người dùng
+              {t("admin.users.add")}
             </Button>
           </Dialog.Trigger>
           <Dialog.Content size="md">
-            <Dialog.Header>Thêm người dùng mới</Dialog.Header>
+            <Dialog.Header>{t("admin.users.form.title")}</Dialog.Header>
             <div className="space-y-4 p-4">
               <div>
                 <label className="mb-1 block text-sm font-medium">
-                  Họ và tên
+                  {t("admin.users.form.name")}
                 </label>
-                <Input placeholder="Nhập họ và tên" />
+                <Input placeholder={t("admin.users.form.name")} />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Email</label>
-                <Input type="email" placeholder="Nhập email" />
+                <label className="mb-1 block text-sm font-medium">
+                  {t("admin.users.form.email")}
+                </label>
+                <Input type="email" placeholder={t("admin.users.form.email")} />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Role</label>
+                <label className="mb-1 block text-sm font-medium">
+                  {t("admin.users.form.role")}
+                </label>
                 <Select defaultValue="student">
                   <Select.Trigger className="w-full">
-                    <Select.Value placeholder="Chọn role" />
+                    <Select.Value placeholder={t("admin.users.form.role")} />
                   </Select.Trigger>
                   <Select.Content>
-                    <Select.Item value="admin">Admin</Select.Item>
-                    <Select.Item value="teacher">Teacher</Select.Item>
-                    <Select.Item value="student">Student</Select.Item>
+                    <Select.Item value="admin">
+                      {t("admin.users.roles.admin")}
+                    </Select.Item>
+                    <Select.Item value="teacher">
+                      {t("admin.users.roles.teacher")}
+                    </Select.Item>
+                    <Select.Item value="student">
+                      {t("admin.users.roles.student")}
+                    </Select.Item>
                   </Select.Content>
                 </Select>
               </div>
             </div>
             <Dialog.Footer>
               <Button variant="outline" onClick={() => setIsAddUserOpen(false)}>
-                Hủy
+                {t("common.cancel")}
               </Button>
-              <Button onClick={() => setIsAddUserOpen(false)}>Lưu</Button>
+              <Button onClick={() => setIsAddUserOpen(false)}>
+                {t("common.save")}
+              </Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog>
@@ -93,7 +145,7 @@ export default function AdminUsersPage() {
         <div className="relative min-w-[200px] flex-1">
           <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
-            placeholder="Tìm kiếm người dùng..."
+            placeholder={t("admin.users.search")}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -101,23 +153,33 @@ export default function AdminUsersPage() {
         </div>
         <Select value={roleFilter} onValueChange={setRoleFilter}>
           <Select.Trigger className="w-[150px]">
-            <Select.Value placeholder="Tất cả role" />
+            <Select.Value placeholder={t("admin.users.filterRole")} />
           </Select.Trigger>
           <Select.Content>
-            <Select.Item value="all">Tất cả role</Select.Item>
-            <Select.Item value="Admin">Admin</Select.Item>
-            <Select.Item value="Teacher">Teacher</Select.Item>
-            <Select.Item value="Student">Student</Select.Item>
+            <Select.Item value="all">{t("admin.users.filterRole")}</Select.Item>
+            <Select.Item value="admin">
+              {t("admin.users.roles.admin")}
+            </Select.Item>
+            <Select.Item value="teacher">
+              {t("admin.users.roles.teacher")}
+            </Select.Item>
+            <Select.Item value="student">
+              {t("admin.users.roles.student")}
+            </Select.Item>
           </Select.Content>
         </Select>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <Select.Trigger className="w-[150px]">
-            <Select.Value placeholder="Trạng thái" />
+            <Select.Value placeholder={t("admin.users.filterStatus")} />
           </Select.Trigger>
           <Select.Content>
-            <Select.Item value="all">Tất cả</Select.Item>
-            <Select.Item value="Active">Active</Select.Item>
-            <Select.Item value="Inactive">Inactive</Select.Item>
+            <Select.Item value="all">{t("common.all")}</Select.Item>
+            <Select.Item value="active">
+              {t("admin.tenants.status.active")}
+            </Select.Item>
+            <Select.Item value="inactive">
+              {t("admin.tenants.status.suspended")}
+            </Select.Item>
           </Select.Content>
         </Select>
       </div>
@@ -127,12 +189,14 @@ export default function AdminUsersPage() {
         <Table>
           <Table.Header>
             <Table.Row>
-              <Table.Head>Người dùng</Table.Head>
-              <Table.Head>Email</Table.Head>
-              <Table.Head>Role</Table.Head>
-              <Table.Head>Trạng thái</Table.Head>
-              <Table.Head>Ngày tạo</Table.Head>
-              <Table.Head className="text-right">Actions</Table.Head>
+              <Table.Head>{t("admin.users.table.user")}</Table.Head>
+              <Table.Head>{t("admin.users.table.email")}</Table.Head>
+              <Table.Head>{t("admin.users.table.role")}</Table.Head>
+              <Table.Head>{t("admin.users.table.status")}</Table.Head>
+              <Table.Head>{t("admin.users.table.joined")}</Table.Head>
+              <Table.Head className="text-right">
+                {t("admin.users.table.actions")}
+              </Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -152,25 +216,27 @@ export default function AdminUsersPage() {
                 <Table.Cell>
                   <Badge
                     variant={
-                      user.role === "Admin"
+                      user.role === "admin"
                         ? "solid"
-                        : user.role === "Teacher"
+                        : user.role === "teacher"
                           ? "surface"
                           : "default"
                     }
                     size="sm"
                   >
-                    {user.role}
+                    {t(`admin.users.roles.${user.role}` as any)}
                   </Badge>
                 </Table.Cell>
                 <Table.Cell>
                   <span
-                    className={`inline-flex items-center gap-1 text-sm ${user.status === "Active" ? "text-green-500" : "text-muted-foreground"}`}
+                    className={`inline-flex items-center gap-1 text-sm ${user.status === "active" ? "text-green-500" : "text-muted-foreground"}`}
                   >
                     <span
-                      className={`h-2 w-2 rounded-full ${user.status === "Active" ? "bg-green-500" : "bg-muted-foreground"}`}
+                      className={`h-2 w-2 rounded-full ${user.status === "active" ? "bg-green-500" : "bg-muted-foreground"}`}
                     />
-                    {user.status}
+                    {user.status === "active"
+                      ? t("admin.tenants.status.active")
+                      : t("admin.tenants.status.suspended")}
                   </span>
                 </Table.Cell>
                 <Table.Cell className="text-muted-foreground">
@@ -186,11 +252,11 @@ export default function AdminUsersPage() {
                     <Menu.Content align="end">
                       <Menu.Item>
                         <Pencil className="mr-2 h-4 w-4" />
-                        Chỉnh sửa
+                        {t("common.edit")}
                       </Menu.Item>
                       <Menu.Item className="text-destructive">
                         <Trash2 className="mr-2 h-4 w-4" />
-                        Xóa
+                        {t("common.delete")}
                       </Menu.Item>
                     </Menu.Content>
                   </Menu>
@@ -202,12 +268,10 @@ export default function AdminUsersPage() {
 
         {/* Pagination */}
         <div className="border-border flex items-center justify-between border-t-2 px-4 py-3">
-          <p className="text-muted-foreground text-sm">
-            Hiển thị 1-{filteredUsers.length} của {users.length} người dùng
-          </p>
+          <p className="text-muted-foreground text-sm">{t("common.viewAll")}</p>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
-              Trước
+              {t("common.previous")}
             </Button>
             <Button size="sm">1</Button>
             <Button variant="outline" size="sm">
@@ -217,7 +281,7 @@ export default function AdminUsersPage() {
               3
             </Button>
             <Button variant="outline" size="sm">
-              Sau
+              {t("common.next")}
             </Button>
           </div>
         </div>
@@ -225,41 +289,3 @@ export default function AdminUsersPage() {
     </div>
   );
 }
-
-const users = [
-  {
-    name: "Nguyễn Văn A",
-    email: "a@example.com",
-    role: "Admin",
-    status: "Active",
-    createdAt: "01/01/2026",
-  },
-  {
-    name: "Trần Thị B",
-    email: "b@example.com",
-    role: "Teacher",
-    status: "Active",
-    createdAt: "15/01/2026",
-  },
-  {
-    name: "Lê Văn C",
-    email: "c@example.com",
-    role: "Student",
-    status: "Active",
-    createdAt: "20/01/2026",
-  },
-  {
-    name: "Phạm Thị D",
-    email: "d@example.com",
-    role: "Student",
-    status: "Inactive",
-    createdAt: "25/01/2026",
-  },
-  {
-    name: "Hoàng Văn E",
-    email: "e@example.com",
-    role: "Teacher",
-    status: "Active",
-    createdAt: "30/01/2026",
-  },
-];

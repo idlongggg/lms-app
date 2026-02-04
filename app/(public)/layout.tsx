@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 
+import { Button } from "@/components/retroui";
 import {
   Header,
   LanguageSwitcher,
   Logo,
   ThemeToggle,
 } from "@/components/shared";
+import { type Language, type LanguageOption } from "@/lib/i18n";
+import { useLanguage, useTheme } from "@/lib/providers";
 
 import { Footer } from "./_components";
 
@@ -28,11 +33,38 @@ function AuthButtons() {
   );
 }
 
-function HeaderRight() {
+interface HeaderRightProps {
+  currentLanguage: LanguageOption;
+  languages: LanguageOption[];
+  setLanguage: (code: Language) => void;
+  langMounted: boolean;
+  theme: string | undefined;
+  toggleTheme: () => void;
+  themeMounted: boolean;
+}
+
+function HeaderRight({
+  currentLanguage,
+  languages,
+  setLanguage,
+  langMounted,
+  theme,
+  toggleTheme,
+  themeMounted,
+}: HeaderRightProps) {
   return (
     <>
-      <LanguageSwitcher />
-      <ThemeToggle />
+      <LanguageSwitcher
+        currentLanguage={currentLanguage}
+        languages={languages}
+        setLanguage={setLanguage}
+        mounted={langMounted}
+      />
+      <ThemeToggle
+        theme={theme}
+        toggleTheme={toggleTheme}
+        mounted={themeMounted}
+      />
       <AuthButtons />
     </>
   );
@@ -43,9 +75,30 @@ export default function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
+  const {
+    currentLanguage,
+    languages,
+    setLanguage,
+    mounted: langMounted,
+  } = useLanguage();
+
   return (
     <>
-      <Header left={<Logo />} right={<HeaderRight />} />
+      <Header
+        left={<Logo />}
+        right={
+          <HeaderRight
+            currentLanguage={currentLanguage}
+            languages={languages}
+            setLanguage={setLanguage}
+            langMounted={langMounted}
+            theme={theme}
+            toggleTheme={toggleTheme}
+            themeMounted={themeMounted}
+          />
+        }
+      />
       {children}
       <Footer />
     </>

@@ -8,7 +8,7 @@ import {
   Logo,
   ThemeToggle,
 } from "@/components/shared";
-import { useTranslation } from "@/lib/providers";
+import { useLanguage, useTheme, useTranslation } from "@/lib/providers";
 
 export default function AuthLayout({
   children,
@@ -16,6 +16,13 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const { t } = useTranslation();
+  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
+  const {
+    currentLanguage,
+    languages,
+    setLanguage,
+    mounted: langMounted,
+  } = useLanguage();
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
@@ -23,8 +30,17 @@ export default function AuthLayout({
         left={<Logo />}
         right={
           <>
-            <LanguageSwitcher />
-            <ThemeToggle />
+            <LanguageSwitcher
+              currentLanguage={currentLanguage}
+              languages={languages}
+              setLanguage={setLanguage}
+              mounted={langMounted}
+            />
+            <ThemeToggle
+              theme={theme}
+              toggleTheme={toggleTheme}
+              mounted={themeMounted}
+            />
           </>
         }
       />

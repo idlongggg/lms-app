@@ -409,6 +409,94 @@
     "changeAvatar": "Change Avatar",
     "updateProfile": "Update Profile"
   },
+  "admin": {
+    "reports": {
+      "title": "Reports & Statistics",
+      "description": "View and download detailed system reports",
+      "create": "Create Report",
+      "export": "Export",
+      "selectType": "Select Report Type",
+      "timeRange": "Time Range",
+      "types": {
+        "userActivity": "User Activity",
+        "learningProgress": "Learning Progress",
+        "tournamentStats": "Tournament Stats",
+        "contentUsage": "Content Analysis"
+      },
+      "table": {
+        "name": "Report Name",
+        "type": "Type",
+        "date": "Date Created",
+        "status": "Status",
+        "download": "Download"
+      },
+      "status": {
+        "ready": "Ready",
+        "generating": "Generating",
+        "failed": "Failed"
+      },
+      "ranges": {
+        "week": "This Week",
+        "month": "This Month",
+        "year": "This Year"
+      }
+    },
+    "tenants": {
+      "title": "Tenant Management",
+      "description": "Manage all tenants in the system",
+      "add": "Add Tenant",
+      "search": "Search tenants...",
+      "filterPlan": "Filter by Plan",
+      "filterStatus": "Filter by Status",
+      "table": {
+        "tenant": "Tenant",
+        "domain": "Domain",
+        "plan": "Plan",
+        "users": "Users",
+        "storage": "Storage",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "form": {
+        "title": "Add New Tenant",
+        "name": "Tenant Name",
+        "code": "Tenant Code",
+        "domain": "Domain",
+        "plan": "Plan"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "description": "Manage accounts and permissions",
+      "add": "Add User",
+      "search": "Search users...",
+      "filterRole": "Filter by Role",
+      "filterStatus": "Filter by Status",
+      "table": {
+        "user": "User",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "joined": "Joined Date",
+        "actions": "Actions"
+      },
+      "roles": {
+        "admin": "Admin",
+        "teacher": "Teacher",
+        "student": "Student"
+      },
+      "form": {
+        "title": "Add New User",
+        "name": "Full Name",
+        "email": "Email",
+        "role": "Role"
+      }
+    }
+  },
   "errors": {
     "required": "This field is required",
     "invalidEmail": "Invalid email address",

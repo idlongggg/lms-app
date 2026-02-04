@@ -22,6 +22,7 @@ import { Menu } from "@/components/retroui/Menu";
 import { Select } from "@/components/retroui/Select";
 import { Table } from "@/components/retroui/Table";
 import { useAuth } from "@/lib/auth";
+import { useTranslation } from "@/lib/providers";
 
 // Mock tenants data
 const tenants = [
@@ -81,6 +82,7 @@ const tenants = [
 
 export default function AdminTenantsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [planFilter, setPlanFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -90,9 +92,7 @@ export default function AdminTenantsPage() {
   if (!user || user.role !== "root-admin") {
     return (
       <div className="flex h-[50vh] items-center justify-center">
-        <p className="text-muted-foreground">
-          Bạn không có quyền truy cập trang này.
-        </p>
+        <p className="text-muted-foreground">{t("errors.noAccess")}</p>
       </div>
     );
   }
@@ -112,44 +112,46 @@ export default function AdminTenantsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Quản lý Tenants</h1>
+          <h1 className="text-3xl font-bold">{t("admin.tenants.title")}</h1>
           <p className="text-muted-foreground">
-            Quản lý tất cả các tenant trong hệ thống
+            {t("admin.tenants.description")}
           </p>
         </div>
         <Dialog open={isAddTenantOpen} onOpenChange={setIsAddTenantOpen}>
           <Dialog.Trigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Thêm Tenant
+              {t("admin.tenants.add")}
             </Button>
           </Dialog.Trigger>
           <Dialog.Content size="md">
-            <Dialog.Header>Thêm Tenant mới</Dialog.Header>
+            <Dialog.Header>{t("admin.tenants.form.title")}</Dialog.Header>
             <div className="space-y-4 p-4">
               <div>
                 <label className="mb-1 block text-sm font-medium">
-                  Tên tenant
+                  {t("admin.tenants.form.name")}
                 </label>
-                <Input placeholder="Nhập tên tenant" />
+                <Input placeholder={t("admin.tenants.form.name")} />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">
-                  Mã code
+                  {t("admin.tenants.form.code")}
                 </label>
-                <Input placeholder="Nhập mã code" />
+                <Input placeholder={t("admin.tenants.form.code")} />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Domain</label>
+                <label className="mb-1 block text-sm font-medium">
+                  {t("admin.tenants.form.domain")}
+                </label>
                 <Input placeholder="example.lms.vn" />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">
-                  Gói dịch vụ
+                  {t("admin.tenants.form.plan")}
                 </label>
                 <Select defaultValue="basic">
                   <Select.Trigger className="w-full">
-                    <Select.Value placeholder="Chọn gói" />
+                    <Select.Value placeholder={t("admin.tenants.form.plan")} />
                   </Select.Trigger>
                   <Select.Content>
                     <Select.Item value="basic">Basic</Select.Item>
@@ -164,9 +166,11 @@ export default function AdminTenantsPage() {
                 variant="outline"
                 onClick={() => setIsAddTenantOpen(false)}
               >
-                Hủy
+                {t("common.cancel")}
               </Button>
-              <Button onClick={() => setIsAddTenantOpen(false)}>Lưu</Button>
+              <Button onClick={() => setIsAddTenantOpen(false)}>
+                {t("common.save")}
+              </Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog>
@@ -178,7 +182,9 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Tổng Tenants</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("admin.dashboard.stats.totalTenants")}
+                </p>
                 <p className="text-2xl font-bold">{tenants.length}</p>
               </div>
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-purple-500">
@@ -191,7 +197,9 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Đang hoạt động</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("admin.tenants.status.active")}
+                </p>
                 <p className="text-2xl font-bold">
                   {tenants.filter((t) => t.status === "ACTIVE").length}
                 </p>
@@ -206,7 +214,9 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Tổng người dùng</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("admin.dashboard.stats.totalUsers")}
+                </p>
                 <p className="text-2xl font-bold">
                   {tenants
                     .reduce((sum, t) => sum + t.users, 0)
@@ -223,7 +233,9 @@ export default function AdminTenantsPage() {
           <Card.Content className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-sm">Tổng dung lượng</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("admin.tenants.table.storage")}
+                </p>
                 <p className="text-2xl font-bold">101.3 GB</p>
               </div>
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-500">
@@ -239,7 +251,7 @@ export default function AdminTenantsPage() {
         <div className="relative min-w-[200px] flex-1">
           <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
-            placeholder="Tìm kiếm tenant..."
+            placeholder={t("admin.tenants.search")}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -247,10 +259,12 @@ export default function AdminTenantsPage() {
         </div>
         <Select value={planFilter} onValueChange={setPlanFilter}>
           <Select.Trigger className="w-[150px]">
-            <Select.Value placeholder="Tất cả gói" />
+            <Select.Value placeholder={t("admin.tenants.filterPlan")} />
           </Select.Trigger>
           <Select.Content>
-            <Select.Item value="all">Tất cả gói</Select.Item>
+            <Select.Item value="all">
+              {t("admin.tenants.filterPlan")}
+            </Select.Item>
             <Select.Item value="Enterprise">Enterprise</Select.Item>
             <Select.Item value="Pro">Pro</Select.Item>
             <Select.Item value="Basic">Basic</Select.Item>
@@ -258,12 +272,16 @@ export default function AdminTenantsPage() {
         </Select>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <Select.Trigger className="w-[150px]">
-            <Select.Value placeholder="Trạng thái" />
+            <Select.Value placeholder={t("admin.tenants.filterStatus")} />
           </Select.Trigger>
           <Select.Content>
-            <Select.Item value="all">Tất cả</Select.Item>
-            <Select.Item value="ACTIVE">Active</Select.Item>
-            <Select.Item value="SUSPENDED">Suspended</Select.Item>
+            <Select.Item value="all">{t("common.all")}</Select.Item>
+            <Select.Item value="ACTIVE">
+              {t("admin.tenants.status.active")}
+            </Select.Item>
+            <Select.Item value="SUSPENDED">
+              {t("admin.tenants.status.suspended")}
+            </Select.Item>
           </Select.Content>
         </Select>
       </div>
@@ -273,13 +291,15 @@ export default function AdminTenantsPage() {
         <Table>
           <Table.Header>
             <Table.Row>
-              <Table.Head>Tenant</Table.Head>
-              <Table.Head>Domain</Table.Head>
-              <Table.Head>Gói</Table.Head>
-              <Table.Head>Người dùng</Table.Head>
-              <Table.Head>Dung lượng</Table.Head>
-              <Table.Head>Trạng thái</Table.Head>
-              <Table.Head className="text-right">Actions</Table.Head>
+              <Table.Head>{t("admin.tenants.table.tenant")}</Table.Head>
+              <Table.Head>{t("admin.tenants.table.domain")}</Table.Head>
+              <Table.Head>{t("admin.tenants.table.plan")}</Table.Head>
+              <Table.Head>{t("admin.tenants.table.users")}</Table.Head>
+              <Table.Head>{t("admin.tenants.table.storage")}</Table.Head>
+              <Table.Head>{t("admin.tenants.table.status")}</Table.Head>
+              <Table.Head className="text-right">
+                {t("admin.tenants.table.actions")}
+              </Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -343,7 +363,9 @@ export default function AdminTenantsPage() {
                           : "bg-red-500"
                       }`}
                     />
-                    {tenant.status === "ACTIVE" ? "Hoạt động" : "Tạm ngưng"}
+                    {tenant.status === "ACTIVE"
+                      ? t("admin.tenants.status.active")
+                      : t("admin.tenants.status.suspended")}
                   </span>
                 </Table.Cell>
                 <Table.Cell className="text-right">
@@ -360,11 +382,11 @@ export default function AdminTenantsPage() {
                       <Menu.Content align="end">
                         <Menu.Item>
                           <Pencil className="mr-2 h-4 w-4" />
-                          Chỉnh sửa
+                          {t("common.edit")}
                         </Menu.Item>
                         <Menu.Item className="text-destructive">
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Xóa
+                          {t("common.delete")}
                         </Menu.Item>
                       </Menu.Content>
                     </Menu>

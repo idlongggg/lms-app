@@ -4,7 +4,8 @@ export type ThemeKey =
   | "preset02"
   | "preset03"
   | "preset04"
-  | "preset05";
+  | "preset05"
+  | "preset06";
 
 export const THEME: Record<
   ThemeKey,
@@ -39,5 +40,10 @@ export const THEME: Record<
     primary: "#f59e0b",
     hover: "#d97706",
     ring: "#f59e0b",
+  },
+  preset06: {
+    primary: "#64748b",
+    hover: "#475569",
+    ring: "#64748b",
   },
 };
