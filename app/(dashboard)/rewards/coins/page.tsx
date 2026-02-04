@@ -4,6 +4,9 @@ import { ArrowDownRight, ArrowUpRight, Coins, TrendingUp } from "lucide-react";
 
 import { AreaChart } from "@/components/retroui/charts/AreaChart";
 import { PieChart } from "@/components/retroui/charts/PieChart";
+import { useTranslation } from "@/lib/providers";
+
+import { PageLayout } from "../../_components/page-layout";
 
 const coinHistory = [
   { date: "T1", balance: 1500, earned: 200, spent: 50 },
@@ -72,198 +75,199 @@ const stats = {
 };
 
 export default function CoinsPage() {
+  const { t } = useTranslation();
+
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Số dư xu</h1>
-        <p className="text-muted-foreground">
-          Theo dõi xu và lịch sử giao dịch của bạn
-        </p>
-      </div>
-
-      {/* Balance Card */}
-      <div className="border-primary bg-primary/20 border-2 p-6 shadow-sm">
-        <div className="flex flex-col items-center gap-6 sm:flex-row">
-          <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl">
-            <Coins className="h-10 w-10" />
-          </div>
-          <div className="flex-1 text-center sm:text-left">
-            <p className="text-muted-foreground text-sm font-medium">
-              Số dư hiện tại
-            </p>
-            <p className="text-4xl font-bold">
-              {stats.balance.toLocaleString()} xu
-            </p>
-            {stats.pendingRewards > 0 && (
-              <p className="text-muted-foreground mt-1 text-sm">
-                +{stats.pendingRewards} xu đang chờ xử lý
+    <PageLayout
+      title={t("rewards.coins.title")}
+      description={t("rewards.coins.description")}
+    >
+      <div className="space-y-8">
+        {/* Balance Card */}
+        <div className="border-primary bg-primary/20 border-2 p-6 shadow-sm">
+          <div className="flex flex-col items-center gap-6 sm:flex-row">
+            <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl">
+              <Coins className="h-10 w-10" />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-muted-foreground text-sm font-medium">
+                Số dư hiện tại
               </p>
-            )}
-          </div>
-          <button className="border-border bg-background border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-            Đổi quà ngay
-          </button>
-        </div>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="border-border bg-background border-2 p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-green-500">
-              <ArrowUpRight className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">
-                Kiếm được tháng này
+              <p className="text-4xl font-bold">
+                {stats.balance.toLocaleString()} xu
               </p>
-              <p className="text-xl font-bold text-green-600">
-                +{stats.earnedThisMonth.toLocaleString()} xu
-              </p>
+              {stats.pendingRewards > 0 && (
+                <p className="text-muted-foreground mt-1 text-sm">
+                  +{stats.pendingRewards} xu đang chờ xử lý
+                </p>
+              )}
             </div>
-          </div>
-        </div>
-        <div className="border-border bg-background border-2 p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-red-500">
-              <ArrowDownRight className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Đã chi tháng này</p>
-              <p className="text-xl font-bold text-red-600">
-                -{stats.spentThisMonth.toLocaleString()} xu
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="border-border bg-background border-2 p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2">
-              <TrendingUp className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Tháng này</p>
-              <p className="text-xl font-bold">
-                {stats.earnedThisMonth - stats.spentThisMonth > 0 ? "+" : ""}
-                {(
-                  stats.earnedThisMonth - stats.spentThisMonth
-                ).toLocaleString()}{" "}
-                xu
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Balance Chart */}
-        <div className="border-border bg-background border-2 shadow-sm lg:col-span-2">
-          <div className="border-border bg-muted border-b-2 px-6 py-4">
-            <h2 className="font-bold">Biến động số dư</h2>
-          </div>
-          <div className="p-4">
-            <AreaChart
-              data={coinHistory}
-              index="date"
-              categories={["balance"]}
-              fillColors={["var(--primary)"]}
-              strokeColors={["var(--secondary)"]}
-              className="h-64"
-              valueFormatter={(value) => `${value} xu`}
-            />
+            <button className="border-border bg-background border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+              Đổi quà ngay
+            </button>
           </div>
         </div>
 
-        {/* Source Breakdown */}
-        <div className="border-border bg-background border-2 shadow-sm">
-          <div className="border-border bg-muted border-b-2 px-6 py-4">
-            <h2 className="font-bold">Nguồn thu</h2>
-          </div>
-          <div className="p-4">
-            <PieChart
-              data={sourceData}
-              dataKey="value"
-              nameKey="name"
-              colors={sourceData.map((s) => s.color)}
-              className="h-48"
-            />
-            <div className="mt-4 space-y-2">
-              {sourceData.map((source) => (
-                <div
-                  key={source.name}
-                  className="flex items-center justify-between text-sm"
-                >
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="h-3 w-3"
-                      style={{ backgroundColor: source.color }}
-                    />
-                    <span>{source.name}</span>
-                  </div>
-                  <span className="font-medium">{source.value} xu</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Transaction History */}
-      <div className="border-border bg-background border-2 shadow-sm">
-        <div className="border-border bg-muted border-b-2 px-6 py-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-bold">Lịch sử giao dịch</h2>
-            <select className="border-border bg-background border px-2 py-1 text-sm">
-              <option>Tất cả</option>
-              <option>Nhận xu</option>
-              <option>Chi xu</option>
-            </select>
-          </div>
-        </div>
-        <div className="divide-border divide-y-2">
-          {transactions.map((tx) => (
-            <div
-              key={tx.id}
-              className="hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors"
-            >
-              <div
-                className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${
-                  tx.type === "earn" ? "bg-green-500" : "bg-red-500"
-                }`}
-              >
-                {tx.type === "earn" ? (
-                  <ArrowUpRight className="h-5 w-5 text-white" />
-                ) : (
-                  <ArrowDownRight className="h-5 w-5 text-white" />
-                )}
+        {/* Stats Grid */}
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div className="border-border bg-background border-2 p-4 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-green-500">
+                <ArrowUpRight className="h-5 w-5 text-white" />
               </div>
-              <div className="flex-1">
-                <p className="font-medium">{tx.description}</p>
+              <div>
                 <p className="text-muted-foreground text-sm">
-                  {new Date(tx.date).toLocaleDateString("vi-VN", {
-                    day: "numeric",
-                    month: "long",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  Kiếm được tháng này
+                </p>
+                <p className="text-xl font-bold text-green-600">
+                  +{stats.earnedThisMonth.toLocaleString()} xu
                 </p>
               </div>
-              <span
-                className={`text-lg font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}
-              >
-                {tx.amount > 0 ? "+" : ""}
-                {tx.amount} xu
-              </span>
             </div>
-          ))}
+          </div>
+          <div className="border-border bg-background border-2 p-4 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-red-500">
+                <ArrowDownRight className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">
+                  Đã chi tháng này
+                </p>
+                <p className="text-xl font-bold text-red-600">
+                  -{stats.spentThisMonth.toLocaleString()} xu
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="border-border bg-background border-2 p-4 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2">
+                <TrendingUp className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Tháng này</p>
+                <p className="text-xl font-bold">
+                  {stats.earnedThisMonth - stats.spentThisMonth > 0 ? "+" : ""}
+                  {(
+                    stats.earnedThisMonth - stats.spentThisMonth
+                  ).toLocaleString()}{" "}
+                  xu
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="border-border border-t-2 p-4">
-          <button className="text-muted-foreground hover:text-foreground w-full text-center text-sm font-medium">
-            Xem tất cả giao dịch
-          </button>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {/* Balance Chart */}
+          <div className="border-border bg-background border-2 shadow-sm lg:col-span-2">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <h2 className="font-bold">Biến động số dư</h2>
+            </div>
+            <div className="p-4">
+              <AreaChart
+                data={coinHistory}
+                index="date"
+                categories={["balance"]}
+                fillColors={["var(--primary)"]}
+                strokeColors={["var(--secondary)"]}
+                className="h-64"
+                valueFormatter={(value) => `${value} xu`}
+              />
+            </div>
+          </div>
+
+          {/* Source Breakdown */}
+          <div className="border-border bg-background border-2 shadow-sm">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <h2 className="font-bold">Nguồn thu</h2>
+            </div>
+            <div className="p-4">
+              <PieChart
+                data={sourceData}
+                dataKey="value"
+                nameKey="name"
+                colors={sourceData.map((s) => s.color)}
+                className="h-48"
+              />
+              <div className="mt-4 space-y-2">
+                {sourceData.map((source) => (
+                  <div
+                    key={source.name}
+                    className="flex items-center justify-between text-sm"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="h-3 w-3"
+                        style={{ backgroundColor: source.color }}
+                      />
+                      <span>{source.name}</span>
+                    </div>
+                    <span className="font-medium">{source.value} xu</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Transaction History */}
+        <div className="border-border bg-background border-2 shadow-sm">
+          <div className="border-border bg-muted border-b-2 px-6 py-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold">Lịch sử giao dịch</h2>
+              <select className="border-border bg-background border px-2 py-1 text-sm">
+                <option>Tất cả</option>
+                <option>Nhận xu</option>
+                <option>Chi xu</option>
+              </select>
+            </div>
+          </div>
+          <div className="divide-border divide-y-2">
+            {transactions.map((tx) => (
+              <div
+                key={tx.id}
+                className="hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors"
+              >
+                <div
+                  className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${
+                    tx.type === "earn" ? "bg-green-500" : "bg-red-500"
+                  }`}
+                >
+                  {tx.type === "earn" ? (
+                    <ArrowUpRight className="h-5 w-5 text-white" />
+                  ) : (
+                    <ArrowDownRight className="h-5 w-5 text-white" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium">{tx.description}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {new Date(tx.date).toLocaleDateString("vi-VN", {
+                      day: "numeric",
+                      month: "long",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+                <span
+                  className={`text-lg font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}
+                >
+                  {tx.amount > 0 ? "+" : ""}
+                  {tx.amount} xu
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="border-border border-t-2 p-4">
+            <button className="text-muted-foreground hover:text-foreground w-full text-center text-sm font-medium">
+              Xem tất cả giao dịch
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

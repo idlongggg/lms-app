@@ -1,4 +1,10 @@
+"use client";
+
 import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
+
+import { useTranslation } from "@/lib/providers";
+
+import { PageLayout } from "../../_components/page-layout";
 
 const courses = [
   {
@@ -86,106 +92,105 @@ const categories = [
 ];
 
 export default function CoursesPage() {
-  return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Tất cả khóa học</h1>
-        <p className="text-muted-foreground">
-          Khám phá hơn 100+ khóa học chất lượng
-        </p>
-      </div>
+  const { t } = useTranslation();
 
-      {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2">
-          <Filter className="text-muted-foreground h-4 w-4" />
-          <span className="text-sm font-medium">Lọc:</span>
+  return (
+    <PageLayout
+      title={t("learning.courses.title")}
+      description={t("learning.courses.description")}
+    >
+      <div className="space-y-8">
+        {/* Filters */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-2">
+            <Filter className="text-muted-foreground h-4 w-4" />
+            <span className="text-sm font-medium">Lọc:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`border-border hover:bg-muted border-2 px-3 py-1 text-sm font-medium transition-all ${
+                  cat === "Tất cả" ? "bg-primary" : "bg-background"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="sm:ml-auto">
+            <select className="border-border bg-background border-2 px-3 py-1.5 text-sm">
+              <option>Phổ biến nhất</option>
+              <option>Mới nhất</option>
+              <option>Đánh giá cao</option>
+            </select>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`border-border hover:bg-muted border-2 px-3 py-1 text-sm font-medium transition-all ${
-                cat === "Tất cả" ? "bg-primary" : "bg-background"
-              }`}
+
+        {/* Course Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course) => (
+            <div
+              key={course.id}
+              className="border-border bg-background flex flex-col border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
             >
-              {cat}
-            </button>
+              {/* Thumbnail */}
+              <div className="border-border bg-muted flex h-32 items-center justify-center border-b-2 text-5xl">
+                {course.thumbnail}
+              </div>
+
+              {/* Content */}
+              <div className="flex flex-1 flex-col p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="border-border bg-muted border px-2 py-0.5 text-xs font-medium">
+                    {course.category}
+                  </span>
+                  <span className="border-border bg-secondary/20 border px-2 py-0.5 text-xs font-medium">
+                    {course.level}
+                  </span>
+                </div>
+
+                <h3 className="font-bold">{course.title}</h3>
+                <p className="text-muted-foreground mt-1 line-clamp-2 flex-1 text-sm">
+                  {course.description}
+                </p>
+
+                <div className="text-muted-foreground mt-3 flex items-center gap-3 text-sm">
+                  <span className="flex items-center gap-1">
+                    <BookOpen className="h-4 w-4" />
+                    {course.lessons}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    {course.duration}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    {course.students}
+                  </span>
+                </div>
+
+                <div className="border-border mt-3 flex items-center justify-between border-t-2 pt-3">
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium">{course.rating}</span>
+                  </div>
+                  <button className="border-border bg-primary border-2 px-4 py-1.5 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+                    Xem chi tiết
+                  </button>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-        <div className="sm:ml-auto">
-          <select className="border-border bg-background border-2 px-3 py-1.5 text-sm">
-            <option>Phổ biến nhất</option>
-            <option>Mới nhất</option>
-            <option>Đánh giá cao</option>
-          </select>
+
+        {/* Load More */}
+        <div className="text-center">
+          <button className="border-border bg-background border-2 px-8 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+            Xem thêm khóa học
+          </button>
         </div>
       </div>
-
-      {/* Course Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            className="border-border bg-background flex flex-col border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
-          >
-            {/* Thumbnail */}
-            <div className="border-border bg-muted flex h-32 items-center justify-center border-b-2 text-5xl">
-              {course.thumbnail}
-            </div>
-
-            {/* Content */}
-            <div className="flex flex-1 flex-col p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <span className="border-border bg-muted border px-2 py-0.5 text-xs font-medium">
-                  {course.category}
-                </span>
-                <span className="border-border bg-secondary/20 border px-2 py-0.5 text-xs font-medium">
-                  {course.level}
-                </span>
-              </div>
-
-              <h3 className="font-bold">{course.title}</h3>
-              <p className="text-muted-foreground mt-1 line-clamp-2 flex-1 text-sm">
-                {course.description}
-              </p>
-
-              <div className="text-muted-foreground mt-3 flex items-center gap-3 text-sm">
-                <span className="flex items-center gap-1">
-                  <BookOpen className="h-4 w-4" />
-                  {course.lessons}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  {course.duration}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Users className="h-4 w-4" />
-                  {course.students}
-                </span>
-              </div>
-
-              <div className="border-border mt-3 flex items-center justify-between border-t-2 pt-3">
-                <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  <span className="font-medium">{course.rating}</span>
-                </div>
-                <button className="border-border bg-primary border-2 px-4 py-1.5 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-                  Xem chi tiết
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Load More */}
-      <div className="text-center">
-        <button className="border-border bg-background border-2 px-8 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-          Xem thêm khóa học
-        </button>
-      </div>
-    </div>
+    </PageLayout>
   );
 }

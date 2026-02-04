@@ -98,6 +98,14 @@
   "dashboard": {
     "welcome": "Xin chào",
     "welcomeBack": "Chào mừng trở lại! Hôm nay bạn muốn học gì?",
+    "activity": {
+      "title": "Hoạt động",
+      "description": "Xem lại lịch sử hoạt động học tập của bạn"
+    },
+    "stats": {
+      "title": "Thống kê",
+      "description": "Phân tích chi tiết tiến độ học tập"
+    },
     "recentActivity": "Hoạt động gần đây",
     "myProgress": "Tiến độ của tôi",
     "upcomingTasks": "Nhiệm vụ sắp tới",
@@ -123,6 +131,10 @@
   "learning": {
     "title": "Bài học của tôi",
     "description": "Tiếp tục hành trình học tập của bạn",
+    "courses": {
+      "title": "Khóa học",
+      "description": "Khám phá các khóa học phù hợp với bạn"
+    },
     "totalSubjects": "Tổng môn học",
     "inProgress": "Đang học",
     "completed": "Hoàn thành",
@@ -147,6 +159,14 @@
     "join": {
       "title": "Tham gia giải đấu",
       "description": "Khám phá và tham gia các giải đấu đang mở"
+    },
+    "leaderboard": {
+      "title": "Bảng xếp hạng",
+      "description": "Xem thứ hạng của bạn và người chơi khác"
+    },
+    "schedule": {
+      "title": "Lịch thi đấu",
+      "description": "Xem lịch các giải đấu sắp diễn ra"
     },
     "history": "Lịch sử thi đấu",
     "available": "Có thể tham gia",
@@ -195,14 +215,31 @@
   },
   "rewards": {
     "title": "Phần thưởng",
-    "description": "Đổi xu lấy phần thưởng hấp dẫn"
+    "description": "Đổi xu lấy phần thưởng hấp dẫn",
+    "coins": {
+      "title": "Số dư xu",
+      "description": "Theo dõi lịch sử xu và giao dịch"
+    },
+    "redeemed": {
+      "title": "Đã đổi",
+      "description": "Quản lý các phần thưởng đã đổi"
+    }
   },
   "news": {
     "title": "Tin tức",
-    "description": "Cập nhật tin tức và sự kiện mới nhất"
+    "description": "Cập nhật tin tức và sự kiện mới nhất",
+    "announcements": {
+      "title": "Thông báo",
+      "description": "Xem tất cả thông báo từ hệ thống"
+    },
+    "events": {
+      "title": "Sự kiện",
+      "description": "Lịch sự kiện sắp diễn ra"
+    }
   },
   "settings": {
     "title": "Cài đặt",
+    "description": "Quản lý cài đặt tài khoản của bạn",
     "general": "Chung",
     "appearance": "Giao diện",
     "language": "Ngôn ngữ",
@@ -215,6 +252,7 @@
   },
   "profile": {
     "title": "Hồ sơ",
+    "description": "Quản lý thông tin cá nhân của bạn",
     "firstName": "Tên",
     "lastName": "Họ",
     "fullName": "Họ và tên",

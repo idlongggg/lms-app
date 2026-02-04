@@ -82,7 +82,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         }
       />
       <div className="mx-auto h-[calc(100vh-4rem)] max-w-7xl">
-        <div className="relative flex h-full gap-4 overflow-hidden pt-16">
+        <div className="relative flex h-full gap-4 overflow-hidden pt-6">
           <Sidebar navigation={navigation} variant="collapsible" />
           <main
             ref={mainRef}

@@ -98,6 +98,14 @@
   "dashboard": {
     "welcome": "Welcome",
     "welcomeBack": "Welcome back! What do you want to learn today?",
+    "activity": {
+      "title": "Activity",
+      "description": "Review your learning activity history"
+    },
+    "stats": {
+      "title": "Statistics",
+      "description": "Detailed analysis of your learning progress"
+    },
     "recentActivity": "Recent Activity",
     "myProgress": "My Progress",
     "upcomingTasks": "Upcoming Tasks",
@@ -123,6 +131,10 @@
   "learning": {
     "title": "My Lessons",
     "description": "Continue your learning journey",
+    "courses": {
+      "title": "Courses",
+      "description": "Discover courses that suit you"
+    },
     "totalSubjects": "Total Subjects",
     "inProgress": "In Progress",
     "completed": "Completed",
@@ -147,6 +159,14 @@
     "join": {
       "title": "Join Tournament",
       "description": "Discover and join open tournaments"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "description": "View your rank and other players"
+    },
+    "schedule": {
+      "title": "Schedule",
+      "description": "View upcoming tournament schedule"
     },
     "history": "Tournament History",
     "available": "Joinable",
@@ -195,14 +215,31 @@
   },
   "rewards": {
     "title": "Rewards",
-    "description": "Exchange coins for attractive rewards"
+    "description": "Exchange coins for attractive rewards",
+    "coins": {
+      "title": "Coin Balance",
+      "description": "Track your coin history and transactions"
+    },
+    "redeemed": {
+      "title": "Redeemed",
+      "description": "Manage your redeemed rewards"
+    }
   },
   "news": {
     "title": "News",
-    "description": "Latest news and events updates"
+    "description": "Latest news and events updates",
+    "announcements": {
+      "title": "Announcements",
+      "description": "View all system announcements"
+    },
+    "events": {
+      "title": "Events",
+      "description": "Upcoming events schedule"
+    }
   },
   "settings": {
     "title": "Settings",
+    "description": "Manage your account settings",
     "general": "General",
     "appearance": "Appearance",
     "language": "Language",
@@ -215,6 +252,7 @@
   },
   "profile": {
     "title": "Profile",
+    "description": "Manage your personal information",
     "firstName": "First Name",
     "lastName": "Last Name",
     "fullName": "Full Name",

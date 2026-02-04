@@ -9,9 +9,13 @@ import {
   getEventCards,
   getNewsCards,
 } from "@/lib/mock/news";
+import { useTranslation } from "@/lib/providers";
+
+import { PageLayout } from "../_components/page-layout";
 
 export default function NewsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   if (!user) return null;
 
@@ -35,13 +39,7 @@ export default function NewsPage() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Tin tức</h1>
-        <p className="text-muted-foreground">Cập nhật mới nhất từ LMS</p>
-      </div>
-
+    <PageLayout title={t("news.title")} description={t("news.description")}>
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Main News */}
         <div className="space-y-6 lg:col-span-2">
@@ -164,6 +162,6 @@ export default function NewsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }
