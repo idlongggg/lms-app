@@ -5,14 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { type DashboardTab, getActiveTabKey } from "@/lib/nav";
+import { type NavTab, getActiveTabKey } from "@/lib/nav";
 import { useTheme, useTranslation } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 
-import { DASHBOARD_TABS } from "../nav";
+import { NAVIGATION_CONFIG } from "../nav";
 
 interface DashboardNavProps {
-  tabs?: DashboardTab[];
+  tabs?: NavTab[];
 }
 
 export function DashboardNav({ tabs }: DashboardNavProps) {
@@ -22,8 +22,9 @@ export function DashboardNav({ tabs }: DashboardNavProps) {
   const { setThemeColor } = useTheme();
 
   // Use provided tabs or fallback to default
-  const navTabs = tabs || DASHBOARD_TABS;
-  const activeTab = navTabs.find((tab) => tab.key === activeKey);
+  const allTabs = tabs || NAVIGATION_CONFIG;
+  const navTabs = allTabs.filter((tab) => !tab.hideInHeader);
+  const activeTab = allTabs.find((tab) => tab.key === activeKey);
 
   // Update theme color when active tab changes
   useEffect(() => {
@@ -68,8 +69,8 @@ function MobileNavDropdown({
   activeTab,
   tabs,
 }: {
-  activeTab: DashboardTab | undefined;
-  tabs: DashboardTab[];
+  activeTab: NavTab | undefined;
+  tabs: NavTab[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

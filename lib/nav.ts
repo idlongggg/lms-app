@@ -5,47 +5,50 @@ import type { Permission } from "@/lib/permissions";
 // --- Types ---
 
 export interface NavItem {
-  key: string; // i18n key suffix
+  key: string;
   href: string;
   icon: Icon;
   badge?: string;
-  children?: NavItem[];
-  access?: Permission[]; // Required permissions (any of these)
+  access?: Permission[];
 }
 
 export interface NavGroup {
-  key?: string; // i18n key suffix for group title
+  key?: string;
   items: NavItem[];
-  access?: Permission[]; // Required permissions for this group
+  access?: Permission[];
 }
 
-export interface NavSection {
-  key: string; // i18n key suffix for section title (e.g., "admin", "parent", "student")
-  access: Permission[]; // Required permissions to see this section
-  items: NavItem[];
-}
-
-export interface DashboardTab {
-  key: string; // Used for i18n: navigation.tabs.{key}
+export interface NavTab {
+  key: string;
   href: string;
   icon: Icon;
-  color: ThemeKey;
-  access?: Permission[]; // Required permissions (any of these)
+  color?: ThemeKey;
+  access?: Permission[];
+  groups: NavGroup[];
+  hideInHeader?: boolean;
 }
-
-// --- Helpers ---
 
 /**
  * Filter dashboard tabs by access
  */
 export function filterTabs(
-  tabs: DashboardTab[],
+  tabs: NavTab[],
   hasPermission: (permission: string) => boolean,
-): DashboardTab[] {
-  return tabs.filter((tab) => {
-    if (!tab.access || tab.access.length === 0) return true;
-    return tab.access.some((p) => hasPermission(p));
-  });
+): NavTab[] {
+  return tabs
+    .filter((tab) => {
+      // Check tab-level access
+      if (tab.access && tab.access.length > 0) {
+        if (!tab.access.some((p) => hasPermission(p))) return false;
+      }
+      return true;
+    })
+    .map((tab) => ({
+      ...tab,
+      // Filter groups within the tab
+      groups: filterNavGroups(tab.groups, hasPermission),
+    }))
+    .filter((tab) => tab.groups.length > 0 || tab.href === "/dashboard"); // Keep dashboard even if no groups
 }
 
 /**
@@ -81,25 +84,6 @@ export function filterNavGroups(
 }
 
 /**
- * Filter nav sections by access
- */
-export function filterNavSections(
-  sections: NavSection[],
-  hasPermission: (permission: string) => boolean,
-): NavSection[] {
-  return sections
-    .filter((section) => {
-      if (!section.access || section.access.length === 0) return true;
-      return section.access.some((p) => hasPermission(p));
-    })
-    .map((section) => ({
-      ...section,
-      items: filterNavItems(section.items, hasPermission),
-    }))
-    .filter((section) => section.items.length > 0);
-}
-
-/**
  * Get active tab key from pathname
  */
 export function getActiveTabKey(pathname: string): string {
@@ -113,22 +97,20 @@ export function getActiveTabKey(pathname: string): string {
 }
 
 /**
- * Get sidebar navigation for a specific tab key
+ * Get sidebar navigation for a specific tab
  */
-export function getSidebarForTab(
-  sidebars: Record<string, NavGroup[]>,
-  tabKey: string,
-): NavGroup[] {
-  return sidebars[tabKey] || sidebars.overview || [];
+export function getSidebarForTab(tabs: NavTab[], tabKey: string): NavGroup[] {
+  const tab = tabs.find((t) => t.key === tabKey);
+  return tab?.groups || [];
 }
 
 /**
  * Get sidebar navigation based on current path
  */
 export function getSidebarForPath(
-  sidebars: Record<string, NavGroup[]>,
+  tabs: NavTab[],
   pathname: string,
 ): NavGroup[] {
   const tabKey = getActiveTabKey(pathname);
-  return getSidebarForTab(sidebars, tabKey);
+  return getSidebarForTab(tabs, tabKey);
 }

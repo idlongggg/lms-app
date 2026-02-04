@@ -15,11 +15,11 @@ import {
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
-import { filterTabs, getActiveTabKey } from "@/lib/nav";
+import { getSidebarForPath, filterTabs } from "@/lib/nav";
 import { SidebarProvider, useSidebar } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
-import { DASHBOARD_SIDEBARS, DASHBOARD_TABS } from "./nav";
+import { NAVIGATION_CONFIG } from "./nav";
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();
@@ -57,9 +57,8 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
   useScrollPosition(mainRef, "content");
 
-  const tabKey = getActiveTabKey(pathname);
-  const navigation = DASHBOARD_SIDEBARS[tabKey] || DASHBOARD_SIDEBARS.overview;
-  const tabs = filterTabs(DASHBOARD_TABS, hasPermission);
+  const tabs = filterTabs(NAVIGATION_CONFIG, hasPermission);
+  const navigation = getSidebarForPath(tabs, pathname);
   const showTabs = tabs.length > 0;
 
   return (

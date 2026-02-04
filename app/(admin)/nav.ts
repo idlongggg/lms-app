@@ -14,7 +14,7 @@ import {
   TournamentsIcon,
   UsersIcon,
 } from "@/lib/icons";
-import type { NavGroup, NavSection } from "@/lib/nav";
+import type { NavGroup } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/permissions";
 
 // ============================================================================
@@ -74,7 +74,7 @@ export const TENANT_ADMIN_NAV: NavGroup[] = [
 // Admin Sections (for permission-based filtering)
 // ============================================================================
 
-export const ADMIN_SECTIONS: NavSection[] = [
+export const ADMIN_SECTIONS: NavGroup[] = [
   {
     key: "systemAdmin",
     access: [PERMISSIONS.TENANT_READ, PERMISSIONS.TENANT_CREATE],
