@@ -16,7 +16,7 @@ import {
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
 import { getActiveTabKey, getSidebarForPath, filterTabs } from "@/lib/nav";
-import { SidebarProvider, useSidebar, useTranslation } from "@/lib/providers";
+import { useSidebar, useTranslation } from "@/lib/providers";
 
 import { DashboardNav } from "./_components/dashboard-nav";
 import { NAVIGATION_CONFIG } from "./nav";
@@ -88,7 +88,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
             ref={mainRef}
             className="flex h-full flex-1 flex-col overflow-hidden"
           >
-            <div className="border-border shrink-0 border-b-2 pb-4">
+            <div className="border-border shrink-0 border-b-2 pb-4 pt-4">
               <h1 className="text-2xl font-bold tracking-tight">
                 {t(`navigation.tabs.${getActiveTabKey(pathname)}`)}
               </h1>
@@ -100,7 +100,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                 })}
               </p>
             </div>
-            <div className="flex-1 overflow-auto pr-4 pb-4 pt-4 px-2">
+            <div className="flex-1 overflow-auto pr-4 pb-6 pt-6 px-2">
               {children}
             </div>
           </main>
@@ -130,8 +130,6 @@ export default function DashboardLayout({
   }
 
   return (
-    <SidebarProvider>
-      <DashboardContent>{children}</DashboardContent>
-    </SidebarProvider>
+    <DashboardContent>{children}</DashboardContent>
   );
 }

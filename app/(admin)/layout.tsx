@@ -14,7 +14,7 @@ import {
 } from "@/components/shared";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { useScrollPosition } from "@/lib/hooks";
-import { SidebarProvider, useSidebar } from "@/lib/providers";
+import { useSidebar } from "@/lib/providers";
 
 import { getAdminNavByRole } from "./nav";
 
@@ -120,8 +120,6 @@ export default function AdminLayout({
   }
 
   return (
-    <SidebarProvider>
-      <AdminContent>{children}</AdminContent>
-    </SidebarProvider>
+    <AdminContent>{children}</AdminContent>
   );
 }
