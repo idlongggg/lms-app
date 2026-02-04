@@ -4,8 +4,6 @@ import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-
-
 const courses = [
   {
     id: 1,

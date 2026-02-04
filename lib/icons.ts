@@ -15,6 +15,7 @@ import {
   Home,
   LayoutDashboard,
   type LucideIcon,
+  Menu,
   MessageSquare,
   Newspaper,
   Settings,
@@ -80,6 +81,9 @@ export const AboutIcon = Shield;
 export const TermsIcon = Shield;
 export const PrivacyIcon = Shield;
 export const ContactIcon = Shield;
+
+// Shared
+export const MenuIcon = Menu;
 
 // Focus
 export const BackIcon = ArrowLeft;

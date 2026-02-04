@@ -13,8 +13,6 @@ import {
 
 import { useTranslation } from "@/lib/providers";
 
-
-
 const activities = [
   {
     id: 1,

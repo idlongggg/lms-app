@@ -8,8 +8,6 @@ import { LineChart } from "@/components/retroui/charts/LineChart";
 import { PieChart } from "@/components/retroui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
 
-
-
 const learningProgressData = [
   { month: "T1", completed: 12, inProgress: 5 },
   { month: "T2", completed: 18, inProgress: 8 },

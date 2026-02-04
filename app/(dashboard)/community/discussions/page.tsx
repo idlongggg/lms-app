@@ -2,8 +2,6 @@
 
 import { useTranslation } from "@/lib/providers";
 
-
-
 export default function DiscussionsPage() {
   const { t } = useTranslation();
 

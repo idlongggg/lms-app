@@ -6,8 +6,6 @@ import { AreaChart } from "@/components/retroui/charts/AreaChart";
 import { PieChart } from "@/components/retroui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
 
-
-
 const coinHistory = [
   { date: "T1", balance: 1500, earned: 200, spent: 50 },
   { date: "T2", balance: 1800, earned: 400, spent: 100 },

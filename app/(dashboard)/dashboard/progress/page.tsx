@@ -8,8 +8,12 @@ export default function AllProgressPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">{t("navigation.sidebar.allProgress")}</h1>
-        <p className="text-muted-foreground">{t("navigation.sidebar.allProgress")} content coming soon.</p>
+        <h1 className="text-3xl font-bold">
+          {t("navigation.sidebar.allProgress")}
+        </h1>
+        <p className="text-muted-foreground">
+          {t("navigation.sidebar.allProgress")} content coming soon.
+        </p>
       </div>
     </div>
   );

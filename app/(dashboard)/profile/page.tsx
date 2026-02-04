@@ -4,8 +4,6 @@ import { BookOpen, Flame, Mail, Settings, Trophy, User } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-
-
 export default function ProfilePage() {
   const { t } = useTranslation();
 

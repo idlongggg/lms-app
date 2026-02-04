@@ -4,8 +4,6 @@ import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
 
-
-
 const redeemedItems = [
   {
     id: 1,

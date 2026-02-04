@@ -11,8 +11,6 @@ import {
 } from "@/lib/mock/rewards";
 import { useTranslation } from "@/lib/providers";
 
-
-
 export default function RewardsPage() {
   const { user } = useAuth();
   const { t } = useTranslation();

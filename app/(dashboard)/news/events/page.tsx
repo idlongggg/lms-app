@@ -154,181 +154,176 @@ export default function EventsPage() {
           <option>Sự kiện</option>
         </select>
       </div>
-        {/* Featured Event */}
-        {upcomingEvents[0] && (
-          <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
-            <div className="flex flex-col gap-6 lg:flex-row">
-              <div className="border-border bg-primary flex h-32 w-32 shrink-0 items-center justify-center border-2 text-6xl">
-                {upcomingEvents[0].image}
+      {/* Featured Event */}
+      {upcomingEvents[0] && (
+        <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
+          <div className="flex flex-col gap-6 lg:flex-row">
+            <div className="border-border bg-primary flex h-32 w-32 shrink-0 items-center justify-center border-2 text-6xl">
+              {upcomingEvents[0].image}
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className={`border-border border px-2 py-0.5 text-xs font-medium ${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color}`}
+                >
+                  {typeConfig[upcomingEvents[0].type].label}
+                </span>
+                <span className="border-border border bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                  Nổi bật
+                </span>
               </div>
-              <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={`border-border border px-2 py-0.5 text-xs font-medium ${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color}`}
-                  >
-                    {typeConfig[upcomingEvents[0].type].label}
-                  </span>
-                  <span className="border-border border bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                    Nổi bật
-                  </span>
-                </div>
-                <h2 className="mt-2 text-2xl font-bold">
-                  {upcomingEvents[0].title}
-                </h2>
-                <p className="text-muted-foreground mt-2">
-                  {upcomingEvents[0].description}
-                </p>
-                <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    {new Date(upcomingEvents[0].startDate).toLocaleDateString(
-                      "vi-VN",
-                      {
-                        day: "numeric",
-                        month: "long",
-                      },
-                    )}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    {new Date(upcomingEvents[0].startDate).toLocaleTimeString(
-                      "vi-VN",
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      },
-                    )}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    {upcomingEvents[0].location}
-                  </span>
-                  {upcomingEvents[0].participants !== null && (
-                    <span className="flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      {upcomingEvents[0].participants}/
-                      {upcomingEvents[0].maxParticipants}
-                    </span>
+              <h2 className="mt-2 text-2xl font-bold">
+                {upcomingEvents[0].title}
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                {upcomingEvents[0].description}
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
+                <span className="flex items-center gap-1">
+                  <Calendar className="h-4 w-4" />
+                  {new Date(upcomingEvents[0].startDate).toLocaleDateString(
+                    "vi-VN",
+                    {
+                      day: "numeric",
+                      month: "long",
+                    },
                   )}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  {new Date(upcomingEvents[0].startDate).toLocaleTimeString(
+                    "vi-VN",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    },
+                  )}
+                </span>
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-4 w-4" />
+                  {upcomingEvents[0].location}
+                </span>
+                {upcomingEvents[0].participants !== null && (
                   <span className="flex items-center gap-1">
-                    <Gift className="h-4 w-4" />
-                    {upcomingEvents[0].rewards}
+                    <Users className="h-4 w-4" />
+                    {upcomingEvents[0].participants}/
+                    {upcomingEvents[0].maxParticipants}
                   </span>
-                </div>
-              </div>
-              <div className="flex shrink-0 flex-col gap-2">
-                <button className="border-border bg-primary border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-                  Đăng ký ngay
-                </button>
-                <button className="border-border bg-background border px-6 py-2 text-sm">
-                  Thêm vào lịch
-                </button>
+                )}
+                <span className="flex items-center gap-1">
+                  <Gift className="h-4 w-4" />
+                  {upcomingEvents[0].rewards}
+                </span>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Upcoming Events */}
-        <div className="space-y-4">
-          <h2 className="font-bold">Sắp diễn ra</h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {upcomingEvents.slice(1).map((event) => {
-              const type = typeConfig[event.type];
-              const status = statusConfig[event.status];
-              return (
-                <div
-                  key={event.id}
-                  className="border-border bg-background border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div className="flex gap-4 p-4">
-                    <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
-                      {event.image}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className={`border-border border px-2 py-0.5 text-xs font-medium ${type.bgColor} ${type.color}`}
-                        >
-                          {type.label}
-                        </span>
-                        <span
-                          className={`border-border border px-2 py-0.5 text-xs font-medium ${status.bgColor} ${status.color}`}
-                        >
-                          {status.label}
-                        </span>
-                      </div>
-                      <h3 className="mt-1 font-bold">{event.title}</h3>
-                      <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(event.startDate).toLocaleDateString(
-                            "vi-VN",
-                          )}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {new Date(event.startDate).toLocaleTimeString(
-                            "vi-VN",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            },
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    <ChevronRight className="text-muted-foreground h-5 w-5 shrink-0 self-center" />
-                  </div>
-                  <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
-                    <span className="flex items-center gap-1">
-                      <Gift className="h-4 w-4" />
-                      {event.rewards}
-                    </span>
-                    <button className="text-secondary font-medium hover:underline">
-                      Chi tiết
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+            <div className="flex shrink-0 flex-col gap-2">
+              <button className="border-border bg-primary border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+                Đăng ký ngay
+              </button>
+              <button className="border-border bg-background border px-6 py-2 text-sm">
+                Thêm vào lịch
+              </button>
+            </div>
           </div>
         </div>
+      )}
 
-        {/* Past Events */}
-        <div className="space-y-4">
-          <h2 className="font-bold">Đã kết thúc</h2>
-          <div className="space-y-2">
-            {pastEvents.map((event) => {
-              const status = statusConfig[event.status];
-              return (
-                <div
-                  key={event.id}
-                  className="border-border bg-background flex items-center gap-4 border-2 p-3 opacity-70"
-                >
-                  <div className="border-border bg-muted flex h-10 w-10 shrink-0 items-center justify-center border text-xl">
+      {/* Upcoming Events */}
+      <div className="space-y-4">
+        <h2 className="font-bold">Sắp diễn ra</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          {upcomingEvents.slice(1).map((event) => {
+            const type = typeConfig[event.type];
+            const status = statusConfig[event.status];
+            return (
+              <div
+                key={event.id}
+                className="border-border bg-background border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="flex gap-4 p-4">
+                  <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
                     {event.image}
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-medium">{event.title}</h3>
+                    <div className="flex flex-wrap items-center gap-2">
                       <span
-                        className={`px-1.5 py-0.5 text-xs ${status.bgColor} ${status.color}`}
+                        className={`border-border border px-2 py-0.5 text-xs font-medium ${type.bgColor} ${type.color}`}
+                      >
+                        {type.label}
+                      </span>
+                      <span
+                        className={`border-border border px-2 py-0.5 text-xs font-medium ${status.bgColor} ${status.color}`}
                       >
                         {status.label}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm">
-                      {new Date(event.startDate).toLocaleDateString("vi-VN")}
-                    </p>
+                    <h3 className="mt-1 font-bold">{event.title}</h3>
+                    <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(event.startDate).toLocaleDateString("vi-VN")}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {new Date(event.startDate).toLocaleTimeString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
                   </div>
-                  <button className="text-muted-foreground hover:text-foreground text-sm">
-                    Xem kết quả
+                  <ChevronRight className="text-muted-foreground h-5 w-5 shrink-0 self-center" />
+                </div>
+                <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
+                  <span className="flex items-center gap-1">
+                    <Gift className="h-4 w-4" />
+                    {event.rewards}
+                  </span>
+                  <button className="text-secondary font-medium hover:underline">
+                    Chi tiết
                   </button>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
+      </div>
+
+      {/* Past Events */}
+      <div className="space-y-4">
+        <h2 className="font-bold">Đã kết thúc</h2>
+        <div className="space-y-2">
+          {pastEvents.map((event) => {
+            const status = statusConfig[event.status];
+            return (
+              <div
+                key={event.id}
+                className="border-border bg-background flex items-center gap-4 border-2 p-3 opacity-70"
+              >
+                <div className="border-border bg-muted flex h-10 w-10 shrink-0 items-center justify-center border text-xl">
+                  {event.image}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-medium">{event.title}</h3>
+                    <span
+                      className={`px-1.5 py-0.5 text-xs ${status.bgColor} ${status.color}`}
+                    >
+                      {status.label}
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground text-sm">
+                    {new Date(event.startDate).toLocaleDateString("vi-VN")}
+                  </p>
+                </div>
+                <button className="text-muted-foreground hover:text-foreground text-sm">
+                  Xem kết quả
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
