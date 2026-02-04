@@ -1,12 +1,13 @@
 import Link from "next/link";
 
 import {
-  Footer,
   Header,
   LanguageSwitcher,
   Logo,
   ThemeToggle,
 } from "@/components/shared";
+
+import { Footer } from "./_components";
 
 function AuthButtons() {
   return (

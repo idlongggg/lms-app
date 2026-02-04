@@ -6,7 +6,6 @@ import { useRef } from "react";
 
 import { Loader } from "@/components/retroui";
 import {
-  DashboardNav,
   Header,
   LanguageSwitcher,
   Logo,
@@ -19,6 +18,8 @@ import type { UserRole } from "@/lib/auth/types";
 import { useScrollPosition } from "@/lib/hooks";
 import { getSidebarForPath, getTabsByRole } from "@/lib/navigation";
 import { SidebarProvider, useSidebar } from "@/lib/providers";
+
+import { DashboardNav } from "./_components/dashboard-nav";
 
 function MobileMenuButton() {
   const { openMobile } = useSidebar();

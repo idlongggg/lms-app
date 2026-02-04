@@ -5,13 +5,16 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { Button, Card, Progress } from "@/components/retroui";
-import { PageLayout } from "@/components/shared";
 import { Can, useAuth } from "@/lib/auth";
 import { PERMISSIONS } from "@/lib/auth/types";
 import { getSubjectsWithProgress } from "@/lib/mock/courses";
 import { useTranslation } from "@/lib/providers";
 
-import { TeacherClassesSection, TeacherQuestionsSection } from "./_components";
+import {
+  PageLayout,
+  TeacherClassesSection,
+  TeacherQuestionsSection,
+} from "../_components";
 
 type FilterType = "all" | "in-progress" | "completed" | "not-started";
 

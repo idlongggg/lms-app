@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Logo } from "./logo";
+import { Logo } from "@/components/shared";
 
 const footerLinks = {
   product: {

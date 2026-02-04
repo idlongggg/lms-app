@@ -4,7 +4,6 @@ import { Clock, Medal, Swords, Target, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 
 import { Button, Card } from "@/components/retroui";
-import { PageLayout } from "@/components/shared";
 import { Can, useAuth } from "@/lib/auth";
 import { PERMISSIONS } from "@/lib/auth/types";
 import {
@@ -18,8 +17,9 @@ import { useTranslation } from "@/lib/providers";
 import {
   CreateTournamentSection,
   JoinTournamentSection,
+  PageLayout,
   ParentTournamentSection,
-} from "./_components";
+} from "../_components";
 
 export default function TournamentPage() {
   const { user } = useAuth();

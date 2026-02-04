@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
-import { FocusHeader } from "@/components/shared";
+import { FocusHeader } from "../../_components";
 
 export default function LearningDetailPage() {
   return (

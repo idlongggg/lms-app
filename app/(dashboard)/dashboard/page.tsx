@@ -3,7 +3,6 @@
 import { BookOpen, Coins, Flame, Star, Target, Trophy } from "lucide-react";
 import Link from "next/link";
 
-import { PageLayout } from "@/components/shared";
 import { Can, useAuth } from "@/lib/auth";
 import { PERMISSIONS } from "@/lib/auth/types";
 import {
@@ -17,7 +16,11 @@ import {
 } from "@/lib/mock/tournaments";
 import { useTranslation } from "@/lib/providers";
 
-import { ParentChildrenSection, TeacherClassesSection } from "./_components";
+import {
+  PageLayout,
+  ParentChildrenSection,
+  TeacherClassesSection,
+} from "../_components";
 
 export default function DashboardPage() {
   const { user } = useAuth();

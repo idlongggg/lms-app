@@ -2,7 +2,7 @@
 
 import { Clock, User, Zap } from "lucide-react";
 
-import { FocusHeader } from "@/components/shared";
+import { FocusHeader } from "../../../_components";
 
 export default function LiveMatchPage() {
   return (
