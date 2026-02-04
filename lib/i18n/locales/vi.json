@@ -270,7 +270,47 @@
     },
     "redeemed": {
       "title": "Đã đổi",
-      "description": "Quản lý các phần thưởng đã đổi"
+      "description": "Quản lý các phần thưởng đã đổi",
+      "redeemedOn": "Đổi ngày",
+      "currentCoins": "Xu hiện có",
+      "redeemedCount": "Đã đổi",
+      "totalSpent": "Tổng xu đã tiêu",
+      "redeemedTitle": "Quà đã đổi",
+      "featuredTitle": "Quà nổi bật",
+      "allRewardsTitle": "Tất cả phần quà",
+      "howToEarn": "Cách kiếm xu",
+      "earnMethods": {
+        "lesson": "Hoàn thành bài học",
+        "lessonDesc": "+10 xu/bài",
+        "tournament": "Thắng thách đấu",
+        "tournamentDesc": "+50 xu/trận",
+        "streak": "Streak hàng ngày",
+        "streakDesc": "+20 xu/ngày",
+        "invite": "Mời bạn bè",
+        "inviteDesc": "+100 xu/người"
+      },
+      "actions": {
+        "owned": "Đã sở hữu",
+        "outOfStock": "Hết hàng",
+        "insufficientCoins": "Không đủ xu",
+        "redeem": "Đổi ngay"
+      },
+      "status": {
+        "ACTIVE": "Đang sử dụng",
+        "APPLIED": "Đã áp dụng",
+        "EXPIRED": "Đã hết hạn"
+      },
+      "categories": {
+        "avatar": "Avatar",
+        "theme": "Giao diện",
+        "voucher": "Voucher",
+        "item": "Vật phẩm",
+        "booster": "Booster"
+      },
+      "stock": {
+        "left": "Còn {{count}}",
+        "unlimited": "Không giới hạn"
+      }
     }
   },
   "news": {

@@ -11,7 +11,7 @@ import { Footer } from "./_components";
 
 function AuthButtons() {
   return (
-    <div className="flex items-center gap-2">
+    <nav className="flex items-center gap-2" aria-label="Authentication">
       <Link
         href="/auth/login"
         className="hover:bg-muted hidden px-4 py-2 font-medium transition-colors sm:block"
@@ -24,7 +24,7 @@ function AuthButtons() {
       >
         Đăng ký
       </Link>
-    </div>
+    </nav>
   );
 }
 

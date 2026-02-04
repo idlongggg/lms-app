@@ -270,7 +270,47 @@
     },
     "redeemed": {
       "title": "Redeemed",
-      "description": "Manage your redeemed rewards"
+      "description": "Manage your redeemed rewards",
+      "redeemedOn": "Redeemed on",
+      "currentCoins": "Current Coins",
+      "redeemedCount": "Redeemed",
+      "totalSpent": "Total Spent",
+      "redeemedTitle": "Redeemed Rewards",
+      "featuredTitle": "Featured Rewards",
+      "allRewardsTitle": "All Rewards",
+      "howToEarn": "How to Earn Coins",
+      "earnMethods": {
+        "lesson": "Complete Lessons",
+        "lessonDesc": "+10 coins/lesson",
+        "tournament": "Win Tournaments",
+        "tournamentDesc": "+50 coins/match",
+        "streak": "Daily Streak",
+        "streakDesc": "+20 coins/day",
+        "invite": "Invite Friends",
+        "inviteDesc": "+100 coins/person"
+      },
+      "actions": {
+        "owned": "Owned",
+        "outOfStock": "Out of Stock",
+        "insufficientCoins": "Insufficient Coins",
+        "redeem": "Redeem Now"
+      },
+      "status": {
+        "ACTIVE": "Active",
+        "APPLIED": "Applied",
+        "EXPIRED": "Expired"
+      },
+      "categories": {
+        "avatar": "Avatar",
+        "theme": "Theme",
+        "voucher": "Voucher",
+        "item": "Item",
+        "booster": "Booster"
+      },
+      "stock": {
+        "left": "{{count}} left",
+        "unlimited": "Unlimited"
+      }
     }
   },
   "news": {

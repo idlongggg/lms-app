@@ -384,21 +384,12 @@ export interface RewardCard {
   description: string;
   image: string;
   cost: number;
-  category: string;
-  categoryLabel: string;
+  category: Reward["category"];
   type: RewardType;
   inStock: boolean;
   stock: number | null;
   owned: boolean;
 }
-
-const categoryLabels: Record<Reward["category"], string> = {
-  avatar: "Avatar",
-  theme: "Giao diện",
-  voucher: "Voucher",
-  item: "Vật phẩm",
-  booster: "Booster",
-};
 
 export function getRewardCards(userId: string): RewardCard[] {
   const inventory = getUserInventory(userId);
@@ -412,7 +403,6 @@ export function getRewardCards(userId: string): RewardCard[] {
       image: r.imageUrl || "https://placehold.co/200x200/333/white?text=Reward",
       cost: r.cost,
       category: r.category,
-      categoryLabel: categoryLabels[r.category],
       type: r.type,
       inStock: r.stock === null || r.stock > 0,
       stock: r.stock,
@@ -426,19 +416,12 @@ export interface RedeemedItem {
   name: string;
   description: string;
   image: string;
-  category: string;
+  category: Reward["category"];
   status: InventoryStatus;
-  statusLabel: string;
   equipped: boolean;
   acquiredAt: string;
   expiresAt: string | null;
 }
-
-const statusLabels: Record<InventoryStatus, string> = {
-  ACTIVE: "Đang sử dụng",
-  APPLIED: "Đã áp dụng",
-  EXPIRED: "Đã hết hạn",
-};
 
 export function getRedeemedItems(userId: string): RedeemedItem[] {
   return getUserInventory(userId).map((i) => ({
@@ -447,9 +430,8 @@ export function getRedeemedItems(userId: string): RedeemedItem[] {
     description: i.reward.description,
     image:
       i.reward.imageUrl || "https://placehold.co/200x200/333/white?text=Item",
-    category: categoryLabels[i.reward.category],
+    category: i.reward.category,
     status: i.status,
-    statusLabel: statusLabels[i.status],
     equipped: i.equipped,
     acquiredAt: i.acquiredAt,
     expiresAt: i.expiresAt,

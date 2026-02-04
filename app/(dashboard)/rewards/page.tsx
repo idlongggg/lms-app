@@ -33,7 +33,9 @@ export default function RewardsPage() {
       actions={
         <div className="border-border bg-primary flex items-center gap-2 border-2 px-4 py-2 shadow-sm">
           <Coins className="h-5 w-5" />
-          <span className="font-bold">{user.coins.toLocaleString()} xu</span>
+          <span className="font-bold">
+            {user.coins.toLocaleString()} {t("dashboard.coins")}
+          </span>
         </div>
       }
     >
@@ -46,7 +48,9 @@ export default function RewardsPage() {
                 <Coins className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Xu hiện có</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.currentCoins")}
+                </p>
                 <p className="text-xl font-bold">
                   {user.coins.toLocaleString()}
                 </p>
@@ -59,8 +63,10 @@ export default function RewardsPage() {
                 <Gift className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Đã đổi</p>
-                <p className="text-xl font-bold">{redeemedItems.length} quà</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.redeemedCount")}
+                </p>
+                <p className="text-xl font-bold">{redeemedItems.length}</p>
               </div>
             </div>
           </div>
@@ -70,7 +76,9 @@ export default function RewardsPage() {
                 <Star className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Tổng xu đã tiêu</p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.totalSpent")}
+                </p>
                 <p className="text-xl font-bold">
                   {coinStats.totalSpent.toLocaleString()}
                 </p>
@@ -83,12 +91,14 @@ export default function RewardsPage() {
         {redeemedItems.length > 0 && (
           <div>
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold">Quà đã đổi</h2>
+              <h2 className="text-xl font-bold">
+                {t("rewards.redeemed.redeemedTitle")}
+              </h2>
               <Link
                 href="/rewards/history"
                 className="text-primary text-sm hover:underline"
               >
-                Xem tất cả →
+                {t("common.viewAll")} →
               </Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -102,7 +112,7 @@ export default function RewardsPage() {
                   </div>
                   <h3 className="text-sm font-medium">{item.name}</h3>
                   <p className="text-muted-foreground mt-1 text-xs">
-                    Đổi ngày{" "}
+                    {t("rewards.redeemed.redeemedOn")}{" "}
                     {new Date(item.acquiredAt).toLocaleDateString("vi-VN")}
                   </p>
                   <div
@@ -114,7 +124,7 @@ export default function RewardsPage() {
                           : "border-yellow-500 bg-yellow-500/10 text-yellow-500"
                     }`}
                   >
-                    {item.statusLabel}
+                    {t(`rewards.redeemed.status.${item.status}`)}
                   </div>
                 </div>
               ))}
@@ -124,7 +134,9 @@ export default function RewardsPage() {
 
         {/* Featured Rewards */}
         <div>
-          <h2 className="mb-4 text-xl font-bold">Quà nổi bật</h2>
+          <h2 className="mb-4 text-xl font-bold">
+            {t("rewards.redeemed.featuredTitle")}
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {featuredRewards.map((reward) => {
               const canAfford = user.coins >= reward.cost;
@@ -152,8 +164,10 @@ export default function RewardsPage() {
                     </div>
                     <span className="text-muted-foreground text-xs">
                       {reward.stock !== null
-                        ? `Còn ${reward.stock}`
-                        : "Không giới hạn"}
+                        ? t("rewards.redeemed.stock.left", {
+                            count: reward.stock,
+                          })
+                        : t("rewards.redeemed.stock.unlimited")}
                     </span>
                   </div>
                   <button
@@ -165,12 +179,12 @@ export default function RewardsPage() {
                     }`}
                   >
                     {reward.owned
-                      ? "Đã sở hữu"
+                      ? t("rewards.redeemed.actions.owned")
                       : !isInStock
-                        ? "Hết hàng"
+                        ? t("rewards.redeemed.actions.outOfStock")
                         : !canAfford
-                          ? "Không đủ xu"
-                          : "Đổi ngay"}
+                          ? t("rewards.redeemed.actions.insufficientCoins")
+                          : t("rewards.redeemed.actions.redeem")}
                   </button>
                 </div>
               );
@@ -180,7 +194,9 @@ export default function RewardsPage() {
 
         {/* All Rewards */}
         <div>
-          <h2 className="mb-4 text-xl font-bold">Tất cả phần quà</h2>
+          <h2 className="mb-4 text-xl font-bold">
+            {t("rewards.redeemed.allRewardsTitle")}
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {rewardCards.slice(4).map((reward) => {
               const canAfford = user.coins >= reward.cost;
@@ -205,8 +221,10 @@ export default function RewardsPage() {
                     </div>
                     <span className="text-muted-foreground text-xs">
                       {reward.stock !== null
-                        ? `Còn ${reward.stock}`
-                        : "Không giới hạn"}
+                        ? t("rewards.redeemed.stock.left", {
+                            count: reward.stock,
+                          })
+                        : t("rewards.redeemed.stock.unlimited")}
                     </span>
                   </div>
                   <button
@@ -218,12 +236,12 @@ export default function RewardsPage() {
                     }`}
                   >
                     {reward.owned
-                      ? "Đã sở hữu"
+                      ? t("rewards.redeemed.actions.owned")
                       : !isInStock
-                        ? "Hết hàng"
+                        ? t("rewards.redeemed.actions.outOfStock")
                         : !canAfford
-                          ? "Không đủ xu"
-                          : "Đổi ngay"}
+                          ? t("rewards.redeemed.actions.insufficientCoins")
+                          : t("rewards.redeemed.actions.redeem")}
                   </button>
                 </div>
               );
@@ -233,15 +251,21 @@ export default function RewardsPage() {
 
         {/* How to earn */}
         <div className="border-border bg-muted/50 border-2 p-6">
-          <h2 className="mb-4 text-xl font-bold">Cách kiếm xu</h2>
+          <h2 className="mb-4 text-xl font-bold">
+            {t("rewards.redeemed.howToEarn")}
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="flex items-start gap-3">
               <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
                 1
               </div>
               <div>
-                <p className="font-medium">Hoàn thành bài học</p>
-                <p className="text-muted-foreground text-sm">+10 xu/bài</p>
+                <p className="font-medium">
+                  {t("rewards.redeemed.earnMethods.lesson")}
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.earnMethods.lessonDesc")}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -249,8 +273,12 @@ export default function RewardsPage() {
                 2
               </div>
               <div>
-                <p className="font-medium">Thắng thách đấu</p>
-                <p className="text-muted-foreground text-sm">+50 xu/trận</p>
+                <p className="font-medium">
+                  {t("rewards.redeemed.earnMethods.tournament")}
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.earnMethods.tournamentDesc")}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -258,8 +286,12 @@ export default function RewardsPage() {
                 3
               </div>
               <div>
-                <p className="font-medium">Streak hàng ngày</p>
-                <p className="text-muted-foreground text-sm">+20 xu/ngày</p>
+                <p className="font-medium">
+                  {t("rewards.redeemed.earnMethods.streak")}
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.earnMethods.streakDesc")}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -267,8 +299,12 @@ export default function RewardsPage() {
                 4
               </div>
               <div>
-                <p className="font-medium">Mời bạn bè</p>
-                <p className="text-muted-foreground text-sm">+100 xu/người</p>
+                <p className="font-medium">
+                  {t("rewards.redeemed.earnMethods.invite")}
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  {t("rewards.redeemed.earnMethods.inviteDesc")}
+                </p>
               </div>
             </div>
           </div>
