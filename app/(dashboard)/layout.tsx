@@ -88,7 +88,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
             ref={mainRef}
             className="flex h-full flex-1 flex-col overflow-hidden"
           >
-            <div className="border-border mb-6 shrink-0 border-b-2 pb-4">
+            <div className="border-border shrink-0 border-b-2 pb-4">
               <h1 className="text-2xl font-bold tracking-tight">
                 {t(`navigation.tabs.${getActiveTabKey(pathname)}`)}
               </h1>
@@ -100,7 +100,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                 })}
               </p>
             </div>
-            <div className="flex-1 overflow-auto pr-6 pb-6">
+            <div className="flex-1 overflow-auto pr-4 pb-4 pt-4 px-2">
               {children}
             </div>
           </main>
