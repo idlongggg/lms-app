@@ -1,1 +1,1 @@
-export * from "./focus-header";
+export * from "./FocusHeader";

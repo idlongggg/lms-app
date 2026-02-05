@@ -1,2 +1,2 @@
-export * from "./teacher-classes-section";
-export * from "./teacher-questions-section";
+export * from "./TeacherClassesSection";
+export * from "./TeacherQuestionsSection";

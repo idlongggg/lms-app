@@ -24,7 +24,8 @@
     "all": "All",
     "details": "Details",
     "register": "Register",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "noResults": "No results found."
   },
   "auth": {
     "login": "Login",

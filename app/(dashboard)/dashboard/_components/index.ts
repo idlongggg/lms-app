@@ -1,2 +1,2 @@
-export * from "./parent-children-section";
-export * from "./teacher-classes-section";
+export * from "./ParentChildrenSection";
+export * from "./TeacherClassesSection";

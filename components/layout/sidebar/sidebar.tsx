@@ -2,12 +2,11 @@
 
 import { type RefObject } from "react";
 
-import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui";
 import { CloseIcon, CollapseIcon, ExpandIcon } from "@/lib/constants/icons";
 import type { NavGroup } from "@/lib/nav";
 
-import { SidebarNav } from "./sidebar-nav";
+import { SidebarNav } from "./SidebarNav";
 
 export interface SidebarProps {
   navigation: NavGroup[];
@@ -51,7 +50,6 @@ export function Sidebar({
       >
         {/* Mobile Header */}
         <div className="border-border flex h-16 items-center justify-between border-b-2 px-4 md:hidden">
-          <Logo title="LMS" />
           <Button
             variant="outline"
             size="icon"

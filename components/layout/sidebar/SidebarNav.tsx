@@ -5,7 +5,7 @@ import { type RefObject } from "react";
 import { Text } from "@/components/ui";
 import type { NavGroup } from "@/lib/nav";
 
-import { SidebarItem } from "./sidebar-item";
+import { SidebarItem } from "./SidebarItem";
 
 export interface SidebarNavProps {
   navigation: NavGroup[];

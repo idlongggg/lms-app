@@ -24,7 +24,8 @@
     "all": "Tất cả",
     "details": "Chi tiết",
     "register": "Đăng ký",
-    "backToHome": "Quay lại trang chủ"
+    "backToHome": "Quay lại trang chủ",
+    "noResults": "Không tìm thấy kết quả."
   },
   "auth": {
     "login": "Đăng nhập",

@@ -13,7 +13,7 @@ import {
   ThemeToggle,
   UserMenu,
 } from "@/components/layout";
-import { Button, Loader } from "@/components/ui";
+import { Button, Loader, Text } from "@/components/ui";
 import { useScrollPosition } from "@/hooks";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import { filterTabs, getActiveTabKey, getSidebarForPath } from "@/lib/nav";
@@ -24,8 +24,11 @@ import {
   useTranslation,
 } from "@/lib/providers";
 
-import { DashboardNav } from "./_components/dashboard-nav";
+import { DashboardNav } from "./_components/DashboardNav";
 import { NAV } from "./nav";
+import { LogoIcon } from "@/lib/constants";
+import Link from "next/link";
+import { title } from "process";
 
 export default function DashboardLayout({
   children,
@@ -83,18 +86,26 @@ export default function DashboardLayout({
   );
 
   return (
-    <div className="bg-background flex h-screen flex-col overflow-hidden">
+    <>
       <Header
         left={
           <>
             <MobileMenuButton onClick={openMobile} />
-            <Logo />
+
+            <Link href="/" className="flex items-center gap-2">
+              <Button size="icon" className="size-9">
+                <Logo />
+              </Button>
+              <Text as="h3" className="font-bold">
+                {t("app.name")}
+              </Text>
+            </Link>
           </>
         }
         center={showTabs ? <DashboardNav tabs={tabs} /> : undefined}
         right={
           <>
-            <Search />
+            <Search t={t} />
             <LanguageSwitcher
               currentLanguage={currentLanguage}
               languages={languages}
@@ -115,26 +126,31 @@ export default function DashboardLayout({
           </>
         }
       />
-      <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden pt-6">
-        <div className="flex h-full">
-          <Sidebar
-            navigation={navigation}
-            isCollapsed={isCollapsed}
-            isMobileOpen={isMobileOpen}
-            toggle={toggle}
-            closeMobile={closeMobile}
-            pathname={pathname}
-            t={t}
-            sidebarRef={sidebarRef}
-          />
-          <main ref={mainRef} className="flex flex-1 flex-col overflow-hidden">
-            <div className="border-border shrink-0 border-b-2 px-6 py-3">
-              {pageHeader}
-            </div>
-            <div className="flex-1 overflow-auto p-6">{children}</div>
-          </main>
+      <div className="bg-background flex h-screen flex-col overflow-hidden">
+        <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden pt-6">
+          <div className="flex h-full">
+            <Sidebar
+              navigation={navigation}
+              isCollapsed={isCollapsed}
+              isMobileOpen={isMobileOpen}
+              toggle={toggle}
+              closeMobile={closeMobile}
+              pathname={pathname}
+              t={t}
+              sidebarRef={sidebarRef}
+            />
+            <main
+              ref={mainRef}
+              className="flex flex-1 flex-col overflow-hidden"
+            >
+              <div className="border-border shrink-0 border-b-2 px-6 py-3">
+                {pageHeader}
+              </div>
+              <div className="flex-1 overflow-auto p-6">{children}</div>
+            </main>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

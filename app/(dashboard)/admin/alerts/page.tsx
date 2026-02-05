@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/Button";
 import { mockAlertRules, mockAlerts } from "@/data/alerts";
 import { useAuth } from "@/lib/auth";
 
-import { AddRuleDialog } from "./_components/add-rule-dialog";
-import { AlertRulesTable } from "./_components/alert-rules-table";
-import { AlertsFilter } from "./_components/alerts-filter";
-import { AlertsList } from "./_components/alerts-list";
-import { AlertsSummary } from "./_components/alerts-summary";
+import { AddRuleDialog } from "./_components/AddRuleDialog";
+import { AlertRulesTable } from "./_components/AlertRulesTable";
+import { AlertsFilter } from "./_components/AlertsFilter";
+import { AlertsList } from "./_components/AlertsList";
+import { AlertsSummary } from "./_components/AlertsSummary";
 
 export default function AdminAlertsPage() {
   const { user } = useAuth();

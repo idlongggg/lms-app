@@ -1,3 +1,3 @@
-export * from "./create-tournament-section";
-export * from "./join-tournament-section";
-export * from "./parent-tournament-section";
+export * from "./CreateTournamentSection";
+export * from "./JoinTournamentSection";
+export * from "./ParentTournamentSection";
