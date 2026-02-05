@@ -87,6 +87,8 @@
       "admin": "Quản trị"
     },
     "sidebar": {
+      "systemAdmin": "Quản trị hệ thống",
+      "tenantAdmin": "Quản trị trường",
       "dashboard": "Bảng điều khiển",
       "overview": "Tổng quan",
       "stats": "Thống kê",
@@ -163,7 +165,30 @@
       "content": "Nội dung",
       "tournaments": "Giải đấu",
       "reports": "Báo cáo",
-      "statistics": "Thống kê"
+      "statistics": "Thống kê",
+      "activity": {
+        "title": "Hoạt động",
+        "description": "Nhật ký hoạt động hệ thống",
+        "types": {
+          "info": "Thông tin",
+          "success": "Thành công",
+          "warning": "Cảnh báo",
+          "error": "Lỗi"
+        }
+      },
+      "roles": {
+        "root-admin": "Admin hệ thống",
+        "tenant-admin": "Admin trường",
+        "teacher": "Giáo viên",
+        "student": "Học sinh",
+        "parent": "Phụ huynh"
+      },
+      "status": {
+        "active": "Hoạt động",
+        "pending": "Chờ duyệt",
+        "suspended": "Đã khóa",
+        "inactive": "Không hoạt động"
+      }
     },
     "public": {
       "features": "Tính năng",
@@ -192,6 +217,30 @@
   "dashboard": {
     "welcome": "Xin chào",
     "welcomeBack": "Chào mừng trở lại! Hôm nay bạn muốn học gì?",
+    "learning": {
+      "description": "Quản lý các khóa học và tiến độ học tập của bạn"
+    },
+    "overview": {
+      "description": "Tổng quan về hành trình học tập và hoạt động"
+    },
+    "tournament": {
+      "description": "Thử thách bản thân và giành chiến thắng"
+    },
+    "community": {
+      "description": "Kết nối, chia sẻ và học hỏi cùng nhau"
+    },
+    "news": {
+      "description": "Cập nhật tin tức và sự kiện mới nhất"
+    },
+    "profile": {
+      "description": "Quản lý thông tin cá nhân của bạn"
+    },
+    "rewards": {
+      "description": "Đổi xu lấy phần thưởng hấp dẫn"
+    },
+    "admin": {
+      "description": "Bảng điều khiển hệ thống"
+    },
     "activity": {
       "title": "Hoạt động",
       "description": "Xem lại lịch sử hoạt động học tập của bạn"
@@ -245,8 +294,7 @@
       "inProgress": "Đang học",
       "completed": "Hoàn thành",
       "notStarted": "Chưa bắt đầu"
-    },
-    "noSubjects": "Không có môn học nào trong danh mục này"
+    }
   },
   "tournament": {
     "title": "Giải đấu",

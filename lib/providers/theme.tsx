@@ -50,8 +50,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Initialize theme and preset from localStorage on mount
   useEffect(() => {
     queueMicrotask(() => {
-      const storedTheme = (localStorage.getItem(STORAGE_KEY) as Theme) || "light";
-      const storedPreset = (localStorage.getItem(PRESET_STORAGE_KEY) as ThemeKey) || "preset00";
+      const storedTheme =
+        (localStorage.getItem(STORAGE_KEY) as Theme) || "light";
+      const storedPreset =
+        (localStorage.getItem(PRESET_STORAGE_KEY) as ThemeKey) || "preset00";
 
       const validPreset = THEME[storedPreset] ? storedPreset : "preset00";
 

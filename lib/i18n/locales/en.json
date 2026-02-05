@@ -87,6 +87,8 @@
       "admin": "Admin"
     },
     "sidebar": {
+      "systemAdmin": "System Admin",
+      "tenantAdmin": "School Admin",
       "dashboard": "Dashboard",
       "overview": "Overview",
       "stats": "Statistics",
@@ -163,7 +165,30 @@
       "content": "Content",
       "tournaments": "Tournaments",
       "reports": "Reports",
-      "statistics": "Statistics"
+      "statistics": "Statistics",
+      "activity": {
+        "title": "Activity",
+        "description": "System activity log",
+        "types": {
+          "info": "Info",
+          "success": "Success",
+          "warning": "Warning",
+          "error": "Error"
+        }
+      },
+      "roles": {
+        "root-admin": "System Admin",
+        "tenant-admin": "School Admin",
+        "teacher": "Teacher",
+        "student": "Student",
+        "parent": "Parent"
+      },
+      "status": {
+        "active": "Active",
+        "pending": "Pending",
+        "suspended": "Suspended",
+        "inactive": "Inactive"
+      }
     },
     "public": {
       "features": "Features",
@@ -192,6 +217,30 @@
   "dashboard": {
     "welcome": "Welcome",
     "welcomeBack": "Welcome back! What do you want to learn today?",
+    "learning": {
+      "description": "Manage your courses and learning progress"
+    },
+    "overview": {
+      "description": "Overview of your learning journey & activities"
+    },
+    "tournament": {
+      "description": "Challenge yourself and win"
+    },
+    "community": {
+      "description": "Connect, share and learn together"
+    },
+    "news": {
+      "description": "Latest news and events updates"
+    },
+    "profile": {
+      "description": "Manage your personal information"
+    },
+    "rewards": {
+      "description": "Exchange coins for attractive rewards"
+    },
+    "admin": {
+      "description": "System Dashboard"
+    },
     "activity": {
       "title": "Activity",
       "description": "Review your learning activity history"
@@ -245,8 +294,7 @@
       "inProgress": "In Progress",
       "completed": "Completed",
       "notStarted": "Not Started"
-    },
-    "noSubjects": "No subjects found in this category"
+    }
   },
   "tournament": {
     "title": "Tournaments",

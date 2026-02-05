@@ -73,10 +73,14 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
               <Text as="p" className="truncate font-medium">
                 {fullName}
               </Text>
-              <Text as="p" className="text-muted-foreground truncate text-xs">
+              <Text
+                as="p"
+                className="text-muted-foreground truncate pb-1 text-xs"
+              >
                 {user.email}
               </Text>
               <Badge
+                size="sm"
                 className="mt-1 text-white"
                 style={{ backgroundColor: user.role.color }}
               >
@@ -102,19 +106,19 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
         {/* Menu Items */}
         <div className="py-1">
           <Menu.Item asChild>
-            <Link href="/profile" className="flex items-center gap-3">
+            <Link href="/profile" className="gap-2">
               <ProfileIcon className="h-4 w-4" />
               <span>{t("navigation.sidebar.profile")}</span>
             </Link>
           </Menu.Item>
           <Menu.Item asChild>
-            <Link href="/rewards" className="flex items-center gap-3">
-              <RedeemedIcon className="h-4 w-4 text-pink-500" />
+            <Link href="/rewards" className="gap-2">
+              <RedeemedIcon className="h-4 w-4" />
               <span>{t("rewards.title")}</span>
             </Link>
           </Menu.Item>
           <Menu.Item asChild>
-            <Link href="/profile/settings" className="flex items-center gap-3">
+            <Link href="/profile/settings" className="gap-2">
               <SettingsIcon className="h-4 w-4" />
               <span>{t("navigation.sidebar.settings")}</span>
             </Link>
@@ -123,10 +127,7 @@ export function UserMenu({ user, logout, isAuthenticated, t }: UserMenuProps) {
 
         {/* Logout */}
         <div className="border-border border-t-2 py-1">
-          <Menu.Item
-            onSelect={logout}
-            className="text-destructive hover:bg-destructive/10"
-          >
+          <Menu.Item onSelect={logout} className="text-destructive gap-2">
             <LogOutIcon className="h-4 w-4" />
             <span>{t("auth.logout")}</span>
           </Menu.Item>

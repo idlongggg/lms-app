@@ -168,8 +168,17 @@ export default function AdminDashboardPage() {
                   <span className="text-lg">{card.icon}</span>
                 </div>
                 <div>
-                  <p className="font-medium">{card.title}</p>
-                  <p className="text-muted-foreground text-sm">{card.value}</p>
+                  <p className="font-medium">{t(card.title)}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {typeof card.value === "number"
+                      ? card.value.toLocaleString()
+                      : card.value}
+                  </p>
+                  {card.change && card.changeLabel && (
+                    <p className="text-xs text-green-500">
+                      +{card.change} {t(card.changeLabel)}
+                    </p>
+                  )}
                 </div>
               </div>
             </CardWrapper>
@@ -224,7 +233,7 @@ export default function AdminDashboardPage() {
                           : "border-border bg-muted"
                   }`}
                 >
-                  {userItem.roleLabel}
+                  {t(`admin.roles.${userItem.role}`)}
                 </span>
               </div>
             ))}

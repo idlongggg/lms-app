@@ -101,7 +101,7 @@ export function getAdminDashboardCards(
     return [
       {
         id: "total-tenants",
-        title: "Tổng Tenants",
+        title: "admin.dashboard.stats.totalTenants",
         value: stats.totalTenants,
         icon: "Building2",
         color: "#3498db",
@@ -109,25 +109,25 @@ export function getAdminDashboardCards(
       },
       {
         id: "total-users",
-        title: "Tổng người dùng",
+        title: "admin.dashboard.stats.totalUsers",
         value: stats.totalUsers,
         change: 12,
-        changeLabel: "so với tuần trước",
+        changeLabel: "admin.dashboard.stats.change",
         icon: "Users",
         color: "#2ecc71",
         href: "/admin/users",
       },
       {
         id: "active-users",
-        title: "Đang hoạt động",
+        title: "admin.dashboard.stats.activeUsers",
         value: stats.activeUsers,
         icon: "UserCheck",
         color: "#f39c12",
       },
       {
         id: "system-health",
-        title: "Trạng thái hệ thống",
-        value: stats.systemHealth === "healthy" ? "Tốt" : "Cảnh báo",
+        title: "admin.health",
+        value: stats.systemHealth === "healthy" ? "Good" : "Warning",
         icon: "Activity",
         color: stats.systemHealth === "healthy" ? "#27ae60" : "#e74c3c",
         href: "/admin/settings",
@@ -140,17 +140,17 @@ export function getAdminDashboardCards(
   return [
     {
       id: "total-students",
-      title: "Học sinh",
+      title: "admin.dashboard.stats.students",
       value: stats.students,
       change: 5,
-      changeLabel: "mới tuần này",
+      changeLabel: "admin.dashboard.stats.change",
       icon: "GraduationCap",
       color: "#3498db",
       href: "/admin/users?role=student",
     },
     {
       id: "total-teachers",
-      title: "Giáo viên",
+      title: "admin.dashboard.stats.teachers",
       value: stats.teachers,
       icon: "UserCog",
       color: "#2ecc71",
@@ -158,7 +158,7 @@ export function getAdminDashboardCards(
     },
     {
       id: "published-lessons",
-      title: "Bài học",
+      title: "admin.dashboard.stats.lessons",
       value: stats.publishedLessons,
       icon: "BookOpen",
       color: "#9b59b6",
@@ -166,7 +166,7 @@ export function getAdminDashboardCards(
     },
     {
       id: "active-tournaments",
-      title: "Giải đấu",
+      title: "admin.dashboard.stats.tournaments",
       value: stats.activeTournaments,
       icon: "Trophy",
       color: "#f39c12",
@@ -211,10 +211,10 @@ export interface ActivityData {
 
 export function getActivityDistribution(): ActivityData[] {
   return [
-    { name: "Học bài", value: 45, color: "#3498db" },
-    { name: "Làm quiz", value: 30, color: "#2ecc71" },
-    { name: "Thi đấu", value: 15, color: "#e74c3c" },
-    { name: "Xem video", value: 10, color: "#f39c12" },
+    { name: "admin.activity.types.info", value: 45, color: "#3498db" },
+    { name: "admin.activity.types.success", value: 30, color: "#2ecc71" },
+    { name: "admin.activity.types.error", value: 15, color: "#e74c3c" },
+    { name: "admin.activity.types.warning", value: 10, color: "#f39c12" },
   ];
 }
 
