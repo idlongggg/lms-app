@@ -27,7 +27,7 @@ import {
   useTranslation,
 } from "@/lib/providers";
 
-import { DashboardNav } from "./_components/DashboardNav";
+import { HeaderTabs } from "@/components/layout/HeaderTabs";
 import { NAV } from "./nav";
 
 export default function DashboardLayout({
@@ -41,7 +41,12 @@ export default function DashboardLayout({
   const { t } = useTranslation();
   const { isCollapsed, isMobileOpen, toggle, openMobile, closeMobile } =
     useSidebar();
-  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
+  const {
+    theme,
+    toggleTheme,
+    setThemeColor,
+    mounted: themeMounted,
+  } = useTheme();
   const {
     currentLanguage,
     languages,
@@ -102,7 +107,16 @@ export default function DashboardLayout({
             </Link>
           </>
         }
-        center={showTabs ? <DashboardNav tabs={tabs} /> : undefined}
+        center={
+          showTabs ? (
+            <HeaderTabs
+              tabs={tabs}
+              pathname={pathname}
+              t={t}
+              setThemeColor={setThemeColor}
+            />
+          ) : undefined
+        }
         right={
           <>
             <Search t={t} />
@@ -128,7 +142,7 @@ export default function DashboardLayout({
           </>
         }
       />
-      <div className="bg-background flex h-screen flex-col overflow-hidden">
+      <div className="bg-background overflohidden flex h-screen flex-col">
         <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden pt-6">
           <div className="flex h-full">
             <Sidebar

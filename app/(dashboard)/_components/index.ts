@@ -5,4 +5,3 @@ export { TeacherQuestionsSection } from "../learning/_components/TeacherQuestion
 export { CreateTournamentSection } from "../tournament/_components/CreateTournamentSection";
 export { JoinTournamentSection } from "../tournament/_components/JoinTournamentSection";
 export { ParentTournamentSection } from "../tournament/_components/ParentTournamentSection";
-export * from "./DashboardNav";
