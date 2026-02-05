@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 
-import { THEME, type ThemeKey } from "@/lib/colors";
+import { THEME, type ThemeKey } from "@/lib/constants/colors";
 
 export type Theme = "light" | "dark";
 

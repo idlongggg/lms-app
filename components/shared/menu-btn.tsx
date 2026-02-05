@@ -1,5 +1,5 @@
 import { Button } from "@/components/retroui";
-import { MenuIcon } from "@/lib/icons";
+import { MenuIcon } from "@/lib/constants/icons";
 
 interface MobileMenuButtonProps {
   onClick: () => void;

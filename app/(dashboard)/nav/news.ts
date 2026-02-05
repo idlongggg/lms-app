@@ -1,4 +1,4 @@
-import { AnnouncementsIcon, EventsIcon, NewsIcon } from "@/lib/icons";
+import { AnnouncementsIcon, EventsIcon, NewsIcon } from "@/lib/constants/icons";
 import type { NavTab } from "@/lib/nav";
 
 export const NAV_NEWS: NavTab = {

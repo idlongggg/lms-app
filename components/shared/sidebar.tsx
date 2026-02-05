@@ -2,27 +2,125 @@
 
 import Link from "next/link";
 import { type RefObject } from "react";
+import { Button, Text, Badge } from "@/components/retroui";
+import { CloseIcon, CollapseIcon, ExpandIcon } from "@/lib/constants/icons";
+import type { NavGroup, NavItem } from "@/lib/nav";
+import { Logo } from "@/components/shared/logo";
 
-import { CloseIcon, CollapseIcon } from "@/lib/icons";
-import type { NavGroup } from "@/lib/nav";
+// ============================================================================
+// SidebarItem Component
+// ============================================================================
 
-import { Logo } from "./logo";
+interface SidebarItemProps {
+  item: NavItem;
+  isActive: boolean;
+  showCollapsed: boolean;
+  closeMobile: () => void;
+  title: string;
+}
+
+function SidebarItem({
+  item,
+  isActive,
+  showCollapsed,
+  closeMobile,
+  title,
+}: SidebarItemProps) {
+  const Icon = item.icon;
+
+  return (
+    <li>
+      <Button
+        variant={isActive ? "default" : "ghost"}
+        className={`w-full justify-start gap-3 ${
+          showCollapsed ? "justify-center px-2" : "px-3"
+        } ${isActive ? "" : "hover:bg-transparent"}`}
+        asChild
+      >
+        <Link
+          href={item.href}
+          onClick={closeMobile}
+          title={showCollapsed ? title : undefined}
+        >
+          <Icon className="h-5 w-5 shrink-0" />
+          {!showCollapsed && <span>{title}</span>}
+          {!showCollapsed && item.badge && (
+            <Badge className="ml-auto">{item.badge}</Badge>
+          )}
+        </Link>
+      </Button>
+    </li>
+  );
+}
+
+// ============================================================================
+// SidebarNav Component
+// ============================================================================
+
+interface SidebarNavProps {
+  navigation: NavGroup[];
+  pathname: string;
+  showCollapsed: boolean;
+  closeMobile: () => void;
+  t: (key: string) => string;
+  sidebarRef?: RefObject<HTMLElement | null>;
+}
+
+function SidebarNav({
+  navigation,
+  pathname,
+  showCollapsed,
+  closeMobile,
+  t,
+  sidebarRef,
+}: SidebarNavProps) {
+  return (
+    <nav ref={sidebarRef} className="flex-1 overflow-y-auto p-2">
+      {navigation.map((group, groupIndex) => (
+        <div key={groupIndex} className="mb-4">
+          {group.key && !showCollapsed && (
+            <Text
+              as="h6"
+              className="text-muted-foreground mb-2 px-3 text-xs font-semibold tracking-wider uppercase"
+            >
+              {t(`navigation.sidebar.${group.key}`)}
+            </Text>
+          )}
+          <ul className="space-y-1">
+            {group.items.map((item) => (
+              <SidebarItem
+                key={item.href}
+                item={item}
+                isActive={pathname === item.href}
+                showCollapsed={showCollapsed}
+                closeMobile={closeMobile}
+                title={t(`navigation.sidebar.${item.key}`)}
+              />
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  );
+}
+
+// ============================================================================
+// Main Sidebar Component
+// ============================================================================
 
 interface SidebarProps {
   navigation: NavGroup[];
-  variant?: "collapsible" | "expanded";
   isCollapsed: boolean;
   isMobileOpen: boolean;
   toggle: () => void;
   closeMobile: () => void;
   pathname: string;
-  t: (key: string, options?: any) => string;
+  t: (key: string) => string;
   sidebarRef: RefObject<HTMLElement | null>;
 }
 
 export function Sidebar({
   navigation,
-  variant = "collapsible",
   isCollapsed,
   isMobileOpen,
   toggle,
@@ -31,8 +129,7 @@ export function Sidebar({
   t,
   sidebarRef,
 }: SidebarProps) {
-  const isExpanded = variant === "expanded";
-  const showCollapsed = !isExpanded && isCollapsed;
+  const showCollapsed = isCollapsed;
 
   return (
     <>
@@ -44,85 +141,50 @@ export function Sidebar({
         />
       )}
 
-      {/* Sidebar */}
       <aside
-        className={`border-border bg-sidebar fixed top-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:shrink-0 ${
+        className={`border-border bg-background fixed top-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:shrink-0 ${
           showCollapsed ? "w-16" : "w-64"
         } ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        {/* Mobile header */}
+        {/* Mobile Header */}
         <div className="border-border flex h-16 items-center justify-between border-b-2 px-4 md:hidden">
           <Logo title="LMS" />
-          <button
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
             onClick={closeMobile}
-            className="border-border bg-background flex h-8 w-8 items-center justify-center border-2"
             aria-label="Close menu"
           >
             <CloseIcon className="h-4 w-4" />
-          </button>
+          </Button>
         </div>
 
-        {/* Toggle button (desktop only, collapsible variant) */}
-        {!isExpanded && (
-          <button
-            onClick={toggle}
-            className="border-border bg-background hover:bg-muted absolute top-6 -right-3 z-10 hidden h-6 w-6 items-center justify-center border-2 shadow-xs transition-all md:flex"
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            <CollapseIcon
-              className={`h-3 w-3 transition-transform ${
-                isCollapsed ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-        )}
+        {/* Toggle Button (Desktop) */}
+        <Button
+          variant="outline"
+          className="bg-background text-foreground absolute top-6 -right-3 z-10 hidden h-6 w-6 items-center justify-center p-0 md:flex"
+          onClick={toggle}
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {isCollapsed ? (
+            <ExpandIcon className="h-4 w-4" />
+          ) : (
+            <CollapseIcon className="h-4 w-4" />
+          )}
+        </Button>
 
-        {/* Navigation */}
-        <nav ref={sidebarRef} className="flex-1 overflow-y-auto p-2">
-          {navigation.map((group, groupIndex) => (
-            <div key={groupIndex} className="mb-4">
-              {group.key && !showCollapsed && (
-                <h3 className="text-muted-foreground mb-2 px-3 text-xs font-semibold tracking-wider uppercase">
-                  {t(`navigation.sidebar.${group.key}`)}
-                </h3>
-              )}
-              <ul className="space-y-1">
-                {group.items.map((item) => {
-                  const isActive = pathname === item.href;
-                  const Icon = item.icon;
-                  const itemTitle = t(`navigation.sidebar.${item.key}`);
-
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        onClick={closeMobile}
-                        className={`flex items-center gap-3 px-3 py-2 font-medium transition-all ${
-                          showCollapsed ? "justify-center px-2" : ""
-                        } ${
-                          isActive
-                            ? "border-border bg-primary border-2 shadow-xs"
-                            : "hover:bg-sidebar-accent"
-                        }`}
-                        title={showCollapsed ? itemTitle : undefined}
-                      >
-                        <Icon className="h-5 w-5 shrink-0" />
-                        {!showCollapsed && <span>{itemTitle}</span>}
-                        {!showCollapsed && item.badge && (
-                          <span className="border-border bg-accent ml-auto border px-1.5 py-0.5 text-xs">
-                            {item.badge}
-                          </span>
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </nav>
+        {/* Navigation Content */}
+        <SidebarNav
+          navigation={navigation}
+          pathname={pathname}
+          showCollapsed={showCollapsed}
+          closeMobile={closeMobile}
+          t={t}
+          sidebarRef={sidebarRef}
+        />
       </aside>
     </>
   );

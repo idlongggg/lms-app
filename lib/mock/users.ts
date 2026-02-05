@@ -4,7 +4,7 @@
  * Based on rbac.md: 5 roles (root-admin, tenant-admin, teacher, student, parent)
  */
 
-import { PERMISSIONS, type Permission } from "../permissions";
+import { PERMISSIONS, type Permission } from "../constants/permissions";
 import type { User, UserProfile, Streak, UserRole } from "../types/user";
 
 // Re-export types

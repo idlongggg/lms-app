@@ -1,4 +1,4 @@
-import { ProfileIcon, SettingsIcon } from "@/lib/icons";
+import { ProfileIcon, SettingsIcon } from "@/lib/constants/icons";
 import type { NavTab } from "@/lib/nav";
 
 export const NAV_PROFILE: NavTab = {

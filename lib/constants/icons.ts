@@ -9,6 +9,7 @@ import {
   Calendar,
   ChevronDown,
   ChevronLeft,
+  ChevronRight,
   Coins,
   FileText,
   Gift,
@@ -95,7 +96,8 @@ export const LanguageIcon = Globe;
 export const LightModeIcon = Sun;
 export const DarkModeIcon = Moon;
 export const CollapseIcon = ChevronLeft;
-export const ExpandIcon = ChevronDown;
+export const ExpandIcon = ChevronRight;
+export const DropdownIcon = ChevronDown;
 export const LogOutIcon = LogOut;
 export const LogoIcon = GraduationCap;
 export const CloseIcon = X;

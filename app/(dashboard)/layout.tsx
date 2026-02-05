@@ -134,7 +134,6 @@ export default function DashboardLayout({
         <div className="flex h-full">
           <Sidebar
             navigation={navigation}
-            variant="collapsible"
             isCollapsed={isCollapsed}
             isMobileOpen={isMobileOpen}
             toggle={toggle}

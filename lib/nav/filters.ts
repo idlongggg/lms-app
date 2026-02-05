@@ -1,32 +1,9 @@
-import type { ThemeKey } from "@/lib/colors";
-import type { Icon } from "@/lib/icons";
-import type { Permission } from "@/lib/permissions";
+/**
+ * Navigation Filter Functions
+ */
 
-// --- Types ---
-
-export interface NavItem {
-  key: string;
-  href: string;
-  icon: Icon;
-  badge?: string;
-  access?: Permission[];
-}
-
-export interface NavGroup {
-  key?: string;
-  items: NavItem[];
-  access?: Permission[];
-}
-
-export interface NavTab {
-  key: string;
-  href: string;
-  icon: Icon;
-  color?: ThemeKey;
-  access?: Permission[];
-  groups: NavGroup[];
-  hideInHeader?: boolean;
-}
+import type { Permission } from "@/lib/constants/permissions";
+import type { NavGroup, NavItem, NavTab } from "./types";
 
 /**
  * Filter dashboard tabs by access
@@ -37,7 +14,6 @@ export function filterTabs(
 ): NavTab[] {
   return tabs
     .filter((tab) => {
-      // Check tab-level access
       if (tab.access && tab.access.length > 0) {
         if (!tab.access.some((p) => hasPermission(p))) return false;
       }
@@ -45,10 +21,9 @@ export function filterTabs(
     })
     .map((tab) => ({
       ...tab,
-      // Filter groups within the tab
       groups: filterNavGroups(tab.groups, hasPermission),
     }))
-    .filter((tab) => tab.groups.length > 0 || tab.href === "/dashboard"); // Keep dashboard even if no groups
+    .filter((tab) => tab.groups.length > 0 || tab.href === "/dashboard");
 }
 
 /**
@@ -84,10 +59,9 @@ export function filterNavGroups(
 }
 
 /**
- * Get active tab key from pathname by matching against tab hrefs
+ * Get active tab key from pathname
  */
 export function getActiveTabKey(tabs: NavTab[], pathname: string): string {
-  // Find tab whose href matches the pathname (excluding root dashboard)
   const matchedTab = tabs.find(
     (tab) => tab.href !== "/dashboard" && pathname.startsWith(tab.href),
   );

@@ -8,7 +8,7 @@ import type { MockUser } from "../mock/users";
 
 // Re-export from constants for backward compatibility
 export type { UserRole } from "../types/user";
-export { type Permission, PERMISSIONS } from "../permissions";
+export { type Permission, PERMISSIONS } from "../constants/permissions";
 
 export interface AuthUser {
   id: string;
@@ -35,7 +35,7 @@ export interface LoginCredentials {
   password: string;
 }
 
-import { Permission } from "../permissions";
+import { Permission } from "../constants/permissions";
 
 export interface AuthService {
   getState(): AuthState;

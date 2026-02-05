@@ -4,9 +4,9 @@ import React from "react";
 
 import { AuthProvider } from "@/lib/auth";
 
-import { LanguageProvider } from "./language-provider";
-import { SidebarProvider } from "./sidebar-provider";
-import { ThemeProvider } from "./theme-provider";
+import { LanguageProvider } from "./lang";
+import { SidebarProvider } from "./sidebar";
+import { ThemeProvider } from "./theme";
 
 interface AppProvidersProps {
   children: React.ReactNode;

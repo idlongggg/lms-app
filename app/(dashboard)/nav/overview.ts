@@ -8,9 +8,9 @@ import {
   ReportsIcon,
   StatsIcon,
   StudentsIcon,
-} from "@/lib/icons";
+} from "@/lib/constants/icons";
 import type { NavTab } from "@/lib/nav";
-import { PERMISSIONS } from "@/lib/permissions";
+import { PERMISSIONS } from "@/lib/constants/permissions";
 
 export const NAV_OVERVIEW: NavTab = {
   key: "overview",

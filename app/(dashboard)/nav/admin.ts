@@ -8,9 +8,9 @@ import {
   TenantsIcon,
   TournamentsIcon,
   UsersIcon,
-} from "@/lib/icons";
+} from "@/lib/constants/icons";
 import type { NavTab } from "@/lib/nav";
-import { PERMISSIONS } from "@/lib/permissions";
+import { PERMISSIONS } from "@/lib/constants/permissions";
 
 export const NAV_ADMIN: NavTab = {
   key: "admin",
@@ -52,9 +52,7 @@ export const NAV_ADMIN: NavTab = {
     },
     {
       key: "system",
-      items: [
-        { key: "settings", href: "/admin/settings", icon: SettingsIcon },
-      ],
+      items: [{ key: "settings", href: "/admin/settings", icon: SettingsIcon }],
     },
   ],
 };

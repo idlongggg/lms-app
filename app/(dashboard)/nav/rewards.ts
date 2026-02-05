@@ -1,4 +1,4 @@
-import { CoinsIcon, RedeemedIcon, ShopIcon } from "@/lib/icons";
+import { CoinsIcon, RedeemedIcon, ShopIcon } from "@/lib/constants/icons";
 import type { NavTab } from "@/lib/nav";
 
 export const NAV_REWARDS: NavTab = {

@@ -3,7 +3,7 @@
  * Minimal navigation configuration for focus/immersive mode
  */
 
-import { BackIcon, HomeIcon } from "@/lib/icons";
+import { BackIcon, HomeIcon } from "@/lib/constants/icons";
 import type { NavItem } from "@/lib/nav";
 
 // ============================================================================

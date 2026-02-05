@@ -10,7 +10,7 @@ import {
   PrivacyIcon,
   TermsIcon,
   TournamentsIcon,
-} from "@/lib/icons";
+} from "@/lib/constants/icons";
 import type { NavItem } from "@/lib/nav";
 
 // ============================================================================
