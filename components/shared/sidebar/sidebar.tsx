@@ -1,10 +1,12 @@
 "use client";
 
 import { type RefObject } from "react";
+
 import { Button } from "@/components/retroui";
+import { Logo } from "@/components/shared/logo";
 import { CloseIcon, CollapseIcon, ExpandIcon } from "@/lib/constants/icons";
 import type { NavGroup } from "@/lib/nav";
-import { Logo } from "@/components/shared/logo";
+
 import { SidebarNav } from "./sidebar-nav";
 
 export interface SidebarProps {

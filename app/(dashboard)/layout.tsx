@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
 import { Button, Loader } from "@/components/retroui";
 import {

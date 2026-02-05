@@ -1,6 +1,6 @@
 import { Button, Menu, Text } from "@/components/retroui";
-import { type Language, type LanguageOption } from "@/lib/i18n";
 import { LanguageIcon } from "@/lib/constants/icons";
+import { type Language, type LanguageOption } from "@/lib/i18n";
 
 interface LanguageSwitcherProps {
   currentLanguage: LanguageOption;

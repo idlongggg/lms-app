@@ -1,12 +1,12 @@
 import { CoursesIcon, LearningIcon } from "@/lib/constants/icons";
-import type { NavTab } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import type { NavTab } from "@/lib/nav";
 
 export const NAV_LEARNING: NavTab = {
   key: "learning",
   href: "/learning",
   icon: LearningIcon,
-  color: "preset02",
+  color: "preset01",
   access: [
     PERMISSIONS.LESSON_READ,
     PERMISSIONS.PROGRESS_READ,

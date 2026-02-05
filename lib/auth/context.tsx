@@ -12,7 +12,7 @@ import React, {
 
 import type { MockUser } from "../mock/users";
 import { canAccessRoute, mockAuthService } from "./mock-auth";
-import type { AuthState, AuthUser, UserRole, Permission } from "./types";
+import type { AuthState, AuthUser, Permission, UserRole } from "./types";
 
 interface AuthContextValue extends AuthState {
   login: (email: string, password: string) => Promise<AuthUser | null>;

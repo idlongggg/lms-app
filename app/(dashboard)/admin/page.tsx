@@ -13,7 +13,6 @@ import {
 import Link from "next/link";
 
 import { useAuth } from "@/lib/auth";
-import { useTranslation } from "@/lib/providers";
 import {
   getAdminDashboardCards,
   getAdminUserList,
@@ -21,6 +20,7 @@ import {
   getSystemStats,
   getTenantStats,
 } from "@/lib/mock/admin-stats";
+import { useTranslation } from "@/lib/providers";
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();

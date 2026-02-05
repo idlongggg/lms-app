@@ -1,12 +1,10 @@
 export const PERMISSIONS = {
-  // System / Tenant
   TENANT_CREATE: "tenant:create",
   TENANT_READ: "tenant:read",
   TENANT_UPDATE: "tenant:update",
   TENANT_DELETE: "tenant:delete",
   TENANT_SUSPEND: "tenant:suspend",
 
-  // User Management
   USER_CREATE: "user:create",
   USER_READ: "user:read",
   USER_UPDATE: "user:update",
@@ -15,7 +13,6 @@ export const PERMISSIONS = {
   USER_IMPERSONATE: "user:impersonate",
   ROLE_ASSIGN: "role:assign",
 
-  // Content Management (Subject -> Topic -> Lesson -> Question)
   SUBJECT_CREATE: "subject:create",
   SUBJECT_READ: "subject:read",
   SUBJECT_UPDATE: "subject:update",
@@ -41,14 +38,12 @@ export const PERMISSIONS = {
   MEDIA_UPLOAD: "media:upload",
   MEDIA_DELETE: "media:delete",
 
-  // Learning & Progress
   LEARNING_PATH_READ: "learning_path:read",
-  PROGRESS_READ: "progress:read", // Read any progress
+  PROGRESS_READ: "progress:read",
   PROGRESS_READ_OWN: "progress:read_own",
   PROGRESS_READ_CHILD: "progress:read_child",
   EXERCISE_SUBMIT: "exercise:submit",
 
-  // Tournament
   TOURNAMENT_CREATE: "tournament:create",
   TOURNAMENT_READ: "tournament:read",
   TOURNAMENT_UPDATE: "tournament:update",
@@ -56,12 +51,10 @@ export const PERMISSIONS = {
   TOURNAMENT_JOIN: "tournament:join",
   TOURNAMENT_SUBMIT: "tournament:submit",
 
-  // Gamification (Leaderboard, Rewards, Badges)
   LEADERBOARD_READ: "leaderboard:read",
   REWARD_REDEEM: "reward:redeem",
   BADGE_READ: "badge:read",
 
-  // Analytics & Reports
   ANALYTICS_DASHBOARD: "analytics:dashboard",
   REPORT_READ: "report:read",
   REPORT_READ_OWN: "report:read_own",

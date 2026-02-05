@@ -3,14 +3,14 @@ import {
   ScheduleIcon,
   TournamentIcon,
 } from "@/lib/constants/icons";
-import type { NavTab } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import type { NavTab } from "@/lib/nav";
 
 export const NAV_TOURNAMENT: NavTab = {
   key: "tournament",
   href: "/tournament",
   icon: TournamentIcon,
-  color: "preset03",
+  color: "preset02",
   access: [PERMISSIONS.TOURNAMENT_READ, PERMISSIONS.TOURNAMENT_JOIN],
   groups: [
     {

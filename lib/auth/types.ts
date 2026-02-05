@@ -3,12 +3,12 @@
  * Type definitions for authentication system
  */
 
-import type { UserRole } from "../types/user";
 import type { MockUser } from "../mock/users";
+import type { UserRole } from "../types/user";
 
 // Re-export from constants for backward compatibility
-export type { UserRole } from "../types/user";
 export { type Permission, PERMISSIONS } from "../constants/permissions";
+export type { UserRole } from "../types/user";
 
 export interface AuthUser {
   id: string;

@@ -37,10 +37,6 @@ import {
 
 export type Icon = LucideIcon;
 
-// =============================================================================
-// Semantic icon exports - change mapping here when needed
-// =============================================================================
-
 // Dashboard tabs
 export const OverviewIcon = Home;
 export const LearningIcon = BookOpen;

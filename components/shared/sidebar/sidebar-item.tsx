@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Button, Badge } from "@/components/retroui";
+
+import { Badge, Button } from "@/components/retroui";
 import type { NavItem } from "@/lib/nav";
 
 export interface SidebarItemProps {

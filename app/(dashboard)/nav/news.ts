@@ -5,7 +5,7 @@ export const NAV_NEWS: NavTab = {
   key: "news",
   href: "/news",
   icon: NewsIcon,
-  color: "preset05",
+  color: "preset03",
   groups: [
     {
       items: [

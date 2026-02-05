@@ -3,6 +3,7 @@
  */
 
 import type { Permission } from "@/lib/constants/permissions";
+
 import type { NavGroup, NavItem, NavTab } from "./types";
 
 /**

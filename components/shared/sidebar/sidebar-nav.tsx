@@ -1,8 +1,10 @@
 "use client";
 
 import { type RefObject } from "react";
+
 import { Text } from "@/components/retroui";
 import type { NavGroup } from "@/lib/nav";
+
 import { SidebarItem } from "./sidebar-item";
 
 export interface SidebarNavProps {

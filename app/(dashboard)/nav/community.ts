@@ -4,8 +4,8 @@ import {
   ForumIcon,
   QuestionBankIcon,
 } from "@/lib/constants/icons";
-import type { NavTab } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import type { NavTab } from "@/lib/nav";
 
 export const NAV_COMMUNITY: NavTab = {
   key: "community",

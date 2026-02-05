@@ -1,4 +1,5 @@
 import type { NavTab } from "@/lib/nav";
+
 import { NAV_ADMIN } from "./admin";
 import { NAV_COMMUNITY } from "./community";
 import { NAV_LEARNING } from "./learning";

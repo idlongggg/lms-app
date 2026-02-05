@@ -9,14 +9,14 @@ import {
   TournamentsIcon,
   UsersIcon,
 } from "@/lib/constants/icons";
-import type { NavTab } from "@/lib/nav";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import type { NavTab } from "@/lib/nav";
 
 export const NAV_ADMIN: NavTab = {
   key: "admin",
   href: "/admin",
   icon: DashboardIcon,
-  color: "preset00",
+  color: "preset05",
   hideInHeader: false,
   access: [
     PERMISSIONS.TENANT_READ,

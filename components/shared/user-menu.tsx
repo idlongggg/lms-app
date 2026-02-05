@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Avatar, Button, Menu, Text, Badge } from "@/components/retroui";
+import { Avatar, Badge, Button, Menu, Text } from "@/components/retroui";
 import { type AuthUser } from "@/lib/auth";
 import {
   CoinsIcon,
