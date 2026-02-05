@@ -1,5 +1,1 @@
-import { LogoIcon } from "@/lib/constants/icons";
-
-export function Logo() {
-  return <LogoIcon />;
-}
+export { LogoIcon as Logo } from "@/lib/constants/icons";

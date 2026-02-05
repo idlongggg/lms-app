@@ -1,5 +1,4 @@
 import { Button, Menu, Text } from "@/components/ui";
-import { LanguageIcon } from "@/lib/constants/icons";
 import { type Language, type LanguageOption } from "@/lib/i18n";
 
 interface LanguageSwitcherProps {
@@ -7,6 +6,7 @@ interface LanguageSwitcherProps {
   languages: LanguageOption[];
   setLanguage: (code: Language) => void;
   mounted: boolean;
+  t: (key: string) => string;
 }
 
 export function LanguageSwitcher({
@@ -14,11 +14,12 @@ export function LanguageSwitcher({
   languages,
   setLanguage,
   mounted,
+  t,
 }: LanguageSwitcherProps) {
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" className="h-9 w-9" disabled>
-        <LanguageIcon className="h-4 w-4" />
+      <Button variant="outline" size="icon" disabled>
+        <Text className="font-bold">--</Text>
       </Button>
     );
   }
@@ -28,11 +29,11 @@ export function LanguageSwitcher({
       <Menu.Trigger asChild>
         <Button
           variant="outline"
+          className="size-9"
           size="icon"
-          className="h-9 w-9"
-          aria-label="Change language"
+          aria-label={t("settings.language")}
         >
-          <Text as="h6" className={`font-bold ${currentLanguage.color}`}>
+          <Text className={`font-bold ${currentLanguage.color}`}>
             {currentLanguage.code.toUpperCase()}
           </Text>
         </Button>
@@ -41,16 +42,13 @@ export function LanguageSwitcher({
         {languages.map((lang) => (
           <Menu.Item key={lang.code} onSelect={() => setLanguage(lang.code)}>
             <Text
-              as="h6"
               className={`font-bold ${
                 lang.code === currentLanguage.code ? "" : lang.color
               }`}
             >
               {lang.code.toUpperCase()}
             </Text>
-            <Text as="p" className="ml-2 text-sm font-medium">
-              {lang.label}
-            </Text>
+            <Text className="ml-2">{lang.label}</Text>
           </Menu.Item>
         ))}
       </Menu.Content>

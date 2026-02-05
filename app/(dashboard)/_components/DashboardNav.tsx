@@ -1,11 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 import { type NavTab } from "@/lib/nav";
 import { useTranslation } from "@/lib/providers";
+import { cn } from "@/lib/utils";
 
 interface DashboardNavProps {
   tabs: NavTab[];

@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-
 import { ApolloProvider } from "@apollo/client/react";
+import React from "react";
 
 import { AuthProvider } from "@/lib/auth";
 import { client } from "@/lib/graphql-client";

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search as SearchIcon } from "lucide-react";
+
 import { Button, Command, Text } from "@/components/ui";
+import { SearchIcon } from "@/lib/constants/icons";
 
 interface SearchProps {
   t: (key: string) => string;
@@ -16,17 +17,17 @@ export function Search({ t }: SearchProps) {
       <Button
         variant="outline"
         className="hidden h-9 w-40 justify-start gap-2 sm:flex"
-        aria-label={t("search")}
+        aria-label={t("common.search")}
         onClick={() => setOpen(true)}
       >
         <SearchIcon className="size-5" />
-        <Text>{t("search.placeholder")}</Text>
+        <Text>{t("common.searchPlaceholder")}</Text>
       </Button>
 
       <Command.Dialog open={open} onOpenChange={setOpen}>
-        <Command.Input placeholder={t("search.placeholder")} />
+        <Command.Input placeholder={t("common.searchPlaceholder")} />
         <Command.List>
-          <Command.Empty>{t("search.noResults")}</Command.Empty>
+          <Command.Empty>{t("common.noResults")}</Command.Empty>
         </Command.List>
       </Command.Dialog>
     </>

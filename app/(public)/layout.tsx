@@ -10,7 +10,7 @@ import {
 } from "@/components/layout";
 import { Button } from "@/components/ui";
 import { type Language, type LanguageOption } from "@/lib/i18n";
-import { useLanguage, useTheme } from "@/lib/providers";
+import { useLanguage, useTheme, useTranslation } from "@/lib/providers";
 
 import { Footer } from "./_components";
 
@@ -41,6 +41,7 @@ interface HeaderRightProps {
   theme: string | undefined;
   toggleTheme: () => void;
   themeMounted: boolean;
+  t: (key: string) => string;
 }
 
 function HeaderRight({
@@ -51,6 +52,7 @@ function HeaderRight({
   theme,
   toggleTheme,
   themeMounted,
+  t,
 }: HeaderRightProps) {
   return (
     <>
@@ -59,11 +61,13 @@ function HeaderRight({
         languages={languages}
         setLanguage={setLanguage}
         mounted={langMounted}
+        t={t}
       />
       <ThemeToggle
         theme={theme}
         toggleTheme={toggleTheme}
         mounted={themeMounted}
+        t={t}
       />
       <AuthButtons />
     </>
@@ -75,6 +79,7 @@ export default function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { t } = useTranslation();
   const { theme, toggleTheme, mounted: themeMounted } = useTheme();
   const {
     currentLanguage,
@@ -96,6 +101,7 @@ export default function PublicLayout({
             theme={theme}
             toggleTheme={toggleTheme}
             themeMounted={themeMounted}
+            t={t}
           />
         }
       />

@@ -24,6 +24,7 @@ import {
   MessageSquare,
   Moon,
   Newspaper,
+  Search,
   Settings,
   Shield,
   ShoppingBag,
@@ -97,6 +98,7 @@ export const DropdownIcon = ChevronDown;
 export const LogOutIcon = LogOut;
 export const LogoIcon = GraduationCap;
 export const CloseIcon = X;
+export const SearchIcon = Search;
 
 // Focus
 export const BackIcon = ArrowLeft;

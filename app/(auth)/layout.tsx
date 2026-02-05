@@ -35,11 +35,13 @@ export default function AuthLayout({
               languages={languages}
               setLanguage={setLanguage}
               mounted={langMounted}
+              t={t}
             />
             <ThemeToggle
               theme={theme}
               toggleTheme={toggleTheme}
               mounted={themeMounted}
+              t={t}
             />
           </>
         }

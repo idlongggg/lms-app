@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
+import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 
 import { mockUsers } from "@/data/users";
 

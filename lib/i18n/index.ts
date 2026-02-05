@@ -1,5 +1,5 @@
-import en from "./locales/en.json";
-import vi from "./locales/vi.json";
+import en from "./locales/en.yaml";
+import vi from "./locales/vi.yaml";
 
 export const translations = { en, vi } as const;
 export type Language = keyof typeof translations;

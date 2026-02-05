@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { title } from "process";
 import { useRef } from "react";
 
 import {
@@ -16,6 +18,7 @@ import {
 import { Button, Loader, Text } from "@/components/ui";
 import { useScrollPosition } from "@/hooks";
 import { useAuth, useRequireAuth } from "@/lib/auth";
+import { LogoIcon } from "@/lib/constants";
 import { filterTabs, getActiveTabKey, getSidebarForPath } from "@/lib/nav";
 import {
   useLanguage,
@@ -26,9 +29,6 @@ import {
 
 import { DashboardNav } from "./_components/DashboardNav";
 import { NAV } from "./nav";
-import { LogoIcon } from "@/lib/constants";
-import Link from "next/link";
-import { title } from "process";
 
 export default function DashboardLayout({
   children,
@@ -90,7 +90,7 @@ export default function DashboardLayout({
       <Header
         left={
           <>
-            <MobileMenuButton onClick={openMobile} />
+            <MobileMenuButton onClick={openMobile} t={t} />
 
             <Link href="/" className="flex items-center gap-2">
               <Button size="icon" className="size-9">
@@ -111,11 +111,13 @@ export default function DashboardLayout({
               languages={languages}
               setLanguage={setLanguage}
               mounted={langMounted}
+              t={t}
             />
             <ThemeToggle
               theme={theme}
               toggleTheme={toggleTheme}
               mounted={themeMounted}
+              t={t}
             />
             <UserMenu
               user={user}

@@ -11,6 +11,7 @@ import React, {
 } from "react";
 
 import type { MockUser } from "@/data/users";
+
 import { canAccessRoute, mockAuthService } from "./mock-auth";
 import type { AuthState, AuthUser, Permission, UserRole } from "./types";
 

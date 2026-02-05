@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export function Header({ left, center, right }: HeaderProps) {
   return (
-    <header className="h-14 border-b-2 shadow-sm">
+    <header className="sticky h-14 border-b-2 shadow-sm">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-2">
         <div className="flex gap-2">
           {/* left */}

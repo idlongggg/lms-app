@@ -35,7 +35,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
-            <Logo title="LMS" />
+            <Logo />
             <p className="text-muted-foreground text-sm">
               Nền tảng học tập trực tuyến với phong cách độc đáo và trải nghiệm
               gamification thú vị.
