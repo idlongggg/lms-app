@@ -4,46 +4,135 @@ export type ThemeKey =
   | "preset02"
   | "preset03"
   | "preset04"
-  | "preset05"
-  | "preset06";
+  | "preset05";
+
+export interface ThemeColors {
+  background: string;
+  foreground: string;
+  card: string;
+  cardForeground: string;
+  primary: string;
+  primaryHover: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  muted: string;
+  mutedForeground: string;
+  accent: string;
+  accentForeground: string;
+  destructive: string;
+  destructiveForeground: string;
+  border: string;
+}
+
+const BASE_LIGHT: Omit<ThemeColors, "primary" | "primaryHover"> = {
+  background: "#fff",
+  foreground: "#000",
+  card: "#fff",
+  cardForeground: "#000",
+  primaryForeground: "#000",
+  secondary: "#000",
+  secondaryForeground: "#fff",
+  muted: "#cccccc",
+  mutedForeground: "#5a5a5a",
+  accent: "#fae583",
+  accentForeground: "#000",
+  destructive: "#e63946",
+  destructiveForeground: "#fff",
+  border: "#000",
+};
+
+const BASE_DARK: Omit<ThemeColors, "primary" | "primaryHover"> = {
+  background: "#1a1a1a",
+  foreground: "#f5f5f5",
+  card: "#242424",
+  cardForeground: "#f5f5f5",
+  primaryForeground: "#000",
+  secondary: "#3a3a3a",
+  secondaryForeground: "#f5f5f5",
+  muted: "#3f3f46",
+  mutedForeground: "#a0a0a0",
+  accent: "#fae583",
+  accentForeground: "#000",
+  destructive: "#e63946",
+  destructiveForeground: "#fff",
+  border: "#5c5c5c",
+};
 
 export const THEME: Record<
   ThemeKey,
-  { primary: string; hover: string; ring: string }
+  { light: ThemeColors; dark: ThemeColors }
 > = {
   preset00: {
-    primary: "#10b981",
-    hover: "#059669",
-    ring: "#10b981",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#ffdb33",
+      primaryHover: "#ffcc00",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#ffdb33",
+      primaryHover: "#ffcc00",
+    },
   },
   preset01: {
-    primary: "#10b981",
-    hover: "#059669",
-    ring: "#10b981",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#10b981",
+      primaryHover: "#059669",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#10b981",
+      primaryHover: "#059669",
+    },
   },
   preset02: {
-    primary: "#3b82f6",
-    hover: "#2563eb",
-    ring: "#3b82f6",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#f97316",
+      primaryHover: "#ea580c",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#f97316",
+      primaryHover: "#ea580c",
+    },
   },
   preset03: {
-    primary: "#ef4444",
-    hover: "#dc2626",
-    ring: "#ef4444",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#3b82f6",
+      primaryHover: "#2563eb",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#3b82f6",
+      primaryHover: "#2563eb",
+    },
   },
   preset04: {
-    primary: "#f97316",
-    hover: "#ea580c",
-    ring: "#f97316",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#a855f7",
+      primaryHover: "#9333ea",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#a855f7",
+      primaryHover: "#9333ea",
+    },
   },
   preset05: {
-    primary: "#f59e0b",
-    hover: "#d97706",
-    ring: "#f59e0b",
-  },
-  preset06: {
-    primary: "#64748b",
-    hover: "#475569",
-    ring: "#64748b",
+    light: {
+      ...BASE_LIGHT,
+      primary: "#ef4444",
+      primaryHover: "#dc2626",
+    },
+    dark: {
+      ...BASE_DARK,
+      primary: "#ef4444",
+      primaryHover: "#dc2626",
+    },
   },
 };

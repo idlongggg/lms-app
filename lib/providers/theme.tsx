@@ -44,25 +44,71 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem(STORAGE_KEY, newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  }, []);
+  /*
+   * Helper to apply a set of colors to the root element.
+   * This is now more complex because we need to handle light/dark switching dynamically.
+   * However, since this provider manages 'theme' (light/dark), we can re-apply colors when theme changes.
+   */
+  const applyThemeColors = useCallback(
+    (themeKey: ThemeKey, currentMode: Theme) => {
+      const themeConfig = THEME[themeKey];
+      if (!themeConfig) return;
+
+      const colors = themeConfig[currentMode];
+      const root = document.documentElement;
+
+      root.style.setProperty("--background", colors.background);
+      root.style.setProperty("--foreground", colors.foreground);
+      root.style.setProperty("--card", colors.card);
+      root.style.setProperty("--card-foreground", colors.cardForeground);
+      root.style.setProperty("--primary", colors.primary);
+      root.style.setProperty("--primary-hover", colors.primaryHover);
+      root.style.setProperty("--primary-foreground", colors.primaryForeground);
+      root.style.setProperty("--secondary", colors.secondary);
+      root.style.setProperty(
+        "--secondary-foreground",
+        colors.secondaryForeground,
+      );
+      root.style.setProperty("--muted", colors.muted);
+      root.style.setProperty("--muted-foreground", colors.mutedForeground);
+      root.style.setProperty("--accent", colors.accent);
+      root.style.setProperty("--accent-foreground", colors.accentForeground);
+      root.style.setProperty("--destructive", colors.destructive);
+      root.style.setProperty(
+        "--destructive-foreground",
+        colors.destructiveForeground,
+      );
+      root.style.setProperty("--border", colors.border);
+    },
+    [],
+  );
+
+  // We need to keep track of the selected 'color preset' as well, to re-apply it when toggling light/dark
+  const [currentPreset, setCurrentPreset] = useState<ThemeKey>("preset00");
+
+  const setTheme = useCallback(
+    (newTheme: Theme) => {
+      setThemeState(newTheme);
+      localStorage.setItem(STORAGE_KEY, newTheme);
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
+
+      // Re-apply colors for the new mode using the current preset
+      applyThemeColors(currentPreset, newTheme);
+    },
+    [currentPreset, applyThemeColors],
+  );
 
   const toggleTheme = useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light");
   }, [theme, setTheme]);
 
-  const setThemeColor = useCallback((color: ThemeKey) => {
-    const themeColors = THEME[color];
-    if (!themeColors) return;
-
-    const root = document.documentElement;
-    root.style.setProperty("--primary", themeColors.primary);
-    root.style.setProperty("--primary-hover", themeColors.hover);
-    root.style.setProperty("--ring", themeColors.ring);
-  }, []);
+  const setThemeColor = useCallback(
+    (color: ThemeKey) => {
+      setCurrentPreset(color);
+      applyThemeColors(color, theme);
+    },
+    [theme, applyThemeColors],
+  );
 
   const value = useMemo<ThemeContextValue>(
     () => ({

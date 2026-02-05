@@ -5,7 +5,7 @@ export const NAV_REWARDS: NavTab = {
   key: "rewards",
   href: "/rewards",
   icon: ShopIcon,
-  color: "preset06",
+  color: "preset02",
   hideInHeader: true,
   groups: [
     {
