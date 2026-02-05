@@ -1,9 +1,9 @@
 import { Plus } from "lucide-react";
 
-import { Button } from "@/components/retroui/Button";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Input } from "@/components/retroui/Input";
-import { Select } from "@/components/retroui/Select";
+import { Button } from "@/components/ui/Button";
+import { Dialog } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 
 interface AddRuleDialogProps {
   isOpen: boolean;

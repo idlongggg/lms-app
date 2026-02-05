@@ -2,10 +2,10 @@
 
 import { ArrowDownRight, ArrowUpRight, Coins, TrendingUp } from "lucide-react";
 
-import { AreaChart } from "@/components/retroui/charts/AreaChart";
-import { PieChart } from "@/components/retroui/charts/PieChart";
+import { Button, Card, Select } from "@/components/ui";
+import { AreaChart } from "@/components/ui/charts/AreaChart";
+import { PieChart } from "@/components/ui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Select } from "@/components/retroui";
 
 const coinHistory = [
   { date: "T1", balance: 1500, earned: 200, spent: 50 },
@@ -81,35 +81,33 @@ export default function CoinsPage() {
       <div className="space-y-8">
         {/* Balance Card */}
         <Card className="border-primary bg-primary/20 shadow-sm">
-            <Card.Content className="p-6">
-                <div className="flex flex-col items-center gap-6 sm:flex-row">
-                    <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl">
-                    <Coins className="h-10 w-10" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                    <p className="text-muted-foreground text-sm font-medium">
-                        Số dư hiện tại
-                    </p>
-                    <p className="text-4xl font-bold">
-                        {stats.balance.toLocaleString()} xu
-                    </p>
-                    {stats.pendingRewards > 0 && (
-                        <p className="text-muted-foreground mt-1 text-sm">
-                        +{stats.pendingRewards} xu đang chờ xử lý
-                        </p>
-                    )}
-                    </div>
-                    <Button size="lg">
-                    Đổi quà ngay
-                    </Button>
-                </div>
-            </Card.Content>
+          <Card.Content className="p-6">
+            <div className="flex flex-col items-center gap-6 sm:flex-row">
+              <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl">
+                <Coins className="h-10 w-10" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <p className="text-muted-foreground text-sm font-medium">
+                  Số dư hiện tại
+                </p>
+                <p className="text-4xl font-bold">
+                  {stats.balance.toLocaleString()} xu
+                </p>
+                {stats.pendingRewards > 0 && (
+                  <p className="text-muted-foreground mt-1 text-sm">
+                    +{stats.pendingRewards} xu đang chờ xử lý
+                  </p>
+                )}
+              </div>
+              <Button size="lg">Đổi quà ngay</Button>
+            </div>
+          </Card.Content>
         </Card>
 
         {/* Stats Grid */}
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-green-500">
                 <ArrowUpRight className="h-5 w-5 text-white" />
               </div>
@@ -124,7 +122,7 @@ export default function CoinsPage() {
             </Card.Content>
           </Card>
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-red-500">
                 <ArrowDownRight className="h-5 w-5 text-white" />
               </div>
@@ -139,7 +137,7 @@ export default function CoinsPage() {
             </Card.Content>
           </Card>
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2">
                 <TrendingUp className="h-5 w-5 text-white" />
               </div>
@@ -161,122 +159,122 @@ export default function CoinsPage() {
           {/* Balance Chart */}
           <Card className="shadow-sm lg:col-span-2">
             <Card.Content className="p-0">
-                <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <div className="border-border bg-muted border-b-2 px-6 py-4">
                 <h2 className="font-bold">Biến động số dư</h2>
-                </div>
-                <div className="p-4">
+              </div>
+              <div className="p-4">
                 <AreaChart
-                    data={coinHistory}
-                    index="date"
-                    categories={["balance"]}
-                    fillColors={["var(--primary)"]}
-                    strokeColors={["var(--secondary)"]}
-                    className="h-64"
-                    valueFormatter={(value) => `${value} xu`}
+                  data={coinHistory}
+                  index="date"
+                  categories={["balance"]}
+                  fillColors={["var(--primary)"]}
+                  strokeColors={["var(--secondary)"]}
+                  className="h-64"
+                  valueFormatter={(value) => `${value} xu`}
                 />
-                </div>
+              </div>
             </Card.Content>
           </Card>
 
           {/* Source Breakdown */}
           <Card className="shadow-sm">
             <Card.Content className="p-0">
-                <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <div className="border-border bg-muted border-b-2 px-6 py-4">
                 <h2 className="font-bold">Nguồn thu</h2>
-                </div>
-                <div className="p-4">
+              </div>
+              <div className="p-4">
                 <PieChart
-                    data={sourceData}
-                    dataKey="value"
-                    nameKey="name"
-                    colors={sourceData.map((s) => s.color)}
-                    className="h-48"
+                  data={sourceData}
+                  dataKey="value"
+                  nameKey="name"
+                  colors={sourceData.map((s) => s.color)}
+                  className="h-48"
                 />
                 <div className="mt-4 space-y-2">
-                    {sourceData.map((source) => (
+                  {sourceData.map((source) => (
                     <div
-                        key={source.name}
-                        className="flex items-center justify-between text-sm"
+                      key={source.name}
+                      className="flex items-center justify-between text-sm"
                     >
-                        <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
                         <div
-                            className="h-3 w-3"
-                            style={{ backgroundColor: source.color }}
+                          className="h-3 w-3"
+                          style={{ backgroundColor: source.color }}
                         />
                         <span>{source.name}</span>
-                        </div>
-                        <span className="font-medium">{source.value} xu</span>
+                      </div>
+                      <span className="font-medium">{source.value} xu</span>
                     </div>
-                    ))}
+                  ))}
                 </div>
-                </div>
+              </div>
             </Card.Content>
           </Card>
         </div>
 
         {/* Transaction History */}
         <Card className="shadow-sm">
-            <Card.Content className="p-0">
-                <div className="border-border bg-muted border-b-2 px-6 py-4">
-                    <div className="flex items-center justify-between">
-                    <h2 className="font-bold">Lịch sử giao dịch</h2>
-                    <div className="w-32">
-                        <Select defaultValue="all">
-                            <Select.Trigger className="h-8">
-                                <Select.Value />
-                            </Select.Trigger>
-                            <Select.Content>
-                                <Select.Item value="all">Tất cả</Select.Item>
-                                <Select.Item value="earn">Nhận xu</Select.Item>
-                                <Select.Item value="spend">Chi xu</Select.Item>
-                            </Select.Content>
-                        </Select>
-                    </div>
-                    </div>
+          <Card.Content className="p-0">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold">Lịch sử giao dịch</h2>
+                <div className="w-32">
+                  <Select defaultValue="all">
+                    <Select.Trigger className="h-8">
+                      <Select.Value />
+                    </Select.Trigger>
+                    <Select.Content>
+                      <Select.Item value="all">Tất cả</Select.Item>
+                      <Select.Item value="earn">Nhận xu</Select.Item>
+                      <Select.Item value="spend">Chi xu</Select.Item>
+                    </Select.Content>
+                  </Select>
                 </div>
-                <div className="divide-border divide-y-2">
-                    {transactions.map((tx) => (
-                    <div
-                        key={tx.id}
-                        className="hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors"
-                    >
-                        <div
-                        className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${
-                            tx.type === "earn" ? "bg-green-500" : "bg-red-500"
-                        }`}
-                        >
-                        {tx.type === "earn" ? (
-                            <ArrowUpRight className="h-5 w-5 text-white" />
-                        ) : (
-                            <ArrowDownRight className="h-5 w-5 text-white" />
-                        )}
-                        </div>
-                        <div className="flex-1">
-                        <p className="font-medium">{tx.description}</p>
-                        <p className="text-muted-foreground text-sm">
-                            {new Date(tx.date).toLocaleDateString("vi-VN", {
-                            day: "numeric",
-                            month: "long",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            })}
-                        </p>
-                        </div>
-                        <span
-                        className={`text-lg font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}
-                        >
-                        {tx.amount > 0 ? "+" : ""}
-                        {tx.amount} xu
-                        </span>
-                    </div>
-                    ))}
+              </div>
+            </div>
+            <div className="divide-border divide-y-2">
+              {transactions.map((tx) => (
+                <div
+                  key={tx.id}
+                  className="hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors"
+                >
+                  <div
+                    className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${
+                      tx.type === "earn" ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  >
+                    {tx.type === "earn" ? (
+                      <ArrowUpRight className="h-5 w-5 text-white" />
+                    ) : (
+                      <ArrowDownRight className="h-5 w-5 text-white" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">{tx.description}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {new Date(tx.date).toLocaleDateString("vi-VN", {
+                        day: "numeric",
+                        month: "long",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
+                  <span
+                    className={`text-lg font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {tx.amount > 0 ? "+" : ""}
+                    {tx.amount} xu
+                  </span>
                 </div>
-                <div className="border-border border-t-2 p-4">
-                    <Button variant="ghost" className="w-full">
-                    Xem tất cả giao dịch
-                    </Button>
-                </div>
-            </Card.Content>
+              ))}
+            </div>
+            <div className="border-border border-t-2 p-4">
+              <Button variant="ghost" className="w-full">
+                Xem tất cả giao dịch
+              </Button>
+            </div>
+          </Card.Content>
         </Card>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 
-import { Input } from "@/components/retroui/Input";
-import { Select } from "@/components/retroui/Select";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 
 interface AlertsFilterProps {
   searchQuery: string;

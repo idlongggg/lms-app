@@ -13,8 +13,8 @@ import {
   Input,
   Label,
   Popover,
-} from "@/components/retroui";
-import { mockSchools } from "@/lib/mock/schools";
+} from "@/components/ui";
+import { mockSchools } from "@/data/schools";
 import { useTranslation } from "@/lib/providers";
 import { cn } from "@/lib/utils";
 

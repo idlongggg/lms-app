@@ -3,15 +3,15 @@
 import { Clock, Medal, Swords, Target, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 
-import { Button, Card } from "@/components/retroui";
-import { Can, useAuth } from "@/lib/auth";
-import { PERMISSIONS } from "@/lib/auth/types";
+import { Button, Card } from "@/components/ui";
 import {
   getLiveTournaments,
   getUpcomingTournaments,
   getUserMedals,
   getUserTournamentHistory,
-} from "@/lib/mock/tournaments";
+} from "@/data/tournaments";
+import { Can, useAuth } from "@/lib/auth";
+import { PERMISSIONS } from "@/lib/auth/types";
 import { useTranslation } from "@/lib/providers";
 
 import {

@@ -1,8 +1,9 @@
 "use client";
 
 import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
+
+import { Badge, Button, Card, Input, Select } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge, Select, Input } from "@/components/retroui";
 
 const courses = [
   {
@@ -112,7 +113,7 @@ export default function CoursesPage() {
               </Button>
             ))}
           </div>
-          <div className="sm:ml-auto w-48">
+          <div className="w-48 sm:ml-auto">
             <Select defaultValue="popular">
               <Select.Trigger className="w-full">
                 <Select.Value />
@@ -144,9 +145,7 @@ export default function CoursesPage() {
                   <Badge variant="outline" className="bg-muted">
                     {course.category}
                   </Badge>
-                  <Badge variant="surface">
-                    {course.level}
-                  </Badge>
+                  <Badge variant="surface">{course.level}</Badge>
                 </div>
 
                 <h3 className="font-bold">{course.title}</h3>
@@ -174,9 +173,7 @@ export default function CoursesPage() {
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{course.rating}</span>
                   </div>
-                  <Button size="sm">
-                    Xem chi tiết
-                  </Button>
+                  <Button size="sm">Xem chi tiết</Button>
                 </div>
               </Card.Content>
             </Card>

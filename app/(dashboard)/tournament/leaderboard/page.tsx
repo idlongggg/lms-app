@@ -2,9 +2,9 @@
 
 import { Award, Crown, Medal, Star } from "lucide-react";
 
-import { BarChart } from "@/components/retroui/charts/BarChart";
+import { Button, Card, Select } from "@/components/ui";
+import { BarChart } from "@/components/ui/charts/BarChart";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Select } from "@/components/retroui";
 
 const leaderboardData = [
   { rank: 1, name: "ProCoder99", score: 12500, wins: 85, avatar: "👨‍💻" },
@@ -63,9 +63,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
             </div>
-            <Button size="lg">
-              Thách đấu ngay
-            </Button>
+            <Button size="lg">Thách đấu ngay</Button>
           </div>
         </Card.Content>
       </Card>
@@ -78,16 +76,16 @@ export default function LeaderboardPage() {
               <div className="flex items-center justify-between">
                 <h2 className="font-bold">Top 10 toàn thời gian</h2>
                 <div className="w-40">
-                    <Select defaultValue="all">
-                        <Select.Trigger className="h-8">
-                            <Select.Value />
-                        </Select.Trigger>
-                        <Select.Content>
-                            <Select.Item value="all">Toàn thời gian</Select.Item>
-                            <Select.Item value="month">Tháng này</Select.Item>
-                            <Select.Item value="week">Tuần này</Select.Item>
-                        </Select.Content>
-                    </Select>
+                  <Select defaultValue="all">
+                    <Select.Trigger className="h-8">
+                      <Select.Value />
+                    </Select.Trigger>
+                    <Select.Content>
+                      <Select.Item value="all">Toàn thời gian</Select.Item>
+                      <Select.Item value="month">Tháng này</Select.Item>
+                      <Select.Item value="week">Tuần này</Select.Item>
+                    </Select.Content>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -143,55 +141,55 @@ export default function LeaderboardPage() {
 
         {/* Weekly Top Chart */}
         <Card className="shadow-sm">
-            <Card.Content className="p-0">
-                <div className="border-border bg-muted border-b-2 px-6 py-4">
-                    <h2 className="font-bold">Top tuần này</h2>
-                </div>
-                <div className="p-4">
-                    <BarChart
-                    data={weeklyTopData}
-                    index="name"
-                    categories={["points"]}
-                    alignment="horizontal"
-                    fillColors={["var(--primary)"]}
-                    className="h-64"
-                    valueFormatter={(value) => `${value} pts`}
-                    />
-                </div>
-            </Card.Content>
+          <Card.Content className="p-0">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <h2 className="font-bold">Top tuần này</h2>
+            </div>
+            <div className="p-4">
+              <BarChart
+                data={weeklyTopData}
+                index="name"
+                categories={["points"]}
+                alignment="horizontal"
+                fillColors={["var(--primary)"]}
+                className="h-64"
+                valueFormatter={(value) => `${value} pts`}
+              />
+            </div>
+          </Card.Content>
         </Card>
       </div>
 
       {/* Rewards Info */}
       <Card className="bg-muted/50">
         <Card.Content className="p-6">
-            <h3 className="mb-4 flex items-center gap-2 font-bold">
+          <h3 className="mb-4 flex items-center gap-2 font-bold">
             <Award className="h-5 w-5" />
             Phần thưởng xếp hạng
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-3">
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-3">
             <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-                <Crown className="h-8 w-8 text-yellow-500" />
-                <div>
+              <Crown className="h-8 w-8 text-yellow-500" />
+              <div>
                 <p className="font-medium">Top 1</p>
                 <p className="text-muted-foreground text-sm">5,000 xu/tháng</p>
-                </div>
+              </div>
             </div>
             <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-                <Medal className="h-8 w-8 text-gray-400" />
-                <div>
+              <Medal className="h-8 w-8 text-gray-400" />
+              <div>
                 <p className="font-medium">Top 2-3</p>
                 <p className="text-muted-foreground text-sm">2,500 xu/tháng</p>
-                </div>
+              </div>
             </div>
             <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-                <Star className="h-8 w-8 text-amber-500" />
-                <div>
+              <Star className="h-8 w-8 text-amber-500" />
+              <div>
                 <p className="font-medium">Top 10</p>
                 <p className="text-muted-foreground text-sm">1,000 xu/tháng</p>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </Card.Content>
       </Card>
     </div>

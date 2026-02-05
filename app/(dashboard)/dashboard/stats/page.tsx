@@ -2,12 +2,12 @@
 
 import { Clock, Target, TrendingUp } from "lucide-react";
 
-import { AreaChart } from "@/components/retroui/charts/AreaChart";
-import { BarChart } from "@/components/retroui/charts/BarChart";
-import { LineChart } from "@/components/retroui/charts/LineChart";
-import { PieChart } from "@/components/retroui/charts/PieChart";
+import { Card } from "@/components/ui";
+import { AreaChart } from "@/components/ui/charts/AreaChart";
+import { BarChart } from "@/components/ui/charts/BarChart";
+import { LineChart } from "@/components/ui/charts/LineChart";
+import { PieChart } from "@/components/ui/charts/PieChart";
 import { useTranslation } from "@/lib/providers";
-import { Card } from "@/components/retroui";
 
 const learningProgressData = [
   { month: "T1", completed: 12, inProgress: 5 },
@@ -113,7 +113,9 @@ export default function StatsPage() {
             <Card.Content className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-muted-foreground text-sm">Streak hiện tại</p>
+                  <p className="text-muted-foreground text-sm">
+                    Streak hiện tại
+                  </p>
                   <p className="text-2xl font-bold">12 ngày</p>
                 </div>
                 <div className="border-border flex h-10 w-10 items-center justify-center border-2 bg-orange-400">

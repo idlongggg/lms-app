@@ -3,8 +3,8 @@
 import { Calendar, Clock, Plus, Trophy, Users } from "lucide-react";
 import { useState } from "react";
 
-import { Button, Card, Dialog } from "@/components/retroui";
-import { mockClasses, mockQuestions } from "@/lib/mock/classes";
+import { Button, Card, Dialog } from "@/components/ui";
+import { mockClasses, mockQuestions } from "@/data/classes";
 
 export function CreateTournamentSection() {
   const [isOpen, setIsOpen] = useState(false);

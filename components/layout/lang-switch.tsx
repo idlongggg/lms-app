@@ -1,4 +1,4 @@
-import { Button, Menu, Text } from "@/components/retroui";
+import { Button, Menu, Text } from "@/components/ui";
 import { LanguageIcon } from "@/lib/constants/icons";
 import { type Language, type LanguageOption } from "@/lib/i18n";
 

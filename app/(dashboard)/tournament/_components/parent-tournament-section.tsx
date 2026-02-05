@@ -2,7 +2,7 @@
 
 import { Award, Crown, Medal, TrendingUp, Trophy } from "lucide-react";
 
-import { mockChildrenProgress } from "@/lib/mock/classes";
+import { mockChildrenProgress } from "@/data/classes";
 
 export function ParentTournamentSection() {
   const children = mockChildrenProgress;

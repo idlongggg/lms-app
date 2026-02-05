@@ -1,8 +1,9 @@
 "use client";
 
 import { Calendar, Clock, Filter, Trophy, Users } from "lucide-react";
+
+import { Badge, Button, Card, Select } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge, Select } from "@/components/retroui";
 
 const upcomingMatches = [
   {
@@ -69,33 +70,33 @@ export default function SchedulePage() {
       {/* My Registered */}
       {myRegistered.length > 0 && (
         <Card className="border-primary bg-primary/10 shadow-sm">
-            <Card.Content className="p-4">
-                <h2 className="mb-3 font-bold">Đã đăng ký</h2>
-                <div className="space-y-2">
-                    {myRegistered.map((match) => (
-                    <div
-                        key={match.id}
-                        className="border-border bg-background flex items-center justify-between border-2 p-3"
-                    >
-                        <div className="flex items-center gap-3">
-                        <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
-                            <Trophy className="h-5 w-5" />
-                        </div>
-                        <div>
-                            <p className="font-medium">{match.title}</p>
-                            <p className="text-muted-foreground text-sm">
-                            {new Date(match.date).toLocaleDateString("vi-VN")} •{" "}
-                            {match.time}
-                            </p>
-                        </div>
-                        </div>
-                        <Badge className="bg-green-100 text-green-700 border-green-200">
-                        Đã đăng ký
-                        </Badge>
+          <Card.Content className="p-4">
+            <h2 className="mb-3 font-bold">Đã đăng ký</h2>
+            <div className="space-y-2">
+              {myRegistered.map((match) => (
+                <div
+                  key={match.id}
+                  className="border-border bg-background flex items-center justify-between border-2 p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
+                      <Trophy className="h-5 w-5" />
                     </div>
-                    ))}
+                    <div>
+                      <p className="font-medium">{match.title}</p>
+                      <p className="text-muted-foreground text-sm">
+                        {new Date(match.date).toLocaleDateString("vi-VN")} •{" "}
+                        {match.time}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge className="border-green-200 bg-green-100 text-green-700">
+                    Đã đăng ký
+                  </Badge>
                 </div>
-            </Card.Content>
+              ))}
+            </div>
+          </Card.Content>
         </Card>
       )}
 
@@ -106,29 +107,29 @@ export default function SchedulePage() {
           <span className="text-sm font-medium">Lọc:</span>
         </div>
         <div className="w-40">
-            <Select defaultValue="all">
-                <Select.Trigger className="h-9">
-                    <Select.Value />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="all">Tất cả độ khó</Select.Item>
-                    <Select.Item value="basic">Cơ bản</Select.Item>
-                    <Select.Item value="medium">Trung bình</Select.Item>
-                    <Select.Item value="advanced">Nâng cao</Select.Item>
-                </Select.Content>
-            </Select>
+          <Select defaultValue="all">
+            <Select.Trigger className="h-9">
+              <Select.Value />
+            </Select.Trigger>
+            <Select.Content>
+              <Select.Item value="all">Tất cả độ khó</Select.Item>
+              <Select.Item value="basic">Cơ bản</Select.Item>
+              <Select.Item value="medium">Trung bình</Select.Item>
+              <Select.Item value="advanced">Nâng cao</Select.Item>
+            </Select.Content>
+          </Select>
         </div>
         <div className="w-40">
-            <Select defaultValue="week">
-                <Select.Trigger className="h-9">
-                    <Select.Value />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="week">Tuần này</Select.Item>
-                    <Select.Item value="month">Tháng này</Select.Item>
-                    <Select.Item value="all">Tất cả</Select.Item>
-                </Select.Content>
-            </Select>
+          <Select defaultValue="week">
+            <Select.Trigger className="h-9">
+              <Select.Value />
+            </Select.Trigger>
+            <Select.Content>
+              <Select.Item value="week">Tuần này</Select.Item>
+              <Select.Item value="month">Tháng này</Select.Item>
+              <Select.Item value="all">Tất cả</Select.Item>
+            </Select.Content>
+          </Select>
         </div>
       </div>
 
@@ -140,84 +141,84 @@ export default function SchedulePage() {
             className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
           >
             <Card.Content className="p-0">
-                {/* Header */}
-                <div className="border-border bg-muted flex items-center justify-between border-b-2 px-4 py-3">
+              {/* Header */}
+              <div className="border-border bg-muted flex items-center justify-between border-b-2 px-4 py-3">
                 <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span className="font-medium">
+                  <Calendar className="h-4 w-4" />
+                  <span className="font-medium">
                     {new Date(match.date).toLocaleDateString("vi-VN", {
-                        weekday: "long",
-                        day: "numeric",
-                        month: "long",
+                      weekday: "long",
+                      day: "numeric",
+                      month: "long",
                     })}
-                    </span>
+                  </span>
                 </div>
                 {match.status === "starting_soon" && (
-                    <Badge className="animate-pulse bg-orange-100 text-orange-700 border-orange-200">
+                  <Badge className="animate-pulse border-orange-200 bg-orange-100 text-orange-700">
                     Sắp bắt đầu
-                    </Badge>
+                  </Badge>
                 )}
-                </div>
+              </div>
 
-                {/* Content */}
-                <div className="p-4">
+              {/* Content */}
+              <div className="p-4">
                 <div className="flex items-start justify-between gap-4">
-                    <div>
+                  <div>
                     <h3 className="text-lg font-bold">{match.title}</h3>
                     <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
-                        <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
                         {match.time}
-                        </span>
-                        <span className="flex items-center gap-1">
+                      </span>
+                      <span className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         {match.participants}/{match.maxParticipants}
-                        </span>
-                        <span className="flex items-center gap-1">
+                      </span>
+                      <span className="flex items-center gap-1">
                         <Trophy className="h-4 w-4" />
                         {match.prize}
-                        </span>
+                      </span>
                     </div>
-                    </div>
-                    <Badge className={
-                        match.difficulty === "Cơ bản"
-                        ? "bg-green-100 text-green-700 border-green-200"
+                  </div>
+                  <Badge
+                    className={
+                      match.difficulty === "Cơ bản"
+                        ? "border-green-200 bg-green-100 text-green-700"
                         : match.difficulty === "Trung bình"
-                            ? "bg-yellow-100 text-yellow-700 border-yellow-200"
-                            : "bg-red-100 text-red-700 border-red-200"
-                    }>
+                          ? "border-yellow-200 bg-yellow-100 text-yellow-700"
+                          : "border-red-200 bg-red-100 text-red-700"
+                    }
+                  >
                     {match.difficulty}
-                    </Badge>
+                  </Badge>
                 </div>
 
                 {/* Progress Bar */}
                 <div className="mt-4">
-                    <div className="mb-1 flex items-center justify-between text-sm">
+                  <div className="mb-1 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">
-                        Số người đăng ký
+                      Số người đăng ký
                     </span>
                     <span className="font-medium">
-                        {Math.round(
+                      {Math.round(
                         (match.participants / match.maxParticipants) * 100,
-                        )}
-                        %
+                      )}
+                      %
                     </span>
-                    </div>
-                    <div className="border-border bg-muted h-2 w-full border">
+                  </div>
+                  <div className="border-border bg-muted h-2 w-full border">
                     <div
-                        className="bg-secondary h-full transition-all"
-                        style={{
+                      className="bg-secondary h-full transition-all"
+                      style={{
                         width: `${(match.participants / match.maxParticipants) * 100}%`,
-                        }}
+                      }}
                     />
-                    </div>
+                  </div>
                 </div>
 
                 {/* Action */}
-                <Button className="mt-4 w-full">
-                    Đăng ký tham gia
-                </Button>
-                </div>
+                <Button className="mt-4 w-full">Đăng ký tham gia</Button>
+              </div>
             </Card.Content>
           </Card>
         ))}

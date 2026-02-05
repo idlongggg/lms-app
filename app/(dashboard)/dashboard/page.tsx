@@ -3,19 +3,12 @@
 import { BookOpen, Coins, Flame, Star, Target, Trophy } from "lucide-react";
 import Link from "next/link";
 
+import { Badge, Card, Progress as RetroProgress } from "@/components/ui";
+import { getInProgressCourses, lessonProgress, lessons } from "@/data/courses";
+import { getLiveTournaments, getUpcomingTournaments } from "@/data/tournaments";
 import { Can, useAuth } from "@/lib/auth";
 import { PERMISSIONS } from "@/lib/auth/types";
-import {
-  getInProgressCourses,
-  lessonProgress,
-  lessons,
-} from "@/lib/mock/courses";
-import {
-  getLiveTournaments,
-  getUpcomingTournaments,
-} from "@/lib/mock/tournaments";
 import { useTranslation } from "@/lib/providers";
-import { Card, Badge, Progress as RetroProgress } from "@/components/retroui";
 
 import { ParentChildrenSection, TeacherClassesSection } from "../_components";
 
@@ -116,65 +109,67 @@ export default function DashboardPage() {
         {/* Continue Learning */}
         <Card className="shadow-sm">
           <Card.Content className="p-0">
-              <div className="border-border flex items-center justify-between border-b-2 p-4">
-                <h2 className="text-xl font-bold">
-                  {t("dashboard.continueLearning")}
-                </h2>
-                <Link
-                  href="/learning/in-progress"
-                  className="text-primary text-sm hover:underline"
-                >
-                  {t("dashboard.viewAllLessons")}
-                </Link>
-              </div>
-              <div className="divide-border divide-y-2">
-                {recentLessons.length > 0 ? (
-                  recentLessons.map((lesson, index) => (
-                    <Link
-                      key={index}
-                      href={`/learning/${lesson.id}`}
-                      className="hover:bg-muted flex items-center justify-between p-4 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2">
-                          <BookOpen className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <p className="font-medium">{lesson.title}</p>
-                          <p className="text-muted-foreground text-sm">
-                            {lesson.subject}
-                          </p>
-                        </div>
+            <div className="border-border flex items-center justify-between border-b-2 p-4">
+              <h2 className="text-xl font-bold">
+                {t("dashboard.continueLearning")}
+              </h2>
+              <Link
+                href="/learning/in-progress"
+                className="text-primary text-sm hover:underline"
+              >
+                {t("dashboard.viewAllLessons")}
+              </Link>
+            </div>
+            <div className="divide-border divide-y-2">
+              {recentLessons.length > 0 ? (
+                recentLessons.map((lesson, index) => (
+                  <Link
+                    key={index}
+                    href={`/learning/${lesson.id}`}
+                    className="hover:bg-muted flex items-center justify-between p-4 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2">
+                        <BookOpen className="h-5 w-5" />
                       </div>
-                      <div className="text-right w-1/3">
-                        <p className="text-sm font-medium mb-1">{lesson.progress}%</p>
-                        {/* We use a simple div progress bar here if RetroProgress isn't imported, but assuming we can use one if available or keep this custom one for now to match style EXACTLY or assume RetroProgress is available. 
+                      <div>
+                        <p className="font-medium">{lesson.title}</p>
+                        <p className="text-muted-foreground text-sm">
+                          {lesson.subject}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="w-1/3 text-right">
+                      <p className="mb-1 text-sm font-medium">
+                        {lesson.progress}%
+                      </p>
+                      {/* We use a simple div progress bar here if RetroProgress isn't imported, but assuming we can use one if available or keep this custom one for now to match style EXACTLY or assume RetroProgress is available. 
                             I will keep the custom one to match the exact "retro" look if RetroProgress is different, but actually RetroUI usually provides a progress bar. 
                             The original code used a custom div. I'll stick to custom structure if I'm not sure about RetroProgress, but the prompt is to USE retrouve.
                             Let's try to mock the look with Tailwind if RetroProgress is not available, but I'll assume I can just use a div for now as they did, wrapped in Card.
                         */}
-                         <div className="border-border bg-muted h-2 w-full border">
-                          <div
-                            className="bg-primary h-full"
-                            style={{ width: `${lesson.progress}%` }}
-                          />
-                        </div>
+                      <div className="border-border bg-muted h-2 w-full border">
+                        <div
+                          className="bg-primary h-full"
+                          style={{ width: `${lesson.progress}%` }}
+                        />
                       </div>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="text-muted-foreground p-8 text-center">
-                    <BookOpen className="mx-auto mb-2 h-8 w-8 opacity-50" />
-                    <p>{t("dashboard.noLessonsInProgress")}</p>
-                    <Link
-                      href="/learning/courses"
-                      className="text-primary text-sm hover:underline"
-                    >
-                      {t("dashboard.exploreCourses")}
-                    </Link>
-                  </div>
-                )}
-              </div>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-muted-foreground p-8 text-center">
+                  <BookOpen className="mx-auto mb-2 h-8 w-8 opacity-50" />
+                  <p>{t("dashboard.noLessonsInProgress")}</p>
+                  <Link
+                    href="/learning/courses"
+                    className="text-primary text-sm hover:underline"
+                  >
+                    {t("dashboard.exploreCourses")}
+                  </Link>
+                </div>
+              )}
+            </div>
           </Card.Content>
         </Card>
 
@@ -182,7 +177,9 @@ export default function DashboardPage() {
         <Card className="shadow-sm">
           <Card.Content className="p-0">
             <div className="border-border flex items-center justify-between border-b-2 p-4">
-              <h2 className="text-xl font-bold">{t("dashboard.tournaments")}</h2>
+              <h2 className="text-xl font-bold">
+                {t("dashboard.tournaments")}
+              </h2>
               <Link
                 href="/tournament"
                 className="text-primary text-sm hover:underline"
@@ -205,11 +202,15 @@ export default function DashboardPage() {
                     <div>
                       <p className="font-medium">{tournament.name}</p>
                       <p className="text-muted-foreground text-sm">
-                        {tournament.maxParticipants} {t("dashboard.participants")}
+                        {tournament.maxParticipants}{" "}
+                        {t("dashboard.participants")}
                       </p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="border-red-500 bg-red-500/10 text-red-500 animate-pulse">
+                  <Badge
+                    variant="outline"
+                    className="animate-pulse border-red-500 bg-red-500/10 text-red-500"
+                  >
                     🔴 {t("dashboard.live")}
                   </Badge>
                 </Link>
@@ -246,9 +247,7 @@ export default function DashboardPage() {
                           </p>
                         </div>
                       </div>
-                      <Badge variant="surface">
-                        {timeLabel}
-                      </Badge>
+                      <Badge variant="surface">{timeLabel}</Badge>
                     </Link>
                   );
                 })}

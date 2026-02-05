@@ -12,8 +12,8 @@ import {
   Zap,
 } from "lucide-react";
 
+import { Badge, Button, Card, Select } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge, Select } from "@/components/retroui";
 
 const events = [
   {
@@ -149,32 +149,35 @@ export default function EventsPage() {
     <div className="space-y-8">
       <div className="flex justify-end">
         <div className="w-40">
-            <Select defaultValue="all">
-                <Select.Trigger className="h-10">
-                    <Select.Value />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="all">Tất cả loại</Select.Item>
-                    <Select.Item value="competition">Thi đấu</Select.Item>
-                    <Select.Item value="workshop">Workshop</Select.Item>
-                    <Select.Item value="event">Sự kiện</Select.Item>
-                </Select.Content>
-            </Select>
+          <Select defaultValue="all">
+            <Select.Trigger className="h-10">
+              <Select.Value />
+            </Select.Trigger>
+            <Select.Content>
+              <Select.Item value="all">Tất cả loại</Select.Item>
+              <Select.Item value="competition">Thi đấu</Select.Item>
+              <Select.Item value="workshop">Workshop</Select.Item>
+              <Select.Item value="event">Sự kiện</Select.Item>
+            </Select.Content>
+          </Select>
         </div>
       </div>
       {/* Featured Event */}
       {upcomingEvents[0] && (
         <Card className="border-primary bg-primary/10 border-2 shadow-sm">
-          <Card.Content className="p-6 flex flex-col gap-6 lg:flex-row">
+          <Card.Content className="flex flex-col gap-6 p-6 lg:flex-row">
             <div className="border-border bg-primary flex h-32 w-32 shrink-0 items-center justify-center border-2 text-6xl">
               {upcomingEvents[0].image}
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className={`${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color} border-transparent`}>
+                <Badge
+                  variant="outline"
+                  className={`${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color} border-transparent`}
+                >
                   {typeConfig[upcomingEvents[0].type].label}
                 </Badge>
-                <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-green-200">
+                <Badge className="border-green-200 bg-green-100 text-green-700 hover:bg-green-100">
                   Nổi bật
                 </Badge>
               </div>
@@ -223,12 +226,8 @@ export default function EventsPage() {
               </div>
             </div>
             <div className="flex shrink-0 flex-col gap-2">
-              <Button size="lg">
-                Đăng ký ngay
-              </Button>
-              <Button variant="outline">
-                Thêm vào lịch
-              </Button>
+              <Button size="lg">Đăng ký ngay</Button>
+              <Button variant="outline">Thêm vào lịch</Button>
             </div>
           </Card.Content>
         </Card>
@@ -247,45 +246,56 @@ export default function EventsPage() {
                 className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <Card.Content className="p-0">
-                    <div className="flex gap-4 p-4">
+                  <div className="flex gap-4 p-4">
                     <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
-                        {event.image}
+                      {event.image}
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-                        <Badge variant="outline" className={`${type.bgColor} ${type.color} border-transparent`}>
-                            {type.label}
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge
+                          variant="outline"
+                          className={`${type.bgColor} ${type.color} border-transparent`}
+                        >
+                          {type.label}
                         </Badge>
-                        <Badge variant="outline" className={`${status.bgColor} ${status.color} border-transparent`}>
-                            {status.label}
+                        <Badge
+                          variant="outline"
+                          className={`${status.bgColor} ${status.color} border-transparent`}
+                        >
+                          {status.label}
                         </Badge>
-                        </div>
-                        <h3 className="mt-1 font-bold">{event.title}</h3>
-                        <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
+                      </div>
+                      <h3 className="mt-1 font-bold">{event.title}</h3>
+                      <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
                         <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(event.startDate).toLocaleDateString("vi-VN")}
+                          <Calendar className="h-3 w-3" />
+                          {new Date(event.startDate).toLocaleDateString(
+                            "vi-VN",
+                          )}
                         </span>
                         <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {new Date(event.startDate).toLocaleTimeString("vi-VN", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            })}
+                          <Clock className="h-3 w-3" />
+                          {new Date(event.startDate).toLocaleTimeString(
+                            "vi-VN",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}
                         </span>
-                        </div>
+                      </div>
                     </div>
                     <ChevronRight className="text-muted-foreground h-5 w-5 shrink-0 self-center" />
-                    </div>
-                    <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
+                  </div>
+                  <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
                     <span className="flex items-center gap-1">
-                        <Gift className="h-4 w-4" />
-                        {event.rewards}
+                      <Gift className="h-4 w-4" />
+                      {event.rewards}
                     </span>
                     <Button variant="link" size="sm" className="h-auto p-0">
-                        Chi tiết
+                      Chi tiết
                     </Button>
-                    </div>
+                  </div>
                 </Card.Content>
               </Card>
             );
@@ -310,7 +320,10 @@ export default function EventsPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-medium">{event.title}</h3>
-                    <Badge variant="outline" className={`${status.bgColor} ${status.color} border-transparent`}>
+                    <Badge
+                      variant="outline"
+                      className={`${status.bgColor} ${status.color} border-transparent`}
+                    >
                       {status.label}
                     </Badge>
                   </div>

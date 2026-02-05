@@ -7,7 +7,7 @@ import {
   LanguageSwitcher,
   Logo,
   ThemeToggle,
-} from "@/components/shared";
+} from "@/components/layout";
 import { useLanguage, useTheme, useTranslation } from "@/lib/providers";
 
 export default function AuthLayout({

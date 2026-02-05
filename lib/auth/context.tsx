@@ -10,7 +10,7 @@ import React, {
   useState,
 } from "react";
 
-import type { MockUser } from "../mock/users";
+import type { MockUser } from "@/data/users";
 import { canAccessRoute, mockAuthService } from "./mock-auth";
 import type { AuthState, AuthUser, Permission, UserRole } from "./types";
 

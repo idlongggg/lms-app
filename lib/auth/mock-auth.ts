@@ -3,8 +3,8 @@
  * Implementation of AuthService with LocalStorage persistence
  */
 
-import type { MockUser } from "../mock/users";
-import { getUserByEmail, mockUsers } from "../mock/users";
+import type { MockUser } from "@/data/users";
+import { getUserByEmail, mockUsers } from "@/data/users";
 import type {
   AuthService,
   AuthState,

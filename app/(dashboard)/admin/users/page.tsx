@@ -10,13 +10,13 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-import { Badge } from "@/components/retroui/Badge";
-import { Button } from "@/components/retroui/Button";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Input } from "@/components/retroui/Input";
-import { Menu } from "@/components/retroui/Menu";
-import { Select } from "@/components/retroui/Select";
-import { Table } from "@/components/retroui/Table";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Dialog } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Menu } from "@/components/ui/Menu";
+import { Select } from "@/components/ui/Select";
+import { Table } from "@/components/ui/Table";
 import { useTranslation } from "@/lib/providers";
 
 const users = [

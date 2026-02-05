@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Button, Card, Input, Label } from "@/components/retroui";
+import { Button, Card, Input, Label } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
 
 export default function ForgotPasswordPage() {

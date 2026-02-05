@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button, Text } from "@/components/retroui";
+import { Button, Text } from "@/components/ui";
 import { LogoIcon } from "@/lib/constants/icons";
 
 interface LogoProps {

@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/retroui";
 import {
   Header,
   LanguageSwitcher,
   Logo,
   ThemeToggle,
-} from "@/components/shared";
+} from "@/components/layout";
+import { Button } from "@/components/ui";
 import { type Language, type LanguageOption } from "@/lib/i18n";
 import { useLanguage, useTheme } from "@/lib/providers";
 

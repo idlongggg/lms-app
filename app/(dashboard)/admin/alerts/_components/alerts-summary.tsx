@@ -1,7 +1,7 @@
 import { AlertTriangle, Bell, Settings } from "lucide-react";
 
-import { Card } from "@/components/retroui/Card";
-import { Alert, AlertRule } from "@/lib/mock/alerts";
+import { Card } from "@/components/ui/Card";
+import { Alert, AlertRule } from "@/data/alerts";
 
 interface AlertsSummaryProps {
   alerts: Alert[];

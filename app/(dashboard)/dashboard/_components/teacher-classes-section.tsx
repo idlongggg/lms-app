@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import { mockClasses, mockClassProgress } from "@/lib/mock/classes";
+import { mockClasses, mockClassProgress } from "@/data/classes";
 
 export function TeacherClassesSection() {
   const classes = mockClasses;

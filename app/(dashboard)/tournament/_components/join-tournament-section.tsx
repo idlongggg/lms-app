@@ -12,8 +12,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-import { Badge, Button, Card, Input, Progress } from "@/components/retroui";
-import { mockJoinableTournaments } from "@/lib/mock/classes";
+import { Badge, Button, Card, Input, Progress } from "@/components/ui";
+import { mockJoinableTournaments } from "@/data/classes";
 import { useTranslation } from "@/lib/providers";
 
 type FilterType = "all" | "available" | "joined";

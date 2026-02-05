@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader } from "@/components/retroui";
+import { Loader } from "@/components/ui";
 import { useRequireAuth } from "@/lib/auth";
 
 export default function AdminSectionLayout({

@@ -2,7 +2,7 @@
 
 import { Bell, Database, Settings, Shield } from "lucide-react";
 
-import { Button, Card, Input, Select, Switch } from "@/components/retroui";
+import { Button, Card, Input, Select, Switch } from "@/components/ui";
 
 interface SettingCardProps {
   icon: React.ReactNode;
@@ -48,7 +48,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="text-sm font-medium mb-1 block">{label}</label>
+      <label className="mb-1 block text-sm font-medium">{label}</label>
       {children}
     </div>
   );
@@ -159,9 +159,7 @@ export default function AdminSettingsPage() {
       </div>
 
       <div className="flex justify-end">
-        <Button size="lg">
-          Lưu cài đặt
-        </Button>
+        <Button size="lg">Lưu cài đặt</Button>
       </div>
     </div>
   );
@@ -169,7 +167,7 @@ export default function AdminSettingsPage() {
 
 function ConnectionStatus({ name, status }: { name: string; status: string }) {
   return (
-    <div className="border-border bg-muted flex items-center justify-between border-2 p-3 rounded">
+    <div className="border-border bg-muted flex items-center justify-between rounded border-2 p-3">
       <div>
         <p className="text-sm font-medium">{name}</p>
         <p className="text-muted-foreground text-xs">{status}</p>

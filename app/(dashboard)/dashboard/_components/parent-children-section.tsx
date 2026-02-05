@@ -2,7 +2,7 @@
 
 import { BookOpen, Clock, Star, TrendingUp, Trophy } from "lucide-react";
 
-import { mockChildrenProgress } from "@/lib/mock/classes";
+import { mockChildrenProgress } from "@/data/classes";
 
 export function ParentChildrenSection() {
   const children = mockChildrenProgress;

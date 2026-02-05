@@ -1,7 +1,8 @@
 "use client";
 
 import { FileText, Folder, MoreVertical, Plus, Search } from "lucide-react";
-import { Button, Card, Input, Select, Badge, Menu } from "@/components/retroui";
+
+import { Badge, Button, Card, Input, Menu, Select } from "@/components/ui";
 
 export default function AdminContentPage() {
   return (
@@ -22,12 +23,9 @@ export default function AdminContentPage() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="relative flex-1 min-w-[200px]">
-           <Input 
-             placeholder="Tìm kiếm nội dung..." 
-             className="pl-9"
-           />
-           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative min-w-[200px] flex-1">
+          <Input placeholder="Tìm kiếm nội dung..." className="pl-9" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
         </div>
         <Select defaultValue="all">
           <Select.Trigger className="w-[180px]">
@@ -61,52 +59,58 @@ export default function AdminContentPage() {
             className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
           >
             <Card.Content className="p-0">
-                <div className="border-border bg-muted flex items-start justify-between border-b-2 p-4">
+              <div className="border-border bg-muted flex items-start justify-between border-b-2 p-4">
                 <div className="flex items-center gap-3">
-                    <div
+                  <div
                     className={`border-border flex h-10 w-10 items-center justify-center border-2 ${content.type === "folder" ? "bg-accent" : "bg-primary"}`}
-                    >
+                  >
                     {content.type === "folder" ? (
-                        <Folder className="h-5 w-5" />
+                      <Folder className="h-5 w-5" />
                     ) : (
-                        <FileText className="h-5 w-5" />
+                      <FileText className="h-5 w-5" />
                     )}
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                     <h3 className="font-medium">{content.title}</h3>
                     <p className="text-muted-foreground text-sm">
-                        {content.subject}
+                      {content.subject}
                     </p>
-                    </div>
+                  </div>
                 </div>
                 <Menu>
-                    <Menu.Trigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreVertical className="h-4 w-4" />
-                        </Button>
-                    </Menu.Trigger>
-                    <Menu.Content align="end">
-                        <Menu.Item>Sửa</Menu.Item>
-                        <Menu.Item className="text-destructive">Xóa</Menu.Item>
-                    </Menu.Content>
+                  <Menu.Trigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </Menu.Trigger>
+                  <Menu.Content align="end">
+                    <Menu.Item>Sửa</Menu.Item>
+                    <Menu.Item className="text-destructive">Xóa</Menu.Item>
+                  </Menu.Content>
                 </Menu>
-                </div>
-                <div className="p-4">
+              </div>
+              <div className="p-4">
                 <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">
+                  <span className="text-muted-foreground">
                     {content.items} items
-                    </span>
-                    <Badge
-                        variant={content.status === "Published" ? "surface" : "default"}
-                        className={content.status === "Published" ? "bg-green-500/10 text-green-500 border-green-500" : ""}
-                    >
+                  </span>
+                  <Badge
+                    variant={
+                      content.status === "Published" ? "surface" : "default"
+                    }
+                    className={
+                      content.status === "Published"
+                        ? "border-green-500 bg-green-500/10 text-green-500"
+                        : ""
+                    }
+                  >
                     {content.status}
-                    </Badge>
+                  </Badge>
                 </div>
                 <p className="text-muted-foreground mt-2 text-xs">
-                    Cập nhật: {content.updatedAt}
+                  Cập nhật: {content.updatedAt}
                 </p>
-                </div>
+              </div>
             </Card.Content>
           </Card>
         ))}

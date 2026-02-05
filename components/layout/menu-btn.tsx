@@ -1,4 +1,4 @@
-import { Button } from "@/components/retroui";
+import { Button } from "@/components/ui";
 import { MenuIcon } from "@/lib/constants/icons";
 
 interface MobileMenuButtonProps {

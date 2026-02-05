@@ -7,7 +7,8 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { Button, Card, Badge } from "@/components/retroui";
+
+import { Badge, Button, Card } from "@/components/ui";
 
 const iconMap: Record<string, LucideIcon> = {
   BookOpen,
@@ -37,13 +38,21 @@ function HeroSection() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/auth/register">
-                <Button variant="secondary" size="lg" className="rounded-none border-2 shadow-md hover:translate-x-0 hover:translate-y-0 hover:shadow-lg transition-all transform hover:-translate-x-1 hover:-translate-y-1">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="transform rounded-none border-2 shadow-md transition-all hover:-translate-x-1 hover:translate-x-0 hover:-translate-y-1 hover:translate-y-0 hover:shadow-lg"
+                >
                   Bắt đầu ngay
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="#features">
-                <Button variant="outline" size="lg" className="bg-background rounded-none border-2 shadow-md hover:translate-x-0 hover:translate-y-0 hover:shadow-lg transition-all transform hover:-translate-x-1 hover:-translate-y-1">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="bg-background transform rounded-none border-2 shadow-md transition-all hover:-translate-x-1 hover:translate-x-0 hover:-translate-y-1 hover:translate-y-0 hover:shadow-lg"
+                >
                   Tìm hiểu thêm
                 </Button>
               </Link>
@@ -98,7 +107,7 @@ function StatCard({
 }) {
   return (
     <div
-      className={`border-border border-2 p-4 flex flex-col items-center justify-center text-center ${variant === "accent" ? "bg-accent" : "bg-muted"}`}
+      className={`border-border flex flex-col items-center justify-center border-2 p-4 text-center ${variant === "accent" ? "bg-accent" : "bg-muted"}`}
     >
       {icon}
       <p className="mt-2 font-medium">{label}</p>
@@ -139,7 +148,7 @@ function FeatureCard({
     <Card className="shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg">
       <Card.Content className="p-6">
         <div className="border-border bg-primary mb-4 inline-flex h-12 w-12 items-center justify-center border-2">
-            <FeatureIcon name={icon} />
+          <FeatureIcon name={icon} />
         </div>
         <h3 className="mb-2 text-xl font-bold">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
@@ -158,12 +167,16 @@ function CTASection() {
           ngày.
         </p>
         <div className="mt-8">
-            <Link href="/auth/register">
-                <Button variant="secondary" size="lg" className="px-8 py-6 text-lg shadow-md hover:shadow-lg transition-all hover:-translate-x-1 hover:-translate-y-1">
-                Đăng ký miễn phí
-                <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-            </Link>
+          <Link href="/auth/register">
+            <Button
+              variant="secondary"
+              size="lg"
+              className="px-8 py-6 text-lg shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg"
+            >
+              Đăng ký miễn phí
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

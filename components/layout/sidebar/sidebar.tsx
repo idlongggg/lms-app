@@ -2,8 +2,8 @@
 
 import { type RefObject } from "react";
 
-import { Button } from "@/components/retroui";
-import { Logo } from "@/components/shared/logo";
+import { Logo } from "@/components/layout/logo";
+import { Button } from "@/components/ui";
 import { CloseIcon, CollapseIcon, ExpandIcon } from "@/lib/constants/icons";
 import type { NavGroup } from "@/lib/nav";
 

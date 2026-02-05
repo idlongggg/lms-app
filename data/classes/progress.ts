@@ -1,8 +1,4 @@
-import {
-  ChildProgress,
-  ClassProgress,
-  StudentProgress,
-} from "@/lib/types/classes";
+import { ChildProgress, ClassProgress, StudentProgress } from "@/types/classes";
 
 import { getChildrenByParent } from "./data";
 

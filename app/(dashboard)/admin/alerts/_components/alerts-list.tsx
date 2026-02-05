@@ -1,9 +1,9 @@
 import { AlertTriangle, Bell, Check, Clock, X } from "lucide-react";
 
-import { Badge } from "@/components/retroui/Badge";
-import { Button } from "@/components/retroui/Button";
-import { Card } from "@/components/retroui/Card";
-import { Alert } from "@/lib/mock/alerts";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Alert } from "@/data/alerts";
 
 interface AlertsListProps {
   alerts: Alert[];

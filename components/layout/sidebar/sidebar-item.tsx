@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Badge, Button } from "@/components/retroui";
+import { Badge, Button } from "@/components/ui";
 import type { NavItem } from "@/lib/nav";
 
 export interface SidebarItemProps {

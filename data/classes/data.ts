@@ -1,4 +1,4 @@
-import { Class, ClassEnrollment, ParentChildLink } from "@/lib/types/classes";
+import { Class, ClassEnrollment, ParentChildLink } from "@/types/classes";
 
 // Mock Classes
 export const mockClasses: Class[] = [

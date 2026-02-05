@@ -2,8 +2,8 @@
 
 import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from "lucide-react";
 
+import { Badge, Button, Card, Select } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge, Select } from "@/components/retroui";
 
 const redeemedItems = [
   {
@@ -107,7 +107,7 @@ export default function RedeemedPage() {
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
                 <Package className="h-5 w-5" />
               </div>
@@ -120,7 +120,7 @@ export default function RedeemedPage() {
             </Card.Content>
           </Card>
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2 text-white">
                 <CheckCircle className="h-5 w-5" />
               </div>
@@ -131,7 +131,7 @@ export default function RedeemedPage() {
             </Card.Content>
           </Card>
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-3">
+            <Card.Content className="flex items-center gap-3 p-4">
               <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2 text-white">
                 💰
               </div>
@@ -187,7 +187,9 @@ export default function RedeemedPage() {
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-lg font-bold">{item.name}</h3>
-                      <Badge className={`${status.bgColor} ${status.color} ${status.borderColor}`}>
+                      <Badge
+                        className={`${status.bgColor} ${status.color} ${status.borderColor}`}
+                      >
                         {status.label}
                       </Badge>
                     </div>
@@ -217,11 +219,7 @@ export default function RedeemedPage() {
 
                   {/* Actions */}
                   <div className="flex shrink-0 gap-2">
-                    {item.status === "active" && (
-                      <Button>
-                        Sử dụng
-                      </Button>
-                    )}
+                    {item.status === "active" && <Button>Sử dụng</Button>}
                     <Button variant="secondary" size="icon">
                       <Eye className="h-4 w-4" />
                     </Button>

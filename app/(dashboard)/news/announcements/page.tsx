@@ -11,8 +11,8 @@ import {
   Pin,
 } from "lucide-react";
 
+import { Badge, Button, Card } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge } from "@/components/retroui";
 
 const announcements = [
   {
@@ -69,7 +69,12 @@ const announcements = [
 
 const typeConfig: Record<
   string,
-  { icon: typeof AlertCircle; color: string; bgColor: string; borderColor: string }
+  {
+    icon: typeof AlertCircle;
+    color: string;
+    bgColor: string;
+    borderColor: string;
+  }
 > = {
   warning: {
     icon: AlertCircle,
@@ -120,7 +125,7 @@ export default function AnnouncementsPage() {
                   key={announcement.id}
                   className={`${config.bgColor} ${config.borderColor} shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md`}
                 >
-                  <Card.Content className="p-4 flex items-start gap-4">
+                  <Card.Content className="flex items-start gap-4 p-4">
                     <div
                       className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 bg-white ${config.color}`}
                     >
@@ -129,9 +134,7 @@ export default function AnnouncementsPage() {
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-bold">{announcement.title}</h3>
-                        <Badge>
-                          Ghim
-                        </Badge>
+                        <Badge>Ghim</Badge>
                       </div>
                       <p className="mt-2 text-sm">{announcement.content}</p>
                       <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-4 text-sm">
@@ -173,7 +176,7 @@ export default function AnnouncementsPage() {
                 key={announcement.id}
                 className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <Card.Content className="p-4 flex items-start gap-4">
+                <Card.Content className="flex items-start gap-4 p-4">
                   <div
                     className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${config.bgColor.split(" ")[0]} ${config.color}`}
                   >
@@ -209,9 +212,7 @@ export default function AnnouncementsPage() {
 
       {/* Load More */}
       <div className="text-center">
-        <Button variant="outline">
-          Xem thêm thông báo cũ
-        </Button>
+        <Button variant="outline">Xem thêm thông báo cũ</Button>
       </div>
     </div>
   );

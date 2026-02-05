@@ -3,9 +3,9 @@
 import { Settings } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/retroui/Button";
+import { Button } from "@/components/ui/Button";
+import { mockAlertRules, mockAlerts } from "@/data/alerts";
 import { useAuth } from "@/lib/auth";
-import { mockAlertRules, mockAlerts } from "@/lib/mock/alerts";
 
 import { AddRuleDialog } from "./_components/add-rule-dialog";
 import { AlertRulesTable } from "./_components/alert-rules-table";

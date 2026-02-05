@@ -1,10 +1,10 @@
 import { Settings } from "lucide-react";
 
-import { Badge } from "@/components/retroui/Badge";
-import { Button } from "@/components/retroui/Button";
-import { Switch } from "@/components/retroui/Switch";
-import { Table } from "@/components/retroui/Table";
-import { AlertRule } from "@/lib/mock/alerts";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Switch } from "@/components/ui/Switch";
+import { Table } from "@/components/ui/Table";
+import { AlertRule } from "@/data/alerts";
 
 interface AlertRulesTableProps {
   rules: AlertRule[];

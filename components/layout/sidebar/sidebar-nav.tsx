@@ -2,7 +2,7 @@
 
 import { type RefObject } from "react";
 
-import { Text } from "@/components/retroui";
+import { Text } from "@/components/ui";
 import type { NavGroup } from "@/lib/nav";
 
 import { SidebarItem } from "./sidebar-item";

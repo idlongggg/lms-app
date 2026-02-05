@@ -12,9 +12,9 @@ import {
   Label,
   Loader,
   Switch,
-} from "@/components/retroui";
+} from "@/components/ui";
+import type { MockUser } from "@/data/users";
 import { useAuth } from "@/lib/auth";
-import type { MockUser } from "@/lib/mock/users";
 import { useTranslation } from "@/lib/providers";
 
 export default function LoginPage() {

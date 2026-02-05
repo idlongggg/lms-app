@@ -1,15 +1,5 @@
 "use client";
 
-import { Avatar, Badge, Card } from "@/components/retroui";
-import { useAuth } from "@/lib/auth";
-import {
-  getAdminDashboardCards,
-  getAdminUserList,
-  getRecentActivity,
-  getSystemStats,
-  getTenantStats,
-} from "@/lib/mock/admin-stats";
-import { useTranslation } from "@/lib/providers";
 import {
   AlertCircle,
   BookOpen,
@@ -23,6 +13,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+
+import { Avatar, Badge, Card } from "@/components/ui";
+import {
+  getAdminDashboardCards,
+  getAdminUserList,
+  getRecentActivity,
+  getSystemStats,
+  getTenantStats,
+} from "@/data/admin-stats";
+import { useAuth } from "@/lib/auth";
+import { useTranslation } from "@/lib/providers";
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
@@ -42,9 +43,17 @@ export default function AdminDashboardPage() {
   ).slice(0, 4);
   const recentActivity = getRecentActivity(user.tenantId).slice(0, 5);
 
-  const StatIcon = ({ icon: Icon, color }: { icon: React.ElementType; color: string }) => (
-    <div className={`border-border flex h-10 w-10 items-center justify-center border-2 ${color}`}>
-       <Icon className="h-5 w-5 text-white" />
+  const StatIcon = ({
+    icon: Icon,
+    color,
+  }: {
+    icon: React.ElementType;
+    color: string;
+  }) => (
+    <div
+      className={`border-border flex h-10 w-10 items-center justify-center border-2 ${color}`}
+    >
+      <Icon className="h-5 w-5 text-white" />
     </div>
   );
 
@@ -158,20 +167,19 @@ export default function AdminDashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {dashboardCards.map((card, index) => {
           const CardWrapper = card.href ? Link : "div";
-          // @ts-ignore - Lucide icons don't always match perfectly string names in mock data
-          const Icon = card.icon; 
+          const Icon = card.icon;
           return (
             <CardWrapper
               key={index}
               href={card.href || "#"}
               className={card.href ? "" : ""}
             >
-              <Card className="h-full shadow-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-md transition-all">
-                <Card.Content className="p-4 flex items-center gap-3">
+              <Card className="h-full shadow-sm transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-md">
+                <Card.Content className="flex items-center gap-3 p-4">
                   <div
                     className={`border-border flex h-10 w-10 items-center justify-center border-2 ${card.color || "bg-primary"}`}
                   >
-                     <span className="text-lg">{Icon}</span>
+                    <span className="text-lg">{Icon}</span>
                   </div>
                   <div>
                     <p className="font-medium">{t(card.title)}</p>
@@ -218,7 +226,10 @@ export default function AdminDashboardPage() {
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
                       {userItem.avatar ? (
-                         <Avatar.Image src={userItem.avatar} alt={userItem.name} />
+                        <Avatar.Image
+                          src={userItem.avatar}
+                          alt={userItem.name}
+                        />
                       ) : null}
                       <Avatar.Fallback>
                         <Users className="h-4 w-4" />
@@ -231,7 +242,7 @@ export default function AdminDashboardPage() {
                       </p>
                     </div>
                   </div>
-                  <Badge 
+                  <Badge
                     variant={
                       userItem.role === "teacher"
                         ? "surface"
@@ -241,17 +252,15 @@ export default function AdminDashboardPage() {
                             ? "surface"
                             : "default"
                     }
-                    className={`
-                      ${
-                        userItem.role === "teacher"
-                          ? "bg-purple-500/10 text-purple-500 border-purple-500"
-                          : userItem.role === "student"
-                            ? "bg-blue-500/10 text-blue-500 border-blue-500"
-                            : userItem.role === "parent"
-                              ? "bg-green-500/10 text-green-500 border-green-500"
-                              : ""
-                      }
-                    `}
+                    className={` ${
+                      userItem.role === "teacher"
+                        ? "border-purple-500 bg-purple-500/10 text-purple-500"
+                        : userItem.role === "student"
+                          ? "border-blue-500 bg-blue-500/10 text-blue-500"
+                          : userItem.role === "parent"
+                            ? "border-green-500 bg-green-500/10 text-green-500"
+                            : ""
+                    } `}
                   >
                     {t(`admin.roles.${userItem.role}`)}
                   </Badge>
@@ -273,7 +282,7 @@ export default function AdminDashboardPage() {
               {recentActivity.map((activity, index) => (
                 <div key={index} className="flex items-start gap-3 p-4">
                   <div
-                    className={`border-border flex h-8 w-8 shrink-0 items-center justify-center border-2 rounded-full ${
+                    className={`border-border flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 ${
                       activity.type === "error"
                         ? "bg-destructive text-destructive-foreground"
                         : activity.type === "warning"

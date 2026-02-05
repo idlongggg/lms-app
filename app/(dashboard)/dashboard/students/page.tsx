@@ -1,9 +1,10 @@
 "use client";
 
-import { Badge, Button, Card, Input, Progress } from "@/components/retroui";
-import { useTranslation } from "@/lib/providers";
 import { Mail, MoreVertical, SlidersHorizontal, User } from "lucide-react";
 import { useState } from "react";
+
+import { Badge, Button, Card, Input, Progress } from "@/components/ui";
+import { useTranslation } from "@/lib/providers";
 
 // Mock data
 const ALL_STUDENTS = Array.from({ length: 12 }).map((_, i) => ({
@@ -21,9 +22,10 @@ export default function StudentsPage() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredStudents = ALL_STUDENTS.filter(student => 
-    student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    student.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = ALL_STUDENTS.filter(
+    (student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.email.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -38,8 +40,8 @@ export default function StudentsPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-           <div className="w-full min-w-[250px]">
-            <Input 
+          <div className="w-full min-w-[250px]">
+            <Input
               placeholder="Search students..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -54,20 +56,30 @@ export default function StudentsPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredStudents.map((student) => (
-          <Card key={student.id} className="group overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all">
+          <Card
+            key={student.id}
+            className="group overflow-hidden transition-all hover:-translate-y-1 hover:shadow-md"
+          >
             <Card.Content className="p-6">
               <div className="mb-4 flex items-start justify-between">
-                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                   <User className="h-6 w-6" />
-                 </div>
-                 <Badge variant={student.status === 'active' ? 'surface' : 'default'} className={student.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 border-transparent' : ''}>
-                   {student.status === 'active' ? 'Active' : 'Inactive'}
-                 </Badge>
+                <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-full">
+                  <User className="h-6 w-6" />
+                </div>
+                <Badge
+                  variant={student.status === "active" ? "surface" : "default"}
+                  className={
+                    student.status === "active"
+                      ? "border-transparent bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                      : ""
+                  }
+                >
+                  {student.status === "active" ? "Active" : "Inactive"}
+                </Badge>
               </div>
-              
+
               <div className="mb-4">
                 <h3 className="font-semibold">{student.name}</h3>
-                <p className="text-muted-foreground text-sm flex items-center gap-1.5 mt-1">
+                <p className="text-muted-foreground mt-1 flex items-center gap-1.5 text-sm">
                   <Mail className="h-3 w-3" />
                   {student.email}
                 </p>
@@ -75,17 +87,22 @@ export default function StudentsPage() {
 
               <div className="space-y-3">
                 <div>
-                  <div className="flex items-center justify-between text-sm mb-1.5">
+                  <div className="mb-1.5 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Progress</span>
                     <span className="font-medium">{student.progress}%</span>
                   </div>
                   <Progress value={student.progress} />
                 </div>
 
-                 <div className="flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
-                   <span>Grade: <span className="text-foreground font-medium">{student.grade}</span></span>
-                   <span>Active: {student.lastActive}</span>
-                 </div>
+                <div className="border-border text-muted-foreground flex items-center justify-between border-t pt-4 text-xs">
+                  <span>
+                    Grade:{" "}
+                    <span className="text-foreground font-medium">
+                      {student.grade}
+                    </span>
+                  </span>
+                  <span>Active: {student.lastActive}</span>
+                </div>
               </div>
             </Card.Content>
           </Card>

@@ -5,7 +5,7 @@ import { Command as CommandPrimitive } from "cmdk";
 import { Check, LucideIcon, Search } from "lucide-react";
 import React from "react";
 
-import { Dialog } from "@/components/retroui/Dialog";
+import { Dialog } from "@/components/ui/Dialog";
 import { cn } from "@/lib/utils";
 
 function Command({

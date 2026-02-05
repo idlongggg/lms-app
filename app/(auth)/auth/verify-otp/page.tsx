@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button, Card, Input, Label } from "@/components/retroui";
-import { useCountdown } from "@/lib/hooks/use-countdown";
+import { Button, Card, Input, Label } from "@/components/ui";
+import { useCountdown } from "@/hooks/use-countdown";
 import { useTranslation } from "@/lib/providers";
 
 export default function VerifyOtpPage() {

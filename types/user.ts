@@ -1,4 +1,4 @@
-import { Permission } from "../constants/permissions";
+import { Permission } from "@/lib/constants/permissions";
 
 export type UserStatus =
   | "PENDING"

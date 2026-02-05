@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-import { Text } from "@/components/retroui/Text";
+import { Text } from "@/components/ui/Text";
 import { cn } from "@/lib/utils";
 
 interface ICardProps extends HTMLAttributes<HTMLDivElement> {

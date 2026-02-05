@@ -3,15 +3,15 @@
 import { Copy, Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-import { Badge } from "@/components/retroui/Badge";
-import { Button } from "@/components/retroui/Button";
-import { Card } from "@/components/retroui/Card";
-import { Dialog } from "@/components/retroui/Dialog";
-import { Input } from "@/components/retroui/Input";
-import { Select } from "@/components/retroui/Select";
-import { Table } from "@/components/retroui/Table";
-import { Textarea } from "@/components/retroui/Textarea";
-import { getQuestionStats, mockQuestions } from "@/lib/mock/classes";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import { Table } from "@/components/ui/Table";
+import { Textarea } from "@/components/ui/Textarea";
+import { getQuestionStats, mockQuestions } from "@/data/classes";
 
 export function TeacherQuestionsSection() {
   const [gradeFilter, setGradeFilter] = useState<string>("all");

@@ -11,8 +11,8 @@ import {
   Trophy,
 } from "lucide-react";
 
+import { Badge, Button, Card } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge } from "@/components/retroui";
 
 const activities = [
   {
@@ -113,19 +113,21 @@ export default function ActivityPage() {
         {/* Today Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-4">
+            <Card.Content className="flex items-center gap-4 p-4">
               <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-green-100">
                 <CheckCircle className="h-6 w-6 text-green-600" />
               </div>
               <div>
                 <p className="text-muted-foreground text-sm">Bài học hôm nay</p>
-                <p className="text-xl font-bold">{todayStats.lessonsCompleted}</p>
+                <p className="text-xl font-bold">
+                  {todayStats.lessonsCompleted}
+                </p>
               </div>
             </Card.Content>
           </Card>
 
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-4">
+            <Card.Content className="flex items-center gap-4 p-4">
               <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-blue-100">
                 <Clock className="h-6 w-6 text-blue-600" />
               </div>
@@ -137,7 +139,7 @@ export default function ActivityPage() {
           </Card>
 
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-4">
+            <Card.Content className="flex items-center gap-4 p-4">
               <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-yellow-100">
                 <Star className="h-6 w-6 text-yellow-600" />
               </div>
@@ -149,13 +151,15 @@ export default function ActivityPage() {
           </Card>
 
           <Card className="shadow-sm">
-            <Card.Content className="p-4 flex items-center gap-4">
+            <Card.Content className="flex items-center gap-4 p-4">
               <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-orange-100">
                 <span className="text-2xl">🔥</span>
               </div>
               <div>
                 <p className="text-muted-foreground text-sm">Streak</p>
-                <p className="text-xl font-bold">{todayStats.streakDays} ngày</p>
+                <p className="text-xl font-bold">
+                  {todayStats.streakDays} ngày
+                </p>
               </div>
             </Card.Content>
           </Card>
@@ -190,11 +194,15 @@ export default function ActivityPage() {
                         </div>
                         {activity.reward && (
                           <Badge
-                            variant={activity.reward.startsWith("+") ? "surface" : "default"}
+                            variant={
+                              activity.reward.startsWith("+")
+                                ? "surface"
+                                : "default"
+                            }
                             className={
                               activity.reward.startsWith("+")
-                                ? "bg-green-100 text-green-700 border-green-200"
-                                : "bg-red-100 text-red-700 border-red-200"
+                                ? "border-green-200 bg-green-100 text-green-700"
+                                : "border-red-200 bg-red-100 text-red-700"
                             }
                           >
                             {activity.reward}

@@ -2,8 +2,8 @@
 
 import { BookOpen, Flame, Mail, Settings, Trophy, User } from "lucide-react";
 
+import { Badge, Button, Card } from "@/components/ui";
 import { useTranslation } from "@/lib/providers";
-import { Button, Card, Badge } from "@/components/retroui";
 
 const profileStats = [
   { label: "Streak", value: "7", icon: Flame },
@@ -59,11 +59,15 @@ export default function ProfilePage() {
                     <Mail className="h-4 w-4" />
                     user@example.com
                   </p>
-                  <Badge variant="surface" className="mt-2 bg-accent">
+                  <Badge variant="surface" className="bg-accent mt-2">
                     Level 15 - Pro Learner
                   </Badge>
                 </div>
-                <Button variant="secondary" size="icon" className="ml-auto hidden sm:flex">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="ml-auto hidden sm:flex"
+                >
                   <Settings className="h-5 w-5" />
                 </Button>
               </div>
@@ -134,7 +138,10 @@ export default function ProfilePage() {
                       </p>
                     </div>
                     {activity.points && (
-                      <Badge variant="outline" className="bg-primary/10 border-primary">
+                      <Badge
+                        variant="outline"
+                        className="bg-primary/10 border-primary"
+                      >
                         +{activity.points}
                       </Badge>
                     )}

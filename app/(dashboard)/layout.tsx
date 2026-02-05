@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
-import { Button, Loader } from "@/components/retroui";
 import {
   Header,
   LanguageSwitcher,
@@ -13,9 +12,10 @@ import {
   Sidebar,
   ThemeToggle,
   UserMenu,
-} from "@/components/shared";
+} from "@/components/layout";
+import { Button, Loader } from "@/components/ui";
+import { useScrollPosition } from "@/hooks";
 import { useAuth, useRequireAuth } from "@/lib/auth";
-import { useScrollPosition } from "@/lib/hooks";
 import { filterTabs, getActiveTabKey, getSidebarForPath } from "@/lib/nav";
 import {
   useLanguage,
@@ -26,8 +26,6 @@ import {
 
 import { DashboardNav } from "./_components/dashboard-nav";
 import { NAV } from "./nav";
-
-
 
 export default function DashboardLayout({
   children,

@@ -11,8 +11,8 @@ import {
   Wifi,
 } from "lucide-react";
 
+import { Badge, Button, Card } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
-import { Button, Card, Badge } from "@/components/retroui";
 
 // Mock health data
 const services = [
@@ -129,99 +129,103 @@ export default function AdminHealthPage() {
       {/* Overall Status */}
       <Card className="shadow-sm">
         <Card.Content className="p-6">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <div
-                className={`border-border flex h-16 w-16 items-center justify-center border-2 ${
+              className={`border-border flex h-16 w-16 items-center justify-center border-2 ${
                 healthyServices === totalServices
-                    ? "bg-green-500"
-                    : "bg-orange-500"
-                }`}
+                  ? "bg-green-500"
+                  : "bg-orange-500"
+              }`}
             >
-                {healthyServices === totalServices ? (
+              {healthyServices === totalServices ? (
                 <CheckCircle className="h-8 w-8 text-white" />
-                ) : (
+              ) : (
                 <AlertTriangle className="h-8 w-8 text-white" />
-                )}
+              )}
             </div>
             <div>
-                <h2 className="text-2xl font-bold">
+              <h2 className="text-2xl font-bold">
                 {healthyServices === totalServices
-                    ? "Hệ thống hoạt động bình thường"
-                    : "Một số dịch vụ có vấn đề"}
-                </h2>
-                <p className="text-muted-foreground">
-                {healthyServices}/{totalServices} dịch vụ đang hoạt động tốt • Cập
-                nhật lúc {new Date().toLocaleTimeString("vi-VN")}
-                </p>
+                  ? "Hệ thống hoạt động bình thường"
+                  : "Một số dịch vụ có vấn đề"}
+              </h2>
+              <p className="text-muted-foreground">
+                {healthyServices}/{totalServices} dịch vụ đang hoạt động tốt •
+                Cập nhật lúc {new Date().toLocaleTimeString("vi-VN")}
+              </p>
             </div>
-            </div>
+          </div>
         </Card.Content>
       </Card>
 
       {/* System Metrics */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="shadow-sm">
-            <Card.Content className="p-4">
-                <div className="mb-2 flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm">CPU Usage</p>
-                    <span className="text-sm font-medium">{metrics.cpu.current}%</span>
-                </div>
-                <div className="bg-muted border-border h-2 border">
-                    <div
-                    className={`h-full ${metrics.cpu.current > 80 ? "bg-red-500" : metrics.cpu.current > 60 ? "bg-orange-500" : "bg-green-500"}`}
-                    style={{ width: `${metrics.cpu.current}%` }}
-                    />
-                </div>
-                <p className="text-muted-foreground mt-1 text-xs">
-                    Avg: {metrics.cpu.avg}% | Max: {metrics.cpu.max}%
-                </p>
-            </Card.Content>
+          <Card.Content className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">CPU Usage</p>
+              <span className="text-sm font-medium">
+                {metrics.cpu.current}%
+              </span>
+            </div>
+            <div className="bg-muted border-border h-2 border">
+              <div
+                className={`h-full ${metrics.cpu.current > 80 ? "bg-red-500" : metrics.cpu.current > 60 ? "bg-orange-500" : "bg-green-500"}`}
+                style={{ width: `${metrics.cpu.current}%` }}
+              />
+            </div>
+            <p className="text-muted-foreground mt-1 text-xs">
+              Avg: {metrics.cpu.avg}% | Max: {metrics.cpu.max}%
+            </p>
+          </Card.Content>
         </Card>
         <Card className="shadow-sm">
-            <Card.Content className="p-4">
-                <div className="mb-2 flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm">Memory Usage</p>
-                    <span className="text-sm font-medium">
-                    {metrics.memory.current}%
-                    </span>
-                </div>
-                <div className="bg-muted border-border h-2 border">
-                    <div
-                    className={`h-full ${metrics.memory.current > 80 ? "bg-red-500" : metrics.memory.current > 60 ? "bg-orange-500" : "bg-green-500"}`}
-                    style={{ width: `${metrics.memory.current}%` }}
-                    />
-                </div>
-                <p className="text-muted-foreground mt-1 text-xs">
-                    Avg: {metrics.memory.avg}% | Max: {metrics.memory.max}%
-                </p>
-            </Card.Content>
+          <Card.Content className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">Memory Usage</p>
+              <span className="text-sm font-medium">
+                {metrics.memory.current}%
+              </span>
+            </div>
+            <div className="bg-muted border-border h-2 border">
+              <div
+                className={`h-full ${metrics.memory.current > 80 ? "bg-red-500" : metrics.memory.current > 60 ? "bg-orange-500" : "bg-green-500"}`}
+                style={{ width: `${metrics.memory.current}%` }}
+              />
+            </div>
+            <p className="text-muted-foreground mt-1 text-xs">
+              Avg: {metrics.memory.avg}% | Max: {metrics.memory.max}%
+            </p>
+          </Card.Content>
         </Card>
         <Card className="shadow-sm">
-            <Card.Content className="p-4">
-                <div className="mb-2 flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm">Disk Usage</p>
-                    <span className="text-sm font-medium">{metrics.disk.current}%</span>
-                </div>
-                <div className="bg-muted border-border h-2 border">
-                    <div
-                    className="h-full bg-green-500"
-                    style={{ width: `${metrics.disk.current}%` }}
-                    />
-                </div>
-                <p className="text-muted-foreground mt-1 text-xs">
-                    Avg: {metrics.disk.avg}% | Max: {metrics.disk.max}%
-                </p>
-            </Card.Content>
+          <Card.Content className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">Disk Usage</p>
+              <span className="text-sm font-medium">
+                {metrics.disk.current}%
+              </span>
+            </div>
+            <div className="bg-muted border-border h-2 border">
+              <div
+                className="h-full bg-green-500"
+                style={{ width: `${metrics.disk.current}%` }}
+              />
+            </div>
+            <p className="text-muted-foreground mt-1 text-xs">
+              Avg: {metrics.disk.avg}% | Max: {metrics.disk.max}%
+            </p>
+          </Card.Content>
         </Card>
         <Card className="shadow-sm">
-            <Card.Content className="p-4">
-                <div className="mb-2 flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm">Network I/O</p>
-                    <Wifi className="h-4 w-4 text-green-500" />
-                </div>
-                <p className="text-lg font-bold">↓ {metrics.network.in}</p>
-                <p className="text-lg font-bold">↑ {metrics.network.out}</p>
-            </Card.Content>
+          <Card.Content className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">Network I/O</p>
+              <Wifi className="h-4 w-4 text-green-500" />
+            </div>
+            <p className="text-lg font-bold">↓ {metrics.network.in}</p>
+            <p className="text-lg font-bold">↑ {metrics.network.out}</p>
+          </Card.Content>
         </Card>
       </div>
 
@@ -230,63 +234,60 @@ export default function AdminHealthPage() {
         <h2 className="mb-4 text-xl font-bold">Trạng thái dịch vụ</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <Card
-              key={service.name}
-              className="shadow-sm"
-            >
+            <Card key={service.name} className="shadow-sm">
               <Card.Content className="p-4">
                 <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3">
                     <div
-                        className={`border-border flex h-10 w-10 items-center justify-center border-2 ${
+                      className={`border-border flex h-10 w-10 items-center justify-center border-2 ${
                         service.status === "healthy"
-                            ? "bg-green-500"
-                            : "bg-orange-500"
-                        }`}
+                          ? "bg-green-500"
+                          : "bg-orange-500"
+                      }`}
                     >
-                        <service.icon className="h-5 w-5 text-white" />
+                      <service.icon className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                        <h3 className="font-bold">{service.name}</h3>
-                        <p
+                      <h3 className="font-bold">{service.name}</h3>
+                      <p
                         className={`text-sm ${
-                            service.status === "healthy"
+                          service.status === "healthy"
                             ? "text-green-500"
                             : "text-orange-500"
                         }`}
-                        >
+                      >
                         {service.status === "healthy"
-                            ? "Hoạt động tốt"
-                            : "Có vấn đề"}
-                        </p>
+                          ? "Hoạt động tốt"
+                          : "Có vấn đề"}
+                      </p>
                     </div>
-                    </div>
-                    <div
+                  </div>
+                  <div
                     className={`h-3 w-3 rounded-full ${
-                        service.status === "healthy"
+                      service.status === "healthy"
                         ? "bg-green-500"
                         : "animate-pulse bg-orange-500"
                     }`}
-                    />
+                  />
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
-                    <div>
+                  <div>
                     <p className="text-muted-foreground">Uptime</p>
                     <p className="font-medium">{service.uptime}</p>
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                     <p className="text-muted-foreground">Latency</p>
                     <p className="font-medium">{service.latency}</p>
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                     <p className="text-muted-foreground">Last check</p>
                     <p className="font-medium">
-                        {new Date(service.lastCheck).toLocaleTimeString("vi-VN", {
+                      {new Date(service.lastCheck).toLocaleTimeString("vi-VN", {
                         hour: "2-digit",
                         minute: "2-digit",
-                        })}
+                      })}
                     </p>
-                    </div>
+                  </div>
                 </div>
               </Card.Content>
             </Card>
@@ -299,61 +300,62 @@ export default function AdminHealthPage() {
         <h2 className="mb-4 text-xl font-bold">Sự cố gần đây</h2>
         <div className="space-y-4">
           {recentIncidents.map((incident) => (
-            <Card
-              key={incident.id}
-              className="shadow-sm"
-            >
+            <Card key={incident.id} className="shadow-sm">
               <Card.Content className="p-4">
                 <div className="flex items-start gap-3">
-                    <div
+                  <div
                     className={`border-border mt-0.5 flex h-8 w-8 items-center justify-center border-2 ${
-                        incident.status === "resolved"
+                      incident.status === "resolved"
                         ? "bg-green-500"
                         : incident.severity === "warning"
-                            ? "bg-orange-500"
-                            : "bg-blue-500"
+                          ? "bg-orange-500"
+                          : "bg-blue-500"
                     }`}
-                    >
+                  >
                     {incident.status === "resolved" ? (
-                        <CheckCircle className="h-4 w-4 text-white" />
+                      <CheckCircle className="h-4 w-4 text-white" />
                     ) : (
-                        <AlertTriangle className="h-4 w-4 text-white" />
+                      <AlertTriangle className="h-4 w-4 text-white" />
                     )}
-                    </div>
-                    <div className="flex-1">
+                  </div>
+                  <div className="flex-1">
                     <div className="flex items-center gap-2">
-                        <h3 className="font-bold">{incident.title}</h3>
-                        <Badge
-                        variant={incident.status === "resolved" ? "surface" : "default"}
-                        className={
-                            incident.status === "resolved"
-                            ? "bg-green-100 text-green-700 border-green-200"
-                            : "bg-orange-100 text-orange-700 border-orange-200"
+                      <h3 className="font-bold">{incident.title}</h3>
+                      <Badge
+                        variant={
+                          incident.status === "resolved" ? "surface" : "default"
                         }
-                        >
+                        className={
+                          incident.status === "resolved"
+                            ? "border-green-200 bg-green-100 text-green-700"
+                            : "border-orange-200 bg-orange-100 text-orange-700"
+                        }
+                      >
                         {incident.status === "resolved"
-                            ? "Đã giải quyết"
-                            : "Đang xử lý"}
-                        </Badge>
+                          ? "Đã giải quyết"
+                          : "Đang xử lý"}
+                      </Badge>
                     </div>
                     <p className="text-muted-foreground mt-1 text-sm">
-                        {incident.description}
+                      {incident.description}
                     </p>
                     <div className="text-muted-foreground mt-2 flex items-center gap-4 text-xs">
-                        <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         Bắt đầu:{" "}
                         {new Date(incident.startedAt).toLocaleString("vi-VN")}
-                        </span>
-                        {incident.resolvedAt && (
+                      </span>
+                      {incident.resolvedAt && (
                         <span className="flex items-center gap-1">
-                            <CheckCircle className="h-3 w-3" />
-                            Giải quyết:{" "}
-                            {new Date(incident.resolvedAt).toLocaleString("vi-VN")}
+                          <CheckCircle className="h-3 w-3" />
+                          Giải quyết:{" "}
+                          {new Date(incident.resolvedAt).toLocaleString(
+                            "vi-VN",
+                          )}
                         </span>
-                        )}
+                      )}
                     </div>
-                    </div>
+                  </div>
                 </div>
               </Card.Content>
             </Card>

@@ -12,9 +12,9 @@ import {
   Users,
 } from "lucide-react";
 
+import { Badge, Button, Card, Input, Select } from "@/components/ui";
+import { type Tournament, tournaments } from "@/data/tournaments";
 import { useAuth } from "@/lib/auth";
-import { type Tournament, tournaments } from "@/lib/mock/tournaments";
-import { Button, Card, Input, Select, Badge } from "@/components/retroui";
 
 export default function AdminTournamentsPage() {
   const { user } = useAuth();
@@ -40,15 +40,30 @@ export default function AdminTournamentsPage() {
   const getStatusDisplay = (status: Tournament["status"]) => {
     switch (status) {
       case "IN_PROGRESS":
-        return { label: "Đang diễn ra", className: "bg-green-500 text-white border-green-600" };
+        return {
+          label: "Đang diễn ra",
+          className: "bg-green-500 text-white border-green-600",
+        };
       case "REGISTRATION":
-        return { label: "Đang đăng ký", className: "bg-blue-500 text-white border-blue-600" };
+        return {
+          label: "Đang đăng ký",
+          className: "bg-blue-500 text-white border-blue-600",
+        };
       case "COMPLETED":
-        return { label: "Đã kết thúc", className: "bg-muted text-muted-foreground" };
+        return {
+          label: "Đã kết thúc",
+          className: "bg-muted text-muted-foreground",
+        };
       case "DRAFT":
-        return { label: "Nháp", className: "bg-yellow-100 text-yellow-700 border-yellow-200" };
+        return {
+          label: "Nháp",
+          className: "bg-yellow-100 text-yellow-700 border-yellow-200",
+        };
       case "CANCELLED":
-        return { label: "Đã hủy", className: "bg-red-100 text-red-700 border-red-200" };
+        return {
+          label: "Đã hủy",
+          className: "bg-red-100 text-red-700 border-red-200",
+        };
       default:
         return { label: status, className: "bg-muted" };
     }
@@ -128,12 +143,9 @@ export default function AdminTournamentsPage() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="relative flex-1 min-w-[200px]">
-           <Input 
-             placeholder="Tìm kiếm giải đấu..." 
-             className="pl-9"
-           />
-           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative min-w-[200px] flex-1">
+          <Input placeholder="Tìm kiếm giải đấu..." className="pl-9" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
         </div>
         <Select defaultValue="all">
           <Select.Trigger className="w-[180px]">
@@ -155,7 +167,7 @@ export default function AdminTournamentsPage() {
           return (
             <Card
               key={tournament.id}
-              className="shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
+              className="shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
             >
               <Card.Content className="p-4">
                 <div className="mb-3 flex items-start justify-between">
@@ -202,12 +214,18 @@ export default function AdminTournamentsPage() {
                     Chi tiết
                   </Button>
                   {tournament.status === "IN_PROGRESS" ? (
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white border-orange-700" size="sm">
+                    <Button
+                      className="border-orange-700 bg-orange-500 text-white hover:bg-orange-600"
+                      size="sm"
+                    >
                       <Pause className="mr-1 h-4 w-4" />
                       Tạm dừng
                     </Button>
                   ) : tournament.status === "REGISTRATION" ? (
-                    <Button className="bg-green-500 hover:bg-green-600 text-white border-green-700" size="sm">
+                    <Button
+                      className="border-green-700 bg-green-500 text-white hover:bg-green-600"
+                      size="sm"
+                    >
                       <Play className="mr-1 h-4 w-4" />
                       Bắt đầu
                     </Button>

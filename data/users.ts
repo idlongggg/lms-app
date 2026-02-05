@@ -4,11 +4,11 @@
  * Based on rbac.md: 5 roles (root-admin, tenant-admin, teacher, student, parent)
  */
 
-import { type Permission, PERMISSIONS } from "../constants/permissions";
-import type { Streak, User, UserProfile, UserRole } from "../types/user";
+import { type Permission, PERMISSIONS } from "@/lib/constants/permissions";
+import type { Streak, User, UserProfile, UserRole } from "@/types/user";
 
 // Re-export types
-export type { Streak, User, UserProfile, UserRole } from "../types/user";
+export type { Streak, User, UserProfile, UserRole } from "@/types/user";
 
 // Role Logic helpers (previously in mock-auth)
 const ROLE_PERMISSIONS: Record<string, Permission[]> = {
