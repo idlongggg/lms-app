@@ -130,7 +130,7 @@ export default function DashboardLayout({
           </>
         }
       />
-      <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden">
+      <div className="mx-auto w-full max-w-7xl flex-1 overflow-hidden pt-6">
         <div className="flex h-full">
           <Sidebar
             navigation={navigation}
@@ -143,7 +143,7 @@ export default function DashboardLayout({
             sidebarRef={sidebarRef}
           />
           <main ref={mainRef} className="flex flex-1 flex-col overflow-hidden">
-            <div className="border-border shrink-0 border-b px-6 py-3">
+            <div className="border-border shrink-0 border-b-2 px-6 py-3">
               {pageHeader}
             </div>
             <div className="flex-1 overflow-auto p-6">{children}</div>

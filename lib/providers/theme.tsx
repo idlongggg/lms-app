@@ -24,31 +24,13 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const STORAGE_KEY = "theme";
+const PRESET_STORAGE_KEY = "theme-preset";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
+  const [currentPreset, setCurrentPreset] = useState<ThemeKey>("preset00");
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage on mount
-  useEffect(() => {
-    queueMicrotask(() => {
-      const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-      const initialTheme = stored || "light";
-
-      setThemeState(initialTheme);
-      document.documentElement.classList.toggle(
-        "dark",
-        initialTheme === "dark",
-      );
-      setMounted(true);
-    });
-  }, []);
-
-  /*
-   * Helper to apply a set of colors to the root element.
-   * This is now more complex because we need to handle light/dark switching dynamically.
-   * However, since this provider manages 'theme' (light/dark), we can re-apply colors when theme changes.
-   */
   const applyThemeColors = useCallback(
     (themeKey: ThemeKey, currentMode: Theme) => {
       const themeConfig = THEME[themeKey];
@@ -57,42 +39,36 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const colors = themeConfig[currentMode];
       const root = document.documentElement;
 
-      root.style.setProperty("--background", colors.background);
-      root.style.setProperty("--foreground", colors.foreground);
-      root.style.setProperty("--card", colors.card);
-      root.style.setProperty("--card-foreground", colors.cardForeground);
-      root.style.setProperty("--primary", colors.primary);
-      root.style.setProperty("--primary-hover", colors.primaryHover);
-      root.style.setProperty("--primary-foreground", colors.primaryForeground);
-      root.style.setProperty("--secondary", colors.secondary);
-      root.style.setProperty(
-        "--secondary-foreground",
-        colors.secondaryForeground,
-      );
-      root.style.setProperty("--muted", colors.muted);
-      root.style.setProperty("--muted-foreground", colors.mutedForeground);
-      root.style.setProperty("--accent", colors.accent);
-      root.style.setProperty("--accent-foreground", colors.accentForeground);
-      root.style.setProperty("--destructive", colors.destructive);
-      root.style.setProperty(
-        "--destructive-foreground",
-        colors.destructiveForeground,
-      );
-      root.style.setProperty("--border", colors.border);
+      Object.entries(colors).forEach(([key, value]) => {
+        const cssVar = `--${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`;
+        root.style.setProperty(cssVar, value);
+      });
     },
     [],
   );
 
-  // We need to keep track of the selected 'color preset' as well, to re-apply it when toggling light/dark
-  const [currentPreset, setCurrentPreset] = useState<ThemeKey>("preset00");
+  // Initialize theme and preset from localStorage on mount
+  useEffect(() => {
+    queueMicrotask(() => {
+      const storedTheme = (localStorage.getItem(STORAGE_KEY) as Theme) || "light";
+      const storedPreset = (localStorage.getItem(PRESET_STORAGE_KEY) as ThemeKey) || "preset00";
+
+      const validPreset = THEME[storedPreset] ? storedPreset : "preset00";
+
+      setThemeState(storedTheme);
+      setCurrentPreset(validPreset);
+      setMounted(true);
+
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+      applyThemeColors(validPreset, storedTheme);
+    });
+  }, [applyThemeColors]);
 
   const setTheme = useCallback(
     (newTheme: Theme) => {
       setThemeState(newTheme);
       localStorage.setItem(STORAGE_KEY, newTheme);
       document.documentElement.classList.toggle("dark", newTheme === "dark");
-
-      // Re-apply colors for the new mode using the current preset
       applyThemeColors(currentPreset, newTheme);
     },
     [currentPreset, applyThemeColors],
@@ -105,6 +81,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setThemeColor = useCallback(
     (color: ThemeKey) => {
       setCurrentPreset(color);
+      localStorage.setItem(PRESET_STORAGE_KEY, color);
       applyThemeColors(color, theme);
     },
     [theme, applyThemeColors],

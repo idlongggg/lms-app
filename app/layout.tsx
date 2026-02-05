@@ -4,7 +4,7 @@ import { Baloo_2 } from "next/font/google";
 
 import { AppProviders } from "@/lib/providers";
 
-const baloo2 = Baloo_2({
+const customFont = Baloo_2({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-sans",
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={`${baloo2.variable} font-sans antialiased`}>
+      <body className={`${customFont.variable} font-sans`}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
