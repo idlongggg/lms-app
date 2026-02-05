@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge } from "@/components/retroui";
 
 const announcements = [
   {
@@ -68,22 +69,25 @@ const announcements = [
 
 const typeConfig: Record<
   string,
-  { icon: typeof AlertCircle; color: string; bgColor: string }
+  { icon: typeof AlertCircle; color: string; bgColor: string; borderColor: string }
 > = {
   warning: {
     icon: AlertCircle,
     color: "text-orange-700",
-    bgColor: "bg-orange-100 border-orange-300",
+    bgColor: "bg-orange-100",
+    borderColor: "border-orange-300",
   },
   info: {
     icon: Info,
     color: "text-blue-700",
-    bgColor: "bg-blue-100 border-blue-300",
+    bgColor: "bg-blue-100",
+    borderColor: "border-blue-300",
   },
   success: {
     icon: CheckCircle,
     color: "text-green-700",
-    bgColor: "bg-green-100 border-green-300",
+    bgColor: "bg-green-100",
+    borderColor: "border-green-300",
   },
 };
 
@@ -95,10 +99,10 @@ export default function AnnouncementsPage() {
   return (
     <div className="space-y-8">
       <div className="flex justify-end">
-        <button className="border-border bg-background flex items-center gap-2 border-2 px-4 py-2 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-          <Bell className="h-4 w-4" />
+        <Button variant="outline" size="sm">
+          <Bell className="mr-2 h-4 w-4" />
           Đánh dấu đã đọc tất cả
-        </button>
+        </Button>
       </div>
       {/* Pinned Announcements */}
       {pinnedAnnouncements.length > 0 && (
@@ -112,11 +116,11 @@ export default function AnnouncementsPage() {
               const config = typeConfig[announcement.type];
               const Icon = config.icon;
               return (
-                <div
+                <Card
                   key={announcement.id}
-                  className={`border-2 ${config.bgColor} p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md`}
+                  className={`${config.bgColor} ${config.borderColor} shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md`}
                 >
-                  <div className="flex items-start gap-4">
+                  <Card.Content className="p-4 flex items-start gap-4">
                     <div
                       className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 bg-white ${config.color}`}
                     >
@@ -125,9 +129,9 @@ export default function AnnouncementsPage() {
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-bold">{announcement.title}</h3>
-                        <span className="border-border bg-primary border px-2 py-0.5 text-xs font-medium">
+                        <Badge>
                           Ghim
-                        </span>
+                        </Badge>
                       </div>
                       <p className="mt-2 text-sm">{announcement.content}</p>
                       <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-4 text-sm">
@@ -146,8 +150,8 @@ export default function AnnouncementsPage() {
                       </div>
                     </div>
                     <ChevronRight className="text-muted-foreground hidden h-5 w-5 shrink-0 sm:block" />
-                  </div>
-                </div>
+                  </Card.Content>
+                </Card>
               );
             })}
           </div>
@@ -165,11 +169,11 @@ export default function AnnouncementsPage() {
             const config = typeConfig[announcement.type];
             const Icon = config.icon;
             return (
-              <div
+              <Card
                 key={announcement.id}
-                className="border-border bg-background border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+                className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex items-start gap-4">
+                <Card.Content className="p-4 flex items-start gap-4">
                   <div
                     className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${config.bgColor.split(" ")[0]} ${config.color}`}
                   >
@@ -196,8 +200,8 @@ export default function AnnouncementsPage() {
                     </div>
                   </div>
                   <ChevronRight className="text-muted-foreground hidden h-5 w-5 shrink-0 sm:block" />
-                </div>
-              </div>
+                </Card.Content>
+              </Card>
             );
           })}
         </div>
@@ -205,9 +209,9 @@ export default function AnnouncementsPage() {
 
       {/* Load More */}
       <div className="text-center">
-        <button className="border-border bg-background border-2 px-6 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+        <Button variant="outline">
           Xem thêm thông báo cũ
-        </button>
+        </Button>
       </div>
     </div>
   );

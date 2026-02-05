@@ -1,4 +1,7 @@
+"use client";
+
 import { FileText, Folder, MoreVertical, Plus, Search } from "lucide-react";
+import { Button, Card, Input, Select, Badge, Menu } from "@/components/retroui";
 
 export default function AdminContentPage() {
   return (
@@ -11,81 +14,101 @@ export default function AdminContentPage() {
             Quản lý bài học, câu hỏi và tài liệu
           </p>
         </div>
-        <button className="border-border bg-primary inline-flex items-center gap-2 border-2 px-4 py-2 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
+        <Button className="gap-2">
           <Plus className="h-4 w-4" />
           Thêm nội dung
-        </button>
+        </Button>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        <div className="border-border bg-input flex flex-1 items-center gap-2 border-2 px-3 py-2 shadow-xs">
-          <Search className="text-muted-foreground h-4 w-4" />
-          <input
-            type="text"
-            placeholder="Tìm kiếm nội dung..."
-            className="flex-1 bg-transparent outline-none"
-          />
+        <div className="relative flex-1 min-w-[200px]">
+           <Input 
+             placeholder="Tìm kiếm nội dung..." 
+             className="pl-9"
+           />
+           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         </div>
-        <select className="border-border bg-input border-2 px-4 py-2 shadow-xs">
-          <option>Tất cả môn học</option>
-          <option>Toán học</option>
-          <option>Tiếng Anh</option>
-          <option>Vật lý</option>
-        </select>
-        <select className="border-border bg-input border-2 px-4 py-2 shadow-xs">
-          <option>Loại nội dung</option>
-          <option>Bài học</option>
-          <option>Câu hỏi</option>
-          <option>Tài liệu</option>
-        </select>
+        <Select defaultValue="all">
+          <Select.Trigger className="w-[180px]">
+            <Select.Value placeholder="Môn học" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all">Tất cả môn học</Select.Item>
+            <Select.Item value="math">Toán học</Select.Item>
+            <Select.Item value="english">Tiếng Anh</Select.Item>
+            <Select.Item value="physics">Vật lý</Select.Item>
+          </Select.Content>
+        </Select>
+        <Select defaultValue="all-types">
+          <Select.Trigger className="w-[180px]">
+            <Select.Value placeholder="Loại nội dung" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value="all-types">Tất cả loại</Select.Item>
+            <Select.Item value="lesson">Bài học</Select.Item>
+            <Select.Item value="question">Câu hỏi</Select.Item>
+            <Select.Item value="document">Tài liệu</Select.Item>
+          </Select.Content>
+        </Select>
       </div>
 
       {/* Content Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {contents.map((content, index) => (
-          <div
+          <Card
             key={index}
-            className="border-border bg-card border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+            className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
           >
-            <div className="border-border bg-muted flex items-start justify-between border-b-2 p-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`border-border flex h-10 w-10 items-center justify-center border-2 ${content.type === "folder" ? "bg-accent" : "bg-primary"}`}
-                >
-                  {content.type === "folder" ? (
-                    <Folder className="h-5 w-5" />
-                  ) : (
-                    <FileText className="h-5 w-5" />
-                  )}
+            <Card.Content className="p-0">
+                <div className="border-border bg-muted flex items-start justify-between border-b-2 p-4">
+                <div className="flex items-center gap-3">
+                    <div
+                    className={`border-border flex h-10 w-10 items-center justify-center border-2 ${content.type === "folder" ? "bg-accent" : "bg-primary"}`}
+                    >
+                    {content.type === "folder" ? (
+                        <Folder className="h-5 w-5" />
+                    ) : (
+                        <FileText className="h-5 w-5" />
+                    )}
+                    </div>
+                    <div>
+                    <h3 className="font-medium">{content.title}</h3>
+                    <p className="text-muted-foreground text-sm">
+                        {content.subject}
+                    </p>
+                    </div>
                 </div>
-                <div>
-                  <h3 className="font-medium">{content.title}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    {content.subject}
-                  </p>
+                <Menu>
+                    <Menu.Trigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreVertical className="h-4 w-4" />
+                        </Button>
+                    </Menu.Trigger>
+                    <Menu.Content align="end">
+                        <Menu.Item>Sửa</Menu.Item>
+                        <Menu.Item className="text-destructive">Xóa</Menu.Item>
+                    </Menu.Content>
+                </Menu>
                 </div>
-              </div>
-              <button className="hover:bg-background p-1 transition-colors">
-                <MoreVertical className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="p-4">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">
-                  {content.items} items
-                </span>
-                <span
-                  className={`border-border border px-2 py-0.5 text-xs ${content.status === "Published" ? "bg-green-500/20 text-green-500" : "bg-muted"}`}
-                >
-                  {content.status}
-                </span>
-              </div>
-              <p className="text-muted-foreground mt-2 text-xs">
-                Cập nhật: {content.updatedAt}
-              </p>
-            </div>
-          </div>
+                <div className="p-4">
+                <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">
+                    {content.items} items
+                    </span>
+                    <Badge
+                        variant={content.status === "Published" ? "surface" : "default"}
+                        className={content.status === "Published" ? "bg-green-500/10 text-green-500 border-green-500" : ""}
+                    >
+                    {content.status}
+                    </Badge>
+                </div>
+                <p className="text-muted-foreground mt-2 text-xs">
+                    Cập nhật: {content.updatedAt}
+                </p>
+                </div>
+            </Card.Content>
+          </Card>
         ))}
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { Button, Card, Badge } from "@/components/retroui";
 
 const iconMap: Record<string, LucideIcon> = {
   BookOpen,
@@ -35,18 +36,16 @@ function HeroSection() {
               lưu!
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="/auth/register"
-                className="border-border bg-secondary text-secondary-foreground inline-flex items-center gap-2 border-2 px-6 py-3 font-medium shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg"
-              >
-                Bắt đầu ngay
-                <ArrowRight className="h-4 w-4" />
+              <Link href="/auth/register">
+                <Button variant="secondary" size="lg" className="rounded-none border-2 shadow-md hover:translate-x-0 hover:translate-y-0 hover:shadow-lg transition-all transform hover:-translate-x-1 hover:-translate-y-1">
+                  Bắt đầu ngay
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </Link>
-              <Link
-                href="#features"
-                className="border-border bg-background inline-flex items-center gap-2 border-2 px-6 py-3 font-medium shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg"
-              >
-                Tìm hiểu thêm
+              <Link href="#features">
+                <Button variant="outline" size="lg" className="bg-background rounded-none border-2 shadow-md hover:translate-x-0 hover:translate-y-0 hover:shadow-lg transition-all transform hover:-translate-x-1 hover:-translate-y-1">
+                  Tìm hiểu thêm
+                </Button>
               </Link>
             </div>
           </div>
@@ -99,7 +98,7 @@ function StatCard({
 }) {
   return (
     <div
-      className={`border-border border-2 p-4 ${variant === "accent" ? "bg-accent" : "bg-muted"}`}
+      className={`border-border border-2 p-4 flex flex-col items-center justify-center text-center ${variant === "accent" ? "bg-accent" : "bg-muted"}`}
     >
       {icon}
       <p className="mt-2 font-medium">{label}</p>
@@ -137,13 +136,15 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="border-border bg-card border-2 p-6 shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg">
-      <div className="border-border bg-primary mb-4 inline-flex h-12 w-12 items-center justify-center border-2">
-        <FeatureIcon name={icon} />
-      </div>
-      <h3 className="mb-2 text-xl font-bold">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
-    </div>
+    <Card className="shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg">
+      <Card.Content className="p-6">
+        <div className="border-border bg-primary mb-4 inline-flex h-12 w-12 items-center justify-center border-2">
+            <FeatureIcon name={icon} />
+        </div>
+        <h3 className="mb-2 text-xl font-bold">{title}</h3>
+        <p className="text-muted-foreground">{description}</p>
+      </Card.Content>
+    </Card>
   );
 }
 
@@ -156,13 +157,14 @@ function CTASection() {
           Tham gia cùng hàng nghìn học viên và biến việc học thành niềm vui mỗi
           ngày.
         </p>
-        <Link
-          href="/auth/register"
-          className="border-border bg-secondary text-secondary-foreground mt-8 inline-flex items-center gap-2 border-2 px-8 py-4 font-medium shadow-md transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg"
-        >
-          Đăng ký miễn phí
-          <ArrowRight className="h-5 w-5" />
-        </Link>
+        <div className="mt-8">
+            <Link href="/auth/register">
+                <Button variant="secondary" size="lg" className="px-8 py-6 text-lg shadow-md hover:shadow-lg transition-all hover:-translate-x-1 hover:-translate-y-1">
+                Đăng ký miễn phí
+                <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+            </Link>
+        </div>
       </div>
     </section>
   );

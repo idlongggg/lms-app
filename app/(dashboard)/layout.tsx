@@ -1,6 +1,5 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
@@ -10,6 +9,7 @@ import {
   LanguageSwitcher,
   Logo,
   MobileMenuButton,
+  Search,
   Sidebar,
   ThemeToggle,
   UserMenu,
@@ -27,20 +27,7 @@ import {
 import { DashboardNav } from "./_components/dashboard-nav";
 import { NAV } from "./nav";
 
-function SearchButton() {
-  return (
-    <button
-      className="border-border bg-background hidden h-9 items-center gap-2 border-2 px-3 shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm sm:flex"
-      aria-label="Search"
-    >
-      <Search className="h-4 w-4" />
-      <span className="text-muted-foreground text-sm">Tìm kiếm...</span>
-      <kbd className="border-border bg-muted ml-2 rounded border px-1.5 py-0.5 text-xs">
-        ⌘K
-      </kbd>
-    </button>
-  );
-}
+
 
 export default function DashboardLayout({
   children,
@@ -109,7 +96,7 @@ export default function DashboardLayout({
         center={showTabs ? <DashboardNav tabs={tabs} /> : undefined}
         right={
           <>
-            <SearchButton />
+            <Search />
             <LanguageSwitcher
               currentLanguage={currentLanguage}
               languages={languages}

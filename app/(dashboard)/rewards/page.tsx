@@ -10,6 +10,7 @@ import {
   getRewardCards,
 } from "@/lib/mock/rewards";
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge } from "@/components/retroui";
 
 export default function RewardsPage() {
   const { user } = useAuth();
@@ -37,8 +38,8 @@ export default function RewardsPage() {
       <div className="space-y-8">
         {/* Quick Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
                 <Coins className="h-5 w-5" />
               </div>
@@ -50,10 +51,10 @@ export default function RewardsPage() {
                   {user.coins.toLocaleString()}
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+            </Card.Content>
+          </Card>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2">
                 <Gift className="h-5 w-5 text-white" />
               </div>
@@ -63,10 +64,10 @@ export default function RewardsPage() {
                 </p>
                 <p className="text-xl font-bold">{redeemedItems.length}</p>
               </div>
-            </div>
-          </div>
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+            </Card.Content>
+          </Card>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2">
                 <Star className="h-5 w-5" />
               </div>
@@ -78,8 +79,8 @@ export default function RewardsPage() {
                   {coinStats.totalSpent.toLocaleString()}
                 </p>
               </div>
-            </div>
-          </div>
+            </Card.Content>
+          </Card>
         </div>
 
         {/* My Redeemed Items */}
@@ -98,30 +99,30 @@ export default function RewardsPage() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {redeemedItems.slice(0, 4).map((item) => (
-                <div
+                <Card
                   key={item.id}
-                  className="border-border bg-muted/50 border-2 p-4 shadow-sm"
+                  className="bg-muted/50 shadow-sm"
                 >
-                  <div className="border-border bg-background mb-3 flex h-16 items-center justify-center border-2 text-3xl">
-                    {item.image || "🎁"}
-                  </div>
-                  <h3 className="text-sm font-medium">{item.name}</h3>
-                  <p className="text-muted-foreground mt-1 text-xs">
-                    {t("rewards.redeemed.redeemedOn")}{" "}
-                    {new Date(item.acquiredAt).toLocaleDateString("vi-VN")}
-                  </p>
-                  <div
-                    className={`mt-2 inline-block border px-2 py-0.5 text-xs font-medium ${
-                      item.status === "ACTIVE"
-                        ? "border-green-500 bg-green-500/10 text-green-500"
+                  <Card.Content className="p-4">
+                    <div className="border-border bg-background mb-3 flex h-16 items-center justify-center border-2 text-3xl">
+                        {item.image || "🎁"}
+                    </div>
+                    <h3 className="text-sm font-medium">{item.name}</h3>
+                    <p className="text-muted-foreground mt-1 text-xs">
+                        {t("rewards.redeemed.redeemedOn")}{" "}
+                        {new Date(item.acquiredAt).toLocaleDateString("vi-VN")}
+                    </p>
+                    <Badge variant={item.status === "ACTIVE" ? "default" : item.status === "APPLIED" ? "surface" : "outline"} className={`mt-2 ${
+                        item.status === "ACTIVE"
+                        ? "bg-green-500/10 text-green-500 border-green-500"
                         : item.status === "APPLIED"
-                          ? "border-blue-500 bg-blue-500/10 text-blue-500"
-                          : "border-yellow-500 bg-yellow-500/10 text-yellow-500"
-                    }`}
-                  >
-                    {t(`rewards.redeemed.status.${item.status}`)}
-                  </div>
-                </div>
+                            ? "bg-blue-500/10 text-blue-500 border-blue-500"
+                            : "bg-yellow-500/10 text-yellow-500 border-yellow-500"
+                    }`}>
+                        {t(`rewards.redeemed.status.${item.status}`)}
+                    </Badge>
+                  </Card.Content>
+                </Card>
               ))}
             </div>
           </div>
@@ -137,51 +138,50 @@ export default function RewardsPage() {
               const canAfford = user.coins >= reward.cost;
               const isInStock = reward.inStock;
               return (
-                <div
+                <Card
                   key={reward.id}
-                  className="border-border bg-background border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+                  className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
-                    {reward.image || "🎁"}
-                  </div>
-                  <h3 className="font-bold">{reward.name}</h3>
-                  <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
-                    {reward.description}
-                  </p>
-                  <div className="mt-2 flex items-center justify-between">
-                    <div
-                      className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
-                    >
-                      <Coins className="h-4 w-4" />
-                      <span className="font-medium">
-                        {reward.cost.toLocaleString()}
-                      </span>
+                  <Card.Content className="p-4">
+                    <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
+                        {reward.image || "🎁"}
                     </div>
-                    <span className="text-muted-foreground text-xs">
-                      {reward.stock !== null
-                        ? t("rewards.redeemed.stock.left", {
-                            count: reward.stock,
-                          })
-                        : t("rewards.redeemed.stock.unlimited")}
-                    </span>
-                  </div>
-                  <button
-                    disabled={!canAfford || !isInStock || reward.owned}
-                    className={`border-border mt-3 w-full border-2 py-2 font-medium shadow-xs transition-all ${
-                      canAfford && isInStock && !reward.owned
-                        ? "bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
-                        : "bg-muted text-muted-foreground cursor-not-allowed"
-                    }`}
-                  >
-                    {reward.owned
-                      ? t("rewards.redeemed.actions.owned")
-                      : !isInStock
-                        ? t("rewards.redeemed.actions.outOfStock")
-                        : !canAfford
-                          ? t("rewards.redeemed.actions.insufficientCoins")
-                          : t("rewards.redeemed.actions.redeem")}
-                  </button>
-                </div>
+                    <h3 className="font-bold">{reward.name}</h3>
+                    <p className="text-muted-foreground mt-1 line-clamp-2 text-xs">
+                        {reward.description}
+                    </p>
+                    <div className="mt-2 flex items-center justify-between">
+                        <div
+                        className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
+                        >
+                        <Coins className="h-4 w-4" />
+                        <span className="font-medium">
+                            {reward.cost.toLocaleString()}
+                        </span>
+                        </div>
+                        <span className="text-muted-foreground text-xs">
+                        {reward.stock !== null
+                            ? t("rewards.redeemed.stock.left", {
+                                count: reward.stock,
+                            })
+                            : t("rewards.redeemed.stock.unlimited")}
+                        </span>
+                    </div>
+                    <Button
+                        disabled={!canAfford || !isInStock || reward.owned}
+                        variant={canAfford && isInStock && !reward.owned ? "default" : "secondary"}
+                        className="mt-3 w-full"
+                    >
+                        {reward.owned
+                        ? t("rewards.redeemed.actions.owned")
+                        : !isInStock
+                            ? t("rewards.redeemed.actions.outOfStock")
+                            : !canAfford
+                            ? t("rewards.redeemed.actions.insufficientCoins")
+                            : t("rewards.redeemed.actions.redeem")}
+                    </Button>
+                  </Card.Content>
+                </Card>
               );
             })}
           </div>
@@ -197,113 +197,114 @@ export default function RewardsPage() {
               const canAfford = user.coins >= reward.cost;
               const isInStock = reward.inStock;
               return (
-                <div
+                <Card
                   key={reward.id}
-                  className="border-border bg-background border-2 p-4 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+                  className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
-                    {reward.image || "🎁"}
-                  </div>
-                  <h3 className="font-bold">{reward.name}</h3>
-                  <div className="mt-2 flex items-center justify-between">
-                    <div
-                      className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
-                    >
-                      <Coins className="h-4 w-4" />
-                      <span className="font-medium">
-                        {reward.cost.toLocaleString()}
-                      </span>
+                  <Card.Content className="p-4">
+                    <div className="border-border bg-muted mb-3 flex h-24 items-center justify-center border-2 text-4xl">
+                        {reward.image || "🎁"}
                     </div>
-                    <span className="text-muted-foreground text-xs">
-                      {reward.stock !== null
-                        ? t("rewards.redeemed.stock.left", {
-                            count: reward.stock,
-                          })
-                        : t("rewards.redeemed.stock.unlimited")}
-                    </span>
-                  </div>
-                  <button
-                    disabled={!canAfford || !isInStock || reward.owned}
-                    className={`border-border mt-3 w-full border-2 py-2 font-medium shadow-xs transition-all ${
-                      canAfford && isInStock && !reward.owned
-                        ? "bg-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm"
-                        : "bg-muted text-muted-foreground cursor-not-allowed"
-                    }`}
-                  >
-                    {reward.owned
-                      ? t("rewards.redeemed.actions.owned")
-                      : !isInStock
-                        ? t("rewards.redeemed.actions.outOfStock")
-                        : !canAfford
-                          ? t("rewards.redeemed.actions.insufficientCoins")
-                          : t("rewards.redeemed.actions.redeem")}
-                  </button>
-                </div>
+                    <h3 className="font-bold">{reward.name}</h3>
+                    <div className="mt-2 flex items-center justify-between">
+                        <div
+                        className={`flex items-center gap-1 text-sm ${!canAfford ? "text-muted-foreground" : ""}`}
+                        >
+                        <Coins className="h-4 w-4" />
+                        <span className="font-medium">
+                            {reward.cost.toLocaleString()}
+                        </span>
+                        </div>
+                        <span className="text-muted-foreground text-xs">
+                        {reward.stock !== null
+                            ? t("rewards.redeemed.stock.left", {
+                                count: reward.stock,
+                            })
+                            : t("rewards.redeemed.stock.unlimited")}
+                        </span>
+                    </div>
+                    <Button
+                        disabled={!canAfford || !isInStock || reward.owned}
+                        variant={canAfford && isInStock && !reward.owned ? "default" : "secondary"}
+                        className="mt-3 w-full"
+                    >
+                        {reward.owned
+                        ? t("rewards.redeemed.actions.owned")
+                        : !isInStock
+                            ? t("rewards.redeemed.actions.outOfStock")
+                            : !canAfford
+                            ? t("rewards.redeemed.actions.insufficientCoins")
+                            : t("rewards.redeemed.actions.redeem")}
+                    </Button>
+                  </Card.Content>
+                </Card>
               );
             })}
           </div>
         </div>
 
         {/* How to earn */}
-        <div className="border-border bg-muted/50 border-2 p-6">
-          <h2 className="mb-4 text-xl font-bold">
-            {t("rewards.redeemed.howToEarn")}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex items-start gap-3">
-              <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
-                1
-              </div>
-              <div>
-                <p className="font-medium">
-                  {t("rewards.redeemed.earnMethods.lesson")}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {t("rewards.redeemed.earnMethods.lessonDesc")}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
-                2
-              </div>
-              <div>
-                <p className="font-medium">
-                  {t("rewards.redeemed.earnMethods.tournament")}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {t("rewards.redeemed.earnMethods.tournamentDesc")}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
-                3
-              </div>
-              <div>
-                <p className="font-medium">
-                  {t("rewards.redeemed.earnMethods.streak")}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {t("rewards.redeemed.earnMethods.streakDesc")}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
-                4
-              </div>
-              <div>
-                <p className="font-medium">
-                  {t("rewards.redeemed.earnMethods.invite")}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  {t("rewards.redeemed.earnMethods.inviteDesc")}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Card className="bg-muted/50 border-2">
+            <Card.Content className="p-6">
+                <h2 className="mb-4 text-xl font-bold">
+                    {t("rewards.redeemed.howToEarn")}
+                </h2>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="flex items-start gap-3">
+                    <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
+                        1
+                    </div>
+                    <div>
+                        <p className="font-medium">
+                        {t("rewards.redeemed.earnMethods.lesson")}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                        {t("rewards.redeemed.earnMethods.lessonDesc")}
+                        </p>
+                    </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                    <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
+                        2
+                    </div>
+                    <div>
+                        <p className="font-medium">
+                        {t("rewards.redeemed.earnMethods.tournament")}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                        {t("rewards.redeemed.earnMethods.tournamentDesc")}
+                        </p>
+                    </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                    <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
+                        3
+                    </div>
+                    <div>
+                        <p className="font-medium">
+                        {t("rewards.redeemed.earnMethods.streak")}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                        {t("rewards.redeemed.earnMethods.streakDesc")}
+                        </p>
+                    </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                    <div className="border-border bg-primary flex h-8 w-8 shrink-0 items-center justify-center border-2 font-bold">
+                        4
+                    </div>
+                    <div>
+                        <p className="font-medium">
+                        {t("rewards.redeemed.earnMethods.invite")}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                        {t("rewards.redeemed.earnMethods.inviteDesc")}
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            </Card.Content>
+        </Card>
       </div>
     </div>
   );

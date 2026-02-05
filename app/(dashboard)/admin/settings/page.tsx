@@ -1,4 +1,8 @@
+"use client";
+
 import { Bell, Database, Settings, Shield } from "lucide-react";
+
+import { Button, Card, Input, Select, Switch } from "@/components/retroui";
 
 interface SettingCardProps {
   icon: React.ReactNode;
@@ -16,32 +20,22 @@ function SettingCard({
   children,
 }: SettingCardProps) {
   return (
-    <div className="border-border bg-card border-2 shadow-sm">
-      <div className="border-border flex items-center gap-3 border-b-2 p-4">
-        <div
-          className={`border-border flex h-10 w-10 items-center justify-center border-2 ${iconBg}`}
-        >
-          {icon}
+    <Card className="shadow-sm">
+      <Card.Content className="p-0">
+        <div className="border-border flex items-center gap-3 border-b-2 p-4">
+          <div
+            className={`border-border flex h-10 w-10 items-center justify-center border-2 ${iconBg}`}
+          >
+            {icon}
+          </div>
+          <div>
+            <h2 className="text-lg font-bold">{title}</h2>
+            <p className="text-muted-foreground text-sm">{description}</p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-lg font-bold">{title}</h2>
-          <p className="text-muted-foreground text-sm">{description}</p>
-        </div>
-      </div>
-      <div className="space-y-4 p-4">{children}</div>
-    </div>
-  );
-}
-
-function ToggleSwitch({ enabled }: { enabled: boolean }) {
-  return (
-    <button
-      className={`border-border h-6 w-12 border-2 transition-colors ${enabled ? "bg-primary" : "bg-muted"}`}
-    >
-      <div
-        className={`border-border bg-background h-4 w-4 border transition-transform ${enabled ? "translate-x-6" : "translate-x-0.5"}`}
-      />
-    </button>
+        <div className="space-y-4 p-4">{children}</div>
+      </Card.Content>
+    </Card>
   );
 }
 
@@ -54,7 +48,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="text-sm font-medium">{label}</label>
+      <label className="text-sm font-medium mb-1 block">{label}</label>
       {children}
     </div>
   );
@@ -90,24 +84,21 @@ export default function AdminSettingsPage() {
           description="Thông tin cơ bản của hệ thống"
         >
           <FormField label="Tên hệ thống">
-            <input
-              type="text"
-              defaultValue="LMS Platform"
-              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-            />
+            <Input type="text" defaultValue="LMS Platform" />
           </FormField>
           <FormField label="Email liên hệ">
-            <input
-              type="email"
-              defaultValue="admin@lms.com"
-              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-            />
+            <Input type="email" defaultValue="admin@lms.com" />
           </FormField>
           <FormField label="Timezone">
-            <select className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs">
-              <option>Asia/Ho_Chi_Minh (UTC+7)</option>
-              <option>Asia/Bangkok (UTC+7)</option>
-            </select>
+            <Select defaultValue="hcm">
+              <Select.Trigger className="w-full">
+                <Select.Value />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Item value="hcm">Asia/Ho_Chi_Minh (UTC+7)</Select.Item>
+                <Select.Item value="bkk">Asia/Bangkok (UTC+7)</Select.Item>
+              </Select.Content>
+            </Select>
           </FormField>
         </SettingCard>
 
@@ -125,7 +116,7 @@ export default function AdminSettingsPage() {
                   {setting.description}
                 </p>
               </div>
-              <ToggleSwitch enabled={setting.enabled} />
+              <Switch defaultChecked={setting.enabled} />
             </div>
           ))}
         </SettingCard>
@@ -137,18 +128,10 @@ export default function AdminSettingsPage() {
           description="Cài đặt bảo mật và xác thực"
         >
           <FormField label="Thời gian session (phút)">
-            <input
-              type="number"
-              defaultValue="60"
-              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-            />
+            <Input type="number" defaultValue="60" />
           </FormField>
           <FormField label="Số lần đăng nhập sai tối đa">
-            <input
-              type="number"
-              defaultValue="5"
-              className="border-border bg-input mt-1 w-full border-2 px-3 py-2 shadow-xs"
-            />
+            <Input type="number" defaultValue="5" />
           </FormField>
           <div className="flex items-center justify-between">
             <div>
@@ -157,7 +140,7 @@ export default function AdminSettingsPage() {
                 Bắt buộc cho Admin
               </p>
             </div>
-            <ToggleSwitch enabled={true} />
+            <Switch defaultChecked={true} />
           </div>
         </SettingCard>
 
@@ -169,16 +152,16 @@ export default function AdminSettingsPage() {
         >
           <ConnectionStatus name="PostgreSQL" status="Connected" />
           <ConnectionStatus name="Redis" status="Connected" />
-          <button className="border-border bg-secondary text-secondary-foreground w-full border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+          <Button variant="secondary" className="w-full">
             Backup Database
-          </button>
+          </Button>
         </SettingCard>
       </div>
 
       <div className="flex justify-end">
-        <button className="border-border bg-primary border-2 px-6 py-2 font-medium shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
+        <Button size="lg">
           Lưu cài đặt
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -186,7 +169,7 @@ export default function AdminSettingsPage() {
 
 function ConnectionStatus({ name, status }: { name: string; status: string }) {
   return (
-    <div className="border-border bg-muted flex items-center justify-between border-2 p-3">
+    <div className="border-border bg-muted flex items-center justify-between border-2 p-3 rounded">
       <div>
         <p className="text-sm font-medium">{name}</p>
         <p className="text-muted-foreground text-xs">{status}</p>

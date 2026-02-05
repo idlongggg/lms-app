@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge, Select } from "@/components/retroui";
 
 const events = [
   {
@@ -147,30 +148,35 @@ export default function EventsPage() {
   return (
     <div className="space-y-8">
       <div className="flex justify-end">
-        <select className="border-border bg-background border-2 px-4 py-2 font-medium">
-          <option>Tất cả loại</option>
-          <option>Thi đấu</option>
-          <option>Workshop</option>
-          <option>Sự kiện</option>
-        </select>
+        <div className="w-40">
+            <Select defaultValue="all">
+                <Select.Trigger className="h-10">
+                    <Select.Value />
+                </Select.Trigger>
+                <Select.Content>
+                    <Select.Item value="all">Tất cả loại</Select.Item>
+                    <Select.Item value="competition">Thi đấu</Select.Item>
+                    <Select.Item value="workshop">Workshop</Select.Item>
+                    <Select.Item value="event">Sự kiện</Select.Item>
+                </Select.Content>
+            </Select>
+        </div>
       </div>
       {/* Featured Event */}
       {upcomingEvents[0] && (
-        <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
-          <div className="flex flex-col gap-6 lg:flex-row">
+        <Card className="border-primary bg-primary/10 border-2 shadow-sm">
+          <Card.Content className="p-6 flex flex-col gap-6 lg:flex-row">
             <div className="border-border bg-primary flex h-32 w-32 shrink-0 items-center justify-center border-2 text-6xl">
               {upcomingEvents[0].image}
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span
-                  className={`border-border border px-2 py-0.5 text-xs font-medium ${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color}`}
-                >
+                <Badge variant="outline" className={`${typeConfig[upcomingEvents[0].type].bgColor} ${typeConfig[upcomingEvents[0].type].color} border-transparent`}>
                   {typeConfig[upcomingEvents[0].type].label}
-                </span>
-                <span className="border-border border bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                </Badge>
+                <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-green-200">
                   Nổi bật
-                </span>
+                </Badge>
               </div>
               <h2 className="mt-2 text-2xl font-bold">
                 {upcomingEvents[0].title}
@@ -217,15 +223,15 @@ export default function EventsPage() {
               </div>
             </div>
             <div className="flex shrink-0 flex-col gap-2">
-              <button className="border-border bg-primary border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+              <Button size="lg">
                 Đăng ký ngay
-              </button>
-              <button className="border-border bg-background border px-6 py-2 text-sm">
+              </Button>
+              <Button variant="outline">
                 Thêm vào lịch
-              </button>
+              </Button>
             </div>
-          </div>
-        </div>
+          </Card.Content>
+        </Card>
       )}
 
       {/* Upcoming Events */}
@@ -236,54 +242,52 @@ export default function EventsPage() {
             const type = typeConfig[event.type];
             const status = statusConfig[event.status];
             return (
-              <div
+              <Card
                 key={event.id}
-                className="border-border bg-background border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+                className="shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex gap-4 p-4">
-                  <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
-                    {event.image}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span
-                        className={`border-border border px-2 py-0.5 text-xs font-medium ${type.bgColor} ${type.color}`}
-                      >
-                        {type.label}
-                      </span>
-                      <span
-                        className={`border-border border px-2 py-0.5 text-xs font-medium ${status.bgColor} ${status.color}`}
-                      >
-                        {status.label}
-                      </span>
+                <Card.Content className="p-0">
+                    <div className="flex gap-4 p-4">
+                    <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
+                        {event.image}
                     </div>
-                    <h3 className="mt-1 font-bold">{event.title}</h3>
-                    <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(event.startDate).toLocaleDateString("vi-VN")}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {new Date(event.startDate).toLocaleTimeString("vi-VN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
+                    <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                        <Badge variant="outline" className={`${type.bgColor} ${type.color} border-transparent`}>
+                            {type.label}
+                        </Badge>
+                        <Badge variant="outline" className={`${status.bgColor} ${status.color} border-transparent`}>
+                            {status.label}
+                        </Badge>
+                        </div>
+                        <h3 className="mt-1 font-bold">{event.title}</h3>
+                        <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-3 text-sm">
+                        <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(event.startDate).toLocaleDateString("vi-VN")}
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            {new Date(event.startDate).toLocaleTimeString("vi-VN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            })}
+                        </span>
+                        </div>
                     </div>
-                  </div>
-                  <ChevronRight className="text-muted-foreground h-5 w-5 shrink-0 self-center" />
-                </div>
-                <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
-                  <span className="flex items-center gap-1">
-                    <Gift className="h-4 w-4" />
-                    {event.rewards}
-                  </span>
-                  <button className="text-secondary font-medium hover:underline">
-                    Chi tiết
-                  </button>
-                </div>
-              </div>
+                    <ChevronRight className="text-muted-foreground h-5 w-5 shrink-0 self-center" />
+                    </div>
+                    <div className="border-border bg-muted flex items-center justify-between border-t px-4 py-2 text-sm">
+                    <span className="flex items-center gap-1">
+                        <Gift className="h-4 w-4" />
+                        {event.rewards}
+                    </span>
+                    <Button variant="link" size="sm" className="h-auto p-0">
+                        Chi tiết
+                    </Button>
+                    </div>
+                </Card.Content>
+              </Card>
             );
           })}
         </div>
@@ -306,19 +310,17 @@ export default function EventsPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-medium">{event.title}</h3>
-                    <span
-                      className={`px-1.5 py-0.5 text-xs ${status.bgColor} ${status.color}`}
-                    >
+                    <Badge variant="outline" className={`${status.bgColor} ${status.color} border-transparent`}>
                       {status.label}
-                    </span>
+                    </Badge>
                   </div>
                   <p className="text-muted-foreground text-sm">
                     {new Date(event.startDate).toLocaleDateString("vi-VN")}
                   </p>
                 </div>
-                <button className="text-muted-foreground hover:text-foreground text-sm">
+                <Button variant="ghost" size="sm">
                   Xem kết quả
-                </button>
+                </Button>
               </div>
             );
           })}

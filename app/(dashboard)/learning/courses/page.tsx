@@ -1,8 +1,8 @@
 "use client";
 
 import { BookOpen, Clock, Filter, Star, Users } from "lucide-react";
-
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge, Select, Input } from "@/components/retroui";
 
 const courses = [
   {
@@ -103,31 +103,35 @@ export default function CoursesPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
-              <button
+              <Button
                 key={cat}
-                className={`border-border hover:bg-muted border-2 px-3 py-1 text-sm font-medium transition-all ${
-                  cat === "Tất cả" ? "bg-primary" : "bg-background"
-                }`}
+                variant={cat === "Tất cả" ? "default" : "outline"}
+                size="sm"
               >
                 {cat}
-              </button>
+              </Button>
             ))}
           </div>
-          <div className="sm:ml-auto">
-            <select className="border-border bg-background border-2 px-3 py-1.5 text-sm">
-              <option>Phổ biến nhất</option>
-              <option>Mới nhất</option>
-              <option>Đánh giá cao</option>
-            </select>
+          <div className="sm:ml-auto w-48">
+            <Select defaultValue="popular">
+              <Select.Trigger className="w-full">
+                <Select.Value />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Item value="popular">Phổ biến nhất</Select.Item>
+                <Select.Item value="newest">Mới nhất</Select.Item>
+                <Select.Item value="rating">Đánh giá cao</Select.Item>
+              </Select.Content>
+            </Select>
           </div>
         </div>
 
         {/* Course Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
-            <div
+            <Card
               key={course.id}
-              className="border-border bg-background flex flex-col border-2 shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
+              className="flex flex-col shadow-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
             >
               {/* Thumbnail */}
               <div className="border-border bg-muted flex h-32 items-center justify-center border-b-2 text-5xl">
@@ -135,14 +139,14 @@ export default function CoursesPage() {
               </div>
 
               {/* Content */}
-              <div className="flex flex-1 flex-col p-4">
+              <Card.Content className="flex flex-1 flex-col p-4">
                 <div className="mb-2 flex items-center gap-2">
-                  <span className="border-border bg-muted border px-2 py-0.5 text-xs font-medium">
+                  <Badge variant="outline" className="bg-muted">
                     {course.category}
-                  </span>
-                  <span className="border-border bg-secondary/20 border px-2 py-0.5 text-xs font-medium">
+                  </Badge>
+                  <Badge variant="surface">
                     {course.level}
-                  </span>
+                  </Badge>
                 </div>
 
                 <h3 className="font-bold">{course.title}</h3>
@@ -170,20 +174,20 @@ export default function CoursesPage() {
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{course.rating}</span>
                   </div>
-                  <button className="border-border bg-primary border-2 px-4 py-1.5 text-sm font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+                  <Button size="sm">
                     Xem chi tiết
-                  </button>
+                  </Button>
                 </div>
-              </div>
-            </div>
+              </Card.Content>
+            </Card>
           ))}
         </div>
 
         {/* Load More */}
         <div className="text-center">
-          <button className="border-border bg-background border-2 px-8 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+          <Button size="lg" variant="outline">
             Xem thêm khóa học
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge } from "@/components/retroui";
 
 const activities = [
   {
@@ -111,99 +112,110 @@ export default function ActivityPage() {
       <div className="space-y-8">
         {/* Today Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="border-border bg-background flex items-center gap-4 border-2 p-4 shadow-sm">
-            <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-green-100">
-              <CheckCircle className="h-6 w-6 text-green-600" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Bài học hôm nay</p>
-              <p className="text-xl font-bold">{todayStats.lessonsCompleted}</p>
-            </div>
-          </div>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-4">
+              <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-green-100">
+                <CheckCircle className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Bài học hôm nay</p>
+                <p className="text-xl font-bold">{todayStats.lessonsCompleted}</p>
+              </div>
+            </Card.Content>
+          </Card>
 
-          <div className="border-border bg-background flex items-center gap-4 border-2 p-4 shadow-sm">
-            <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-blue-100">
-              <Clock className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Thời gian học</p>
-              <p className="text-xl font-bold">{todayStats.timeSpent}</p>
-            </div>
-          </div>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-4">
+              <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-blue-100">
+                <Clock className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Thời gian học</p>
+                <p className="text-xl font-bold">{todayStats.timeSpent}</p>
+              </div>
+            </Card.Content>
+          </Card>
 
-          <div className="border-border bg-background flex items-center gap-4 border-2 p-4 shadow-sm">
-            <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-yellow-100">
-              <Star className="h-6 w-6 text-yellow-600" />
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Xu kiếm được</p>
-              <p className="text-xl font-bold">+{todayStats.coinsEarned}</p>
-            </div>
-          </div>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-4">
+              <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-yellow-100">
+                <Star className="h-6 w-6 text-yellow-600" />
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Xu kiếm được</p>
+                <p className="text-xl font-bold">+{todayStats.coinsEarned}</p>
+              </div>
+            </Card.Content>
+          </Card>
 
-          <div className="border-border bg-background flex items-center gap-4 border-2 p-4 shadow-sm">
-            <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-orange-100">
-              <span className="text-2xl">🔥</span>
-            </div>
-            <div>
-              <p className="text-muted-foreground text-sm">Streak</p>
-              <p className="text-xl font-bold">{todayStats.streakDays} ngày</p>
-            </div>
-          </div>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-4">
+              <div className="border-border flex h-12 w-12 items-center justify-center border-2 bg-orange-100">
+                <span className="text-2xl">🔥</span>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Streak</p>
+                <p className="text-xl font-bold">{todayStats.streakDays} ngày</p>
+              </div>
+            </Card.Content>
+          </Card>
         </div>
 
         {/* Activity Timeline */}
-        <div className="border-border bg-background border-2 shadow-sm">
-          <div className="border-border bg-muted border-b-2 px-6 py-4">
-            <h2 className="font-bold">Lịch sử hoạt động</h2>
-          </div>
-          <div className="divide-border divide-y-2">
-            {activities.map((activity) => {
-              const Icon = activity.icon;
-              return (
-                <div
-                  key={activity.id}
-                  className="hover:bg-muted/50 flex items-start gap-4 p-4 transition-colors"
-                >
+        <Card className="shadow-sm">
+          <Card.Content className="p-0">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <h2 className="font-bold">Lịch sử hoạt động</h2>
+            </div>
+            <div className="divide-border divide-y-2">
+              {activities.map((activity) => {
+                const Icon = activity.icon;
+                return (
                   <div
-                    className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${activity.color}`}
+                    key={activity.id}
+                    className="hover:bg-muted/50 flex items-start gap-4 p-4 transition-colors"
                   >
-                    <Icon className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="font-medium">{activity.title}</p>
-                        <p className="text-muted-foreground text-sm">
-                          {activity.description}
-                        </p>
-                      </div>
-                      {activity.reward && (
-                        <span
-                          className={`border-border shrink-0 border px-2 py-0.5 text-sm font-medium ${
-                            activity.reward.startsWith("+")
-                              ? "bg-green-100 text-green-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          {activity.reward}
-                        </span>
-                      )}
+                    <div
+                      className={`border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 ${activity.color}`}
+                    >
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
-                    <p className="text-muted-foreground mt-1 text-xs">
-                      {activity.time}
-                    </p>
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <p className="font-medium">{activity.title}</p>
+                          <p className="text-muted-foreground text-sm">
+                            {activity.description}
+                          </p>
+                        </div>
+                        {activity.reward && (
+                          <Badge
+                            variant={activity.reward.startsWith("+") ? "surface" : "default"}
+                            className={
+                              activity.reward.startsWith("+")
+                                ? "bg-green-100 text-green-700 border-green-200"
+                                : "bg-red-100 text-red-700 border-red-200"
+                            }
+                          >
+                            {activity.reward}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground mt-1 text-xs">
+                        {activity.time}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="border-border border-t-2 p-4">
-            <button className="border-border bg-background w-full border-2 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-              Xem thêm hoạt động
-            </button>
-          </div>
-        </div>
+                );
+              })}
+            </div>
+            <div className="border-border border-t-2 p-4">
+              <Button variant="secondary" className="w-full">
+                Xem thêm hoạt động
+              </Button>
+            </div>
+          </Card.Content>
+        </Card>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { Award, Crown, Medal, Star } from "lucide-react";
 
 import { BarChart } from "@/components/retroui/charts/BarChart";
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Select } from "@/components/retroui";
 
 const leaderboardData = [
   { rank: 1, name: "ProCoder99", score: 12500, wins: 85, avatar: "👨‍💻" },
@@ -39,145 +40,160 @@ export default function LeaderboardPage() {
   return (
     <div className="space-y-8">
       {/* My Rank Card */}
-      <div className="border-primary bg-primary/10 border-2 p-6 shadow-sm">
-        <div className="flex flex-col items-center gap-6 sm:flex-row">
-          <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl font-bold">
-            #{myStats.rank}
-          </div>
-          <div className="flex-1 text-center sm:text-left">
-            <h2 className="text-xl font-bold">Thứ hạng của bạn</h2>
-            <div className="mt-2 flex flex-wrap justify-center gap-4 sm:justify-start">
-              <div className="text-center">
-                <p className="text-2xl font-bold">{myStats.score}</p>
-                <p className="text-muted-foreground text-sm">Điểm</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold">{myStats.wins}</p>
-                <p className="text-muted-foreground text-sm">Thắng</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold">{myStats.percentile}</p>
-                <p className="text-muted-foreground text-sm">Percentile</p>
+      <Card className="border-primary bg-primary/10 shadow-sm">
+        <Card.Content className="p-6">
+          <div className="flex flex-col items-center gap-6 sm:flex-row">
+            <div className="border-border bg-primary flex h-20 w-20 items-center justify-center border-2 text-4xl font-bold">
+              #{myStats.rank}
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-xl font-bold">Thứ hạng của bạn</h2>
+              <div className="mt-2 flex flex-wrap justify-center gap-4 sm:justify-start">
+                <div className="text-center">
+                  <p className="text-2xl font-bold">{myStats.score}</p>
+                  <p className="text-muted-foreground text-sm">Điểm</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold">{myStats.wins}</p>
+                  <p className="text-muted-foreground text-sm">Thắng</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold">{myStats.percentile}</p>
+                  <p className="text-muted-foreground text-sm">Percentile</p>
+                </div>
               </div>
             </div>
+            <Button size="lg">
+              Thách đấu ngay
+            </Button>
           </div>
-          <button className="border-border bg-background border-2 px-6 py-3 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
-            Thách đấu ngay
-          </button>
-        </div>
-      </div>
+        </Card.Content>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Leaderboard Table */}
-        <div className="border-border bg-background border-2 shadow-sm lg:col-span-2">
-          <div className="border-border bg-muted border-b-2 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-bold">Top 10 toàn thời gian</h2>
-              <select className="border-border bg-background border px-2 py-1 text-sm">
-                <option>Toàn thời gian</option>
-                <option>Tháng này</option>
-                <option>Tuần này</option>
-              </select>
-            </div>
-          </div>
-          <div className="divide-border divide-y-2">
-            {leaderboardData.map((player) => (
-              <div
-                key={player.rank}
-                className={`hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors ${
-                  player.rank <= 3 ? "bg-primary/5" : ""
-                }`}
-              >
-                {/* Rank */}
-                <div className="border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 font-bold">
-                  {player.rank === 1 ? (
-                    <Crown className="h-5 w-5 text-yellow-500" />
-                  ) : player.rank === 2 ? (
-                    <Medal className="h-5 w-5 text-gray-400" />
-                  ) : player.rank === 3 ? (
-                    <Medal className="h-5 w-5 text-amber-600" />
-                  ) : (
-                    player.rank
-                  )}
-                </div>
-
-                {/* Avatar */}
-                <div className="border-border bg-muted flex h-10 w-10 items-center justify-center border-2 text-xl">
-                  {player.avatar}
-                </div>
-
-                {/* Name */}
-                <div className="flex-1">
-                  <p className="font-medium">{player.name}</p>
-                  <p className="text-muted-foreground text-sm">
-                    {player.wins} thắng
-                  </p>
-                </div>
-
-                {/* Score */}
-                <div className="text-right">
-                  <p className="font-bold">{player.score.toLocaleString()}</p>
-                  <p className="text-muted-foreground text-sm">điểm</p>
+        <Card className="shadow-sm lg:col-span-2">
+          <Card.Content className="p-0">
+            <div className="border-border bg-muted border-b-2 px-6 py-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold">Top 10 toàn thời gian</h2>
+                <div className="w-40">
+                    <Select defaultValue="all">
+                        <Select.Trigger className="h-8">
+                            <Select.Value />
+                        </Select.Trigger>
+                        <Select.Content>
+                            <Select.Item value="all">Toàn thời gian</Select.Item>
+                            <Select.Item value="month">Tháng này</Select.Item>
+                            <Select.Item value="week">Tuần này</Select.Item>
+                        </Select.Content>
+                    </Select>
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="border-border border-t-2 p-4">
-            <button className="text-muted-foreground hover:text-foreground w-full text-center text-sm font-medium">
-              Xem thêm
-            </button>
-          </div>
-        </div>
+            </div>
+            <div className="divide-border divide-y-2">
+              {leaderboardData.map((player) => (
+                <div
+                  key={player.rank}
+                  className={`hover:bg-muted/50 flex items-center gap-4 p-4 transition-colors ${
+                    player.rank <= 3 ? "bg-primary/5" : ""
+                  }`}
+                >
+                  {/* Rank */}
+                  <div className="border-border flex h-10 w-10 shrink-0 items-center justify-center border-2 font-bold">
+                    {player.rank === 1 ? (
+                      <Crown className="h-5 w-5 text-yellow-500" />
+                    ) : player.rank === 2 ? (
+                      <Medal className="h-5 w-5 text-gray-400" />
+                    ) : player.rank === 3 ? (
+                      <Medal className="h-5 w-5 text-amber-600" />
+                    ) : (
+                      player.rank
+                    )}
+                  </div>
+
+                  {/* Avatar */}
+                  <div className="border-border bg-muted flex h-10 w-10 items-center justify-center border-2 text-xl">
+                    {player.avatar}
+                  </div>
+
+                  {/* Name */}
+                  <div className="flex-1">
+                    <p className="font-medium">{player.name}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {player.wins} thắng
+                    </p>
+                  </div>
+
+                  {/* Score */}
+                  <div className="text-right">
+                    <p className="font-bold">{player.score.toLocaleString()}</p>
+                    <p className="text-muted-foreground text-sm">điểm</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="border-border border-t-2 p-4">
+              <Button variant="ghost" className="w-full">
+                Xem thêm
+              </Button>
+            </div>
+          </Card.Content>
+        </Card>
 
         {/* Weekly Top Chart */}
-        <div className="border-border bg-background border-2 shadow-sm">
-          <div className="border-border bg-muted border-b-2 px-6 py-4">
-            <h2 className="font-bold">Top tuần này</h2>
-          </div>
-          <div className="p-4">
-            <BarChart
-              data={weeklyTopData}
-              index="name"
-              categories={["points"]}
-              alignment="horizontal"
-              fillColors={["var(--primary)"]}
-              className="h-64"
-              valueFormatter={(value) => `${value} pts`}
-            />
-          </div>
-        </div>
+        <Card className="shadow-sm">
+            <Card.Content className="p-0">
+                <div className="border-border bg-muted border-b-2 px-6 py-4">
+                    <h2 className="font-bold">Top tuần này</h2>
+                </div>
+                <div className="p-4">
+                    <BarChart
+                    data={weeklyTopData}
+                    index="name"
+                    categories={["points"]}
+                    alignment="horizontal"
+                    fillColors={["var(--primary)"]}
+                    className="h-64"
+                    valueFormatter={(value) => `${value} pts`}
+                    />
+                </div>
+            </Card.Content>
+        </Card>
       </div>
 
       {/* Rewards Info */}
-      <div className="border-border bg-muted/50 border-2 p-6">
-        <h3 className="mb-4 flex items-center gap-2 font-bold">
-          <Award className="h-5 w-5" />
-          Phần thưởng xếp hạng
-        </h3>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-            <Crown className="h-8 w-8 text-yellow-500" />
-            <div>
-              <p className="font-medium">Top 1</p>
-              <p className="text-muted-foreground text-sm">5,000 xu/tháng</p>
+      <Card className="bg-muted/50">
+        <Card.Content className="p-6">
+            <h3 className="mb-4 flex items-center gap-2 font-bold">
+            <Award className="h-5 w-5" />
+            Phần thưởng xếp hạng
+            </h3>
+            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
+                <Crown className="h-8 w-8 text-yellow-500" />
+                <div>
+                <p className="font-medium">Top 1</p>
+                <p className="text-muted-foreground text-sm">5,000 xu/tháng</p>
+                </div>
             </div>
-          </div>
-          <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-            <Medal className="h-8 w-8 text-gray-400" />
-            <div>
-              <p className="font-medium">Top 2-3</p>
-              <p className="text-muted-foreground text-sm">2,500 xu/tháng</p>
+            <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
+                <Medal className="h-8 w-8 text-gray-400" />
+                <div>
+                <p className="font-medium">Top 2-3</p>
+                <p className="text-muted-foreground text-sm">2,500 xu/tháng</p>
+                </div>
             </div>
-          </div>
-          <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
-            <Star className="h-8 w-8 text-amber-500" />
-            <div>
-              <p className="font-medium">Top 10</p>
-              <p className="text-muted-foreground text-sm">1,000 xu/tháng</p>
+            <div className="border-border bg-background flex items-center gap-3 border-2 p-3">
+                <Star className="h-8 w-8 text-amber-500" />
+                <div>
+                <p className="font-medium">Top 10</p>
+                <p className="text-muted-foreground text-sm">1,000 xu/tháng</p>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+            </div>
+        </Card.Content>
+      </Card>
     </div>
   );
 }

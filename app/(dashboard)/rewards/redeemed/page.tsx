@@ -3,6 +3,7 @@
 import { Calendar, CheckCircle, Clock, Eye, Gift, Package } from "lucide-react";
 
 import { useTranslation } from "@/lib/providers";
+import { Button, Card, Badge, Select } from "@/components/retroui";
 
 const redeemedItems = [
   {
@@ -59,27 +60,31 @@ const redeemedItems = [
 
 const statusConfig: Record<
   string,
-  { label: string; color: string; bgColor: string }
+  { label: string; color: string; bgColor: string; borderColor: string }
 > = {
   active: {
     label: "Đang hoạt động",
     color: "text-green-700",
     bgColor: "bg-green-100",
+    borderColor: "border-green-200",
   },
   applied: {
     label: "Đang áp dụng",
     color: "text-blue-700",
     bgColor: "bg-blue-100",
+    borderColor: "border-blue-200",
   },
   expired: {
     label: "Hết hạn",
     color: "text-gray-500",
     bgColor: "bg-gray-100",
+    borderColor: "border-gray-200",
   },
   pending: {
     label: "Đang xử lý",
     color: "text-orange-700",
     bgColor: "bg-orange-100",
+    borderColor: "border-orange-200",
   },
 };
 
@@ -93,16 +98,16 @@ export default function RedeemedPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <button className="border-border bg-primary border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+        <Button>
           <Gift className="mr-2 inline h-4 w-4" />
           Đổi thêm quà
-        </button>
+        </Button>
       </div>
       <div className="space-y-8">
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-primary flex h-10 w-10 items-center justify-center border-2">
                 <Package className="h-5 w-5" />
               </div>
@@ -112,10 +117,10 @@ export default function RedeemedPage() {
                   {redeemedItems.length} vật phẩm
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+            </Card.Content>
+          </Card>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-secondary flex h-10 w-10 items-center justify-center border-2 text-white">
                 <CheckCircle className="h-5 w-5" />
               </div>
@@ -123,10 +128,10 @@ export default function RedeemedPage() {
                 <p className="text-muted-foreground text-sm">Đang hoạt động</p>
                 <p className="text-xl font-bold">{activeItems} vật phẩm</p>
               </div>
-            </div>
-          </div>
-          <div className="border-border bg-background border-2 p-4 shadow-sm">
-            <div className="flex items-center gap-3">
+            </Card.Content>
+          </Card>
+          <Card className="shadow-sm">
+            <Card.Content className="p-4 flex items-center gap-3">
               <div className="border-border bg-accent flex h-10 w-10 items-center justify-center border-2 text-white">
                 💰
               </div>
@@ -136,26 +141,26 @@ export default function RedeemedPage() {
                   {totalSpent.toLocaleString()} xu
                 </p>
               </div>
-            </div>
-          </div>
+            </Card.Content>
+          </Card>
         </div>
 
         {/* Filter */}
         <div className="flex flex-wrap items-center gap-4">
           <span className="text-sm font-medium">Lọc theo trạng thái:</span>
           <div className="flex gap-2">
-            <button className="border-border bg-muted border-2 px-3 py-1.5 text-sm font-medium">
+            <Button variant="secondary" size="sm">
               Tất cả
-            </button>
-            <button className="border-border bg-background border px-3 py-1.5 text-sm">
+            </Button>
+            <Button variant="outline" size="sm">
               Đang hoạt động
-            </button>
-            <button className="border-border bg-background border px-3 py-1.5 text-sm">
+            </Button>
+            <Button variant="outline" size="sm">
               Đang áp dụng
-            </button>
-            <button className="border-border bg-background border px-3 py-1.5 text-sm">
+            </Button>
+            <Button variant="outline" size="sm">
               Hết hạn
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -164,15 +169,15 @@ export default function RedeemedPage() {
           {redeemedItems.map((item) => {
             const status = statusConfig[item.status];
             return (
-              <div
+              <Card
                 key={item.id}
-                className={`border-border bg-background border-2 shadow-sm transition-all ${
+                className={`shadow-sm transition-all ${
                   item.status === "expired"
                     ? "opacity-60"
                     : "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md"
                 }`}
               >
-                <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
+                <Card.Content className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
                   {/* Icon */}
                   <div className="border-border bg-muted flex h-16 w-16 shrink-0 items-center justify-center border-2 text-3xl">
                     {item.image}
@@ -182,11 +187,9 @@ export default function RedeemedPage() {
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-lg font-bold">{item.name}</h3>
-                      <span
-                        className={`border-border border px-2 py-0.5 text-xs font-medium ${status.bgColor} ${status.color}`}
-                      >
+                      <Badge className={`${status.bgColor} ${status.color} ${status.borderColor}`}>
                         {status.label}
-                      </span>
+                      </Badge>
                     </div>
                     <p className="text-muted-foreground mt-1 text-sm">
                       {item.description}
@@ -215,33 +218,19 @@ export default function RedeemedPage() {
                   {/* Actions */}
                   <div className="flex shrink-0 gap-2">
                     {item.status === "active" && (
-                      <button className="border-border bg-primary border-2 px-4 py-2 font-medium shadow-xs transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-sm">
+                      <Button>
                         Sử dụng
-                      </button>
+                      </Button>
                     )}
-                    <button className="border-border bg-background hover:bg-muted border px-4 py-2 text-sm transition-colors">
+                    <Button variant="secondary" size="icon">
                       <Eye className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
-                </div>
-              </div>
+                </Card.Content>
+              </Card>
             );
           })}
         </div>
-
-        {/* Empty State (hidden, for reference) */}
-        {redeemedItems.length === 0 && (
-          <div className="border-border border-2 border-dashed p-12 text-center">
-            <Gift className="text-muted-foreground mx-auto h-12 w-12" />
-            <h3 className="mt-4 font-bold">Chưa có vật phẩm nào</h3>
-            <p className="text-muted-foreground mt-2 text-sm">
-              Hãy đổi xu để nhận những phần quà hấp dẫn!
-            </p>
-            <button className="border-border bg-primary mt-4 border-2 px-6 py-2 font-medium shadow-xs">
-              Đổi quà ngay
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
