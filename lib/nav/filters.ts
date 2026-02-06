@@ -16,7 +16,8 @@ export function filterTabs(
   return tabs
     .filter((tab) => {
       if (tab.access && tab.access.length > 0) {
-        if (!tab.access.some((p) => hasPermission(p))) return false;
+        if (!tab.hideInHeader || !tab.access.some((p) => hasPermission(p)))
+          return false;
       }
       return true;
     })

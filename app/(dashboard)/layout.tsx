@@ -117,10 +117,14 @@ export default function DashboardLayout({
 
   // Navigation Logic
   const tabs = filterTabs(NAV, hasPermission);
-  const showTabs = tabs.length > 0;
   const navigation = getSidebarForPath(tabs, pathname);
   const activeTabKey = getActiveTabKey(tabs, pathname);
   const activeNavItemKey = getActiveNavItemKey(tabs, pathname);
+
+  const activeIndex = tabs.findIndex(
+    (tab) => pathname === tab.href || pathname.startsWith(`${tab.href}/`),
+  );
+  const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
 
   // Page Header Logic
   const titleKey = activeNavItemKey
@@ -152,7 +156,6 @@ export default function DashboardLayout({
                   size="icon"
                   className="md:hidden"
                   onClick={openMobile}
-                  aria-label="Open mobile menu"
                 >
                   <MenuIcon className="size-4" />
                 </Button>
@@ -174,49 +177,34 @@ export default function DashboardLayout({
         </div>
 
         {/* Center Header */}
-        <div className="hidden md:flex">
-          {showTabs &&
-            (() => {
-              const activeIndex = tabs.findIndex(
-                (tab) =>
-                  pathname === tab.href || pathname.startsWith(`${tab.href}/`),
-              );
-              const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
-
-              return (
-                <Tabs selectedIndex={selectedIndex}>
-                  <TabsTriggerList>
-                    {tabs
-                      .filter((tab) => !tab.hideInHeader)
-                      .map((tab) => (
-                        <TabsTrigger key={tab.key}>
-                          <Link
-                            href={tab.href}
-                            className="flex items-center gap-2"
-                          >
-                            <tab.icon className="size-4" />
-                            <span className="hidden lg:inline">
-                              {t(`navigation.tabs.${tab.key}`)}
-                            </span>
-                          </Link>
-                        </TabsTrigger>
-                      ))}
-                  </TabsTriggerList>
-                </Tabs>
-              );
-            })()}
+        <div className="flex flex-2 justify-center">
+          <Tabs selectedIndex={selectedIndex} className="hidden sm:flex">
+            <TabsTriggerList>
+              {tabs.map((tab) => (
+                <Link href={tab.href} key={tab.key}>
+                  <TabsTrigger
+                    className={`flex flex-1 items-center gap-2 ${tab.key === activeTabKey ? "bg-muted shadow-md" : "hover:shadow-md"}`}
+                  >
+                    <tab.icon className="size-4" />
+                    <span>{t(`navigation.tabs.${tab.key}`)}</span>
+                  </TabsTrigger>
+                </Link>
+              ))}
+            </TabsTriggerList>
+          </Tabs>
         </div>
 
         {/* Right Header */}
-        <div className="flex gap-2">
+        <div className="flex flex-1 gap-2">
           <Button
             variant="outline"
-            className="hidden h-9 justify-start gap-2 sm:flex"
+            className="flex size-9 gap-2 sm:w-40 sm:justify-start"
             onClick={() => setSearchOpen(true)}
-            aria-label="Search"
           >
-            <SearchIcon className="size-4" />
-            <span className="truncate">{t("common.searchPlaceholder")}</span>
+            <SearchIcon className="size-4 shrink-0" />
+            <span className="hidden sm:inline">
+              {t("common.searchPlaceholder")}
+            </span>
           </Button>
 
           <Command.Dialog open={searchOpen} onOpenChange={setSearchOpen}>
@@ -247,7 +235,11 @@ export default function DashboardLayout({
                 <Tooltip>
                   <Tooltip.Trigger asChild>
                     <Menu.Trigger asChild>
-                      <Button className="flex h-9 gap-2" aria-label="Open user menu">
+                      <Button
+                        size="icon"
+                        className="flex h-9 gap-2"
+                        aria-label="Open user menu"
+                      >
                         <Avatar className="bg-background size-6">
                           {user.avatarUrl && (
                             <Avatar.Image src={user.avatarUrl} alt="Avatar" />
@@ -256,10 +248,10 @@ export default function DashboardLayout({
                             <ProfileIcon />
                           </Avatar.Fallback>
                         </Avatar>
-                        <span className="hidden truncate md:flex">
+                        <span className="hidden truncate sm:flex">
                           {user.firstName}
                         </span>
-                        {/* <DropdownIcon className="hidden size-4 shrink-0 md:block" /> */}
+                        <DropdownIcon className="hidden size-4 shrink-0 md:block" />
                       </Button>
                     </Menu.Trigger>
                   </Tooltip.Trigger>
@@ -355,7 +347,7 @@ export default function DashboardLayout({
       </header>
 
       {/* Sidebar */}
-      {/* Mobile overlay */}
+        {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 md:hidden"
@@ -363,6 +355,7 @@ export default function DashboardLayout({
         />
       )}
 
+      {/* Sidebar */}
       <aside
         className={`border-border bg-background fixed top-0 left-0 z-50 col-span-1 flex hidden h-full flex-col border-r-2 transition-all duration-300 md:sticky md:top-16 md:block md:h-[calc(100vh-4rem)] md:shrink-0 ${
           isCollapsed ? "w-16" : "w-64"
@@ -371,7 +364,7 @@ export default function DashboardLayout({
         }`}
         ref={sidebarRef}
       >
-        {/* Mobile Header with Close Button */}
+        {/* Mobile Header */}
         <div className="border-border flex h-16 items-center justify-between border-b-2 px-4 md:hidden">
           <Button
             variant="outline"
@@ -384,7 +377,7 @@ export default function DashboardLayout({
           </Button>
         </div>
 
-        {/* Toggle Button (Desktop) */}
+        {/* Toggle Button */}
         <Button
           variant="outline"
           className="bg-background text-foreground absolute top-6 -right-3 z-10 hidden h-6 w-6 items-center justify-center p-0 md:flex"
