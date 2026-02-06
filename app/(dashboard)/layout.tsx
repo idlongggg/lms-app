@@ -347,7 +347,7 @@ export default function DashboardLayout({
       </header>
 
       {/* Sidebar */}
-        {/* Mobile Overlay */}
+      {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 md:hidden"
