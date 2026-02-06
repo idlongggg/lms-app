@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 
-import { Button } from "@/components/ui";
+import { Tabs, TabsTrigger, TabsTriggerList, Text } from "@/components/ui";
 import { type ThemeKey } from "@/lib/constants/colors";
 import { type NavTab } from "@/lib/nav";
 
@@ -19,40 +20,44 @@ export function HeaderTabs({
   t,
   setThemeColor,
 }: HeaderTabsProps) {
-  if (tabs.length === 0) {
+  // Handle empty tabs gracefully
+  if (!tabs || tabs.length === 0) {
     return null;
   }
 
-  return (
-    <div className="flex w-full items-center gap-2 overflow-x-auto p-1">
-      {tabs
-        .filter((tab) => !tab.hideInHeader)
-        .map((tab) => {
-          const Icon = tab.icon;
-          const isActive =
-            pathname === tab.href || pathname.startsWith(`${tab.href}/`);
+  const activeIndex = tabs.findIndex(
+    (tab) => pathname === tab.href || pathname.startsWith(`${tab.href}/`),
+  );
 
-          return (
-            <Button
-              key={tab.key}
-              asChild
-              variant={isActive ? "default" : "ghost"}
-              className="flex h-10 items-center gap-2"
-              onClick={() => {
-                if (tab.color) {
-                  setThemeColor(tab.color);
-                }
-              }}
-            >
-              <Link href={tab.href}>
-                <Icon className="size-4" />
-                <span className="hidden lg:inline">
-                  {t(`navigation.tabs.${tab.key}`)}
-                </span>
-              </Link>
-            </Button>
-          );
-        })}
-    </div>
+  const activeTab = tabs[activeIndex !== -1 ? activeIndex : 0];
+
+  useEffect(() => {
+    if (activeTab?.color) {
+      setThemeColor(activeTab.color);
+    }
+  }, [activeTab, setThemeColor]);
+
+  return (
+    <Tabs
+      selectedIndex={activeIndex !== -1 ? activeIndex : 0}
+      className="w-full"
+    >
+      <TabsTriggerList>
+        {tabs
+          .filter((tab) => !tab.hideInHeader)
+          .map((tab) => {
+            return (
+              <TabsTrigger key={tab.key}>
+                <Link href={tab.href} className="flex items-center gap-2">
+                  <tab.icon className="size-4" />
+                  <Text className="hidden lg:inline">
+                    {t(`navigation.tabs.${tab.key}`)}
+                  </Text>
+                </Link>
+              </TabsTrigger>
+            );
+          })}
+      </TabsTriggerList>
+    </Tabs>
   );
 }

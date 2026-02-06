@@ -253,6 +253,20 @@ dashboard:
   daysLeft: "ngày nữa"
   hoursLeft: "giờ nữa"
 
+  # Nav Item Descriptions
+  questionBank:
+    description: "Khám phá và đóng góp vào ngân hàng câu hỏi"
+  discussions:
+    description: "Tham gia thảo luận cùng cộng đồng"
+  allCourses:
+    description: "Xem tất cả các khóa học hiện có"
+  arena:
+    description: "Tham gia đấu trường cạnh tranh"
+  schedule:
+    description: "Xem lịch thi đấu và lớp học"
+  leaderboard:
+    description: "Xem bảng xếp hạng thành tích"
+
 learning:
   title: "Bài học của tôi"
   description: "Tiếp tục hành trình học tập của bạn"

@@ -253,6 +253,20 @@ dashboard:
   daysLeft: "days left"
   hoursLeft: "hours left"
 
+  # Nav Item Descriptions
+  questionBank:
+    description: "Browse and contribute to the community question bank"
+  discussions:
+    description: "Participate in community discussions"
+  allCourses:
+    description: "Browse all available courses"
+  arena:
+    description: "Enter the competitive arena"
+  schedule:
+    description: "View tournament and class schedules"
+  leaderboard:
+    description: "See top performers and rankings"
+
 learning:
   title: "My Lessons"
   description: "Continue your learning journey"

@@ -87,3 +87,28 @@ export function getSidebarForPath(
   const tabKey = getActiveTabKey(tabs, pathname);
   return getSidebarForTab(tabs, tabKey);
 }
+/** * Get active nav item key from pathname
+ */
+export function getActiveNavItemKey(
+  tabs: NavTab[],
+  pathname: string,
+): string | undefined {
+  let matchedItemKey: string | undefined;
+  let maxMatchLength = 0;
+
+  for (const tab of tabs) {
+    for (const group of tab.groups) {
+      for (const item of group.items) {
+        if (pathname.startsWith(item.href)) {
+          // Check for exact match or deeper match to handle nested routes properly
+          if (item.href.length > maxMatchLength) {
+            maxMatchLength = item.href.length;
+            matchedItemKey = item.key;
+          }
+        }
+      }
+    }
+  }
+
+  return matchedItemKey;
+}

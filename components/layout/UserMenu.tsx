@@ -66,10 +66,10 @@ function UserMenuTrigger({ user, t }: UserMenuTriggerProps) {
                   </Avatar.Fallback>
                 </Avatar>
               </div>
-              <Text className="flex-1 truncate text-left text-sm font-medium">
+              <Text className="hidden flex-1 truncate text-left text-sm font-medium lg:block">
                 {user.firstName}
               </Text>
-              <DropdownIcon className="size-4 shrink-0" />
+              <DropdownIcon className="hidden size-4 shrink-0 lg:block" />
             </Button>
           </Menu.Trigger>
         </Tooltip.Trigger>
