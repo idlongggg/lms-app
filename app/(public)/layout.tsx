@@ -2,13 +2,7 @@
 
 import Link from "next/link";
 
-import {
-  Header,
-  LanguageSwitcher,
-  Logo,
-  ThemeToggle,
-} from "@/components/layout";
-import { Button } from "@/components/ui";
+import { LanguageSwitcher, Logo, ThemeToggle } from "@/components/layout";
 import { type Language, type LanguageOption } from "@/lib/i18n";
 import { useLanguage, useTheme, useTranslation } from "@/lib/providers";
 
@@ -74,6 +68,22 @@ function HeaderRight({
   );
 }
 
+interface HeaderProps {
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+}
+
+function PublicHeader({ left, right }: HeaderProps) {
+  return (
+    <header className="sticky h-14 border-b-2 shadow-sm">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-2">
+        {left}
+        {right}
+      </div>
+    </header>
+  );
+}
+
 export default function PublicLayout({
   children,
 }: {
@@ -90,7 +100,7 @@ export default function PublicLayout({
 
   return (
     <>
-      <Header
+      <PublicHeader
         left={<Logo />}
         right={
           <HeaderRight

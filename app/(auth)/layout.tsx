@@ -3,8 +3,8 @@
 import Link from "next/link";
 
 import {
-  Header,
   LanguageSwitcher,
+  LayoutHeader,
   Logo,
   ThemeToggle,
 } from "@/components/layout";
@@ -26,7 +26,7 @@ export default function AuthLayout({
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <Header
+      <LayoutHeader
         left={<Logo />}
         right={
           <>
