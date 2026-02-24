@@ -1,7 +1,3 @@
-/**
- * Navigation Filter Functions
- */
-
 import type { Permission } from "@/lib/constants/permissions";
 
 import type { NavGroup, NavItem, NavTab } from "./types";
@@ -100,8 +96,8 @@ export function getActiveNavItemKey(
   for (const tab of tabs) {
     for (const group of tab.groups) {
       for (const item of group.items) {
-        if (pathname.startsWith(item.href)) {
-          // Check for exact match or deeper match to handle nested routes properly
+        const matchesHref = pathname.startsWith(item.href);
+        if (matchesHref) {
           if (item.href.length > maxMatchLength) {
             maxMatchLength = item.href.length;
             matchedItemKey = item.key;

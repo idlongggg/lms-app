@@ -1,7 +1,3 @@
-/**
- * Navigation Types
- */
-
 import type { ThemeKey } from "@/lib/constants/colors";
 import type { Icon } from "@/lib/constants/icons";
 import type { Permission } from "@/lib/constants/permissions";
