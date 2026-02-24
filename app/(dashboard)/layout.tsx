@@ -393,49 +393,54 @@ export default function DashboardLayout({
 
         {/* Navigation Content */}
         <nav className="flex-1 overflow-y-auto p-2">
-          {navigation.map((group, groupIndex) => (
-            <div key={groupIndex} className="mb-4">
-              {group.key && !isCollapsed && (
-                <Text
-                  as="h6"
-                  className="text-muted-foreground mb-2 px-3 text-xs font-semibold tracking-wider uppercase"
-                >
-                  {t(`navigation.sidebar.${group.key}`)}
-                </Text>
-              )}
-              <ul className="space-y-1">
-                {group.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href;
-                  const title = t(`navigation.sidebar.${item.key}`);
+          {navigation.map((group, groupIndex) => {
+            const activeItemIndex = group.items.findIndex(
+              (item) => pathname === item.href,
+            );
 
-                  return (
-                    <li key={item.href}>
-                      <Button
-                        variant={isActive ? "default" : "ghost"}
-                        className={`w-full justify-start gap-3 ${
-                          isCollapsed ? "justify-center px-2" : "px-3"
-                        } ${isActive ? "" : "hover:bg-transparent"}`}
-                        asChild
-                      >
+            return (
+              <div key={groupIndex} className="mb-4">
+                {group.key && !isCollapsed && (
+                  <Text
+                    as="h6"
+                    className="text-muted-foreground mb-2 px-3 text-xs font-semibold tracking-wider uppercase"
+                  >
+                    {t(`navigation.sidebar.${group.key}`)}
+                  </Text>
+                )}
+                <Tabs selectedIndex={activeItemIndex}>
+                  <TabsTriggerList className="flex-col space-x-0 space-y-1">
+                    {group.items.map((item) => {
+                      const Icon = item.icon;
+                      const title = t(`navigation.sidebar.${item.key}`);
+
+                      return (
                         <Link
+                          key={item.href}
                           href={item.href}
                           onClick={closeMobile}
                           title={isCollapsed ? title : undefined}
+                          className="w-full"
                         >
-                          <Icon className="h-5 w-5 shrink-0" />
-                          {!isCollapsed && <span>{title}</span>}
-                          {!isCollapsed && item.badge && (
-                            <Badge className="ml-auto">{item.badge}</Badge>
-                          )}
+                          <TabsTrigger
+                            className={`flex w-full items-center justify-start gap-3 ${
+                              isCollapsed ? "justify-center px-2" : "px-3"
+                            } ${pathname === item.href && "bg-muted shadow-md"}`}
+                          >
+                            <Icon className="h-5 w-5 shrink-0" />
+                            {!isCollapsed && <span>{title}</span>}
+                            {!isCollapsed && item.badge && (
+                              <Badge className="ml-auto">{item.badge}</Badge>
+                            )}
+                          </TabsTrigger>
                         </Link>
-                      </Button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+                      );
+                    })}
+                  </TabsTriggerList>
+                </Tabs>
+              </div>
+            );
+          })}
         </nav>
       </aside>
 
