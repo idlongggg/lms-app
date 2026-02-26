@@ -5,9 +5,7 @@ import {
   OverviewIcon,
   ProgressIcon,
   RecentActivityIcon,
-  ReportsIcon,
   StatsIcon,
-  StudentsIcon,
 } from "@/lib/constants/icons";
 import { PERMISSIONS } from "@/lib/constants/permissions";
 import type { NavTab } from "@/lib/nav";
@@ -27,24 +25,6 @@ export const NAV_OVERVIEW: NavTab = {
           href: "/dashboard/activity",
           icon: RecentActivityIcon,
         },
-      ],
-    },
-    // Role-specific groups
-    {
-      key: "adminOverview",
-      access: [PERMISSIONS.USER_READ, PERMISSIONS.PROGRESS_READ],
-      items: [
-        {
-          key: "allStudents",
-          href: "/dashboard/students",
-          icon: StudentsIcon,
-        },
-        {
-          key: "allProgress",
-          href: "/dashboard/progress",
-          icon: ProgressIcon,
-        },
-        { key: "reports", href: "/dashboard/reports", icon: ReportsIcon },
       ],
     },
     {

@@ -68,7 +68,7 @@ export interface Lesson {
   updatedAt: string;
 }
 
-export interface Question {
+export interface CourseQuestion {
   id: string;
   lessonId: string;
   content: string;
@@ -337,7 +337,7 @@ export const lessons: Lesson[] = [
 ];
 
 // Questions for lessons
-export const questions: Question[] = [
+export const questions: CourseQuestion[] = [
   // Questions for lesson-math-1
   {
     id: "question-1",
@@ -457,7 +457,7 @@ export function getLessonById(id: string): Lesson | undefined {
   return lessons.find((l) => l.id === id);
 }
 
-export function getQuestionsForLesson(lessonId: string): Question[] {
+export function getQuestionsForLesson(lessonId: string): CourseQuestion[] {
   return questions
     .filter((q) => q.lessonId === lessonId)
     .sort((a, b) => a.order - b.order);

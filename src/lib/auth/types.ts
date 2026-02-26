@@ -35,7 +35,7 @@ export interface LoginCredentials {
   password: string;
 }
 
-import { Permission } from "@/lib/constants/permissions";
+import type { Permission } from "@/lib/constants/permissions";
 
 export interface AuthService {
   getState(): AuthState;

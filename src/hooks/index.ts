@@ -1,3 +1,3 @@
 export * from "./use-countdown";
 export * from "./use-scroll-position";
-export * from "./useUsers";
+export * from "./use-users";

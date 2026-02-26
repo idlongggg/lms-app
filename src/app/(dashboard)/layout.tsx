@@ -1,10 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { LanguageSwitcher, Logo, ThemeToggle } from "@/components/layout";
+import {
+  LanguageSwitcher,
+  Logo,
+  ResponsiveTabs,
+  ThemeToggle,
+} from "@/components/layout";
 import {
   Avatar,
   Badge,
@@ -12,14 +17,11 @@ import {
   Command,
   Loader,
   Menu,
-  Tabs,
-  TabsTrigger,
-  TabsTriggerList,
   Text,
   Tooltip,
 } from "@/components/ui";
 import { useScrollPosition } from "@/hooks";
-import { type AuthUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/auth";
 import { useAuth, useRequireAuth } from "@/lib/auth";
 import {
   CloseIcon,
@@ -34,13 +36,9 @@ import {
   SearchIcon,
   SettingsIcon,
 } from "@/lib/constants/icons";
-import {
-  filterTabs,
-  getActiveNavItemKey,
-  getActiveTabKey,
-  getSidebarForPath,
-} from "@/lib/nav";
-// Navigation configuration import
+import type { Language, LanguageOption } from "@/lib/i18n";
+import type { NavGroup, NavTab } from "@/lib/nav";
+import { filterTabs, getActiveNavItemKey, getSidebarForPath } from "@/lib/nav";
 import { NAV } from "@/lib/nav/dashboard";
 import {
   useLanguage,
@@ -49,89 +47,52 @@ import {
   useTranslation,
 } from "@/lib/providers";
 
-export default function DashboardLayout({
-  children,
+// ─── DashboardHeader ────────────────────────────────────────────────────────
+
+function DashboardHeader({
+  tabs,
+  pathname,
+  user,
+  isAuthenticated,
+  logout,
+  t,
+  openMobile,
+  theme,
+  toggleTheme,
+  themeMounted,
+  currentLanguage,
+  languages,
+  setLanguage,
+  langMounted,
 }: {
-  children: React.ReactNode;
+  tabs: NavTab[];
+  pathname: string;
+  user: AuthUser | null;
+  isAuthenticated: boolean;
+  logout: () => void;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+  openMobile: () => void;
+  theme: string;
+  toggleTheme: () => void;
+  themeMounted: boolean;
+  currentLanguage: LanguageOption;
+  languages: LanguageOption[];
+  setLanguage: (language: Language) => void;
+  langMounted: boolean;
 }) {
-  const pathname = usePathname();
-  // Authentication hooks
-  const { isAuthorized, isLoading } = useRequireAuth();
-  const { hasPermission } = useAuth();
-  
-  // Layout Providers hooks
-  const { setThemeColor } = useTheme();
-
-  // Refs for scroll positioning
-  const mainRef = useRef<HTMLElement>(null);
-  useScrollPosition(mainRef, "content");
-
-  // Sync theme color with active tab configuration
-  useEffect(() => {
-    const tabs = filterTabs(NAV, hasPermission);
-    if (!tabs || tabs.length === 0) return;
-
-    // Check if pathname matches a tab or sub-route
-    const matchIndex = tabs.findIndex(
-      (tab) => pathname === tab.href || pathname.startsWith(`${tab.href}/`),
-    );
-    const activeIndex = matchIndex !== -1 ? matchIndex : 0;
-    const activeTab = tabs[activeIndex];
-
-    if (activeTab?.color) {
-      setThemeColor(activeTab.color);
-    }
-  }, [pathname, hasPermission, setThemeColor]);
-
-  if (isLoading) {
-    return (
-      <div className="bg-background flex h-screen items-center justify-center">
-        <Loader size="lg" />
-      </div>
-    );
-  }
-
-  if (!isAuthorized) {
-    return null;
-  }
-
-  return (
-    <div className="mx-auto flex h-screen max-w-7xl flex-col overflow-hidden">
-      <DashboardHeader />
-      <div className="relative flex flex-1 overflow-hidden">
-        <DashboardSidebar />
-        <main
-          ref={mainRef}
-          className="flex flex-1 flex-col overflow-hidden bg-white"
-        >
-          <DashboardPageHeader />
-          <div className="flex-1 overflow-y-auto p-6 md:p-8">{children}</div>
-        </main>
-      </div>
-    </div>
-  );
-}
-
-function DashboardHeader() {
-  const pathname = usePathname();
-  const { hasPermission, user, logout, isAuthenticated } = useAuth();
-  const { t } = useTranslation();
-  const { openMobile } = useSidebar();
-  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
-  const {
-    currentLanguage,
-    languages,
-    setLanguage,
-    mounted: langMounted,
-  } = useLanguage();
-
   const [searchOpen, setSearchOpen] = useState(false);
+  const router = useRouter();
 
-  const tabs = filterTabs(NAV, hasPermission);
-  const activeIndex = tabs.findIndex(
+  const activeIdx = tabs.findIndex(
     (tab) => pathname === tab.href || pathname.startsWith(`${tab.href}/`),
   );
-  const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
+  const selectedIdx = activeIdx !== -1 ? activeIdx : 0;
+
+  const handleTabSelect = (index: number) => {
+    router.push(tabs[index].href);
+  };
+
+  const tabLabels = tabs.map((tab) => t(`navigation.tabs.${tab.key}`));
 
   const fullName = user ? `${user.lastName} ${user.firstName}` : "";
 
@@ -168,25 +129,17 @@ function DashboardHeader() {
       </div>
 
       {/* Center Header */}
-      <div className="flex flex-2 justify-center">
-        <Tabs selectedIndex={selectedIndex} className="hidden md:flex">
-          <TabsTriggerList>
-            {tabs.map((tab) => (
-              <Link href={tab.href} key={tab.key}>
-                <TabsTrigger className={`flex items-center gap-2`}>
-                  <tab.icon className="size-4" />
-                  <Text className="flex hidden lg:flex">
-                    {t(`navigation.tabs.${tab.key}`)}
-                  </Text>
-                </TabsTrigger>
-              </Link>
-            ))}
-          </TabsTriggerList>
-        </Tabs>
+      <div className="hidden flex-1 justify-center lg:flex lg:max-w-[70%]">
+        <ResponsiveTabs
+          tabs={tabs}
+          labels={tabLabels}
+          selectedIndex={selectedIdx}
+          onSelect={handleTabSelect}
+        />
       </div>
 
       {/* Right Header */}
-      <div className="flex flex-1 gap-2">
+      <div className="flex gap-2">
         <Button
           variant="outline"
           className="flex size-9 gap-2 sm:w-40 sm:justify-start"
@@ -219,7 +172,7 @@ function DashboardHeader() {
           t={t}
         />
 
-        {isAuthenticated && user && (
+        {user && (
           <Menu>
             <Tooltip.Provider>
               <Tooltip>
@@ -322,10 +275,7 @@ function DashboardHeader() {
               </div>
 
               <div className="border-border border-t-2 py-1">
-                <Menu.Item
-                  onSelect={logout}
-                  className="text-destructive gap-2"
-                >
+                <Menu.Item onSelect={logout} className="text-destructive gap-2">
                   <LogOutIcon className="size-4" />
                   <Text className="text-sm">{t("auth.logout")}</Text>
                 </Menu.Item>
@@ -338,17 +288,27 @@ function DashboardHeader() {
   );
 }
 
-function DashboardSidebar() {
-  const pathname = usePathname();
-  const { hasPermission } = useAuth();
-  const { t } = useTranslation();
-  const { isCollapsed, isMobileOpen, toggle, closeMobile } = useSidebar();
-  
+// ─── DashboardSidebar ───────────────────────────────────────────────────────
+
+function DashboardSidebar({
+  navigation,
+  pathname,
+  t,
+  isCollapsed,
+  isMobileOpen,
+  toggle,
+  closeMobile,
+}: {
+  navigation: NavGroup[];
+  pathname: string;
+  t: (key: string) => string;
+  isCollapsed: boolean;
+  isMobileOpen: boolean;
+  toggle: () => void;
+  closeMobile: () => void;
+}) {
   const sidebarRef = useRef<HTMLElement>(null);
   useScrollPosition(sidebarRef, "sidebar");
-
-  const tabs = filterTabs(NAV, hasPermission);
-  const navigation = getSidebarForPath(tabs, pathname);
 
   return (
     <>
@@ -362,7 +322,7 @@ function DashboardSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`border-border bg-background fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:relative md:z-0 md:h-full md:shrink-0 ${
+        className={`bg-background fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r-2 transition-all duration-300 md:relative md:z-0 md:h-full md:shrink-0 ${
           isCollapsed ? "w-16" : "w-64"
         } ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
@@ -397,68 +357,68 @@ function DashboardSidebar() {
         </Button>
 
         {/* Navigation Content */}
-        <nav className="flex-1 overflow-y-auto p-2">
-          {navigation.map((group, groupIndex) => {
-            const activeItemIndex = group.items.findIndex(
-              (item) => pathname === item.href,
-            );
+        <nav className="flex-1 overflow-y-auto px-2 py-4">
+          {navigation.map((group, idx) => (
+            <div key={idx} className="mb-4">
+              {group.key && !isCollapsed && (
+                <span className="mb-2 text-xs font-bold tracking-wider uppercase">
+                  {t(`navigation.sidebar.${group.key}`)}
+                </span>
+              )}
+              <div className="flex flex-col space-y-1">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const title = t(`navigation.sidebar.${item.key}`);
+                  const isActive = pathname === item.href;
 
-            return (
-              <div key={groupIndex} className="mb-4">
-                {group.key && !isCollapsed && (
-                  <span className="mb-2 text-xs font-bold tracking-wider uppercase">
-                    {t(`navigation.sidebar.${group.key}`)}
-                  </span>
-                )}
-                <Tabs selectedIndex={activeItemIndex}>
-                  <TabsTriggerList className="flex-col space-y-1 space-x-0">
-                    {group.items.map((item, index) => {
-                      const Icon = item.icon;
-                      const title = t(`navigation.sidebar.${item.key}`);
-
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeMobile}
-                          title={isCollapsed ? title : undefined}
-                          className="w-full"
-                        >
-                          <TabsTrigger
-                            className={`flex w-full items-center justify-start gap-3 ${
-                              isCollapsed ? "justify-center px-2" : "px-3"
-                            }`}
-                          >
-                            <Icon className="h-5 w-5 shrink-0" />
-                            {!isCollapsed && <span>{title}</span>}
-                            {!isCollapsed && item.badge && (
-                              <Badge className="ml-auto">{item.badge}</Badge>
-                            )}
-                          </TabsTrigger>
-                        </Link>
-                      );
-                    })}
-                  </TabsTriggerList>
-                </Tabs>
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMobile}
+                      title={isCollapsed ? title : undefined}
+                      className="w-full"
+                    >
+                      <button
+                        role="tab"
+                        aria-selected={isActive}
+                        className={`flex w-full items-center justify-start gap-3 px-4 py-1 focus:outline-hidden ${
+                          isCollapsed ? "justify-center px-2" : "px-3"
+                        } ${
+                          isActive
+                            ? "border-border bg-primary text-primary-foreground border-2 font-semibold"
+                            : "border-2 border-transparent"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5 shrink-0" />
+                        {!isCollapsed && <span>{title}</span>}
+                        {!isCollapsed && item.badge && (
+                          <Badge className="ml-auto">{item.badge}</Badge>
+                        )}
+                      </button>
+                    </Link>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </nav>
       </aside>
     </>
   );
 }
 
-function DashboardPageHeader() {
-  const pathname = usePathname();
-  const { hasPermission } = useAuth();
-  const { t } = useTranslation();
+// ─── DashboardPageHeader ────────────────────────────────────────────────────
 
-  const tabs = filterTabs(NAV, hasPermission);
-  const activeNavItemKey = getActiveNavItemKey(tabs, pathname);
-
+function DashboardPageHeader({
+  activeNavItemKey,
+  t,
+}: {
+  activeNavItemKey?: string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+}) {
   return (
-    <div className="border-border shrink-0 border-b-2 px-6 pt-6 pb-4 md:px-8 md:pt-8 md:pb-6">
+    <div className="border-b-2 px-6 py-4">
       <h1 className="text-2xl font-bold tracking-tight">
         {t(
           activeNavItemKey
@@ -476,6 +436,121 @@ function DashboardPageHeader() {
           },
         )}
       </p>
+    </div>
+  );
+}
+
+// ─── DashboardLayout ────────────────────────────────────────────────────────
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+
+  // Authentication
+  const { isAuthorized, isLoading } = useRequireAuth();
+  const { user, logout, isAuthenticated, hasPermission } = useAuth();
+
+  // Providers
+  const { t } = useTranslation();
+  const {
+    setThemeColor,
+    theme,
+    toggleTheme,
+    mounted: themeMounted,
+  } = useTheme();
+  const { isCollapsed, isMobileOpen, toggle, openMobile, closeMobile } =
+    useSidebar();
+  const {
+    currentLanguage,
+    languages,
+    setLanguage,
+    mounted: langMounted,
+  } = useLanguage();
+
+  // Compute filtered tabs once, memoized
+  const tabs = useMemo(() => filterTabs(NAV, hasPermission), [hasPermission]);
+
+  // Derive data for child components
+  const navigation = useMemo(
+    () => getSidebarForPath(tabs, pathname),
+    [tabs, pathname],
+  );
+
+  const activeNavItemKey = useMemo(
+    () => getActiveNavItemKey(tabs, pathname),
+    [tabs, pathname],
+  );
+
+  // Refs for scroll positioning
+  const mainRef = useRef<HTMLElement>(null);
+  useScrollPosition(mainRef, "content");
+
+  // Sync theme color with active tab configuration
+  useEffect(() => {
+    if (!tabs || tabs.length === 0) return;
+
+    const matchIndex = tabs.findIndex(
+      (tab) => pathname === tab.href || pathname.startsWith(`${tab.href}/`),
+    );
+    const activeIndex = matchIndex !== -1 ? matchIndex : 0;
+    const activeTab = tabs[activeIndex];
+
+    if (activeTab?.color) {
+      setThemeColor(activeTab.color);
+    }
+  }, [pathname, tabs, setThemeColor]);
+
+  if (isLoading) {
+    return (
+      <div className="bg-background flex h-screen items-center justify-center">
+        <Loader size="lg" />
+      </div>
+    );
+  }
+
+  if (!isAuthorized) {
+    return null;
+  }
+
+  return (
+    <div className="mx-auto flex h-screen max-w-7xl flex-col overflow-hidden">
+      <DashboardHeader
+        tabs={tabs}
+        pathname={pathname}
+        user={user}
+        isAuthenticated={isAuthenticated}
+        logout={logout}
+        t={t}
+        openMobile={openMobile}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        themeMounted={themeMounted}
+        currentLanguage={currentLanguage}
+        languages={languages}
+        setLanguage={setLanguage}
+        langMounted={langMounted}
+      />
+      <div className="relative flex flex-1 overflow-hidden pt-4">
+        <DashboardSidebar
+          navigation={navigation}
+          pathname={pathname}
+          t={t}
+          isCollapsed={isCollapsed}
+          isMobileOpen={isMobileOpen}
+          toggle={toggle}
+          closeMobile={closeMobile}
+        />
+        <main
+          ref={mainRef}
+          className="flex flex-1 flex-col overflow-hidden bg-white"
+        >
+          <DashboardPageHeader activeNavItemKey={activeNavItemKey} t={t} />
+          <div className="flex-1 overflow-y-auto p-6 md:p-8">{children}</div>
+        </main>
+      </div>
     </div>
   );
 }

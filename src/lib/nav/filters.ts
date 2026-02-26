@@ -12,8 +12,7 @@ export function filterTabs(
   return tabs
     .filter((tab) => {
       if (tab.access && tab.access.length > 0) {
-        if (!tab.hideInHeader || !tab.access.some((p) => hasPermission(p)))
-          return false;
+        if (!tab.access.some((p) => hasPermission(p))) return false;
       }
       return true;
     })
@@ -21,6 +20,7 @@ export function filterTabs(
       ...tab,
       groups: filterNavGroups(tab.groups, hasPermission),
     }))
+    .filter((tab) => !tab.hideInHeader)
     .filter((tab) => tab.groups.length > 0 || tab.href === "/dashboard");
 }
 
