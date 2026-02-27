@@ -63,11 +63,10 @@ export function ResponsiveTabs({
             key={tab.key}
             onClick={() => onSelect(index)}
             className={cn(
-              "flex flex-1 items-center justify-center gap-1 truncate px-2 py-1.5 text-sm font-medium transition-colors",
-              "border-b-2 focus:outline-hidden",
+              "flex flex-1 items-center justify-center gap-1 truncate border-2 border-transparent px-4 py-1 text-sm font-medium transition-colors focus:outline-hidden",
               isActive
-                ? "border-primary text-primary"
-                : "text-muted-foreground hover:text-foreground border-transparent",
+                ? "border-border bg-primary text-primary-foreground font-semibold"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             <Icon className={cn("size-4 shrink-0", !showText && "md:hidden")} />

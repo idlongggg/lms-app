@@ -345,7 +345,8 @@ function DashboardSidebar({
         {/* Toggle Button */}
         <Button
           variant="outline"
-          className="bg-background absolute top-5 -right-3 size-6 p-0"
+          size="icon"
+          className="bg-background absolute top-5 -right-3 hidden size-6 p-0 md:flex"
           onClick={toggle}
           aria-label="Toggle sidebar"
         >
